@@ -40,7 +40,7 @@ VBoxManage unregistervm xTER --delete
 If there is no folder "C:\Users\Bob\VMs", create it:
 mkdir "C:\Users\Bob\VMs"
 
-Now create a new VM named "XTER" of type "Linux Red Hat 64-bit" and place it into "C:\Users\Bob\VMs":
+Now create a new VM named "xTER" of type "Linux Red Hat 64-bit" and place it into "C:\Users\Bob\VMs":
 
 1. VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 
