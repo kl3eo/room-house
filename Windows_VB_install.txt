@@ -80,13 +80,18 @@ Add this directive to boot from Disk 0:
 Boot and post-installation setup
 ================================
 
-Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. After the xTER is fully loaded, you'll see a confirmation on this screen.
+Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. 
+After the xTER is fully loaded, you'll see a confirmation on this screen.
 
 == OR =================
-If there is no graphical manager, as when you've done this setup on a server, you may also continue to use your command line and start the xTER boot from it with such command:
+If there is no graphical manager, as when you've done this setup on a server, you may also continue to use command line.
+
+Start the xTER boot from it with such command:
 10. VBoxHeadless --startvm xTER
 
-Warning: You will NOT see any output from the loading xTER in this case. Just wait a few minutes and check if you can open the Admin web interface (see below).
+Warning: You will NOT see any output from the loading xTER in this case. 
+
+Just wait a few minutes and check if you can open the Admin web interface (see below).
 =======================
 
 Suppose your computer has internal IP as such: 192.168.0.11
@@ -95,12 +100,15 @@ Now, check if you can open the Admin web interface in your browser at https://19
 The rest of this setup is covered in the Help file at:
 https://xter.tech/vbhelp/index.html - go to p.17 and read to the end.
 
-If your browser complains now that this site's certificate is "*.xter.tech" or "*.room-house.com", while you're trying to access it by IP - that's correct. Continue.
-We will allow your computer be accessed on the right URL later, and these certificates will actually be good for your new Room-House node.
+If your browser complains now that this site's certificate is "*.xter.tech" or "*.room-house.com", while you're trying to access it by IP - that's correct. 
+
+Continue. We will allow your computer be accessed on the right URL later, and this certificate will actually be good for your new Room-House node.
 
 Use the default login/password, if it is the first time you log in the web interface.
 
-When logged in, go to the Settings menu and enter some new unique Host name for you node by which it will be known to public. We suggest using your city or location name.
+When logged in, go to the Settings menu and enter some new unique Host name for you node by which it will be known to public. 
+We suggest using your city or location name.
+
 When you changed the host name from default numbers to some good new name, don't forget to push the "Save" button in the right column.
 
 Don't forget to change the default admin password and also "Save" it. See the Help file on the link above how you can do this. 
