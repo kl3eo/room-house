@@ -123,7 +123,7 @@ First, write to us and tell us what name you've chosen for your public node, and
 Example: name "aspen", IP 81.25.50.13
 
 Second, make port forwarding from your router to your host, namely, our standard external port for Room-House is 443. 
-You have to forward port 443 from your router to the internal IP of your host machine, which we guessed earlier 192.168.0.11
+You have to forward port 443 from your router to port 8443 of the internal IP of your host machine, which we guessed earlier 192.168.0.11
 
 If you also want to access your admin web interface from outside of your local network, forward port 8443 from your router to port 8843 of your host.
 But make sure that you've changed your default admin password as we hope you already did! Only you must know it.
