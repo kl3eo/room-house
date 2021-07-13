@@ -1,0 +1,106 @@
+=============================================================
+=============================================================
+Setting up xTER Virtual Machine (VM) in VirtualBox in Windows
+=============================================================
+=============================================================
+
+
+Pre-installation
+================
+
+1. Check that Virtualization support is enabled in your BIOS.
+2. Check that Hyper-V native Windows virtualization is NOT running. If it is, stop it and maybe remove it.
+
+
+Installation
+============
+
+1. Download the latest VirtualBox for Windows from https://www.virtualbox.org/wiki/Downloads
+2. Run the installation binary and install VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
+
+
+Setup xTER VM
+=============
+
+Open the Windows command line terminal.
+
+Type or copy/paste this command to set a correct PATH to the VirtualBox binary files:
+set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
+
+Now, check that Windows understands the "VBoxManage" command - type "VBoxManage" in the terminal and see the output.
+
+If Windows doesn't understand this command, then check this link to better understand why:
+https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
+
+If you have installed VirtualBox into a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
+
+If Windows understands the "VBoxManage" command, and there is an old VM named "xTER", now you can delete it:
+VBoxManage unregistervm xTER --delete
+
+If there is no folder "C:\Users\Bob\VMs", create it:
+mkdir "C:\Users\Bob\VMs"
+
+Now create a new VM named "XTER" of type "Linux Red Hat 64-bit" and place it into "C:\Users\Bob\VMs":
+
+1. VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
+
+Setup this new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, EFI, port forwarding and keeping external request IPs for logging.
+If you can, increase the RAM size, # of CPU cores according to what you actually have unused on your host computer:
+
+2. VBoxManage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+
+Setup port forwarding for requests to the Room-House chat and to the HTTPS admin web interface:
+
+3. VBoxManage modifyvm xTER --natpf1 "chat,tcp,,8443,,443" 
+4. VBoxManage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
+
+Create a 2Gb disk for storing Room-House database, logs, etc:
+
+5. VBoxManage createmedium --filename 2G.vdi --size 2000
+
+Create a virtual SATA controller:
+
+6. VBoxManage storagectl xTER --name SATA --add sata
+
+Download file "https://github.com/kl3eo/pirl2/tree/main/VirtualBox/loop.vdi" to "C:\Users\Bob\VMs\xTER"
+
+Attache this file to the VM as Disk 0:
+
+7. VBoxManage storageattach xTER --storagectl SATA --medium loop.vdi --port 0 --type hdd
+
+Attach the 2Gb partition as Disk 1:
+
+8. VBoxManage storageattach xTER --storagectl SATA --medium 2G.vdi --port 1 --type hdd
+
+Add this directive to boot from Disk 0:
+
+9. VBoxManage modifyvm xTER --boot1 disk --boot2 none --boot3 none --boot4 none
+
+
+Boot and post-installation setup
+================================
+
+Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. After the xTER is fully loaded, you'll see a confirmation on this screen.
+
+== OR =================
+If there is no graphical manager, as when you've done this setup on a server, you may also continue to use your command line and start the xTER boot from it with such command:
+10. VBoxHeadless --startvm xTER
+
+Warning: You will NOT see any output from the loading xTER in this case. Just wait a few minutes and check if you can open the Admin web interface (see below).
+=======================
+
+Suppose your computer has internal IP as such: 192.168.0.11
+Now, check if you can open the Admin web interface in your browser at https://192.168.0.11:8843
+
+The rest of this setup is covered in the Help file at:
+https://xter.tech/vbhelp/index.html - go to p.17 and read to the end.
+
+If your browser complains now that this site's certificate is "*.xter.tech" or "*.room-house.com", while you're trying to access it by IP - that's correct. Continue.
+We will allow your computer be accessed on the right URL later, and these certificates will actually be good for your new Room-House node.
+
+Use the default login/password, if it is the first time you log in the web interface.
+
+When logged in, go to the Settings menu and enter some new unique Host name for you node by which it will be known to public. We suggest using your city or location name.
+When you changed the host name from default numbers to some good new name, don't forget to push the "Save" button in the right column.
+
+Don't forget to change the default admin password and also "Save" it. See the Help file on the link above how you can do this. 
