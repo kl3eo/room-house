@@ -64,7 +64,7 @@ Create a virtual SATA controller:
 
 Download file "https://github.com/kl3eo/pirl2/tree/main/VirtualBox/loop.vdi" to "C:\Users\Bob\VMs\xTER"
 
-Attache this file to the VM as Disk 0:
+Attach this file to the VM as Disk 0:
 
 7. VBoxManage storageattach xTER --storagectl SATA --medium loop.vdi --port 0 --type hdd
 
