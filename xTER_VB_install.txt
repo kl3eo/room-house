@@ -29,32 +29,32 @@ set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
 
 Now, check that Windows understands the "VBoxManage" command - type "VBoxManage" in the terminal and see the output.
 
-If Windows doesn't understand this command, then check this link to better understand why:
+If Windows doesn't understand this command, check this link to see why:
 https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
 
-If you have installed VirtualBox into a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
+If you have installed VirtualBox to a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
 
 If Windows understands the "VBoxManage" command, and there is an old VM named "xTER", now you can delete it:
 VBoxManage unregistervm xTER --delete
 
-If there is no folder "C:\Users\Bob\VMs", create it:
+If there is no folder "C:\Users\Bob\VMs", you should make it:
 mkdir "C:\Users\Bob\VMs"
 
-Now create a new VM named "xTER" of type "Linux Red Hat 64-bit" and place it into "C:\Users\Bob\VMs":
+Now create a new VM named "xTER" of type "Linux Red Hat 64-bit" and place it to "C:\Users\Bob\VMs":
 
 1. VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 
-Setup this new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, EFI, port forwarding and keeping external request IPs for logging.
-If you can, increase the RAM size, # of CPU cores according to what you actually have unused on your host computer:
+Setup this new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external request IPs.
+If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
 2. VBoxManage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 
-Setup port forwarding for requests to the Room-House chat and to the HTTPS admin web interface:
+Setup internal host-to-guest port forwarding to the Room-House chat and to the HTTPS admin web interface:
 
 3. VBoxManage modifyvm xTER --natpf1 "chat,tcp,,8443,,443" 
 4. VBoxManage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
 
-Create a 2Gb disk for storing Room-House database, logs, etc:
+Create a 2Gb disk for Room-House database, logs, etc:
 
 5. VBoxManage createmedium --filename 2G.vdi --size 2000
 
@@ -62,7 +62,7 @@ Create a virtual SATA controller:
 
 6. VBoxManage storagectl xTER --name SATA --add sata
 
-Download file "https://github.com/kl3eo/room-house/blob/main/loop.vdi" to "C:\Users\Bob\VMs\xTER"
+Download our bootloader  file "https://github.com/kl3eo/room-house/blob/main/loop.vdi" and put it to "C:\Users\Bob\VMs\xTER"
 
 Attach this file to the VM as Disk 0:
 
