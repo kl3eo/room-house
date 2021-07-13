@@ -83,8 +83,8 @@ Boot and post-installation setup
 Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. 
 After the xTER is fully loaded, you'll see a confirmation on this screen.
 
-== OR =================
-If there is no graphical manager, as when you've done this setup on a server, you may also continue to use command line.
+== OR ================= ======================= ======================= ======================= =======================
+If there is no graphical manager, as when you've done this setup on a remote host, you may also continue to use command line.
 
 Start the xTER boot from it with such command:
 10. VBoxHeadless --startvm xTER
@@ -92,7 +92,7 @@ Start the xTER boot from it with such command:
 Warning: You will NOT see any output from the loading xTER in this case. 
 
 Just wait a few minutes and check if you can open the Admin web interface (see below).
-=======================
+======================= ======================= ======================= =======================
 
 Suppose your computer has internal IP as such: 192.168.0.11
 Now, check if you can open the Admin web interface in your browser at https://192.168.0.11:8843
