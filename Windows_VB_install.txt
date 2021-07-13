@@ -22,7 +22,7 @@ Installation
 Setup xTER VM
 =============
 
-Open the Windows command line terminal.
+Open the Windows command line terminal - it will usually prompt to "C:\Users\Bob" - if you're a User named Bob.
 
 Type or copy/paste this command to set a correct PATH to the VirtualBox binary files:
 set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
