@@ -19,7 +19,7 @@ Installation
 2. Run the installation binary and install VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
 
 In case you're on a different OS like Linux, the rest is the same for you, too. Here is a shortcut of all the commands in one script for you:
-https://github.com/kl3eo/pirl2/blob/main/VirtualBox/VM_create_RH_only.sh
+https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
 
 Setup xTER VM
 =============
