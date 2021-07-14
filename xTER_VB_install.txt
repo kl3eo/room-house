@@ -115,6 +115,47 @@ When you changed the host name from default random numbers to some good new name
 Don't forget to change the default admin password and also "Save" it. See the Help file on the link given above about how you can do this. 
 
 
+Check your Room-House node is usable
+====================================
+
+First, look at the admin WI page menu "Info", Disk Use and Memory Use columns. If you've setup the VM with a minimal amount of RAM available to it,
+that is, 5,120M, then you'd be now with ~195K of free disk space and 5,060M of total memory. Check that this is indeed the case. 
+
+If you'd allowed more RAM during setup, then of course there would be more disk space and mem available now.
+
+Now, look at the list of running processes in the same page below the middle line inside a wide container. Check that the KMS is running.
+The must be a line ending with "/home/nobody/newlib/bin/kurento-media-server". That's it, the first line on top. So far, so good.
+
+Now, look at the bottom of the same container, there must be a very-very long line containing a lot of "java", "spring", "guava" words.
+If it's there, congratulations, your node is running. 
+
+If it's not there, the chances are high that the node has not started automatically after the xTER unpacking.
+
+This is known to happen if your VM setup is minimal in RAM, or if the VM's CPU power is not high. 
+In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. Wait a couple of seconds, then check the "Info" menu again.
+Your node must be running now, and all is well.
+
+Now, if still you can't see your RH node is running, and instead you see an alert telling you that there has been a problem with your static IP.
+This is possible - if you don't have a static IP, or if it's not visible from outside of your local net.
+
+Check that your IP is actually static and not dynamic - contact your internet provider and request for a static IP.
+
+It is not possible to run an RH node without a static IP, though it is still possible to boot the xTER and use its admin web interface.
+
+Your RH node will also temporarily stop running, if your external static IP becomes invisible from the outside. When this problem disappears,
+so does the problem with the RH node -it's up and running again, automatically.
+
+Finally, check that the RH interface is visible - click on the link https://192.168.0.11:8443 (here we assume again on your local IP).
+You should see a standard entrance to RH.
+
+If there is no button "Enter", then you probably haven't given your host a name yet. Navigate to the admin WI menu "Settings", give your host a name, 
+hit "Save" button, then return to this RH window in your browser - you may need to drop the stale browser cache to see the change, 
+now the Enter button and name/room input fields are visible in the middle of the central container. 
+
+Use them to enter the chat and check that it is usable, - connect to it from two WiFi devices on your local net, for example.
+
+Your RH node is up and running. Proceed to go public.
+
 Going public
 ============
 
