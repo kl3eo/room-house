@@ -15,14 +15,16 @@ Pre-installation
 Installation
 ============
 
-1. Download the latest VirtualBox for Windows from https://www.virtualbox.org/wiki/Downloads
+1. Download the latest VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
 2. Run the installation binary and install VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
 
+In case you're on a different OS like Linux, the rest is the same for you, too. Here is a shortcut of all the commands in one script for you:
+https://github.com/kl3eo/pirl2/blob/main/VirtualBox/VM_create_RH_only.sh
 
 Setup xTER VM
 =============
 
-Open the Windows command line terminal - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
+Open command line terminal - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
 Type or copy/paste this command to set a correct PATH to the VirtualBox binary files:
 set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
@@ -94,7 +96,7 @@ Warning: You will NOT see any output from the loading xTER in this case.
 Just wait a few minutes and check if you can open the admin web interface (see below).
 ======================= ======================= ======================= =======================
 
-Suppose your computer has internal IP as such: 192.168.0.11
+Suppose your computer has an internal IP as such: 192.168.0.11
 Now, check if you can open the admin web interface in your browser at https://192.168.0.11:8843
 
 [ The rest of this setup is covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and to the end ]
@@ -124,7 +126,7 @@ Example: name "aspen", IP 81.13.45.90
 We need this info to add your node to our proxy servers so that it becomes visible to public.
 
 Second, make port forwarding from your router to your host, namely, our standard external port for Room-House which is 443. 
-You have to forward port 443 from your router to port 8443 of your host machine, which we guessed earlier is something like 192.168.0.11
+You have to forward port 443 from your router to port 8443 of your host machine, which we guessed earlier has an IP like 192.168.0.11
 
 If you also want to access your admin web interface from outside of your local network, forward port 8443 from your router to port 8843 of your host.
 But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
