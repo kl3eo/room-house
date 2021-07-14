@@ -22,7 +22,7 @@ Installation
 Setup xTER VM
 =============
 
-Open the Windows command line terminal - it will usually prompt to "C:\Users\Bob" - if you're a User named Bob.
+Open the Windows command line terminal - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
 Type or copy/paste this command to set a correct PATH to the VirtualBox binary files:
 set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
@@ -34,13 +34,13 @@ https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
 
 If you have installed VirtualBox to a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
 
-If Windows understands the "VBoxManage" command, and there is an old VM named "xTER", now you can delete it:
+If Windows understands the "VBoxManage" command, and there is some old VM named "xTER", now you may want to delete it:
 VBoxManage unregistervm xTER --delete
 
-If there is no folder "C:\Users\Bob\VMs", you should make it:
+If there is no folder "C:\Users\Bob\VMs", now you should make one:
 mkdir "C:\Users\Bob\VMs"
 
-Now create a new VM named "xTER" of type "Linux Red Hat 64-bit" and place it to "C:\Users\Bob\VMs":
+Create a new VM named "xTER" of type "Linux Red Hat 64-bit" and place it to "C:\Users\Bob\VMs":
 
 1. VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 
@@ -49,7 +49,7 @@ If you can, increase the RAM size and # of CPU cores according to what is actual
 
 2. VBoxManage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 
-Setup internal host-to-guest port forwarding to the Room-House chat and to the HTTPS admin web interface:
+Setup internal host-to-guest port forwarding for the Room-House chat and to the HTTPS admin web interface:
 
 3. VBoxManage modifyvm xTER --natpf1 "chat,tcp,,8443,,443" 
 4. VBoxManage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
@@ -81,33 +81,32 @@ Boot and post-installation setup
 ================================
 
 Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. 
-After the xTER is fully loaded, you'll see a confirmation on this screen.
+After the xTER is fully loaded, you'll see a confirmation in this window.
 
-== OR ================= ======================= ======================= ======================= =======================
-If there is no graphical manager, as when you've done this setup on a remote host, you may also continue to use command line.
+== OR ================= OR ======================= OR ======================= ======================= =======================
+If there is no graphical manager, as when you've done this setup on a remote host, you continue to use command line.
 
 Start the xTER boot from it with such command:
 10. VBoxHeadless --startvm xTER
 
 Warning: You will NOT see any output from the loading xTER in this case. 
 
-Just wait a few minutes and check if you can open the Admin web interface (see below).
+Just wait a few minutes and check if you can open the admin web interface (see below).
 ======================= ======================= ======================= =======================
 
 Suppose your computer has internal IP as such: 192.168.0.11
-Now, check if you can open the Admin web interface in your browser at https://192.168.0.11:8843
+Now, check if you can open the admin web interface in your browser at https://192.168.0.11:8843
 
-The rest of this setup is covered in the Help file at:
-https://xter.tech/vbhelp/index.html - go to p.17 and read to the end.
+[ The rest of this setup is covered in the Help at https://xter.tech/vbhelp/index.html - go to p.17 and to the end ]
 
 If your browser complains now that this site's certificate is "*.xter.tech" or "*.room-house.com", while you're trying to access it by IP - that's correct. 
 
-Continue. We will allow your computer be accessed on the right URL later, and this certificate will actually be good for your new Room-House node.
+Continue. We will allow your computer be accessed on the right URL later, and this certificate will then be good for your new Room-House node.
 
 Use the default login/password, if it is the first time you log in the web interface.
 
-When logged in, go to the Settings menu and enter some new unique Host name for you node by which it will be known to public. 
-We suggest using your city or location name.
+When logged in, go to the Settings menu and enter some unique Host name for you node by which it will be known to public. 
+We suggest using your city or location as the name.
 
 When you changed the host name from default numbers to some good new name, don't forget to push the "Save" button in the right column.
 
@@ -120,9 +119,9 @@ Going public
 It's time to make your node visible to public and begin to earn coins for the Room-House traffic.
 
 First, write to us and tell us what name you've chosen for your public node, and what's your static IP.
-Example: name "aspen", IP 81.25.50.13
+Example: name "aspen", IP 81.13.45.90
 
-We need this info to add your node in our proxy servers so that it becomes visible to public.
+We need this info to add your node to our proxy servers so that it becomes visible to public.
 
 Second, make port forwarding from your router to your host, namely, our standard external port for Room-House is 443. 
 You have to forward port 443 from your router to port 8443 of your host machine, which we guessed earlier 192.168.0.11
