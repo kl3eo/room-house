@@ -94,7 +94,7 @@ Start the xTER boot from it with the command:
 Warning: You will NOT see any output from the loading xTER in this case. 
 
 Just wait a few minutes and check if you can open the admin web interface (see below).
-======================= ======================= ======================= =======================
+--------------------------------------------------------------------------------------
 
 Suppose your computer has an internal IP as such: 192.168.0.11
 Now, check if you can open the admin web interface in your browser at https://192.168.0.11:8843
@@ -138,7 +138,7 @@ Your node must be running now, and all is well.
 Now, if still you can't see your RH node is running, and instead you see an alert telling you that there has been a problem with your static IP.
 This is possible - if you don't have a static IP, or if it's not visible from outside of your local net.
 
-Check that your IP is actually static and not dynamic - contact your internet provider and request for a static IP.
+Check that your external IP is actually static and not dynamic - contact your internet provider and request for a static IP.
 
 It is not possible to run an RH node without a static IP, though it is still possible to boot the xTER and use its admin web interface.
 
