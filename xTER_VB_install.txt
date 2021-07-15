@@ -157,24 +157,24 @@ If you'd allowed more RAM during setup, then of course there would be more disk 
 
 Now, look at the list of running processes in the same page below the middle line inside a wide container. Check that the KMS is running.
 
-There must be a line ending with "/home/nobody/newlib/bin/kurento-media-server". If it's there, it's the first line on top.
+There must be a line ending with "kurento-media-server". If it's there, it's the first line on top.
 
-Now, look at the bottom of the same container, there must be a very-very VERY long line containing hundreds of words like "java", "spring", "guava", etc.
+Now, look at the bottom of the same container, there must be a very-very VERY long line containing hundreds of words, like "java", "spring", "guava", etc.
 
 If it's there, congratulations, your node is running. 
 
 If it's not there, the chances are high that the node has not started automatically.
 
-This is known if your VM setup is minimal in RAM, or if the VM's CPU power is not enough high.
+This is known if your VM setup is minimal in RAM, or if the VM's CPU power isn't enough.
  
 In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. 
 
 Wait a couple of seconds, then check the "Info" menu again. Your node must be running now.
 
-If your RH node is not running, and instead an alert keeps telling you that "there has been a problem with your static IP", 
+If your RH node is not running, and instead an alert keeps telling you that there has been "a problem with your static IP", 
 - it happens if your external IP is dynamic, or if it's not visible from outside of your local net. 
 
-Or, if you've failed to forward ports on your router correctly (see again pp.1 and 2 in this Chapter). 
+Or, if you've failed to forward two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
 Check on your router now again to be sure the port forwarding is there and it's correct.
 
@@ -200,6 +200,8 @@ Example: name "aspen", IP 81.13.45.90
 We need this info to add your node to our proxy servers so that it becomes visible to public.
 
 And as soon as we add your node to the list on our proxies, we will inform you.
+
+=========
 
 Good luck!
 
