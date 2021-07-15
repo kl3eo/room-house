@@ -93,7 +93,7 @@ Boot and post-installation setup
 Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. 
 After the xTER is fully loaded, you'll see a confirmation in this window.
 
-== OR ================= OR ======================= OR ======================= ======================= =======================
+== OR =================
 If there is no graphical manager, like when you've done this setup on a remote host, continue to use command line.
 
 Start the xTER boot from it with the command:
