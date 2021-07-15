@@ -5,6 +5,14 @@ Setting up xTER Virtual Machine (VM) in VirtualBox
 ==================================================
 
 
+Prerequisites
+=============
+
+1. A 64-bit CPU (mostly x86-64, Intel or AMD); for other variants of 64-bit CPU possible, see support page of VirtualBox.
+2. 5G or more of free unused RAM (normally it means 8G or more of total RAM; 6G total RAM will sometimes be enough, too).
+3. Static IP4 on your router to Internet.
+
+
 Pre-installation
 ================
 
