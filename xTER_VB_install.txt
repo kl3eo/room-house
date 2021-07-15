@@ -112,10 +112,10 @@ Warning: You will NOT see any output from the loading xTER in this case.
 Just wait a few minutes and check if you can open the admin web interface (see below).
 --------------------------------------------------------------------------------------
 
-Suppose your computer has an internal IP as such: 192.168.0.11
-Now, check if you can open the admin web interface in your browser at https://192.168.0.11:8843
+We suppose your computer has an internal IP as such: 192.168.0.11
+Then, check if you can open the admin web interface in your browser at https://192.168.0.11:8843
 
-[ The rest of this setup is covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and to the end ]
+[ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and to the end ]
 
 If your browser complains now that this site's certificate is "*.xter.tech" or "*.room-house.com", while you're trying to access it by IP - that's correct. 
 
@@ -124,61 +124,78 @@ We will allow your computer be accessed on the right URL later, and this certifi
 Use the default login/password, if it is the first time you log in the web interface.
 
 When logged in, go to the Settings menu and enter some unique Host name for you node by which it will be known to public. 
-We suggest using your city or location as the name.
+We suggest using your city or location as the name. Click on the random numbers to the right of the word: "Host" to edit the name.
 
-When you changed the host name from default random numbers to some new name, hit "Enter" and then don't forget to push the "Save" button in the right column.
+When you changed the host name from default random numbers to some new name, hit "Enter", confirm.
 
-Don't forget to change the default admin password and also "Save" it. See the Help file on the link given above about how you can do this. 
+And then don't forget to push the "Save" button in the right column, confirm again.
+
+Don't forget to change the default admin password and also "Save" it. See the Help file on the link given above about how you can do this in details. 
 
 
 Check your Room-House node is usable
 ====================================
 
-First, look at the admin WI page menu "Info", Disk Use and Memory Use columns. If you've setup the VM with a minimal amount of RAM available to it,
+Before anything, do port forwarding from your Internet router to your host.
+
+1. First, forward our standard external port for Room-House which is 443. 
+You have to forward this port 443 from your router to port 8443 of your host machine. 
+[ Which as you may remember we guessed earlier has an IP like 192.168.0.11 - or whatever, you know better. ]
+
+2. Also, forward the port 8443 from your router to port 8843 of your host.
+But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
+
+Now, it's time to check in the admin web interface (WI).
+
+First, open the WI menu "Info" page, Disk Use and Memory Use columns. If you've setup the VM with a minimal amount of RAM available to it,
 that is, 5,120M, then you'd be now with ~195K of free disk space and 5,060M of total memory. Check that this is indeed the case. 
 
 If you'd allowed more RAM during setup, then of course there would be more disk space and mem available now.
 
 Now, look at the list of running processes in the same page below the middle line inside a wide container. Check that the KMS is running.
-The must be a line ending with "/home/nobody/newlib/bin/kurento-media-server". That's it, the first line on top. So far, so good.
+
+There must be a line ending with "/home/nobody/newlib/bin/kurento-media-server". If it's there, it's the first line on top.
 
 Now, look at the bottom of the same container, there must be a very long line containing a lot of words "java", "spring", "guava", etc.
+
 If it's there, congratulations, your node is running. 
 
 If it's not there, the chances are high that the node has not started automatically after the boot.
 
-This is known to happen if your VM setup is minimal in RAM, or if the VM's CPU power is not high.
+This is known if your VM setup is minimal in RAM, or if the VM's CPU power is not enough.
  
-In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. Wait a couple of seconds, then check the "Info" menu again.
-Your node must be running now.
+In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. 
 
-Yet you may see that your RH node is not running, and instead you see an alert telling you that there has been a problem with your static IP.
-This happens if your external IP is dynamic, or if it's not visible from outside of your local net.
+Wait a couple of seconds, then check the "Info" menu again. Your node must be running now.
 
-Check that your external IP is actually static and not dynamic - contact your internet provider and request for a static IP.
+If your RH node is not running, and instead an alert keeps repeating that "there has been a problem with your static IP", 
+- it happens if your external IP is dynamic, or if it's not visible from outside of your local net. 
+
+Or, if you've failed to forward ports on your router correctly (see again pp.1 and 2 in this Chapter). 
+
+Check on your router now again to be sure the port forwarding is there and it's correct.
+
+Check that your external IP is actually static and not dynamic - or contact your Internet provider and request for a static IP.
 
 It is not possible to run an RH node on a dynamic IP, though it is possible to boot and use the admin web interface.
 
-Your RH node will also temporarily stop running, if your external static IP becomes invisible from the outside. When this problem disappears,
+Your RH node will also temporarily stop running, if your external static IP is invisible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
+
 
 Going public
 ============
 
 It's time to make your node visible to the world and begin to earn your coins for the Room-House traffic.
 
-First, write to us and tell us what name you've chosen for your public node, and what's your static IP.
+Write to us and tell us what name you've chosen for your public node, and what's your static IP.
 Example: name "aspen", IP 81.13.45.90
 
 We need this info to add your node to our proxy servers so that it becomes visible to public.
 
-Second, make port forwarding from your router to your host, namely, our standard external port for Room-House which is 443. 
-You have to forward port 443 from your router to port 8443 of your host machine, which we guessed earlier has an IP like 192.168.0.11
-
-Third, forward port 8443 from your router to port 8843 of your host.
-But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
+And as soon as we add your node to the list on our proxies, we will inform you.
 
 Good luck!
 
