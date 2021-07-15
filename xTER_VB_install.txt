@@ -39,15 +39,17 @@ set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
 
 Now, check that Windows understands the "VBoxManage" command - type "VBoxManage" in the terminal and see the output.
 
-If Windows doesn't understand this command, check this link to see why:
+If Windows doesn't understand this command, for example this link shows why:
 https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
 
 If you have installed VirtualBox to a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
 
 If Windows understands the "VBoxManage" command, and there is some old VM named "xTER", now you may want to delete it:
+
 VBoxManage unregistervm xTER --delete
 
 If there is no folder "C:\Users\Bob\VMs", now you should make one:
+
 mkdir "C:\Users\Bob\VMs"
 
 Change to this new directory:
