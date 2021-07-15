@@ -50,11 +50,17 @@ VBoxManage unregistervm xTER --delete
 If there is no folder "C:\Users\Bob\VMs", now you should make one:
 mkdir "C:\Users\Bob\VMs"
 
-Create a new VM named "xTER" of type "Linux Red Hat 64-bit" and place it to "C:\Users\Bob\VMs":
+Change to this new directory:
+
+cd "C:\Users\Bob\VMs"
+
+Create a new VM named "xTER" of type "Linux Red Hat 64-bit":
 
 1. VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 
-Setup this new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external request IPs.
+Now there must have appeared a new folder - "C:\Users\Bob\VMs\xTER".
+
+Provide your new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external request IPs.
 If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
 2. VBoxManage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
