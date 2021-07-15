@@ -29,6 +29,7 @@ Installation
 In case you're on a different OS like Linux, the rest is the same for you, too. Here is a shortcut of all the commands in one script for you:
 https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
 
+
 Setup xTER VM
 =============
 
@@ -182,7 +183,7 @@ Check that your external IP is actually static and not dynamic - or contact your
 
 It is not possible to run an RH node on a dynamic IP, though it is possible to boot and use the admin web interface.
 
-Your RH node will also temporarily stop running, if your external static IP stops being visible from the outside. When this problem disappears,
+Your RH node will also temporarily stop running, if your external static IP is lost from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
@@ -201,8 +202,11 @@ We need this info to add your node to our proxy servers so that it becomes visib
 
 And as soon as we add your node to the list on our proxies, we will inform you.
 
-=========
+
+==========
+==========
 
 Good luck!
 
-
+==========
+==========
