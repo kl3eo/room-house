@@ -147,8 +147,11 @@ But make sure that you've changed the default admin password as we hope you alre
 
 Now, it's time to check in the admin web interface (WI).
 
-First, open the WI menu "Info" page, Disk Use and Memory Use columns. If you've setup the VM with a minimal amount of RAM available to it,
-that is, 5,120M, then you'd be now with ~195K of free disk space and 5,060M of total memory. Check that this is indeed the case. 
+First, open the WI menu "Info" page, search for Disk Use and Memory Use columns. 
+
+If you've setup this VM with a minimal amount of RAM available to it, then you'd be now with ~195K of free disk space and 5,060M of total memory. 
+
+Check that this is indeed the case. 
 
 If you'd allowed more RAM during setup, then of course there would be more disk space and mem available now.
 
@@ -156,19 +159,19 @@ Now, look at the list of running processes in the same page below the middle lin
 
 There must be a line ending with "/home/nobody/newlib/bin/kurento-media-server". If it's there, it's the first line on top.
 
-Now, look at the bottom of the same container, there must be a very long line containing a lot of words "java", "spring", "guava", etc.
+Now, look at the bottom of the same container, there must be a very-very VERY long line containing hundreds of words like "java", "spring", "guava", etc.
 
 If it's there, congratulations, your node is running. 
 
-If it's not there, the chances are high that the node has not started automatically after the boot.
+If it's not there, the chances are high that the node has not started automatically.
 
-This is known if your VM setup is minimal in RAM, or if the VM's CPU power is not enough.
+This is known if your VM setup is minimal in RAM, or if the VM's CPU power is not enough high.
  
 In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. 
 
 Wait a couple of seconds, then check the "Info" menu again. Your node must be running now.
 
-If your RH node is not running, and instead an alert keeps repeating that "there has been a problem with your static IP", 
+If your RH node is not running, and instead an alert keeps telling you that "there has been a problem with your static IP", 
 - it happens if your external IP is dynamic, or if it's not visible from outside of your local net. 
 
 Or, if you've failed to forward ports on your router correctly (see again pp.1 and 2 in this Chapter). 
@@ -179,7 +182,7 @@ Check that your external IP is actually static and not dynamic - or contact your
 
 It is not possible to run an RH node on a dynamic IP, though it is possible to boot and use the admin web interface.
 
-Your RH node will also temporarily stop running, if your external static IP is invisible from the outside. When this problem disappears,
+Your RH node will also temporarily stop running, if your external static IP stops being visible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
@@ -188,9 +191,10 @@ Now that your RH node is up and running, proceed to going public.
 Going public
 ============
 
-It's time to make your node visible to the world and begin to earn your coins for the Room-House traffic.
+It's time to make your node visible to the world and begin to earn coins for the Room-House traffic.
 
 Write to us and tell us what name you've chosen for your public node, and what's your static IP.
+
 Example: name "aspen", IP 81.13.45.90
 
 We need this info to add your node to our proxy servers so that it becomes visible to public.
