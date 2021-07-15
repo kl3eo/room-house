@@ -118,7 +118,7 @@ Use the default login/password, if it is the first time you log in the web inter
 When logged in, go to the Settings menu and enter some unique Host name for you node by which it will be known to public. 
 We suggest using your city or location as the name.
 
-When you changed the host name from default random numbers to some good new name, don't forget to push the "Save" button in the right column.
+When you changed the host name from default random numbers to some new name, hit "Enter" and then don't forget to push the "Save" button in the right column.
 
 Don't forget to change the default admin password and also "Save" it. See the Help file on the link given above about how you can do this. 
 
