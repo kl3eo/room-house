@@ -161,7 +161,7 @@ We need this info to add your node to our proxy servers so that it becomes visib
 Second, make port forwarding from your router to your host, namely, our standard external port for Room-House which is 443. 
 You have to forward port 443 from your router to port 8443 of your host machine, which we guessed earlier has an IP like 192.168.0.11
 
-If you also want to access your admin web interface from outside of your local network, forward port 8443 from your router to port 8843 of your host.
+Third, forward port 8443 from your router to port 8843 of your host.
 But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
 
 Good luck!
