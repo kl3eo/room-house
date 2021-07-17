@@ -118,20 +118,13 @@ Then, check if you can open the admin web interface in your browser at https://1
 
 [ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and to the end ]
 
-If your browser complains now that this site's certificate is "*.xter.tech" or "*.room-house.com", while you're trying to access it by IP - that's correct. 
+If your browser complains now that this site's certificate is "*.room-house.com", while you're trying to access it by IP - that's correct. 
 
 We will allow your computer be accessed on the right URL later, and this certificate will then be good for your new Room-House node.
 
 Use the default login/password, if it is the first time you log in the web interface.
 
-When logged in, go to the Settings menu and enter some unique Host name for you node by which it will be known to public. 
-We suggest using your city or location as the name. Click on the random numbers to the right of the word: "Host" to edit the name.
-
-When you changed the host name from default random numbers to some new name, hit "Enter", confirm.
-
-And then don't forget to push the "Save" button in the right column, confirm again.
-
-Don't forget to change the default admin password and also "Save" it. See the Help file on the link given above about how you can do this in details. 
+Don't forget to change the default admin password and "Save" it. See the Help file on the link given above about how you can do this in details. 
 
 
 Check your Room-House node is usable
@@ -170,7 +163,9 @@ This is known if your VM setup is minimal in RAM, or if the VM's CPU power isn't
  
 In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. 
 
-Wait a couple of seconds, then check the "Info" menu again. Your node must be running now.
+Wait a couple of seconds, then check the "Info" menu again. Your node must be running now. 
+
+In case of doubt - go to "Stats" again, hit "Restart" and back to see the result at the bottom of the "Info" page.
 
 If your RH node is not running, and instead an alert keeps telling you that there has been "a problem with your static IP", 
 - it happens if your external IP is dynamic, or if it's not visible from outside of your local net. 
@@ -194,9 +189,9 @@ Going public
 
 It's time to make your node visible to the world and begin to earn coins for the Room-House traffic.
 
-Write to us and tell us what name you've chosen for your public node, and what's your static IP.
+Write to us and tell us what's your static IP.
 
-Example: name "aspen", IP 81.13.45.90
+Example: IP 81.13.45.90
 
 We need this info to add your node to our proxy servers so that it becomes visible to public.
 
