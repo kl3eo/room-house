@@ -178,7 +178,7 @@ Check that your external IP is actually static and not dynamic - or contact your
 
 It is not possible to run an RH node on a dynamic IP, though it is possible to boot and use the admin web interface.
 
-Your RH node will also temporarily stop running, if your external static IP is lost from the outside. When this problem disappears,
+Your RH node will also temporarily stop running, if your external static IP is not visible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
