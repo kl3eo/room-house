@@ -113,10 +113,10 @@ Warning: You will NOT see any output from the loading xTER in this case.
 Just wait a few minutes and check if you can open the admin web interface (see below).
 --------------------------------------------------------------------------------------
 
-Here we suppose your computer has an internal IP as such: 192.168.0.11 -
+Here we suppose your computer has an internal IP "192.168.0.11".
 See if you can open the admin web interface (WI) in your browser at https://192.168.0.11:8843
 
-[ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and to the end ]
+[ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
 
 If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it by IP - that's correct. 
 
@@ -130,13 +130,13 @@ Don't forget to change the default admin password and "Save" it. See the Help fi
 Check your Room-House node is usable
 ====================================
 
-Before anything, do port forwarding from the Internet router to your host.
+Before anything, you must do port forwarding on the Internet router to your host.
 
 1. First, forward our standard external port for Room-House which is 443. 
-You have to forward this port 443 from your router to port 8443 of your host machine. 
+You have to forward this port 443 on the router to port 8443 on your host machine. 
 [ Which as you may remember we guessed earlier has an IP like 192.168.0.11 - or whatever, you know better. ]
 
-2. Second, forward the port 8443 from your router to port 8843 of your host.
+2. Second, forward the port 8443 on your router to port 8843 on your host.
 But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
 
 Now, it's time to check in the admin web interface (WI).
@@ -147,7 +147,7 @@ If you've setup this VM with a minimal amount of RAM available to it, then you'd
 
 Check that this is indeed the case. 
 
-If you'd allowed more RAM during setup, then of course there would be more disk space and memory available now.
+If you'd allowed more RAM during setup, then of course there would be more disk space and more memory available now.
 
 Now, look at the list of running processes in the same page below the middle line inside a wide container. Check that the KMS is running.
 
@@ -157,9 +157,9 @@ Now, look at the bottom of the same container, there must be a very-very VERY lo
 
 If it's there, congratulations, your node is running. 
 
-If it's not there, the chances are high that the node has not started automatically.
+If it's not there, maybe the node has not started automatically.
 
-This is known if your VM setup is minimal in RAM, or if the VM's CPU power isn't enough.
+This is known if your VM setup is minimal in RAM, or the VM's CPU power isn't enough.
  
 In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. 
 
@@ -168,17 +168,17 @@ Wait a couple of seconds, then check the "Info" menu again. Your node must be ru
 In case of doubt - go to "Stats" again, hit "Restart" again and go back to see the result at the bottom of the "Info" page.
 
 If your RH node is not running, and an alert keeps telling you that there has been "a problem with your static IP", 
-- maybe your external IP is dynamic, or if it's not visible from outside of your local net. 
+- maybe your external IP is dynamic, or maybe it's static but not visible from outside of your local net. 
 
-Or, if you've failed to forward two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
+Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
-Check on your router now again to be sure the port forwarding is there and it's correct.
+Check your router now again to be sure the port forwarding is there and it's correct.
 
-Check that your external IP is actually static and not dynamic - contact your Internet provider and request for a static IP.
+Also make sure that your external IP is static and not dynamic - contact your Internet provider and request for a static IP.
 
-It is NOT possible now to run an RH node on a dynamic IP, though it is ok to boot and use the admin web interface.
+It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the admin web interface.
 
-Your RH node will also temporarily stop running, if your external static IP is not visible from the outside. When this problem disappears,
+Your RH node will also temporarily stop running, if your external static IP becomes not visible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
@@ -187,13 +187,13 @@ Now that your RH node is up and running, proceed to going public.
 Going public
 ============
 
-It's time we will make your node visible to the world and you begin to earn coins for the Room-House traffic.
+It's time we make your node visible to the world and you begin to earn coins for the Room-House traffic.
 
 Write to us and tell us what's your static IP.
 
 Example: IP 81.13.45.90
 
-We need this info to add your node to our proxy servers so that it becomes visible to public.
+We will add your node to our proxy servers so that it becomes visible to public.
 
 And as soon as we add your node to the list on our proxies, we will inform you.
 
