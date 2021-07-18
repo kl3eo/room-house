@@ -159,15 +159,13 @@ If it's there, congratulations, your node is running.
 
 If it's not there, maybe the node has not started automatically.
 
-This is known if your VM setup is minimal in RAM, or the VM's CPU power isn't enough.
+This is known to happen if your VM's CPU power is low.
  
-In this case, go to the "Stats" menu and hit the "Restart" button on top of the list. 
+In this case, hit "Restart KMS" button in the left column. 
 
-Wait a couple of seconds, then check the "Info" menu again. Your node must be running now. 
+Wait a few seconds, then you'll see your node is running.
 
-In case of doubt - go to "Stats" again, hit "Restart" again and go back to see the result at the bottom of the "Info" page.
-
-If your RH node is not running, and an alert keeps telling you that there has been "a problem with your static IP", 
+If your RH node is NOT running, whatever, and an alert keeps telling you that there has been "a problem with your static IP", 
 - maybe your external IP is dynamic, or maybe it's static but not visible from outside of your local net. 
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
@@ -178,7 +176,7 @@ Also make sure that your external IP is static and not dynamic - contact your In
 
 It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the admin web interface.
 
-Your RH node will also temporarily stop running, if your external static IP becomes not visible from the outside. When this problem disappears,
+Your RH node will also temporarily stop running when your external static IP becomes invisible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
