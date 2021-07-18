@@ -174,7 +174,7 @@ If your RH node is NOT running, whatever, and an alert keeps telling you that th
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
-Check your router now again to be sure the port forwarding is there and it's correct.
+Check your router again to be sure the port forwarding is there and it's correct.
 
 Also make sure that your external IP is static and not dynamic - contact your Internet provider and request for a static IP.
 
@@ -189,9 +189,9 @@ Now that your RH node is up and running, proceed to going public.
 Going public
 ============
 
-It's time we make your node visible to the world and you begin to earn coins for the Room-House traffic.
+It's time we make your node visible to the world and after that you begin to earn coins for the Room-House traffic.
 
-Write to us and tell us what's your static IP.
+Use Twitter or Telegram and tell us what's your static IP.
 
 Example: IP 81.13.45.90
 
