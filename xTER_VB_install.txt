@@ -9,24 +9,26 @@ Prerequisites
 =============
 
 1. A 64-bit CPU (x86-64, Intel or AMD); if other variants of 64-bit CPU are possible, see support on VirtualBox site.
-2. 5G or more of free unused RAM (normally it means 8G or more of total RAM; 6G total RAM may be enough, too).
-3. Static IP4 on your router to Internet.
+2. 5G or more of free unused RAM (normally it means 8G or more of total RAM).
+3. Static IP4 on your Internet router.
 
 
 Pre-installation
 ================
 
 1. Check that Virtualization support is enabled in your BIOS.
-2. Check that Hyper-V native Windows virtualization is NOT running. If it is, stop it and/or remove it.
+2. Check that Hyper-V native Windows virtualization is NOT running. Stop it and maybe remove it.
 
 
 Installation
 ============
 
 1. Download the latest VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
+
 2. Run the installation binary and install VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
 
-In case you're on a different OS like Linux, the rest is true for you, too. Here is a shortcut of all the commands in one script for you:
+In case you're on a different OS like Linux, the rest is true for you, too. Here is a shortcut of all the commands in one awesome script for you:
+
 https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
 
 
@@ -36,11 +38,13 @@ Setup xTER VM
 Open command line terminal - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
 Type or copy/paste this command to set a correct PATH to the VirtualBox binary files:
+
 set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
 
 Now, check that Windows understands the "VBoxManage" command - type "VBoxManage" in the terminal and see the output.
 
 If Windows doesn't understand this command, for example this link shows why:
+
 https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
 
 If you have installed VirtualBox to a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
