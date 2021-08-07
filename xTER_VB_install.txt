@@ -117,12 +117,11 @@ Warning: You will NOT see any output from the loading xTER in this case.
 Just wait a few minutes and check if you can open the admin web interface (see below).
 --------------------------------------------------------------------------------------
 
-Here we suppose your computer has an internal IP "192.168.0.11".
-See if you can open the admin web interface (WI) in your browser at https://192.168.0.11:8843
+See if you can open the admin web interface (WI) in your browser at https://localhost:8843
 
 [ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
 
-If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it by IP - that's correct. 
+If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's correct. 
 
 We will allow your computer be accessed on the right URL later, and this certificate will then be good for your new Room-House node.
 
@@ -138,7 +137,7 @@ Before anything, you must do port forwarding on the Internet router to your host
 
 1. First, forward our standard external port for Room-House which is 443. 
 You have to forward this port 443 on the router to port 8443 on your host machine. 
-[ Which as you may remember we guessed earlier has an IP like 192.168.0.11 - or whatever, you know better. ]
+[ Which has an IP like 192.168.0.11 - or whatever, you know better. ]
 
 2. Second, forward the port 8443 on your router to port 8843 on your host.
 But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
