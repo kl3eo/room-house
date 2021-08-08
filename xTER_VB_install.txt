@@ -5,16 +5,19 @@ Setting up you own Room-House
 =============================
 
 
+
 Prerequisites
 =============
+
 
 1. A 64-bit CPU (x86-64, Intel or AMD); if other CPUs are possible, see support on VirtualBox site.
 2. 5G or more of unused RAM (normally it means 6G or more of total RAM).
 3. Static IP4 on your Internet router.
 
 
-Pre-installation
-================
+Pre-install
+===========
+
 
 1. Check that Virtualization is enabled in your BIOS.
 2. Check that Hyper-V (Windows only) is NOT running.
@@ -22,6 +25,7 @@ Pre-installation
 
 Installation
 ============
+
 
 1. Download the latest VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
 
@@ -38,6 +42,7 @@ https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
 
 Setup xTER VM
 =============
+
 
 Open the command line (terminal) - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
@@ -128,51 +133,59 @@ Add this directive to boot from Disk 0:
 9. VBoxManage modifyvm xTER --boot1 disk --boot2 none --boot3 none --boot4 none
 
 
-Boot and post-installation setup
-================================
 
-Now, boot the VM from VirtualBox graphical manager. You should see another window opening and xTER loading in it. 
-After the xTER is fully loaded, you'll see a confirmation in this window.
+Boot and post-install
+=====================
+
+
+Now, boot the VM from the VirtualBox graphical manager. You should see another window open and xTER start in it. 
+After the xTER has booted, you'll see a confirmation in this window.
 
 == OR =================
-If there is no graphical manager, like when you've done this setup on a remote host, continue to use command line.
+If there is no graphical manager, e.g. when you set up on a remote host, use the command line.
 
-Start the xTER boot from it with the command:
+Start the xTER VM with the command:
+
+
 10. VBoxHeadless --startvm xTER
+
 
 Warning: You will NOT see any output from the loading xTER in this case. 
 
 Just wait a few minutes and check if you can open the admin web interface (see below).
 --------------------------------------------------------------------------------------
 
-See if you can open the admin web interface (WI) in your browser at https://localhost:8843
+See if you can open the admin's web interface (WI) in your browser at https://localhost:8843
 
 [ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
 
 If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's correct. 
 
-We will allow your computer be accessed on the right URL later, and this certificate will then be good for your new Room-House node.
+We will allow access on the right URL later, and this certificate will then be good for your new Room-House node.
 
-Use the default login/password, if it is the first time you log in the web interface.
+Use the default login/password, if it is the first time you log in the WI.
 
-Don't forget to change the default admin password and "Save" it. See the Help file on the link given above about how you can do this in details. 
+Don't forget to change the default admin password and "Save" it. See the Help file on the link above about the details. 
 
 
 Check your Room-House node is usable
 ====================================
 
-Before anything, you must do port forwarding on the Internet router to your host.
 
-1. First, forward our standard external port for Room-House which is 443. 
+Before anything, do port forwarding on the Internet router to your host machine.
+
+1. First, forward the port 443 for the Room-House traffic. 
+
 You have to forward this port 443 on the router to port 8443 on your host machine. 
-[ Which has an IP like 192.168.0.11 - or whatever, you know better. ]
+[ Which has an IP like 192.168.0.11 - or whatever, you know better.]
 
-2. Second, forward the port 8443 on your router to port 8843 on your host.
-But make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
+2. Second, forward the WI port 8443 on your router to port 8843 on your host.
 
-Now, it's time to check in the admin web interface (WI).
+NB: Make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
 
-First, open the WI menu "Info" page, search for Disk Use and Memory Use columns. 
+Now, it's time to check the things in the WI.
+
+Open the WI menu "Info" page, search for Disk Use and Memory Use columns. 
 
 If you've setup this VM with a minimal amount of RAM available to it, then you'd be now with ~195K of free disk space and 5,060M of total memory. 
 
@@ -188,26 +201,26 @@ Now, look at the bottom of the same container, there must be a very-very VERY lo
 
 If it's there, congratulations, your node is running. 
 
-If it's not there, maybe the node has not started automatically.
+If it's not there, maybe it has not started automatically.
 
 This is known to happen if your VM's CPU power is low.
  
-In this case, hit "Restart KMS" button in the left column. 
+In this case, just hit the "Restart KMS" button in the left column. 
 
 Wait a few seconds, then you'll see your node is running.
 
-If your RH node is NOT running, whatever, and an alert keeps telling you that there has been "a problem with your static IP", 
-- maybe your external IP is dynamic, or maybe it's static but not visible from outside of your local net. 
+If your RH node is NOT running, whatever you try, and an alert keeps telling you that there has been "a problem with your static IP", 
+- then your external IP is dynamic, or maybe it's static but is not visible from outside. 
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
-Check your router again to be sure the port forwarding is there and it's correct.
+Check this on your router again to be sure the port forwarding is there and it's correct.
 
-Also make sure that your external IP is static and not dynamic - contact your Internet provider and request for a static IP.
+Also make sure that your external IP is static and not dynamic - or contact your Internet provider and request for a static IP.
 
-It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the admin web interface.
+It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the WI!
 
-Your RH node will also temporarily stop running when your external static IP becomes invisible from the outside. When this problem disappears,
+Note that the RH node will also temporarily stop running when your external IP is invisible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
 
 Now that your RH node is up and running, proceed to going public.
