@@ -8,16 +8,16 @@ Setting up you own Room-House
 Prerequisites
 =============
 
-1. A 64-bit CPU (x86-64, Intel or AMD); if other variants of 64-bit CPU are possible, see support on VirtualBox site.
-2. 5G or more of free unused RAM (normally it means 8G or more of total RAM).
+1. A 64-bit CPU (x86-64, Intel or AMD); if other CPUs are possible, see support on VirtualBox site.
+2. 5G or more of unused RAM (normally it means 6G or more of total RAM).
 3. Static IP4 on your Internet router.
 
 
 Pre-installation
 ================
 
-1. Check that Virtualization support is enabled in your BIOS.
-2. Check that Hyper-V native Windows virtualization is NOT running. Stop it and maybe remove it.
+1. Check that Virtualization is enabled in your BIOS.
+2. Check that Hyper-V (Windows only) is NOT running.
 
 
 Installation
@@ -25,9 +25,13 @@ Installation
 
 1. Download the latest VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
 
-2. Run the installation binary and install VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
+2. Run the installation of VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
 
-In case you're on a different OS like Linux, the rest is true for you, too. Here is a shortcut of all the commands in one awesome script for you:
+
+In case you're on a different OS like Linux, the rest of this is true, too. 
+
+A shortcut of all the commands in one awesome script for you:
+
 
 https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
 
@@ -35,67 +39,91 @@ https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
 Setup xTER VM
 =============
 
-Open command line terminal - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
+Open the command line (terminal) - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
-Type or copy/paste this command to set a correct PATH to the VirtualBox binary files:
+Set a correct PATH to the VirtualBox binary files:
+
 
 set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
 
+
 Now, check that Windows understands the "VBoxManage" command - type "VBoxManage" in the terminal and see the output.
 
-If Windows doesn't understand this command, for example this link shows why:
+If Windows doesn't understand this command, this link explains why not:
+
 
 https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
 
-If you have installed VirtualBox to a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
 
-If Windows understands the "VBoxManage" command, and there is some old VM named "xTER", now you may want to delete it:
+If you have installed VirtualBox in a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
+
+If Windows understands the "VBoxManage" command, and there is some old VM named "xTER", you may want to delete it:
+
 
 VBoxManage unregistervm xTER --delete
 
-If there is no folder "C:\Users\Bob\VMs", now you should make one:
+
+If there is no folder "C:\Users\Bob\VMs", now make one:
+
 
 mkdir "C:\Users\Bob\VMs"
 
+
 Create a new VM named "xTER" of type "Linux Red Hat 64-bit":
+
 
 1. VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 
-Now there must have appeared a new folder - "C:\Users\Bob\VMs\xTER".
+
+There must have appeared a new folder - "C:\Users\Bob\VMs\xTER".
 
 Change to this new directory:
 
+
 cd "C:\Users\Bob\VMs\xTER"
+
 
 Provide your new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external request IPs.
 If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
+
 2. VBoxManage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 
+
 Setup internal host-to-guest port forwarding for the Room-House chat and to the HTTPS admin web interface:
+
 
 3. VBoxManage modifyvm xTER --natpf1 "chat,tcp,,8443,,443" 
 4. VBoxManage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
 
+
 Create a 2Gb disk for Room-House database, logs, etc:
+
 
 5. VBoxManage createmedium --filename 2G.vdi --size 2000
 
+
 Create a virtual SATA controller:
+
 
 6. VBoxManage storagectl xTER --name SATA --add sata
 
-Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop.vdi" and put it to "C:\Users\Bob\VMs\xTER"
 
+Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop.vdi" and put it to "C:\Users\Bob\VMs\xTER"
 Attach this file to the VM as Disk 0:
+
 
 7. VBoxManage storageattach xTER --storagectl SATA --medium loop.vdi --port 0 --type hdd
 
+
 Attach the 2Gb file as Disk 1:
+
 
 8. VBoxManage storageattach xTER --storagectl SATA --medium 2G.vdi --port 1 --type hdd
 
+
 Add this directive to boot from Disk 0:
+
 
 9. VBoxManage modifyvm xTER --boot1 disk --boot2 none --boot3 none --boot4 none
 
