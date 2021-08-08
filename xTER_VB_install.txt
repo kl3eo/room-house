@@ -5,7 +5,6 @@ Setting up you own Room-House
 =============================
 
 
-
 Prerequisites
 =============
 
@@ -150,16 +149,16 @@ Start the xTER VM with the command:
 10. VBoxHeadless --startvm xTER
 
 
-Warning: You will NOT see any output from the loading xTER in this case. 
+Warning: You will NOT see any output from the loading xTER in this case - just wait a few minutes.
 
-Just wait a few minutes and check if you can open the admin web interface (see below).
---------------------------------------------------------------------------------------
 
-See if you can open the admin's web interface (WI) in your browser at https://localhost:8843
+----------------------------------------------------------------------------
+Use the admin's web interface (WI) in your browser at https://localhost:8843
+----------------------------------------------------------------------------
 
 [ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
 
-If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's correct. 
+If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's OK. 
 
 We will allow access on the right URL later, and this certificate will then be good for your new Room-House node.
 
@@ -168,20 +167,24 @@ Use the default login/password, if it is the first time you log in the WI.
 Don't forget to change the default admin password and "Save" it. See the Help file on the link above about the details. 
 
 
+
 Check your Room-House node is usable
 ====================================
 
 
-Before anything, do port forwarding on the Internet router to your host machine.
+Before anything, do port forwarding to your host machine on your Internet router:
+
 
 1. First, forward the port 443 for the Room-House traffic. 
 
 You have to forward this port 443 on the router to port 8443 on your host machine. 
 [ Which has an IP like 192.168.0.11 - or whatever, you know better.]
 
+
 2. Second, forward the WI port 8443 on your router to port 8843 on your host.
 
-NB: Make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
+Warning: Make sure that you've changed the default admin password as we hope you already did! Only you must know it by now.
+
 
 Now, it's time to check the things in the WI.
 
@@ -226,8 +229,8 @@ so does the problem with the RH node - it's up and running again, automatically.
 Now that your RH node is up and running, proceed to going public.
 
 
-Going public
-============
+Go public
+=========
 
 It's time we make your node visible to the world and after that you begin to earn coins for the Room-House traffic.
 
