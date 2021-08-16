@@ -1,0 +1,194 @@
+=============================
+=============================
+Set up you own Validator node
+=============================
+=============================
+
+
+Prerequisites
+=============
+
+
+1. A 64-bit CPU (x86-64, Intel or AMD); if other CPUs are possible, see support on VirtualBox site.
+2. 2G or more of unused RAM.
+3. Static IP4 on your Internet router.
+
+
+Pre-install
+===========
+
+
+1. Check that Virtualization is enabled in your BIOS.
+2. Check that Hyper-V (Windows only) is NOT running.
+
+
+Installation
+============
+
+
+1. Download the latest VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
+
+2. Run the installation of VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
+
+
+In case you're on a different OS like Linux, the rest of this is true, too. 
+
+A shortcut of all the commands in one awesome script for you:
+
+============================================================= start script
+#!/bin/bash
+mkdir -p ~/VB && cd ~/VB
+
+if [ -f /opt/loop_polka.vdi ]; then
+        cp -a /opt/loop_polka.vdi ./
+else
+        echo File /opt/loop_polka.vdi not found. Exiting
+        exit
+fi
+
+vboxmanage createvm --name xTER_polka --ostype RedHat_64 --register --basefolder `pwd`
+mv loop_polka.vdi xTER_polka/ && cd xTER_polka
+vboxmanage modifyvm xTER_polka --memory 2048 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+vboxmanage modifyvm xTER_polka --natpf1 "admin,tcp,,8453,,443"
+vboxmanage createmedium --filename 10G.vdi --size 10000
+vboxmanage storagectl xTER_polka --name SATA --add sata
+vboxmanage storageattach xTER_polka --storagectl SATA --medium loop_polka.vdi --port 0 --type hdd
+vboxmanage storageattach xTER_polka --storagectl SATA --medium 10G.vdi --port 1 --type hdd
+vboxmanage modifyvm xTER_polka --boot1 disk --boot2 none --boot3 none --boot4 none
+
+============================================================= end script
+
+
+Setup xTER VM
+=============
+
+
+Open the command line (terminal) - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
+
+Set a correct PATH to the VirtualBox binary files:
+
+
+set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
+
+
+Now, check that Windows understands the "VBoxManage" command - type "VBoxManage" in the terminal and see the output.
+
+If Windows doesn't understand this command, this link explains why not:
+
+
+https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
+
+
+If you have installed VirtualBox in a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
+
+If Windows understands the "VBoxManage" command, and there is some old VM named "xTER_polka", you may want to delete it:
+
+
+VBoxManage unregistervm xTER_polka --delete
+
+
+If there is no folder "C:\Users\Bob\VMs", now make one:
+
+
+mkdir "C:\Users\Bob\VMs"
+
+
+Create a new VM named "xTER_polka" of type "Linux Red Hat 64-bit":
+
+
+1. VBoxManage createvm --name xTER_polka --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
+
+
+There must have appeared a new folder - "C:\Users\Bob\VMs\xTER_polka".
+
+Change to this new directory:
+
+
+cd "C:\Users\Bob\VMs\xTER_polka"
+
+
+Provide your new VM with minimum 2.048M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging exTER_polkanal request IPs.
+If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
+
+
+2. VBoxManage modifyvm xTER_polka --memory 2048 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+
+
+Setup internal host-to-guest port forwarding to the HTTPS admin web interface:
+
+
+3. VBoxManage modifyvm xTER_polka --natpf1 "chat,tcp,,8453,,443" 
+
+
+Create at least a 10Gb disk for block chain database, logs, etc - or more, if you can. 
+The block chain grows about 4G every month, so take care and don't give it too little space now.
+
+
+4. VBoxManage createmedium --filename 10G.vdi --size 10000
+
+
+Create a virtual SATA controller:
+
+
+5. VBoxManage storagectl xTER_polka --name SATA --add sata
+
+
+Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop_polka.vdi" and put it to "C:\Users\Bob\VMs\xTER_polka"
+Attach this file to the VM as Disk 0:
+
+
+6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop.vdi --port 0 --type hdd
+
+
+Attach the 10Gb file as Disk 1:
+
+
+7. VBoxManage storageattach xTER_polka --storagectl SATA --medium 10G.vdi --port 1 --type hdd
+
+
+Add this directive to boot from Disk 0:
+
+
+8. VBoxManage modifyvm xTER_polka --boot1 disk --boot2 none --boot3 none --boot4 none
+
+
+
+Boot and post-install
+=====================
+
+
+Now, boot the VM from the VirtualBox graphical manager. You should see another window open and xTER start in it. 
+After the xTER has booted, you'll see a confirmation in this window.
+
+== OR =================
+If there is no graphical manager, e.g. when you set up on a remote host, use the command line.
+
+Start the xTER VM with the command:
+
+
+9. VBoxHeadless --startvm xTER_polka
+
+
+Warning: You will NOT see any output from the loading xTER in this case - just wait a few minutes.
+
+
+----------------------------------------------------------------------------
+Use the admin's web interface (WI) in your browser at https://localhost:8453
+----------------------------------------------------------------------------
+
+[ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
+
+If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's OK. 
+
+Use the default login/password, if it is the first time you log in the WI.
+
+Don't forget to change the default admin password and "Save" it. See the Help file on the link above about the details. 
+
+
+==========
+==========
+
+Good luck!
+
+==========
+==========
