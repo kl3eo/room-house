@@ -107,7 +107,7 @@ Change to this new directory:
 cd "C:\Users\Bob\VMs\xTER_polka"
 
 
-Provide your new VM with minimum 2.048M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging exTER_polkanal request IPs.
+Provide your new VM with minimum 2,048M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging exTER_polkanal request IPs.
 If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
 
@@ -137,7 +137,7 @@ Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop
 Attach this file to the VM as Disk 0:
 
 
-6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop.vdi --port 0 --type hdd
+6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop_vdi.vdi --port 0 --type hdd
 
 
 Attach the 10Gb file as Disk 1:
