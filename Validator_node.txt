@@ -107,7 +107,7 @@ Change to this new directory:
 cd "C:\Users\Bob\VMs\xTER_polka"
 
 
-Provide your new VM with minimum 2,048M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging exTER_polkanal request IPs.
+Provide your new VM with minimum 2,048M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external IPs.
 If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
 
