@@ -117,7 +117,7 @@ If you can, increase the RAM size and # of CPU cores according to what is actual
 Setup internal host-to-guest port forwarding to the HTTPS admin web interface:
 
 
-3. VBoxManage modifyvm xTER_polka --natpf1 "chat,tcp,,8453,,443" 
+3. VBoxManage modifyvm xTER_polka --natpf1 "admin,tcp,,8453,,443" 
 
 
 Create at least a 10Gb disk for block chain database, logs, etc - or more, if you can. 
