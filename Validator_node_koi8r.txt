@@ -104,7 +104,7 @@ mkdir "C:\Users\Bob\VMs"
 cd "C:\Users\Bob\VMs\xTER_polka"
 
 
-Сейчас укажем, что для новой VM должны быть как минимум 2048 магабайт оперативки (2 гиг), 1 или 2 CPU, без audio, с загрузкой EFI, port forwarding и logging external IPs.
+Сейчас укажем, что для новой VM должны быть как минимум 2048 мегабайт оперативки (2 гиг), 1 или 2 CPU, без audio, с загрузкой EFI, port forwarding и logging external IPs.
 Если можете, увеличьте RAM и количество ядер CPU у виртуалки согласно тому, что на самом деле есть у вашего компа:
 
 
