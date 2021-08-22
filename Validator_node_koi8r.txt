@@ -145,7 +145,7 @@ cd "C:\Users\Bob\VMs\xTER_polka"
 Передаём его виртуальной машине как Disk 0:
 
 
-6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop_vdi.vdi --port 0 --type hdd
+6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop_polka.vdi --port 0 --type hdd
 
 
 Присоединяем ранее созданный 10Гб (или 30Гб, 60Гб, ..) файл как Disk 1:

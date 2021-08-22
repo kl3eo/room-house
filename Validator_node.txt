@@ -137,7 +137,7 @@ Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop
 Attach this file to the VM as Disk 0:
 
 
-6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop_vdi.vdi --port 0 --type hdd
+6. VBoxManage storageattach xTER_polka --storagectl SATA --medium loop_polka.vdi --port 0 --type hdd
 
 
 Attach the 10Gb file as Disk 1:
