@@ -87,11 +87,11 @@ Change to it:
 	cd "C:\Users\Bob\VMs\xTER"
 
 
-Set up your new VM with minimum 5,120M of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external request IPs.
+Set up your new VM with minimum 4GB of RAM, 1 or 2 CPU cores, no audio, with EFI, port forwarding and logging external request IPs.
 If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
 
-	VBoxManage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+	VBoxManage modifyvm xTER --memory 4096 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 
 
 Set up internal host-to-guest port forwarding for the Room-House audio chat and to the HTTPS admin web interface:
@@ -114,6 +114,9 @@ Create a virtual SATA controller:
 
 
 Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop.vdi" and put it to "C:\Users\Bob\VMs\xTER"
+
+NB: for Validate.Guru install, download and use "loop_vg.vdi" instead of "loop.vdi".
+
 Attach this file to the VM as Disk 0:
 
 
@@ -158,7 +161,7 @@ Use the admin's web admin interface (WA) in your browser at https://localhost:88
 
 [ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
 
-If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's OK. 
+If your browser complains that this site's certificate is "*.room-house.com" (or "*.validate.guru"), while you're trying to access it locally - that's OK. 
 
 We will allow access on the right URL later, and this certificate will then be good for your new Room-House node.
 
