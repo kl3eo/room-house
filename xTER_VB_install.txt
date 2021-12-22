@@ -176,7 +176,9 @@ If your browser complains that this site's certificate is "*.room-house.com" (or
 
 We will allow access on the right URL later, and this certificate will then be good for your new Room-House/Validate.Guru node.
 
-Use the default login/password, if it is the first time you log in the WA.
+Use the default login/password, if it is the first time you log in the Manager. 
+
+The defaults are printed on the xTER boot "black" window next to the xTER greeting, as you may also find them in one of the pictures in the Help HTML file on the link given above.
 
 Don't forget to change the default admin password and "Save" it. See the Help file on the link above about the details. 
 
