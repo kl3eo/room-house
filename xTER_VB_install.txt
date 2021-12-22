@@ -187,7 +187,7 @@ You have to forward this port 443 from the router to the port 8443 on your host 
 
 2. Second, forward the Manager program port 8443 from your router to the port 8843 on your host,  R-8443=>H-8843
 
-Warning: Make sure that you've changed the default admin password as we hope you already did!!! Only you must know this password now.
+Warning: Make sure that you've changed the default admin password in "Settings" menu of the Manager - as we hope you already did!!! Only you must know this password now.
 
 
 Now, it's time to check the things in the Manager.
