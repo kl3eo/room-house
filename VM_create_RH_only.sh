@@ -11,7 +11,7 @@ fi
 
 vboxmanage createvm --name xTER --ostype RedHat_64 --register --basefolder `pwd`
 mv loop.vdi xTER/ && cd xTER
-vboxmanage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+vboxmanage modifyvm xTER --memory 4096 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 vboxmanage modifyvm xTER --natpf1 "chat,tcp,,8443,,443"
 vboxmanage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
 vboxmanage createmedium --filename 2G.vdi --size 2000
