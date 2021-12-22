@@ -205,11 +205,11 @@ You have to forward this port 443 from the router to the port 8443 on your host 
 Warning: Make sure that you've changed the default admin password in "Settings" menu of the Manager - as we hope you already did!!! Only you must know this password now.
 
 
-Now, it's time to check the things in the Manager.
+Now, it's time to check things in the Manager.
 
 Open the Manager menu "Info" page, search for Disk Use and Memory Use columns. 
 
-If you've setup this VM with a minimal amount of RAM available to it, then you'd be now with ~1.4G of free disk space. 
+If you setup this VM with a recommended minimal amount of RAM (i.e. 4096M), then you're now with ~860M of free disk space and ~160M of free RAM. 
 
 Check that this is indeed the case. 
 
