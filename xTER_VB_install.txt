@@ -141,6 +141,17 @@ Boot and post-install
 
 
 Now, boot the VM from the VirtualBox graphical manager. You should see another window open and xTER start in it. 
+
+If instead of seeing the bootloader's greeting you're in the command prompt, that means the VB can't find your bootloader. 
+
+It happened more than once, so there is a way to go on - just start the bootloader manually!
+
+Type the following three commands, one by one (in command one, "FS0:" is FS+"zero"+"column").
+
+FS0:
+cd efi\boot
+bootx64.efi
+
 After the xTER has booted, you'll see a confirmation in this window.
 
 == OR ==
