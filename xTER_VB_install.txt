@@ -10,7 +10,7 @@ Prerequisites
 
 
 1. A 64-bit CPU (x86-64, Intel or AMD); for other CPUs, see support on VirtualBox site.
-2. 5G or more of unused RAM (~6G or more of total RAM).
+2. ~4G or more of unused RAM (~6G+ of total RAM).
 3. Static IP4 on your Internet router.
 
 
@@ -19,7 +19,7 @@ Pre-install
 
 
 1. Check that Virtualization is ENABLED in your BIOS.
-2. Check that Hyper-V (Windows only) is NOT running.
+2. Check that Hyper-V (on Windows only) is NOT running.
 
 
 Installation
@@ -45,7 +45,7 @@ Setup xTER VM
 
 Open the command line (terminal) - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
-Set a correct PATH to the VirtualBox binary files:
+Set a correct PATH to find the VirtualBox binary files:
 
 
 	set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
@@ -61,7 +61,7 @@ https://www.roelpeters.be/vboxmanage-is-not-recognized-and-how-to-solve-it/
 
 If you have installed VirtualBox in a different folder, don't forget to set a correct PATH in the terminal before running the rest of this setup.
 
-If Windows understands the "VBoxManage" command, and there is some old VM named "xTER", you may want to delete it:
+If Windows understands the "VBoxManage" command, and there is some old VM named "xTER", now you may want to delete it:
 
 
 	VBoxManage unregistervm xTER --delete
@@ -79,7 +79,7 @@ Create a new VM named "xTER" of type "Linux Red Hat 64-bit":
 	VBoxManage createvm --name xTER --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 
 
-Here appears a new folder - "C:\Users\Bob\VMs\xTER".
+Here is a new folder created - "C:\Users\Bob\VMs\xTER".
 
 Change to it:
 
@@ -94,10 +94,10 @@ If you can, increase the RAM size and # of CPU cores according to what is actual
 	VBoxManage modifyvm xTER --memory 4096 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 
 
-Set up internal host-to-guest port forwarding for the Room-House audio chat and to the HTTPS admin web interface:
+Set up internal host-to-guest port forwarding for the Room-House audio/video chat and to the HTTPS admin web interface:
 
 
-	VBoxManage modifyvm xTER --natpf1 "audiochat,tcp,,8443,,443" 
+	VBoxManage modifyvm xTER --natpf1 "chat,tcp,,8443,,443" 
 	VBoxManage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
 
 
@@ -144,9 +144,9 @@ Now, boot the VM from the VirtualBox graphical manager. You should see another w
 After the xTER has booted, you'll see a confirmation in this window.
 
 == OR ==
-If there is no graphical manager, e.g. when you set up on a remote host, use the command line.
+If there is no graphical manager, e.g. when you set up on a remote "headless" host, use the command line.
 
-Start the xTER VM with the command:
+Start the "headless" xTER VM with the command:
 
 
 	VBoxHeadless --startvm xTER
@@ -156,14 +156,14 @@ Warning: You will NOT see any output from the loading xTER in this case - just w
 
 
 ----------------------------------------------------------------------------------
-Use the admin's web admin interface (WA) in your browser at https://localhost:8843
+Use the admin's web admin interface ("Manager" program) in your browser at https://localhost:8843
 ----------------------------------------------------------------------------------
 
 [ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
 
 If your browser complains that this site's certificate is "*.room-house.com" (or "*.validate.guru"), while you're trying to access it locally - that's OK. 
 
-We will allow access on the right URL later, and this certificate will then be good for your new Room-House node.
+We will allow access on the right URL later, and this certificate will then be good for your new Room-House/Validate.Guru node.
 
 Use the default login/password, if it is the first time you log in the WA.
 
@@ -178,23 +178,23 @@ Check your Room-House node is usable
 Before anything, do port forwarding to your host machine on your Internet router:
 
 
-1. First, forward the port 443. It's the workhorse port of the Room-House audio chat.
+1. First, forward the port 443. It's the workhorse port of the Room-House chat.
 
 You have to forward this port 443 from the router to the port 8443 on your host machine, R-443=>H-8443
 
-[ Which we assume has an IP like 192.168.0.11 - or whatever, you know better.]
+[ Which we assume has an IP like 192.168.0.11 - or whatever, you know it better.]
 
 
-2. Second, forward the WA port 8443 from your router to the port 8843 on your host,  R-8443=>H-8843
+2. Second, forward the Manager program port 8443 from your router to the port 8843 on your host,  R-8443=>H-8843
 
 Warning: Make sure that you've changed the default admin password as we hope you already did!!! Only you must know this password now.
 
 
-Now, it's time to check the things in the WA.
+Now, it's time to check the things in the Manager.
 
-Open the WA menu "Info" page, search for Disk Use and Memory Use columns. 
+Open the Manager menu "Info" page, search for Disk Use and Memory Use columns. 
 
-If you've setup this VM with a minimal amount of RAM available to it, then you'd be now with ~195K of free disk space and 5,060M of total memory. 
+If you've setup this VM with a minimal amount of RAM available to it, then you'd be now with ~1.4G of free disk space. 
 
 Check that this is indeed the case. 
 
@@ -210,22 +210,22 @@ If it's there, congratulations, your node is running.
 
 If it's not there, maybe it has not started automatically.
 
-This is known to happen if your VM's CPU power is low.
+This is known to happen if your VM's power is low.
  
 In this case, just hit the "Restart KMS" button in the left column. 
 
 Wait a few seconds, then you'll see your node is running.
 
-If your RH node is NOT running, whatever you try, and an alert keeps telling you that there has been "a problem with your static IP", 
+If your RH node is NOT running, whatever you did, and an alert keeps telling you that there has been "a problem with your static IP", 
 - then your external IP is dynamic, or maybe it's static but is not visible from outside. 
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
 Check this on your router again to be sure the port forwarding is there and it's correct.
 
-Also make sure that your external IP is static and not dynamic - or contact your Internet provider and request for a static IP.
+Also make sure that your external IP is static and not dynamic - or contact your Internet provider and request a static IP.
 
-It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the WA!
+It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the Manager!
 
 Note that the RH node will also temporarily stop running when your external IP becomes invisible from the outside. When this problem disappears,
 so does the problem with the RH node - it's up and running again, automatically.
@@ -240,7 +240,7 @@ It's time we make your node visible to the world and after that you begin to ear
 
 Use Twitter or Telegram and tell us what's your static IP.
 
-Example: IP 81.13.45.90 Your city: London
+Example: IP 81.13.44.89 Your city: London
 
 We will add your node to our proxy servers list and it becomes visible to the world as "london.room-house.com"
 
