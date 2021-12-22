@@ -221,17 +221,17 @@ There must be a line ending with "kurento-media-server". If it's there, it's the
 
 Now, look at the bottom of the same container, there must be a very-very VERY long line containing hundreds of words, like "java", "spring", "guava", etc.
 
-If it's there, congratulations, your node is running. 
+If it's there, congratulations, your R-H node is running. 
 
-If it's not there, maybe it has not started automatically.
+If it's not there, maybe the chat has not started automatically.
 
 This is known to happen if your VM's power is low.
  
 In this case, just hit the "Restart KMS" button in the left column. 
 
-Wait a few seconds, then you'll see your node is running.
+Wait a few seconds, then you'll see your R-H node is running.
 
-If your RH node is NOT running, whatever you did, and an alert keeps telling you that there has been "a problem with your static IP", 
+If your R-H node is NOT running, whatever you did, and an alert keeps telling you that there has been "a problem with your static IP", 
 - then your external IP is dynamic, or maybe it's static but is not visible from outside. 
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
@@ -240,12 +240,12 @@ Check this on your router again to be sure the port forwarding is there and it's
 
 Also make sure that your external IP is static and not dynamic - or contact your Internet provider and request a static IP.
 
-It is NOT possible to run an RH node on a dynamic IP, though it is ok to boot xTER and use the Manager!
+It is NOT possible to run an R-H node on a dynamic IP, though it is ok to boot xTER and use the Manager!
 
-Note that the RH node will also temporarily stop running when your external IP becomes invisible from the outside. When this problem disappears,
-so does the problem with the RH node - it's up and running again, automatically.
+Note that the R-H node will also temporarily stop running when your external IP becomes invisible from the outside. When this problem disappears,
+so does the problem with the R-H node - it's up and running again, automatically.
 
-Now that your RH node is up and running, proceed to go public.
+Now that your R-H node is up and running, proceed to go public.
 
 
 Go public
