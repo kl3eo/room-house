@@ -8,12 +8,12 @@ else
         exit
 fi
 
-vboxmanage createvm --name xTER_router --ostype RedHat_64 --register --basefolder `pwd`
-mv loop_router.vdi xTER_router/ && cd xTER_router
-vboxmanage modifyvm xTER_router --memory 2048 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
-vboxmanage modifyvm xTER_router --natpf1 "admin,tcp,,8843,,443"
+vboxmanage createvm --name xTER_router2 --ostype RedHat_64 --register --basefolder `pwd`
+mv loop_router.vdi xTER_router2/ && cd xTER_router2
+vboxmanage modifyvm xTER_router2 --memory 2048 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+vboxmanage modifyvm xTER_router2 --natpf1 "admin,tcp,,8843,,443"
 vboxmanage createmedium --filename 2G.vdi --size 2000
-vboxmanage storagectl xTER_router --name SATA --add sata
-vboxmanage storageattach xTER_router --storagectl SATA --medium loop_router.vdi --port 0 --type hdd
-vboxmanage storageattach xTER_router --storagectl SATA --medium 2G.vdi --port 1 --type hdd
-vboxmanage modifyvm xTER_router --boot1 disk --boot2 none --boot3 none --boot4 none
+vboxmanage storagectl xTER_router2 --name SATA --add sata
+vboxmanage storageattach xTER_router2 --storagectl SATA --medium loop_router.vdi --port 0 --type hdd
+vboxmanage storageattach xTER_router2 --storagectl SATA --medium 2G.vdi --port 1 --type hdd
+vboxmanage modifyvm xTER_router2 --boot1 disk --boot2 none --boot3 none --boot4 none
