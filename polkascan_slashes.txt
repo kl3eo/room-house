@@ -1,0 +1,120 @@
+SLASHES
+==========================
+==========================
+==========================
+==========================
+
+ERA 497: block 3369133, sum is 81591.764378776 PIRL
+
+select sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) from data_event where block_id=3369133 and event_id='Slash';
++----------------------------------------------------------------+
+| sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) |
++----------------------------------------------------------------+
+|                                                81591.764378776 |
++----------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 from data_event where block_id=3369133 and event_id='Slash';
+
+mysql> select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 from data_event where block_id=3369133 and event_id='Slash';
++-----------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 |
++-----------------------------------------------------------+
+|                                                  61.06023 |5CVY79wPGEpnerfUHXRkkyTbvYK4b6uE46BXYF4u1Uzwnb2e
+|                                         5662.962334366947 |5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku
+|                                           124.53935536354 |5EM76GfCst2SfkFfabU2mnLsovVY9DVFNneBa8Bi4mo235R1
+|                                          104.198359163222 |5H9MpiZEYQHwg3VYnDcscQH4X8a796ruD1BpME66u2Hnxd3D
+|                                          209.527183274288 |5Dq2jsKyZ9n27NMvpnyDJ1QjgwoRuuHyPKpdLJjEj39NbzRs
+|                                         1697.173509679182 |5HjgAXNTcCr6bwZ3z7ru4VzBm7YWYPHycKgEKFEup5qzSuhF
+|                                         1256.895588961066 |5EnV2rATiceqa6zpFzfhhwnVJdzddAzvrt5bdqJm2jxyzTSK
+|                                          176.255136699517 |5EsiY5GBKodew4tkxagsZyLLFVXAfNN9jre15DT4MH1UcsiG
+|                                         36677.17111974412 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                           73.114949459028 |5HdVK4twx9SoD6mJSiPCNMneo8Y5xkWK3UJub5Qekr5wL281
+|                                         7270.139104960773 |5HQEyRf2sUG96xVRwZ7LTHhUHaR7sBfhDfWregc3ameMM2yc
+|                                          814.705192830576 |5FUZx2HuAQAckiDJa6L5npEhdF8kMhf9W3fgNgMwZ3XBDqBC
+|                                         7104.453219866002 |5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP
+|                                          147.972419551304 |5HdqKabUed7zQLXpFhLThKUc4JyqhkBRw8X45AxWxVZcmNkf
+|                                         5296.881607784115 |5GsQxJr6Nsuuy1t4SuZFYyH8yfayeS7gxmHy8qNLapos87KE
+|                                                    62.874 |5EHgdxZC3BhoYANeHhAVZWKrxfF23pcZrDfBwpDVTuLrCHB4
+|                                         6870.465948833107 |5HKWKEXRPuUzyfTmfzboBCEGokpRYnjFbn3xS6Y8AQMhExFY
+|                                          165.423149442613 |5CajHU7obxxhCy8SRPkg6krKh94pyijBLcqmFnJ7tzYpf5Ri
+|                                         4006.670259566985 |5DSDEFG6yLJvNU53Dntp3EHRAQRUYpF467ZHWV2Kq9cvDetG
+|                                           67.718597387932 |5E53NmqDGpQEHgTiPtjkoz8FMBBhidi7W2C5zz2eSpGSHckJ
+|                                         3606.567757251074 |5CP538H1c5yj5E63S2Jnckkwt4udy1XDqgDWsGXskCRcrMsf
+|                                           75.166120381222 |5Cm3EuM92eDJ76vaTfsFHsu59rR7DkUHLNPrkJQBE5JP6C6J
+|                                           59.829234209402 |5HTsyLYrhFCeJucLBMbQ4NhJ8usp1JZbPKJzYZUqrQwDZfQe
++-----------------------------------------------------------+
+23 rows in set (0.00 sec)
+
+
+
+select JSON_EXTRACT(attributes[1], "$.value") from data_event  where block_id=3369133 and event_id='Slash';
+
+mysql> select sum(JSON_EXTRACT(attributes->"$[1]", "$.value")) from data_event where block_id=3369133 and event_id='Slash';
++--------------------------------------------------+
+| sum(JSON_EXTRACT(attributes->"$[1]", "$.value")) |
++--------------------------------------------------+
+|                             8.159176437877602e16 |
++--------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+==========================
+==========================
+==========================
+==========================
+
+ERA 481: block 3150115, sum is 115916.81719132126 PIRL
+
+select sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) from data_event where block_id=3150115 and event_id='Slash';
++----------------------------------------------------------------+
+| sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) |
++----------------------------------------------------------------+
+|                                             115916.81719132126 |
++----------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 from data_event where block_id=3150115 and event_id='Slash';
+
++-----------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 |
++-----------------------------------------------------------+
+|                                           75.242885986591 |5E53NmqDGpQEHgTiPtjkoz8FMBBhidi7W2C5zz2eSpGSHckJ
+|                                        14720.717995320916 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                                   30.2715 |5H9RHwUCvH73Lrq46Py1Y1SGpNTsn8gw4gpzcJ811kcGT6Av
+|                                         6915.882608960393 |5Dci6k2XGMPi7ZacfifZ1JM2DfLQiTAdkXeBnPex8C98Ah1j
+|                                          216.766080866191 |5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE
+|                                          461.330347785627 |5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP
+|                                          183.803499380681 |5CajHU7obxxhCy8SRPkg6krKh94pyijBLcqmFnJ7tzYpf5Ri
+|                                         1376.456498198839 |5EnV2rATiceqa6zpFzfhhwnVJdzddAzvrt5bdqJm2jxyzTSK
+|                                          193.021928753968 |5EsiY5GBKodew4tkxagsZyLLFVXAfNN9jre15DT4MH1UcsiG
+|                                        13042.394377722516 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                                58.8097125 |5Gv9qJWEQzevDQKeTG6ramLNUQ3PjHr7A8qvLJhbG4qRxzZp
+|                                         3784.773737451184 |5Hg6qW3DXZJhNvsz6bmaz37XeAa8fnHy8fx86iYx2GyYhxt2
+|                                         3042.012010895256 |5GYi7rtH52oPbZmNYBVVeVAp7yEpcbyyAWVfB5F16RtVXV5V
+|                                         2338.474499006673 |5D8DUfzkB3U7ovs2iMGu76bGwuULPH8Dby81AyCbQ6Tvkyzq
+|                                            58.88135952284 |5DcZiwYyXdXRZ5YBH9KEegqnNHa98ySfwdaVgw3TLkXsKw13
+|                                        12767.284070452093 |5ChXpfYx17dtsgKtKXrFeqroSNHkiAYercYJZGN87CJ4QwSf
+|                                            4.753440686887 |5Hp1j9eAs9612nWMsQ7ZsDaPpRTHWNSUSSRicBwJvoR4qPwq
+|                                         4560.948107590336 |5DSDEFG6yLJvNU53Dntp3EHRAQRUYpF467ZHWV2Kq9cvDetG
+|                                         6858.032000706027 |5GEZCgmTQMn32Y8dbz93BBrm6zDwnv8H6HXZnJpvqZuYAsF5
+|                                                 60.421914 |5Et1em2DPr8cNQKMMkAryByEzUjGNtS9jkxopgCZkLffCjgZ
+|                                         6765.785345719172 |5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku
+|                                          797.407680301753 |5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP
+|                                                    60.543 |5HDpKEgBWNnHsujXoAbmGkXf8NY8scDwGFttRG6VgTKtNgQS
+|                                          1960.19811495967 |5HQEyRf2sUG96xVRwZ7LTHhUHaR7sBfhDfWregc3ameMM2yc
+|                                         4315.471633096764 |5ELQeZzkxKhY82ZcopLTUVKhoXH1XrWDLh5tJYd8PaRgG7Uy
+|                                           51.566143984853 |5FRhPCfXkUyZ93D2YRj4WHziUkWgEevFz2ds1vHAztt3tLwi
+|                                          8505.85550407442 |5DQ3VCa4uGHLqnjaqvN3BeicmwLzQX3c4uWZ6qesY7c8iS1R
+|                                                    60.543 |5HR4xLmgmhX5Q2uJWcUCYqSNNM8wmX7gNBwamqEjF3JtiyeR
+|                                         1543.593697719179 |5DRnQzfeSVnVP9Rm1PtkrDLXtUPvu3VHwKscL2m17izXf654
+|                                         3188.434346752174 |5HKWKEXRPuUzyfTmfzboBCEGokpRYnjFbn3xS6Y8AQMhExFY
+|                                           83.517911534691 |5Cm3EuM92eDJ76vaTfsFHsu59rR7DkUHLNPrkJQBE5JP6C6J
+|                                         1542.883653105051 |5GKs8j7UhiAJ2TFxcMqbxXe5G39sdybSPqQj82KXxGgf3iQz
+|                                         4709.176828036571 |5ELQeZzkxKhY82ZcopLTUVKhoXH1XrWDLh5tJYd8PaRgG7Uy
+|                                          164.413799501448 |5HdqKabUed7zQLXpFhLThKUc4JyqhkBRw8X45AxWxVZcmNkf
+|                                         7470.336251149964 |5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE
+|                                            59.34523324212 |5HanHWVw1By1Gkj6DfSK53uCGk5rc3FtknQ8UA3cHCZAEtLg
+|                                         3887.466472356426 |5DV4i2V7gx3HRGrNjbz9LmUdDjwG7MqFiVrsUZVVqrZHdFf7
++-----------------------------------------------------------+
