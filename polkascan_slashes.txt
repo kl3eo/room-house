@@ -113,7 +113,7 @@ select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 from data_event
 ==========================
 ==========================
 
-HASHES of TX (refund 60 slashes of eras 497 and 481 on 12.04.2022)
+HASHES of TX (refund 60 slashes of eras 497 and 481 on 12/04/2022)
 
 people=# select sum, blockhash, address, id from unslash where status is not null order by id;
         sum         |                             blockhash                              |                     address                      | id 
@@ -178,4 +178,204 @@ people=# select sum, blockhash, address, id from unslash where status is not nul
   7470.336251149964 | 0x5df88640a1d0f8bae7d6bb61332490fe61b4ec26f5c4ddbc75df6000f72ffb26 | 5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE | 58
      59.34523324212 | 0x69d193a60629a21ce64a410449e7c0f466a0b66f9ce6b12ca37de9192be43f74 | 5HanHWVw1By1Gkj6DfSK53uCGk5rc3FtknQ8UA3cHCZAEtLg | 59
   3887.466472356426 | 0xc9f6f3045384ffba276d487042e6dfc56d9878266e090c930ad6531c8fb8dfbf | 5DV4i2V7gx3HRGrNjbz9LmUdDjwG7MqFiVrsUZVVqrZHdFf7 | 60
+(60 rows)
+
+
+==========================
+==========================
+==========================
+==========================
+
+ERA 458: block 2846015, sum is 71679.93450348124 PIRL
+
+mysql> select sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) from data_event where block_id=2846015 and event_id='Slash';
++----------------------------------------------------------------+
+| sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) |
++----------------------------------------------------------------+
+|                                              71679.93450348124 |
++----------------------------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 from data_event where block_id=2846015 and event_id='Slash';
++-----------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 |
++-----------------------------------------------------------+
+|                                                58.8097125 |5Gv9qJWEQzevDQKeTG6ramLNUQ3PjHr7A8qvLJhbG4qRxzZp
+|                                         6618.708265774086 |5Dci6k2XGMPi7ZacfifZ1JM2DfLQiTAdkXeBnPex8C98Ah1j
+|                                          838.234858081179 |5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP
+|                                            4.753440686887 |5Hp1j9eAs9612nWMsQ7ZsDaPpRTHWNSUSSRicBwJvoR4qPwq
+|                                         12470.13727265606 |5ChXpfYx17dtsgKtKXrFeqroSNHkiAYercYJZGN87CJ4QwSf
+|                                           51.566143984853 |5FRhPCfXkUyZ93D2YRj4WHziUkWgEevFz2ds1vHAztt3tLwi
+|                                         4408.808881236452 |5DSDEFG6yLJvNU53Dntp3EHRAQRUYpF467ZHWV2Kq9cvDetG
+|                                                   30.2715 |5H9RHwUCvH73Lrq46Py1Y1SGpNTsn8gw4gpzcJ811kcGT6Av
+|                                          8221.93654309547 |5DQ3VCa4uGHLqnjaqvN3BeicmwLzQX3c4uWZ6qesY7c8iS1R
+|                                          392.708283382315 |5CkiRkK9EwZ27yNG88yoo4yT1AhbwKmRotXiedFmCusysmza
+|                                         6765.785345719172 |5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku
+|                                           61.053194832806 |5EeZ2z4D4aBDMmrZUG9ekD28q3QdnWcreoXVzv1HE7UidFTJ
+|                                         1542.627077024911 |5HQEyRf2sUG96xVRwZ7LTHhUHaR7sBfhDfWregc3ameMM2yc
+|                                         5911.235979142982 |5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP
+|                                           86.274166245073 |5Dz8Ew8bsrd9BHCygQSBdqnBwiKGUMk86HVmrQhpXpUSDXKT
+|                                         1495.273404867079 |5DRnQzfeSVnVP9Rm1PtkrDLXtUPvu3VHwKscL2m17izXf654
+|                                         3801.617251554796 |5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE
+|                                          155.849749483567 |5DF8WLdHwQXKnbbc9H1nhfrLfNV4fiYFaaxUKFxu5qx2eGzt
+|                                         7398.807609485843 |5D8DUfzkB3U7ovs2iMGu76bGwuULPH8Dby81AyCbQ6Tvkyzq
+|                                            58.88135952284 |5DcZiwYyXdXRZ5YBH9KEegqnNHa98ySfwdaVgw3TLkXsKw13
+|                                         3614.417491812667 |5DV4i2V7gx3HRGrNjbz9LmUdDjwG7MqFiVrsUZVVqrZHdFf7
+|                                            59.34523324212 |5HanHWVw1By1Gkj6DfSK53uCGk5rc3FtknQ8UA3cHCZAEtLg
+|                                         3608.105954551948 |5Hg6qW3DXZJhNvsz6bmaz37XeAa8fnHy8fx86iYx2GyYhxt2
+|                                                      69.3 |5GmdHWhPr6nBJDvFXpMcHm7QBLQcgnAjU3YzupbxzLs9z4xa
+|                                         3955.425784598138 |5HKWKEXRPuUzyfTmfzboBCEGokpRYnjFbn3xS6Y8AQMhExFY
++-----------------------------------------------------------+
+25 rows in set (0.00 sec)
+
+==========================
+==========================
+==========================
+==========================
+
+ERA 393: block 1963174, sum is 124607.51690821935 PIRL
+
+mysql> select sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) from data_event where block_id=1963174 and event_id='Slash';
++----------------------------------------------------------------+
+| sum(JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000) |
++----------------------------------------------------------------+
+|                                             124607.51690821935 |
++----------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 from data_event where block_id=1963174 and event_id='Slash';
++-----------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 |
++-----------------------------------------------------------+
+|                                           65.648596594415 |5EeZ2z4D4aBDMmrZUG9ekD28q3QdnWcreoXVzv1HE7UidFTJ
+|                                         4878.577250165887 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                          369.742018193688 |5Ca5WdMSFrCopoSoGeBUXn3BFqUV2ZGcrSaQ3zsJb9NYSHLX
+|                                        13300.618051660036 |5ChXpfYx17dtsgKtKXrFeqroSNHkiAYercYJZGN87CJ4QwSf
+|                                          360.995399426823 |5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx
+|                                         2224.788991413534 |5ELQeZzkxKhY82ZcopLTUVKhoXH1XrWDLh5tJYd8PaRgG7Uy
+|                                         2358.840943690337 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                          973.363432294595 |5FUZx2HuAQAckiDJa6L5npEhdF8kMhf9W3fgNgMwZ3XBDqBC
+|                                         3683.375242301877 |5HQEyRf2sUG96xVRwZ7LTHhUHaR7sBfhDfWregc3ameMM2yc
+|                                          295.357915969996 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                          176.789031721988 |5HdqKabUed7zQLXpFhLThKUc4JyqhkBRw8X45AxWxVZcmNkf
+|                                         3386.370912568294 |5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE
+|                                         1380.826988474514 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                            55.44746665038 |5FRhPCfXkUyZ93D2YRj4WHziUkWgEevFz2ds1vHAztt3tLwi
+|                                         3159.452945868287 |5CP538H1c5yj5E63S2Jnckkwt4udy1XDqgDWsGXskCRcrMsf
+|                                          553.375587697543 |5HKWKEXRPuUzyfTmfzboBCEGokpRYnjFbn3xS6Y8AQMhExFY
+|                                          607.693339053777 |5GP2zJH2yB5nUgFQvpUng6hxJ83iFrx3FEVjvrgN4ZDKYboK
+|                                         8723.199522513716 |5DQ3VCa4uGHLqnjaqvN3BeicmwLzQX3c4uWZ6qesY7c8iS1R
+|                                          167.580375788782 |5DF8WLdHwQXKnbbc9H1nhfrLfNV4fiYFaaxUKFxu5qx2eGzt
+|                                          4776.87390689205 |5D8DUfzkB3U7ovs2iMGu76bGwuULPH8Dby81AyCbQ6Tvkyzq
+|                                                   65.0349 |5Dtbw1aUNgtpTUMmoyujKSHijAtDwZtsJQXpiyM7KqQL2svF
+|                                         5053.711262708174 |5GsQxJr6Nsuuy1t4SuZFYyH8yfayeS7gxmHy8qNLapos87KE
+|                                          422.266971378833 |5CkiRkK9EwZ27yNG88yoo4yT1AhbwKmRotXiedFmCusysmza
+|                                         1511.231514262633 |5GKs8j7UhiAJ2TFxcMqbxXe5G39sdybSPqQj82KXxGgf3iQz
+|                                           3294.3316986419 |5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku
+|                                           92.767920693627 |5Dz8Ew8bsrd9BHCygQSBdqnBwiKGUMk86HVmrQhpXpUSDXKT
+|                                          185.554013677995 |5EsiY5GBKodew4tkxagsZyLLFVXAfNN9jre15DT4MH1UcsiG
+|                                         4665.965520771142 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                                      65.1 |5HR4xLmgmhX5Q2uJWcUCYqSNNM8wmX7gNBwamqEjF3JtiyeR
+|                                         2141.098652602522 |5GYi7rtH52oPbZmNYBVVeVAp7yEpcbyyAWVfB5F16RtVXV5V
+|                                         2736.495115283386 |5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP
+|                                                     32.55 |5H9RHwUCvH73Lrq46Py1Y1SGpNTsn8gw4gpzcJ811kcGT6Av
+|                                         6976.618284141484 |5GEZCgmTQMn32Y8dbz93BBrm6zDwnv8H6HXZnJpvqZuYAsF5
+|                                             5.11122654504 |5Hp1j9eAs9612nWMsQ7ZsDaPpRTHWNSUSSRicBwJvoR4qPwq
+|                                         6975.275426671758 |5Dci6k2XGMPi7ZacfifZ1JM2DfLQiTAdkXeBnPex8C98Ah1j
+|                                           87.353583583068 |5HdVK4twx9SoD6mJSiPCNMneo8Y5xkWK3UJub5Qekr5wL281
+|                                         4856.166824635089 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                            89.80420595128 |5Cm3EuM92eDJ76vaTfsFHsu59rR7DkUHLNPrkJQBE5JP6C6J
+|                                           131.32809631686 |5EM76GfCst2SfkFfabU2mnLsovVY9DVFNneBa8Bi4mo235R1
+|                                         4723.435682256213 |5ELQeZzkxKhY82ZcopLTUVKhoXH1XrWDLh5tJYd8PaRgG7Uy
+|                                                   64.9698 |5Et1em2DPr8cNQKMMkAryByEzUjGNtS9jkxopgCZkLffCjgZ
+|                                         4879.330519707141 |5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE
+|                                                  63.23625 |5Gv9qJWEQzevDQKeTG6ramLNUQ3PjHr7A8qvLJhbG4qRxzZp
+|                                         1782.348959503885 |5HjgAXNTcCr6bwZ3z7ru4VzBm7YWYPHycKgEKFEup5qzSuhF
+|                                          3098.38498620665 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                                      65.1 |5HDpKEgBWNnHsujXoAbmGkXf8NY8scDwGFttRG6VgTKtNgQS
+|                                            109.9453573922 |5H9MpiZEYQHwg3VYnDcscQH4X8a796ruD1BpME66u2Hnxd3D
+|                                          221.035974065527 |5Dq2jsKyZ9n27NMvpnyDJ1QjgwoRuuHyPKpdLJjEj39NbzRs
+|                                         4548.167130160541 |5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn
+|                                         1246.799499433656 |5ED4AUhHCNQYeXYhS9nc4rQPXVsaycnh8pMrpZmD7ttuWaGq
+|                                         3980.706307507747 |5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku
+|                                                     69.93 |5DLTdqviwHp1JKR2K3ACHoGe4bzRb6YWPqkYT5H853UMqWVn
+|                                         3933.331457158631 |5DSDEFG6yLJvNU53Dntp3EHRAQRUYpF467ZHWV2Kq9cvDetG
+|                                           81.744581649759 |5FEU6PyjcwFdNxzMtwCuWAAcx7s6vP7Uj2zZructqVSrKyQv
+|                                         4852.367266372072 |5GYi7rtH52oPbZmNYBVVeVAp7yEpcbyyAWVfB5F16RtVXV5V
++-----------------------------------------------------------+
+55 rows in set (0.00 sec)
+
+
+==========================
+==========================
+==========================
+==========================
+
+HASHES of TX (full refund of 80 slashes of eras 458 and 393 on 14/04/2022)
+
+
+people=# select sum, blockhash, address, id from unslash where status is not null order by id;
+        sum         |                             blockhash                              |                     address                      | id 
+--------------------+--------------------------------------------------------------------+--------------------------------------------------+----
+         58.8097125 | 0x50b429db3c43d85bebb3bb2e7fd16fa2d1c6e07b0aabf030a39bb15ed0209250 | 5Gv9qJWEQzevDQKeTG6ramLNUQ3PjHr7A8qvLJhbG4qRxzZp |  1
+  6618.708265774086 | 0x60beffdbd4425f69030293d3d077a655af56dc487fd82693e3cd608979d61468 | 5Dci6k2XGMPi7ZacfifZ1JM2DfLQiTAdkXeBnPex8C98Ah1j |  2
+   838.234858081179 | 0x7f9c0838a8372effae46ab66b1516c18e386b9c1c31864507fa9deeb2768b360 | 5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP |  3
+     4.753440686887 | 0xf27a611bbd7b3e3d42453c962ccbd371be12bb44bc86ac4a9f76a09386647e3d | 5Hp1j9eAs9612nWMsQ7ZsDaPpRTHWNSUSSRicBwJvoR4qPwq |  4
+  12470.13727265606 | 0x0a074f834a59b8417a8c1c45f8868322f12b6d68b678e01a02dc991712ad6091 | 5ChXpfYx17dtsgKtKXrFeqroSNHkiAYercYJZGN87CJ4QwSf |  5
+    51.566143984853 | 0x50c05925b654e1464ecd9e7a6f89e7b030a98387b95bdc81174b63b3a3cb5dae | 5FRhPCfXkUyZ93D2YRj4WHziUkWgEevFz2ds1vHAztt3tLwi |  6
+  4408.808881236452 | 0xed5d2250514dc9b2be217276ba418bbd066d28ebaf7241cebe0d4bc1237625d7 | 5DSDEFG6yLJvNU53Dntp3EHRAQRUYpF467ZHWV2Kq9cvDetG |  7
+            30.2715 | 0xbc00d3c385b68dc185fa8ac67a2b49a2ff63be38eded94a72c538dd6e346d856 | 5H9RHwUCvH73Lrq46Py1Y1SGpNTsn8gw4gpzcJ811kcGT6Av |  8
+   8221.93654309547 | 0x7a7c2b73338b1ff557f6b915be71f16bcdd3a3bd2527f30286b5f6259512f504 | 5DQ3VCa4uGHLqnjaqvN3BeicmwLzQX3c4uWZ6qesY7c8iS1R |  9
+   392.708283382315 | 0x44beaf54d1bf96207c86b866662a92e046251cf28a2eaf459aeb671cef6cc75f | 5CkiRkK9EwZ27yNG88yoo4yT1AhbwKmRotXiedFmCusysmza | 10
+  6765.785345719172 | 0x9e5ba4f2e8ae1fbe7d3d05157c16faab93537172a31f44f818faf11e69ec9f21 | 5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku | 11
+    61.053194832806 | 0x7b8973ffe4fd295de36d4444b6a0c692341fb4e4afab3fef763c26295addb4a9 | 5EeZ2z4D4aBDMmrZUG9ekD28q3QdnWcreoXVzv1HE7UidFTJ | 12
+  1542.627077024911 | 0x9e1cf34a3264fff2e2765012bc4d74bc310eeae7305d511e3bb5cdf4c7aec7fe | 5HQEyRf2sUG96xVRwZ7LTHhUHaR7sBfhDfWregc3ameMM2yc | 13
+  5911.235979142982 | 0x8a3a0653a6d0caf3ad511e0a98af3be38e2eec5cbf0a412e7a6521ef02c386df | 5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP | 14
+    86.274166245073 | 0xa8be7b912c29d0ec7049099594d4a344f314095232a839b394b66e18a5f3bee2 | 5Dz8Ew8bsrd9BHCygQSBdqnBwiKGUMk86HVmrQhpXpUSDXKT | 15
+  1495.273404867079 | 0x4d30b626baf0e2a71ec4d614e7fc60e16fca26342dda1b25a800726dd4707e9d | 5DRnQzfeSVnVP9Rm1PtkrDLXtUPvu3VHwKscL2m17izXf654 | 16
+  3801.617251554796 | 0x65318a5c522bb9935af9d9d4f32f9f914850ae8c3a5c6a5036fadf232ade6055 | 5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE | 17
+   155.849749483567 | 0x33f7dd259388b1390c1f1a0a20336e348d3b9c61d17138c4d045d2823cf0e4ff | 5DF8WLdHwQXKnbbc9H1nhfrLfNV4fiYFaaxUKFxu5qx2eGzt | 18
+  7398.807609485843 | 0x56868cecbc07b3b2fac8f2af3d19463286b9b5f436b3d46963a58a9dbaf90baa | 5D8DUfzkB3U7ovs2iMGu76bGwuULPH8Dby81AyCbQ6Tvkyzq | 19
+     58.88135952284 | 0xfb758cd0344878637cc0219693d2a07f17ccf80dfd1fea600136cb3a938ba008 | 5DcZiwYyXdXRZ5YBH9KEegqnNHa98ySfwdaVgw3TLkXsKw13 | 20
+  3614.417491812667 | 0xaa2317023ca569c957207d230769498f4aafbe39fc80cbdba2068de01bd9c022 | 5DV4i2V7gx3HRGrNjbz9LmUdDjwG7MqFiVrsUZVVqrZHdFf7 | 21
+     59.34523324212 | 0x4545bdfec0d4d4294fab9f9623d368d516460c9f74a51a8ea623bf8aed528d0f | 5HanHWVw1By1Gkj6DfSK53uCGk5rc3FtknQ8UA3cHCZAEtLg | 22
+  3608.105954551948 | 0x44944a816ebb4083e0cb5a83484013c3f0a83e182d511ad8643c5528c8e89e51 | 5Hg6qW3DXZJhNvsz6bmaz37XeAa8fnHy8fx86iYx2GyYhxt2 | 23
+               69.3 | 0xb0dffcefa26e204084da1cda62941f353d91a6e24eb101a090809a162be369c1 | 5GmdHWhPr6nBJDvFXpMcHm7QBLQcgnAjU3YzupbxzLs9z4xa | 24
+  3955.425784598138 | 0xc0b0d9f68f06e3e59b344613ed01cf70b7f2c2b73b57c01efdccc17de8766c07 | 5HKWKEXRPuUzyfTmfzboBCEGokpRYnjFbn3xS6Y8AQMhExFY | 25
+    65.648596594415 | 0x556b504e44ceb3fb16b70201745cd27a040e8bb99dda2e4a34c5c5975f324947 | 5EeZ2z4D4aBDMmrZUG9ekD28q3QdnWcreoXVzv1HE7UidFTJ | 26
+  4878.577250165887 | 0x3948427e828acced8337c8327fedd7fb64dbfae48bd2a99685caeb5082eb14f7 | 5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn | 27
+   369.742018193688 | 0x7c487332e07f573dc160997ef75d6dbb10b94248a1c18342e8590e3763b0a774 | 5Ca5WdMSFrCopoSoGeBUXn3BFqUV2ZGcrSaQ3zsJb9NYSHLX | 28
+ 13300.618051660036 | 0xd4e5b541f6b304c5d30a3f007ef09ea49a93e53312b354797655da20a46479c3 | 5ChXpfYx17dtsgKtKXrFeqroSNHkiAYercYJZGN87CJ4QwSf | 29
+   360.995399426823 | 0x72ec85ae45d6f92920a8c7b10c2b6d25887837a7b024d539200c8cf4b3a73aa4 | 5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx | 30
+  2224.788991413534 | 0xefe3044a8d939f66ca6e50389dff31fb7cb492e9cd628997031d02cc9414fb86 | 5ELQeZzkxKhY82ZcopLTUVKhoXH1XrWDLh5tJYd8PaRgG7Uy | 31
+  2358.840943690337 | 0x1e07a7e1704028c5b3c79256e904f3cce84486190b63c4be33650d8668b527b6 | 5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn | 32
+   973.363432294595 | 0xad73108f809e152f40c9c8b2f0ae73fb0154ada0031ece256a396f38f5b8b12d | 5FUZx2HuAQAckiDJa6L5npEhdF8kMhf9W3fgNgMwZ3XBDqBC | 33
+  3683.375242301877 | 0x073ba30393112173543578d1747bd179b34f03945879412024ec0d7ecf2adfbc | 5HQEyRf2sUG96xVRwZ7LTHhUHaR7sBfhDfWregc3ameMM2yc | 34
+   295.357915969996 | 0xb92d104454eea7e8f21e3998b24256492518eea8316979af7b23c48db5845499 | 5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn | 35
+   176.789031721988 | 0x83f29a5a9b25015c48baea4b0e331534db3e5f9efc5f0f25619b6421154221f3 | 5HdqKabUed7zQLXpFhLThKUc4JyqhkBRw8X45AxWxVZcmNkf | 36
+  3386.370912568294 | 0xaeb40e34d5c521f2f6db61e9028b67ab428411951b1c74a90f9d093252c08d69 | 5Dc5NjTruCfwF2bxvstLVDSUtESjJGkmCvLdSSoKB4WPYaTE | 37
+  1380.826988474514 | 0x715479657f49bb6205dc2cec25b92452012292d43c76e0573e4fdd5b7ad59d7d | 5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn | 38
+     55.44746665038 | 0x4ef6996fcd2232df249bdc75704113ee796f2d4fd20b1a1a938d31be760c6af4 | 5FRhPCfXkUyZ93D2YRj4WHziUkWgEevFz2ds1vHAztt3tLwi | 39
+  3159.452945868287 | 0xe1805a01ff2f01f8f5c1410d7c0af147bd68207b65c1abf14e6740b2e079df8d | 5CP538H1c5yj5E63S2Jnckkwt4udy1XDqgDWsGXskCRcrMsf | 40
+   553.375587697543 | 0x8750c18dbd49ca6376d43fff03424f907dace27f5cb1a09f3ce79a1d727b1a88 | 5HKWKEXRPuUzyfTmfzboBCEGokpRYnjFbn3xS6Y8AQMhExFY | 41
+   607.693339053777 | 0xa34d9a9353df297b663ed641fc1127c32dc9b5fc73c65769c7108cb706d554d8 | 5GP2zJH2yB5nUgFQvpUng6hxJ83iFrx3FEVjvrgN4ZDKYboK | 42
+  8723.199522513716 | 0x6d68e06e91e2756a1a7b247c31ba77788612ad018f3625f05be2d63c3267699c | 5DQ3VCa4uGHLqnjaqvN3BeicmwLzQX3c4uWZ6qesY7c8iS1R | 43
+   167.580375788782 | 0xedf57b7dd5cbc339bd5ac8825a6aada238609fe13bcb2f34cd8636d2010931c2 | 5DF8WLdHwQXKnbbc9H1nhfrLfNV4fiYFaaxUKFxu5qx2eGzt | 44
+   4776.87390689205 | 0x05b8cac6e45812cde6542ee2a86d295dbec39efff5a50e59cc1687840548cf08 | 5D8DUfzkB3U7ovs2iMGu76bGwuULPH8Dby81AyCbQ6Tvkyzq | 45
+            65.0349 | 0xd9c4ac01665cf4e1223d628752c4743ac100c90ec24ed6aa6fbf000997b5402c | 5Dtbw1aUNgtpTUMmoyujKSHijAtDwZtsJQXpiyM7KqQL2svF | 46
+  5053.711262708174 | 0x2821d46209f4b6bd19603bfd38e53e7679950c9f67613b2d3fafcb47f5cc27fb | 5GsQxJr6Nsuuy1t4SuZFYyH8yfayeS7gxmHy8qNLapos87KE | 47
+   422.266971378833 | 0xc5e04e84a27293d3ae0fbefcac2b645587d3e960fa6f2956f30f470725277887 | 5CkiRkK9EwZ27yNG88yoo4yT1AhbwKmRotXiedFmCusysmza | 48
+  1511.231514262633 | 0xf31fe5cb8329654095f64a1ff9f30aeea15787d2ed7b6285f6690cbe61e2ef25 | 5GKs8j7UhiAJ2TFxcMqbxXe5G39sdybSPqQj82KXxGgf3iQz | 49
+    3294.3316986419 | 0xf0327c30623dd5afca31addf8c15670572204664210fab7deb16968f94e2309c | 5G3hGwV1XxQV16XL8MzV4br9KJ8wQ548Wf6YC7ScSeRbGCku | 50
+    92.767920693627 | 0xba7fc8261b174e4c826bcfdfc990135ea72de58b81b70aa17e7fb94e2e7c0096 | 5Dz8Ew8bsrd9BHCygQSBdqnBwiKGUMk86HVmrQhpXpUSDXKT | 51
+   185.554013677995 | 0x2db05cedfae6c1c91662266d8315ab74964732775eb9d00ef1e83813cbe15996 | 5EsiY5GBKodew4tkxagsZyLLFVXAfNN9jre15DT4MH1UcsiG | 52
+  4665.965520771142 | 0xbfa0c77c201fa9c7f07e28c1fadf060c5e8ccc2bcfde66fc7bd0a3fffe6e50dd | 5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn | 53
+               65.1 | 0x2ed623457ba063d0bf7d536a099521b533e266a7050250c7380d8f195c212c9d | 5HR4xLmgmhX5Q2uJWcUCYqSNNM8wmX7gNBwamqEjF3JtiyeR | 54
+  2141.098652602522 | 0x8103e95dd05ba357428231d54e638601e03e1b8d75b8581638981ba0deb20406 | 5GYi7rtH52oPbZmNYBVVeVAp7yEpcbyyAWVfB5F16RtVXV5V | 55
+  2736.495115283386 | 0x4951c3c3e653df9697500de668f9222d67016a290f3bcaab1d0e998e1e87c3d3 | 5EWgQSD8iMS7yGiCR394zSDYM2sGoD8CvmCYjVqJSMt31FMP | 56
+              32.55 | 0xaaa8d1d10cc73442caed2e67bdbd02d3783cb015d9387b9626f1998bf6c6c055 | 5H9RHwUCvH73Lrq46Py1Y1SGpNTsn8gw4gpzcJ811kcGT6Av | 57
+  6976.618284141484 | 0xca83a2cb3823ef250c151d9918a3ba9c9ef3812f78e769fa9714887c83fdccac | 5GEZCgmTQMn32Y8dbz93BBrm6zDwnv8H6HXZnJpvqZuYAsF5 | 58
+      5.11122654504 | 0x5942b68f7407e7ab37b8b40519c6688f55dff073b6675917757eeea7347b079d | 5Hp1j9eAs9612nWMsQ7ZsDaPpRTHWNSUSSRicBwJvoR4qPwq | 59
+  6975.275426671758 | 0x56cc5edbbe2100f338f11d236b656094807d4c4560a01d3c368221529cd992d6 | 5Dci6k2XGMPi7ZacfifZ1JM2DfLQiTAdkXeBnPex8C98Ah1j | 60
 (60 rows)
