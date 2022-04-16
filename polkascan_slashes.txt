@@ -362,6 +362,20 @@ people=# select sum, blockhash, address, id from unslash where status is not nul
    607.693339053777 | 0xa34d9a9353df297b663ed641fc1127c32dc9b5fc73c65769c7108cb706d554d8 | 5GP2zJH2yB5nUgFQvpUng6hxJ83iFrx3FEVjvrgN4ZDKYboK | 42
   8723.199522513716 | 0x6d68e06e91e2756a1a7b247c31ba77788612ad018f3625f05be2d63c3267699c | 5DQ3VCa4uGHLqnjaqvN3BeicmwLzQX3c4uWZ6qesY7c8iS1R | 43
    167.580375788782 | 0xedf57b7dd5cbc339bd5ac8825a6aada238609fe13bcb2f34cd8636d2010931c2 | 5DF8WLdHwQXKnbbc9H1nhfrLfNV4fiYFaaxUKFxu5qx2eGzt | 44
+==== nn. 45-60 has been paid twice by bot. no regrets.
+
+people=# select sum(sum) from unslash where id > 44 and id < 61;
+        sum         
+--------------------
+ 38999.986414270544
+(1 row)
+
+people=# select count(*) from unslash where id > 44 and id < 61;
+ count 
+-------
+    16
+(1 row)
+   
    4776.87390689205 | 0x6b19ca13c0bcf05650ebe8702880f3bc26d814711047b4b1e1422655d585e301 | 5D8DUfzkB3U7ovs2iMGu76bGwuULPH8Dby81AyCbQ6Tvkyzq | 45
             65.0349 | 0x71c56225a635c236760a5756a107121886269dc9f5a34f0584d3f81fc80dc50d | 5Dtbw1aUNgtpTUMmoyujKSHijAtDwZtsJQXpiyM7KqQL2svF | 46
   5053.711262708174 | 0x6a7911878cbf0733b58f2338719f3fa44b36225b33804b87bd55ba283516c836 | 5GsQxJr6Nsuuy1t4SuZFYyH8yfayeS7gxmHy8qNLapos87KE | 47
@@ -378,6 +392,7 @@ people=# select sum, blockhash, address, id from unslash where status is not nul
   6976.618284141484 | 0x8571815e666b39313fc41dcef99d824719a697d55784514cfacdb5e682fc68fc | 5GEZCgmTQMn32Y8dbz93BBrm6zDwnv8H6HXZnJpvqZuYAsF5 | 58
       5.11122654504 | 0x12f3473bbe80480e1f187d10864b876ef1bb6d0eab2a884d4202d7333e0dacef | 5Hp1j9eAs9612nWMsQ7ZsDaPpRTHWNSUSSRicBwJvoR4qPwq | 59
   6975.275426671758 | 0x897d283bd7d32366dea22570e8df2939565131c0cb4072e0a4d163e86b88fa6f | 5Dci6k2XGMPi7ZacfifZ1JM2DfLQiTAdkXeBnPex8C98Ah1j | 60
+==== END no regrets.   
     87.353583583068 | 0x120a2641502c0d96fefc2de796318a46c75c85e659dae134ddb5cebf3c028339 | 5HdVK4twx9SoD6mJSiPCNMneo8Y5xkWK3UJub5Qekr5wL281 | 61
   4856.166824635089 | 0xdb0cf0efc8ece3cb725e0ed4bcdf6c6c9a8c26d67e47310f255feb7696b6e248 | 5FA9WUcQXbaGxwMRcgNmuSAk3BcvAiwXU1hHEcshXYiiy5Tn | 62
      89.80420595128 | 0x384c4b94e760041d2cb6a553b368579232605512a3bfe4dcd92508ee0f6124a1 | 5Cm3EuM92eDJ76vaTfsFHsu59rR7DkUHLNPrkJQBE5JP6C6J | 63
@@ -399,3 +414,93 @@ people=# select sum, blockhash, address, id from unslash where status is not nul
     81.744581649759 | 0xdd13ae28478925a477d2e33bffec4a3007bb53a48d84f43b7282d742bfa1613b | 5FEU6PyjcwFdNxzMtwCuWAAcx7s6vP7Uj2zZructqVSrKyQv | 79
   4852.367266372072 | 0x6f9c695e63f97d1849288681aa6c9ce6a02f993c72f990d4d2618af0362d8a57 | 5GYi7rtH52oPbZmNYBVVeVAp7yEpcbyyAWVfB5F16RtVXV5V | 80
 
+==========================
+==========================
+==========================
+==========================
+
+TOTAL SLASHES in eras:
+	237 (block 4528)
+	239 (4816)
+	241 (8379)
+	242 (19714)
+	243 (23109)
+	246 (54235)
+	247 (65685)
+	256 (173010)
+	261 (232138)
+	262 (245090)
+	263 (257465)
+	265 (283749)
+	267 (310271)
+	268 (323177)
+	270 (339320)
+	273 (366346)
+	282 (489302)
+	290 (596957)
+	297 (681837)
+	298 (695893)
+	308 (805482)
+	317 (922452)
+	320 (964019)
+	326 (1046777)
+	329 (1085566)
+	330 (1099630)
+	333 (1141789)
+	336 (1183633)
+	354 (1435067)
+	393 (1963174)
+	458 (2846015)
+	481 (3150115)
+	497 (3369133)
+	
+==========================
+==========================
+==========================
+==========================
+
+Request from SMALL MARINE to REFUND slashes from eras 261, 262 and 308:
+
+A. mysql> select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000, JSON_EXTRACT(attributes->"$[0]", "$.value") from data_event where block_id=232138 and event_id='Slash' and JSON_EXTRACT(attributes->"$[0]", "$.value") = "0x3afbf9e2bb0f880b5e5a19d370a3c1f72504458be9a4149d46de948bfa367d2e";
++-----------------------------------------------------------+----------------------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 | JSON_EXTRACT(attributes->"$[0]", "$.value")                          |
++-----------------------------------------------------------+----------------------------------------------------------------------+
+|                                         35009.32148389479 | "0x3afbf9e2bb0f880b5e5a19d370a3c1f72504458be9a4149d46de948bfa367d2e" |
++-----------------------------------------------------------+----------------------------------------------------------------------+
+1 row in set (0.03 sec)
+
+B. mysql> select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000, JSON_EXTRACT(attributes->"$[0]", "$.value") from data_event where block_id=245090 and event_id='Slash' and JSON_EXTRACT(attributes->"$[0]", "$.value") = "0x3afbf9e2bb0f880b5e5a19d370a3c1f72504458be9a4149d46de948bfa367d2e";
++-----------------------------------------------------------+----------------------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 | JSON_EXTRACT(attributes->"$[0]", "$.value")                          |
++-----------------------------------------------------------+----------------------------------------------------------------------+
+|                                         35016.17127114753 | "0x3afbf9e2bb0f880b5e5a19d370a3c1f72504458be9a4149d46de948bfa367d2e" |
++-----------------------------------------------------------+----------------------------------------------------------------------+
+
+C. mysql> select JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000, JSON_EXTRACT(attributes->"$[0]", "$.value") from data_event where block_id=805482 and event_id='Slash' and JSON_EXTRACT(attributes->"$[0]", "$.value") = "0x3afbf9e2bb0f880b5e5a19d370a3c1f72504458be9a4149d46de948bfa367d2e";
++-----------------------------------------------------------+----------------------------------------------------------------------+
+| JSON_EXTRACT(attributes->"$[1]", "$.value")/1000000000000 | JSON_EXTRACT(attributes->"$[0]", "$.value")                          |
++-----------------------------------------------------------+----------------------------------------------------------------------+
+|                                         7547.684425262831 | "0x3afbf9e2bb0f880b5e5a19d370a3c1f72504458be9a4149d46de948bfa367d2e" |
++-----------------------------------------------------------+----------------------------------------------------------------------+
+1 row in set (0.01 sec)
+
+Transfers:
+
+A. Block 3,546,835 extrinsic hash: 0x324a27630d7a9d69cc69722f2ac7d835612e145fc997a0dd62e0231465f28bb1
+B. Block 3,546,846 extrinsic hash: 0x210405a83852c012e20115e645013e2e49a5c81d669571ef0a334935c2f3b1bf
+C. Block 3,546,884 extrinsic hash: 0xedb4aa55db013d8bd661c15c487309988a9b20c7cd9505b8b515a22beb4c2ccc
+
+
+REFUND OF SLASHES (12/04/2022 - 16/04/2022)
+=================================================
+
+1. 81591.764378776
+2. 115916.81719132126
+3. 71679.93450348124
+4. 124607.51690821935
+5. 38999.986414270544
+6. 35009.32148389479
+7. 35016.17127114753
+8. 7547.684425262831
+=====================
+Total refunded: 510369.196576374 PIRL
