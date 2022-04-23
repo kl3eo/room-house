@@ -14,6 +14,10 @@ import store from './store';
 import router from './router';
 import Connector from '@vue-polkadot/vue-api';
 import 'setimmediate';
+import Notifications from 'vue-notification'
+//import FullpageModal from 'vue-fullpage-modal';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.filter('shortAddress', shortAddress);
 
@@ -45,6 +49,9 @@ Vue.filter('toNumber', toNumber)
 Vue.filter('toPercent', toPercent)
 
 Vue.use(VueClipboard);
+Vue.use(Notifications);
+//Vue.use(FullpageModal);
+Vue.use(VueSweetalert2);
 
 Vue.config.productionTip = false;
 

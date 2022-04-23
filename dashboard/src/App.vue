@@ -8,6 +8,7 @@
       <!-- <Offline /> -->
     <!-- </div> -->
   </div>
+<notifications group="foo" />
 </template>
 
 <script lang="ts">

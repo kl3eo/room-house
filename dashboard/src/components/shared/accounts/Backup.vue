@@ -17,10 +17,10 @@
       <b-input v-model="password" type="password"
         @input="validatePassword(password)"
         password-reveal></b-input>
-    </b-field>      
+    </b-field>
     <router-link :to="{name: 'accounts'}">
       <b-button icon-left="cloud-download-alt" type="is-dark" 
-        @click="makeBackup(address, password)" outlined>
+        @click="makeBackup(address, password);" outlined>
         Backup
       </b-button>
     </router-link>
@@ -37,7 +37,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import Identicon from '@polkadot/vue-identicon';
 import keyring from '@polkadot/ui-keyring';
 import FileSaver from 'file-saver';
+//import BasicComponent from '../../BasicComponent.vue'
 
+//import { notificationTypes,  showNotification } from '@/utils/notification';
 
 @Component({
   components: {
@@ -52,6 +54,24 @@ export default class Backup extends Vue {
 
   public password: string = '';
   public isPassValid: boolean = false;
+
+/*
+  private snackbarTypes = {
+    success: {
+      type: 'is-success',
+      actionText: 'View',
+      onAction: () => window.open('/', '_blank'),
+    },
+    info: {
+      type: 'is-info',
+      actionText: 'OK',
+    },
+    danger: {
+      type: 'is-danger',
+      actionText: 'Oh no!',
+    },
+  };
+*/
   public validatePassword(password: string): boolean {
     return this.isPassValid = keyring.isPassValid(password);
   }
@@ -71,13 +91,45 @@ export default class Backup extends Vue {
     try {
       const addressKeyring = address && keyring.getPair(address);
       const json = addressKeyring && keyring.backupAccount(addressKeyring, password);
-      const blob = new Blob([JSON.stringify(json)], { type: 'application/json; charset=utf-8' });
 
+      const blob = new Blob([JSON.stringify(json)], { type: 'application/json; charset=utf-8' });
       FileSaver.saveAs(blob, `${address}.json`);
+
+	this.showNotification(JSON.stringify(json));
+//      this.showNotification(JSON.stringify(json), this.snackbarTypes.success);
+//      showNotification(JSON.stringify(json),notificationTypes.success);
+//	alert(JSON.stringify(json));
+//      const file = new File([JSON.stringify(json)], `${address}.json`, {type: 'application/json;charset=utf-8'});
+//      FileSaver.saveAs(file);
     } catch (error) {
       console.error(error);
       return;
     }
   }
+/*
+  private showNotification(message: string | null, params = this.snackbarTypes.info) {
+    this.$buefy.snackbar.open({
+      duration: 25000,
+      message: `${message}`,
+      type: 'is-success',
+      position: 'is-bottom',
+      actionText: 'OK',
+      queue: false,
+      ...params,
+    });
+  }
+*/
+/*
+private showNotification(message: string | null) {
+this.$notify({
+  group: 'foo',
+  title: 'Important message',
+  text: message
+});
+}
+*/
+private showNotification(message: string | undefined) {
+this.$swal(message);
+}
 }
 </script>

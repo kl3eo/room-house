@@ -1,4 +1,7 @@
 {
+  "types": [
+    "vue-sweetalert2"
+  ],
   "compilerOptions": {
     "target": "es2020",
     "module": "es2020",
