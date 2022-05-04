@@ -1,7 +1,7 @@
 set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
 vboxmanage unregistervm xTER_polka --delete
 vboxmanage createvm --name xTER_polka --ostype RedHat_64 --register --basefolder "C:\Users\Tran Ngoc Quynh\VMs"
-vboxmanage modifyvm xTER_polka --memory 2048 --cpus 2 --audio none --firmware efi --nic1 nat --nictype1 Am79C973 --nataliasmode1 proxyonly
+vboxmanage modifyvm xTER_polka --memory 2048 --cpus 2 --graphicscontroller vmsvga --audio none --firmware efi --nic1 nat --nictype1 Am79C973 --nataliasmode1 proxyonly
 vboxmanage modifyvm xTER_polka --natpf1 "admin,tcp,,8843,,443"
 vboxmanage createmedium --filename 60G.vdi --size 60000
 vboxmanage storagectl xTER_polka --name SATA --add sata
