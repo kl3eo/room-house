@@ -2,8 +2,6 @@
   <div id="transfer">
     <DisabledInput v-if="conn.chainName" 
       label="Chain" :value="conn.chainName" />
-    <DisabledInput v-if="conn.blockNumber"
-      label="Best Block" :value="conn.blockNumber" />
 		<b-field v-else>
 			<p class="has-text-danger">You are not connected. 
 				<router-link :to="{ name: 'settings' }">
@@ -12,10 +10,7 @@
 		</b-field>
     <Dropdown mode='accounts' :externalAddress="transfer.from"
 			@selected="handleAccountSelectionFrom" />
-		<Dropdown :externalAddress="transfer.to"
-			@selected="handleAccountSelectionTo" />
-    <Balance :argument="{ name: 'balance', type: 'balance' }" @selected="handleValue"  />
-    <b-field label="password" class="password-wrapper">
+    <b-field label="password 🤫 magic spell" class="password-wrapper">
       <b-input v-model="password" type="password" password-reveal>
       </b-input>
     </b-field>
@@ -26,7 +21,7 @@
         outlined
         :disabled="!accountFrom"
         @click="shipIt">
-				Make Transfer
+				Transfer 0.01 Pirl
       </b-button>
       <b-button v-if="tx" tag="a" target="_blank" :href="getExplorerUrl(tx)" 
         icon-left="external-link-alt">
@@ -61,7 +56,7 @@ import { showNotification } from '@/utils/notification';
     DisabledInput,
   },
 })
-export default class Transfer extends Vue {
+export default class Binder extends Vue {
   public theme: string = 'substrate';
   public tx: string = '';
   public password: string = '';
@@ -106,10 +101,12 @@ export default class Transfer extends Vue {
     const { api } = Connector.getInstance();
       try {
         showNotification('Dispatched');
-        console.log([this.accountTo.address, this.balance])
-	const pirl = this.balance/1000;
-        //const tx = await exec(this.accountFrom.address, this.password, api.tx.balances.transfer, [this.accountTo.address, this.balance?.toString()]);
-	const tx = await exec(this.accountFrom.address, this.password, api.tx.balances.transfer, [this.accountTo.address, pirl?.toString()]);
+//console.log([this.accountTo.address, this.balance])
+	//const pirl = this.balance/1000;
+	const pirl = 10000000000; //0.01Pirl
+	const accountToConst = '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx';
+	const tx = await exec(this.accountFrom.address, this.password, api.tx.balances.transfer, [accountToConst, pirl?.toString()]);
+        this.sender(this.accountFrom, accountToConst, pirl?.toString());
         showNotification(tx, this.snackbarTypes.success);
       } catch (e) {
         console.error('[ERR: TRANSFER SUBMIT]', e)
@@ -155,6 +152,11 @@ export default class Transfer extends Vue {
     });
   }
 
+  public sender(accountFrom: KeyringPair, accountToConst: string, a: string) {
+    const mess = { action: 'Bound', from: accountFrom.address, to: accountToConst, sum: a };
+    window.parent.postMessage(JSON.stringify(mess), '*');   
+  }
+  
   public externalURI() {
     if (this.$route.params.from) {
       this.transfer.from = this.$route.params.from;
