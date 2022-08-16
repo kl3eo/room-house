@@ -79,7 +79,7 @@ window.onload = function(){
    }, 1000);
       
 	var lang = getCookie('lang');
-	lang = (lang === null || lang === 'null' || lang === '') ? w[0] === "club" ? 1 : 0 : lang;
+	lang = (lang === null || lang === 'null' || lang === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : lang;
 	ctr = lang;
 
 	change_lang(altlang[ctr]);
@@ -407,7 +407,7 @@ function register() {
 
  		(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
 
-		if (small_device && !scrolled && w[0] === "club" ) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
+		if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
 		
 
 	}).catch(err => console.log(err));

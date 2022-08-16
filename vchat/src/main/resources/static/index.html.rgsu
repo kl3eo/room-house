@@ -15,11 +15,9 @@
 <script src="./js/mBox.Core.js"></script>
 <script src="./js/mBox.Modal.js"></script>
 
-<!-- script src="/webjars/webrtc-adapter/release/adapter.js"></script -->
-
-<script>var w = window.location.hostname.split('.');</script>
+<script>var w = window.location.hostname.split('.'); var hack = w[0] === 'club' ? false : false; var normal_mode = true;</script>
 <script src="https://en.room-house.com/files/cur_104.js"></script>
-<script src="./js/a11.js"></script>
+<script src="./js/a12.js"></script>
 
 <link rel="stylesheet" href="./css/mBoxCore.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="./css/mBoxModal.css" type="text/css" media="screen" />
@@ -100,7 +98,26 @@
  .exiter {
  	background:url(/icons/off2.png) center center no-repeat;
  }
+
+ #sub_selector0 {
+ 	margin-left:4px;
+ }
  
+ #sub_selectorA {
+ 	margin-left:24px;
+ }
+
+ #sub_selectorC {
+ 	margin-left:-45px;
+ } 
+ 
+ #sub_selector9 {
+ 	margin-left:0px;
+ }
+ #rightlab {
+ 	margin-left:-24px;
+ }
+
 }
 
 @media screen and (min-width: 1024px) {
@@ -108,7 +125,7 @@
  .subcontrols {
         position:relative;
 	z-index:99;
-	margin:0 auto;
+	margin:0 auto 0 -69px;
 	width:700px;
 	top:48px;
 	opacity:0;
@@ -118,9 +135,9 @@
  .controls {
         position:relative;
         z-index:99;
-        margin:0 auto;
+        margin:0 auto 0 -24px;
         width:700px;
-        top:48px;
+        top:24px;
 	left:-140px;
  }
 
@@ -161,6 +178,22 @@
 
  .exiter {
  	background:url(/icons/off72.png) center center no-repeat;
+ }
+
+ #sub_selectorA {
+ 	margin-left:0px;
+ }
+
+ #sub_selectorC {
+ 	margin-left:-6px;
+ }
+
+ #sub_selector9 {
+ 	margin-left:-22px;
+ }
+ 
+ #rightlab {
+ 	margin-left:12px;
  }
 
 }
@@ -256,7 +289,7 @@
 	position: absolute;
 	top: -20px;
 	left: 0px;	
-	background: transparent;
+	background: #112;
 	color: #fed;
 	z-index: 999;
 	display: none;
@@ -295,24 +328,36 @@
 
 @media (min-width: 1024px) {
     #leftnum, #rightnum {
-        font-size: 36px;
+        font-size: 42px;
+	font-weight:bold;
     }
+    
+    #leftnum {
+        margin-left:15px;
+    }
+    
     #logger {
         !left:43vw;
         !bottom:0vh;
+    }
+    
+    .labsA {
+	font-size:14px;
+	color:#ccc;
+	white-space:nowrap;
+	font-family:Courier;
+	margin-bottom: -4vh;
     }
 }
 
 @media (max-width: 1024px) {
     #leftnum {
         font-size: 36px;
-        !margin-left: -2px;
         position:relative;
         z-index:1011;
     }
     #rightnum {
         font-size: 36px;
-        !margin-left: -66px;
         position:relative;
         z-index:1011;
     }
@@ -320,6 +365,14 @@
         !left:36%;
         !bottom:5vh;
     }   
+
+    .labsA {
+	font-size:14px;
+	color:#ccc;
+	white-space:nowrap;
+	font-family:Courier;
+	margin-bottom: -3vh;
+    }
 }
 
 .poll {
@@ -376,13 +429,6 @@
 	color:#ccc;
 	margin-bottom:-90px;
 	white-space:nowrap;
-}
-
-.labsA {
-	font-size:14px;
-	color:#ccc;
-	white-space:nowrap;
-	font-family:Courier;
 }
 
 .inpoll {
@@ -473,7 +519,8 @@
 </style>
 </head>
 <body style="background:#112;font-family:Sans;" onclick="cli1()">
-<script>document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + window.location.hostname +'.png) bottom center no-repeat;">');</script>
+<div id="phones" class=phones></div>
+<script>let wlh = small_device ? '' : window.location.hostname; $('phones').style.visibility = 'visible'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;">');</script>
 
 <div id="poll_container" class=poll_container>
   <div id="poll" class=poll>
@@ -581,12 +628,14 @@ if (!curIP.length) {
 <!-- dont remove!-->
 <div id="bundled" style="position:relative;width:50%;min-width:350px;margin:0 auto;text-align:center;">
 <!-- div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;">This is a demo cabin. Go to <a href='https://room-house.com'>the site</a> to read and find out more..</div -->
-<script>var w = window.location.hostname.split('.'); if (w[0] === 'clubb') document.write('<div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;margin: -20px auto 30px auto;">Это демо-кабина. Узнать больше <a style="color:#f7f53f;" href="https://room-house.com">на сайте</a> Румхауса</div>');
+<script>var w = window.location.hostname.split('.'); if (w[0] === 'cclub') document.write('<div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;margin: -20px auto 30px auto;">Это демо-кабина. Узнать больше <a style="color:#f7f53f;" href="https://room-house.com">на сайте</a> Румхауса</div>');
 </script>
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyPirl network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
 <div id="sp_containerr" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
 <div id="slidein" style="display:none;"></div><!-- dummy -->
 <div id="anno_adder" style="display:none;"></div><!-- dummy -->
+<div id="leftpluss" style="display:none;"></div><!-- dummy -->
+<div id="rightpluss" style="display:none;"></div><!-- dummy -->
 <div id="removerB" style="color:#777;font-size:16px;line-height:24px;cursor:pointer;z-index:1001;position:absolute;right:3px;"></div>
 <script>document.write('<iframe id="sp_balance" name=sp_balance scrolling="no" style="display:none;border:0;background:transparent;text-align:right;height:84px;width:354px;margin-left:-8px;"></iframe>');</script>
 </div>
@@ -625,16 +674,16 @@ if (!curIP.length) {
 
 <div id="subcontrols" class=subcontrols><!-- set top to -12px with sp container-->
 
-<div id="sub_selector0" style="float:left;margin-left:0px;margin-top:-12px;">
+<div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
-		<span id=leftnum>679</span>
+		<span id=leftnum>696</span>
 	</div>
 </div>
 
-<div id="sub_selectorA" style="float:left;margin-left:0px;">
+<div id="sub_selectorA" style="float:left;">
 		<div id="leftplus" class=plusA>
-			<!-- img id="ball1" src="/img/gold_ball.png" width=60 border=0 style="position:relative;z-index:1002;" -->
+			<img id="ball1" src="/img/gold_ball.png" width=60 border=0 style="position:relative;z-index:1002;">
 		</div>
 </div>
 
@@ -642,16 +691,16 @@ if (!curIP.length) {
 <div class=bigO style="float:left;visibility:hidden;margin: 0 20px;" title="dummy"></div>
 </div>
 
-<div id="sub_selectorC" style="float:left;margin-left:0px;">
+<div id="sub_selectorC" style="float:left;">
 		<div id="rightplus" class=plusA>
-			<!-- img id="ball2" src="/img/gold_ball2.png" width=60 border=0 style="position:relative;z-index:1002;" -->
+			<img id="ball2" src="/img/gold_ball2.png" width=60 border=0 style="position:relative;z-index:1002;">
 		</div>
 </div>
 
-<div id="sub_selector9" style="float:left;margin-left:-24px;margin-top:-12px;">
+<div id="sub_selector9" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
-		<div id="rightlab" class=labsA style="margin-left:-12px;opacity:0;"></div>
-		<span id=rightnum>429</span>
+		<div id="rightlab" class=labsA style="opacity:0;"></div>
+		<span id=rightnum>442</span>
 	</div>
 </div>
 
@@ -676,7 +725,7 @@ if (!curIP.length) {
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<div id="phones" class=phones>Hello!</div>
+<script>let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) $('phones').style.visibility='hidden'}, 2400);}</script>
 </body>
 </html>
 

@@ -17,7 +17,7 @@
 
 <script>var w = window.location.hostname.split('.'); var hack = w[0] === 'club' ? false : false; var normal_mode = true;</script>
 <script src="https://en.room-house.com/files/cur_104.js"></script>
-<script src="./js/a11.js"></script>
+<script src="./js/a12.js"></script>
 
 <link rel="stylesheet" href="./css/mBoxCore.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="./css/mBoxModal.css" type="text/css" media="screen" />
@@ -99,16 +99,20 @@
  	background:url(/icons/off2.png) center center no-repeat;
  }
 
+ #sub_selector0 {
+ 	margin-left:4px;
+ }
+ 
  #sub_selectorA {
- 	margin-left:20px;
+ 	margin-left:24px;
  }
 
  #sub_selectorC {
- 	margin-left:-36px;
+ 	margin-left:-45px;
  } 
  
  #sub_selector9 {
- 	margin-left:-6px;
+ 	margin-left:0px;
  }
  #rightlab {
  	margin-left:-24px;
@@ -133,7 +137,7 @@
         z-index:99;
         margin:0 auto 0 -24px;
         width:700px;
-        top:48px;
+        top:24px;
 	left:-140px;
  }
 
@@ -516,7 +520,7 @@
 </head>
 <body style="background:#112;font-family:Sans;" onclick="cli1()">
 <div id="phones" class=phones></div>
-<script>let wlh = small_device ? '' : window.location.hostname; /*if (w[0] !== "club") {$('phones').innerHTML = 'Hello';}*/ $('phones').style.visibility = 'visible'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;">');</script>
+<script>let wlh = small_device ? '' : window.location.hostname; $('phones').style.visibility = 'visible'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;">');</script>
 
 <div id="poll_container" class=poll_container>
   <div id="poll" class=poll>
@@ -624,7 +628,7 @@ if (!curIP.length) {
 <script>var w = window.location.hostname.split('.'); if (w[0] === 'cclub') document.write('<div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;margin: -20px auto 30px auto;">Это демо-кабина. Узнать больше <a style="color:#f7f53f;" href="https://room-house.com">на сайте</a> Румхауса</div>');
 </script>
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyPirl network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
-<div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
+<div id="sp_containerr" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
 <div id="slidein" style="display:none;"></div><!-- dummy -->
 <div id="anno_adder" style="display:none;"></div><!-- dummy -->
 <div id="leftpluss" style="display:none;"></div><!-- dummy -->
@@ -667,7 +671,7 @@ if (!curIP.length) {
 
 <div id="subcontrols" class=subcontrols><!-- set top to -12px with sp container-->
 
-<div id="sub_selector0" style="float:left;margin-left:0px;margin-top:-5vh;">
+<div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
 		<span id=leftnum>696</span>
@@ -693,7 +697,7 @@ if (!curIP.length) {
 <div id="sub_selector9" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="rightlab" class=labsA style="opacity:0;"></div>
-		<span id=rightnum>441</span>
+		<span id=rightnum>442</span>
 	</div>
 </div>
 

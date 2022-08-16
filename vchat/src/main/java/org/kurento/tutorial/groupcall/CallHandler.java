@@ -266,8 +266,6 @@ public class CallHandler extends TextWebSocketHandler {
     
     String curip = params.get("curip").getAsString();
 
-    //if (name.substring(5,Math.min(11, name.length())).equals("Ronnie") && curip.equals("81.25.50.12")) {curip = "164.68.105.131";}
-
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);

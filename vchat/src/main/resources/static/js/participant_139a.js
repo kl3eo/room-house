@@ -34,9 +34,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var coo_muted = loadData(name+'_muted');
 	
 	//no sound from other guests on default
-	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
-	
-	if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
+	//or all allowed
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 			
 	var coo_volume = loadData(name+'_volume');
 
