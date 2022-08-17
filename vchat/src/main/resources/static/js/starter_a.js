@@ -31,6 +31,10 @@ var cammode = 0;
 
 var voting_shown = w[0] === "club" ? 1 : 0;
 
+var sp_shown = (w[0] === "skypirl" || w[0] === "africa") ? 1 : 0;
+
+var sound_on_played = w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0;
+
 var scrolled = false;
 
 var heard_info = false;
@@ -218,7 +222,7 @@ function ed() {
   if(role == 0) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3'; (function() { soundEffect.volume=1; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(10000);}}).delay(3000);}
 */
   
-  if(role == 0) {(function() { soundEffect.volume=0.5; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(7000);}
+  if(role == 0 && sound_on_played && !heard_info) {(function() { heard_info = true; soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(5000);}
   
   if (role == 0 && hack) role = 1;
 
@@ -273,7 +277,8 @@ function ed() {
   
   (function(){$('chatter').style.display='block';$('antichatter').style.display='block';$('audience').style.display='block';}).delay(1000);
   (function(){
-		$('phones').style.paddingTop = small_device ? '39vh' : '45vh';
+		$('phones').style.paddingTop = small_device ? '41vh' : '45vh';
+		if (voting_shown) {$('leftnum').style.display = 'block'; $('rightnum').style.display = 'block';}
   }).delay(1000);
   
   if (voting_shown) {(function(){$('room-header').style.marginTop = small_device ? '12vw' : '8vw'; $('subcontrols').style.display='block'; $('subcontrols').fade(1);}).delay(1000);} else  {$('room-header').style.marginTop = small_device ?  '0vw' : '8vw';}
@@ -288,7 +293,7 @@ if (na != null && na != 'null') {
  	ed();
 } else { //demo mode		
 	normal_mode = false; 
-	$('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=badge style="opacity:0;width:190px;margin:-120px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/pricing_ru.html>' + morer +'</a></div></div>'; $('phones').style.cursor = 'pointer';$('phones').style.paddingTop = '39vh'; $('phones').fade(1); $('badge').fade(1); (function(){$('cont').fade(1);}).delay(500); (function(){$('learn_more').fade(1);}).delay(1000); $('phones').onclick = ed;
+	$('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=badge style="opacity:0;width:190px;margin:-120px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/demo_ru.html>' + morer +'</a></div></div>'; $('phones').style.cursor = 'pointer';$('phones').style.paddingTop = '39vh'; $('phones').fade(1); $('badge').fade(1); (function(){$('cont').fade(1);}).delay(500); (function(){$('learn_more').fade(1);}).delay(1000); $('phones').onclick = ed;
 }
 
 } else if (event.origin == 'https://cube.room-house.com:8449') {
@@ -321,7 +326,7 @@ if (na != null && na != 'null') {
   } else if (obj.action == 'load') {
   
 	if ($('removerA')) $('removerA').remove();
-	if ($('sp_container')) 
+	if ($('sp_container') && sp_shown) 
 
 	{
 		var morphStart = function(){
@@ -348,11 +353,11 @@ if (na != null && na != 'null') {
   } else if (obj.action == 'err') {
   	if ($('removerA')) $('removerA').remove();
 	
-	(function() { if ($('sp_container')) $('sp_container').style.display = 'none';$('poll_container').style.display = 'none';}).delay(1000);
+	(function() { if ($('sp_container') && sp_shown) $('sp_container').style.display = 'none';$('poll_container').style.display = 'none';}).delay(1000);
   } else if (obj.action == 'success') {
   
 	if ($('removerB')) $('removerB').remove();
-  	if ( $('sp_container') && $('sp_container').style.display == 'block' ) {
+  	if ( $('sp_container') && sp_shown && $('sp_container').style.display == 'block' ) {
 		const sp_circles = document.querySelectorAll('.accos');
 		sp_circles.forEach(circle => {
  
@@ -426,7 +431,7 @@ if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMu
 
 function cli5() {let sem  = screen.width > 1023 ? '7' : '';
 new_message = 0; if (chat_shown) {$('message_wrap').fade(0); $('chatter').fade(0); $('audience').fade(0); $('antichatter').fade(0);chat_shown = 0; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat'; if (voting_shown) {(function(){$('subcontrols').fade(0);}).delay(1000); $('subcontrols').style.display='none'}} else {
-if (!small_device) {let roomRect = $('room').getBoundingClientRect();let roomTop = parseInt(roomRect.top); $('message_wrap').style.top = voting_shown ? '0vh' : roomTop > 400 ? '6vh' : roomTop > 360 ? '4vh' : roomTop > 320 ? '2vh' : roomTop > 280 ? '0vh' : '0vh'; if ($('sp_container')) $('message_wrap').style.top = '0vh';} $('chatter').style.display='block'; $('antichatter').style.display='block'; $('audience').style.display='block'; $('message_wrap').fade(1); $('chatter').fade(1); $('audience').fade(1); $('antichatter').fade(1); chat_shown = 1; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f'; if (voting_shown) { (function(){$('subcontrols').style.display='block';
+if (!small_device) {let roomRect = $('room').getBoundingClientRect();let roomTop = parseInt(roomRect.top); $('message_wrap').style.top = voting_shown ? '0vh' : roomTop > 400 ? '6vh' : roomTop > 360 ? '4vh' : roomTop > 320 ? '2vh' : roomTop > 280 ? '0vh' : '0vh'; if ($('sp_container') && sp_shown) $('message_wrap').style.top = '0vh';} $('chatter').style.display='block'; $('antichatter').style.display='block'; $('audience').style.display='block'; $('message_wrap').fade(1); $('chatter').fade(1); $('audience').fade(1); $('antichatter').fade(1); chat_shown = 1; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f'; if (voting_shown) { (function(){$('subcontrols').style.display='block';
 (function() {if ($('ball1')) (function() {$('ball1').fade(0);$('leftlab').fade(1);}).delay(2000);if ($('ball2')) (function() {$('ball2').fade(0);$('rightlab').fade(1);}).delay(2000);(function() {$('leftplus').innerHTML = '+';$('rightplus').innerHTML = '+';}).delay(2000);}).delay(2000);
 $('subcontrols').fade(1);}).delay(500);}}
 }

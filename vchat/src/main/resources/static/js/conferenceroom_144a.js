@@ -407,7 +407,7 @@ function register() {
 
  		(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
 
-		if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
+		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
 		
 
 	}).catch(err => console.log(err));
@@ -490,7 +490,7 @@ function onNewParticipant(request) {
 			let na = request.name.split('_');
 			$('acco_'+request.name).fade(1);
 			$('acco_' + f).onclick = function() {copy(ac); flashText('copied '+ na[0]);}
-			if ($('sp_container') && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
+			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
 		}
 	}	
 
@@ -945,7 +945,7 @@ function onExistingParticipants(msg) {
 			
 			$('acco_' + f).fade(1);
 			$('acco_' + f).onclick = function() {copy(ac); flashText('copied '+ na[0]);}
-			if ($('sp_container') && $('sp_container').style.display != 'block') $('acco_' + f).style.visibility='hidden';			
+			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_' + f).style.visibility='hidden';			
 		}	
 		
 		if ($('anno_' + f) && ValidateAnno(a)) {
