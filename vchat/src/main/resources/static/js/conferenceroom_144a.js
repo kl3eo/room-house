@@ -363,6 +363,7 @@ function register() {
 		$('cr').style.display = 'none';
 		$('av_selector').style.display = 'block';
 		$('poll').style.display = 'block';
+		if (voting_shown) {$('leftnum').style.display = 'block'; $('rightnum').style.display = 'block';}
 	
 		var curr_all_muted = getCookie('all_muted') || false;
 		let sem  = screen.width > 1023 ? '7' : '';

@@ -278,7 +278,7 @@ function ed() {
   (function(){$('chatter').style.display='block';$('antichatter').style.display='block';$('audience').style.display='block';}).delay(1000);
   (function(){
 		$('phones').style.paddingTop = small_device ? '41vh' : '45vh';
-		if (voting_shown) {$('leftnum').style.display = 'block'; $('rightnum').style.display = 'block';}
+		
   }).delay(1000);
   
   if (voting_shown) {(function(){$('room-header').style.marginTop = small_device ? '12vw' : '8vw'; $('subcontrols').style.display='block'; $('subcontrols').fade(1);}).delay(1000);} else  {$('room-header').style.marginTop = small_device ?  '0vw' : '8vw';}
@@ -353,7 +353,7 @@ if (na != null && na != 'null') {
   } else if (obj.action == 'err') {
   	if ($('removerA')) $('removerA').remove();
 	
-	(function() { if ($('sp_container') && sp_shown) $('sp_container').style.display = 'none';$('poll_container').style.display = 'none';}).delay(1000);
+	(function() { if ($('sp_container') && sp_shown) $('sp_container').style.display = 'none'; $('poll_container').style.display = 'none';}).delay(1000);
   } else if (obj.action == 'success') {
   
 	if ($('removerB')) $('removerB').remove();
