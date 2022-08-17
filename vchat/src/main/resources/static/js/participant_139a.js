@@ -52,6 +52,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var i_am_muted = loadData(myname+'_muted');
 	let am = getCookie('all_muted');
 	if (i_am_muted === null || i_am_muted === 'null') i_am_muted = (am === true || am === 'true') ? true  : false;
+	
+	if (name == myname) saveData(myname+'_muted', i_am_muted, 1440);
 
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;

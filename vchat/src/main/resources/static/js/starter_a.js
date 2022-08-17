@@ -70,8 +70,8 @@ function change_lang(l) {
 	learner = learner_.get(l);
 	morer = morer_.get(l);
 		
-	mod1.content.innerHTML = about_content.get(l);
-	mod2.content.innerHTML = help_content.get(l);
+	if (typeof(mod1) != 'undefined' && mod1 !== null) mod1.content.innerHTML = about_content.get(l);
+	if (typeof(mod2) != 'undefined' && mod2 !== null) mod2.content.innerHTML = help_content.get(l);
 
 	if (typeof(mod3) != 'undefined' && mod3 !== null) mod3.content.innerHTML = left_content.get(l);
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(l);

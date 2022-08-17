@@ -44,7 +44,7 @@ const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true :
 const fps = 15;
 const wi = 640;
 const fps_hq = 24;
-const wi_hq = 1280;
+const wi_hq = 1920;
 
 const role  = 0;
 
@@ -347,7 +347,12 @@ function register() {
 		if (temporary && role == 0) role = 3;
 
 		if (role == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
-		
+
+		//define in case the onload retarded
+		let l = getCookie('lang');
+		l = (l === null || l === 'null' || l === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l;
+		change_lang(altlang[l]);
+			
 		$('room-header').innerText = 'ROOM ' + room;
 		$('room-header').style.display = 'block';
 		$('room-backer').style.display = 'none';
