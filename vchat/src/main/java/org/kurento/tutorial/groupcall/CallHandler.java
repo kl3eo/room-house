@@ -352,6 +352,7 @@ public class CallHandler extends TextWebSocketHandler {
     final String n = params.get("name").getAsString();
     final UserSession who = registry.getByName(n);
     if (who != null) {
+		who.setRole("0");
 		leaveRoom(who);
     }    
     log.info("GURU {}: trying to drop {} viewer!", user.getName(), n);
