@@ -167,10 +167,10 @@ function rejoin(){
 	rejoined++;
 	if (problems) {leaveRoom(); register();} else {
 
-	/*
-	   (function() { if ( ((i_am_guest & !guru_is_here) || (pcounter === 0 && registered)) && !fullscreen ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
+	
+	   (function() { if ( i_am_guest && !guru_is_here && !fullscreen ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
 	   }).delay(200);
-	*/	
+		
 	   //console.log ('here pcounter is', pcounter, 'registered:', registered);	   
 	/*   (function() { if ( pcounter === 0 && registered ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
 	   }).delay(1000);
@@ -348,7 +348,7 @@ function register() {
 
 		if (role == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
 
-		//define in case the onload retarded
+		//define in case the onload retarded; doesn't help in iOS?
 		let l = getCookie('lang');
 		l = (l === null || l === 'null' || l === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l;
 		change_lang(altlang[l]);
@@ -494,8 +494,9 @@ function onNewParticipant(request) {
 		if ($('acco_'+request.name) && ValidateAccountId(request.acc_id) ) {
 			$('acco_'+request.name).style.display='block';
 			let na = request.name.split('_');
+			let ac = request.acc_id;
 			$('acco_'+request.name).fade(1);
-			$('acco_' + f).onclick = function() {copy(ac); flashText('copied '+ na[0]);}
+			$('acco_' + f).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
 			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
 		}
 	}	
