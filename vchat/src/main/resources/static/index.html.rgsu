@@ -21,6 +21,7 @@
 
 <link rel="stylesheet" href="./css/mBoxCore.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="./css/mBoxModal.css" type="text/css" media="screen" />
+<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 
 <style>
 
@@ -226,9 +227,9 @@
 	cursor: pointer;
 	opacity: 1;
 	border: 1px solid #9cf;
-	width: 24px;
-	height: 24px;
-	border-radius: 14px;
+	width: 36px;
+	height: 36px;
+	border-radius: 20px;
 }
 
 .speak {
@@ -330,6 +331,7 @@
     #leftnum, #rightnum {
         font-size: 42px;
 	font-weight:bold;
+	display:none;
     }
     
     #leftnum {
@@ -355,11 +357,13 @@
         font-size: 36px;
         position:relative;
         z-index:1011;
+	display:none;
     }
     #rightnum {
         font-size: 36px;
         position:relative;
         z-index:1011;
+	display:none;
     }
     #logger {
         !left:36%;
@@ -631,7 +635,7 @@ if (!curIP.length) {
 <script>var w = window.location.hostname.split('.'); if (w[0] === 'cclub') document.write('<div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;margin: -20px auto 30px auto;">Это демо-кабина. Узнать больше <a style="color:#f7f53f;" href="https://room-house.com">на сайте</a> Румхауса</div>');
 </script>
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyPirl network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
-<div id="sp_containerr" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
+<div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
 <div id="slidein" style="display:none;"></div><!-- dummy -->
 <div id="anno_adder" style="display:none;"></div><!-- dummy -->
 <div id="leftpluss" style="display:none;"></div><!-- dummy -->
@@ -677,7 +681,7 @@ if (!curIP.length) {
 <div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
-		<span id=leftnum>696</span>
+		<span id=leftnum>701</span>
 	</div>
 </div>
 
@@ -700,7 +704,7 @@ if (!curIP.length) {
 <div id="sub_selector9" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="rightlab" class=labsA style="opacity:0;"></div>
-		<span id=rightnum>442</span>
+		<span id=rightnum>444</span>
 	</div>
 </div>
 
