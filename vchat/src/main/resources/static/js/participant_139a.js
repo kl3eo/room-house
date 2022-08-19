@@ -134,7 +134,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	dropper.className = 'dropper';
 	dropper.id = 'drop-' + name;
 	dropper.appendChild(document.createTextNode('X'));
-	dropper.style.fontSize = '14px';
+	dropper.style.fontSize = '16px';
 		
 	slider.style.zIndex = '1001';
 	
@@ -183,7 +183,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	adder.id = 'adder_' + name;
 	adder.appendChild(document.createTextNode('A'));
 	adder.onclick = setAnno;
-	adder.style.display = name == myname ? 'block' : 'none';
+	adder.style.display = name == myname && myrole != 0 ? 'block' : 'none';
 	container.appendChild(adder);
 		
 	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
@@ -195,8 +195,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	} else {
 		if (name != myname) speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
-		if (name == myname && (i_am_muted === true || i_am_muted === 'true')) speaker.appendChild(document.createTextNode('x'));
-		if (name == myname && (i_am_muted === false || i_am_muted === 'false')) speaker.appendChild(document.createTextNode('\uD83C\uDFA4'));
+		if (name == myname && (i_am_muted === true || i_am_muted === 'true')) speaker.appendChild(document.createTextNode('X'));
+		if (name == myname && (i_am_muted === false || i_am_muted === 'false') && myrole != 0) speaker.appendChild(document.createTextNode('\uD83C\uDFA4'));
 	}
 	
 	speaker.style.fontSize = "42px";

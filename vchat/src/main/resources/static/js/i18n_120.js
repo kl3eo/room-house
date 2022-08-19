@@ -54,7 +54,7 @@ var learner_ = new Map([
 
 var morer_ = new Map([
    ['en', 'more'],
-   ['ru', 'больше'],
+   ['ru', 'правила'],
    ['es', 'more'],
    ['fr', 'more'],
    ['cn', 'more'],
