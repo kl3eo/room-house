@@ -264,12 +264,14 @@
 	right: 0px;
 	width: 18px;
 	height: 18px;
+	border-radius: 10px;
+	color :#fed;
 	cursor: pointer;
-	z-index: 999;
-	background: transparent;
+	z-index: 1001;
+	background: #369;
 	opacity: 0.5;
 	padding:3px;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .locos {
@@ -302,12 +304,13 @@
 	position: absolute;
 	top: 0px;
 	right: 0px;	
-	background: transparent;
+	background: #369;
 	color: #fed;
 	z-index: 999;
 	font-size: 16px;
 	width: 18px;
 	height: 18px;
+	border-radius: 10px;
 }
 
 .poll_container {
@@ -704,7 +707,7 @@ if (!curIP.length) {
 <div id="sub_selector9" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="rightlab" class=labsA style="opacity:0;"></div>
-		<span id=rightnum>444</span>
+		<span id=rightnum>446</span>
 	</div>
 </div>
 

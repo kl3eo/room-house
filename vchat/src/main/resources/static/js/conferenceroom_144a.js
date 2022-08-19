@@ -168,8 +168,10 @@ function rejoin(){
 	if (problems) {leaveRoom(); register();} else {
 
 	
-	   (function() { if ( i_am_guest && !guru_is_here && !fullscreen ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
+	   /*
+	   (function() { if ( i_am_guest && !guru_is_here ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
 	   }).delay(200);
+	   */
 		
 	   //console.log ('here pcounter is', pcounter, 'registered:', registered);	   
 	/*   (function() { if ( pcounter === 0 && registered ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
@@ -495,8 +497,8 @@ function onNewParticipant(request) {
 			$('acco_'+request.name).style.display='block';
 			let na = request.name.split('_');
 			let ac = request.acc_id;
-			$('acco_'+request.name).fade(1);
-			$('acco_' + f).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
+			$('acco_'+ request.name).fade(1);
+			$('acco_' + request.name).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
 			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
 		}
 	}	
@@ -947,7 +949,7 @@ function onExistingParticipants(msg) {
 			$('loco_' + f).fade(1);			
 		}		
 		
-		if ($('acco_'+f) && ValidateAccountId(ac)) {
+		if ($('acco_' + f) && ValidateAccountId(ac)) {
 			$('acco_' + f).style.display='block';
 			
 			$('acco_' + f).fade(1);

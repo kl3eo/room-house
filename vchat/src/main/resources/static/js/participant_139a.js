@@ -39,6 +39,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
 	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
+	
+	if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only
 			
 	var coo_volume = loadData(name+'_volume');
 
@@ -62,16 +64,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if ( myrole != 1) i_am_guest = 1 ;
 	if ( myrole == 1 & pcounter === 0 & guru_is_here ) i_am_guest = 0 ;
 	
-	if (!guru_is_here && false) {
-		(function(){
-			if (!guru_is_here && false){
-				flashText(waiter);
-			}
-		}).delay(500);
-	}
-	else {
-		(function(){ $('phones').fade(0); (function(){ $('phones').innerHTML = '';}).delay(100);}).delay(500);
-	}
+	(function(){ $('phones').fade(0); (function(){ $('phones').innerHTML = '';}).delay(100);}).delay(500);
+	
 	if (typeof(mod3) != 'undefined' && mod3 !== null) mod3.content.innerHTML = left_content.get(altlang[ctr]);
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
 	
