@@ -178,3 +178,12 @@ var creatu_ = new Map ([
    ['cn', 'CREATE or bind account!'],
    ['pt', 'CREATE or bind account!'],
 ]);
+
+var hea_ = new Map ([
+   ['en', 'VIDEOCHAT WITHOUT REGISTER'],
+   ['ru', 'ВИДЕОЧАТ БЕЗ РЕГИСТРАЦИИ'],
+   ['es', 'VIDEOCHAT WITHOUT REGISTER'],
+   ['fr', 'VIDEOCHAT WITHOUT REGISTER'],
+   ['cn', 'VIDEOCHAT WITHOUT REGISTER'],
+   ['pt', 'VIDEOCHAT WITHOUT REGISTER'],
+]);

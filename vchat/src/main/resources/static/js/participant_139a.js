@@ -178,6 +178,12 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	adder.appendChild(document.createTextNode('A'));
 	adder.onclick = setAnno;
 	adder.style.display = name == myname && myrole != 0 ? 'block' : 'none';
+	
+	//to be able to write anno to other streams:
+	//adder.style.display = myrole != 0 ? 'block' : 'none';
+	//adder.style.right = name == myname ? '0px' : '24px';
+	//then set a var = who_to onclick and pass it with a signal to server
+	
 	container.appendChild(adder);
 		
 	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
@@ -380,12 +386,13 @@ function Participant(name, myname, mode, myrole, new_flag) {
 						token: tok
 					}		
 					sendMessage(message);	
-					pcounter++;//to be disposed next, +- = 0
+
 				}
 				
-				let p = participants[name];
-				p.dispose();
-				delete p;
+				// ?! taken care of in room.leave
+				//let p = participants[name];
+				//p.dispose();
+				//delete p;
 					
 	  		}).catch(err => console.log(err));
 			

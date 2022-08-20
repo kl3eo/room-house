@@ -19,7 +19,7 @@ var oldColor = null;
 
 var selectedFile = null;
 
-var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = '';
+var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = '';
 
 var chat_shown = 1;
 
@@ -67,6 +67,7 @@ function change_lang(l) {
 	badger = badger_.get(l);
 	learner = learner_.get(l);
 	morer = morer_.get(l);
+	hea = hea_.get(l);
 		
 	if (typeof(mod1) != 'undefined' && mod1 !== null) mod1.content.innerHTML = about_content.get(l);
 	if (typeof(mod2) != 'undefined' && mod2 !== null) mod2.content.innerHTML = help_content.get(l);
@@ -198,6 +199,7 @@ function ed() {
  if ($('badge')) $('badge').fade(0);
  if ($('learn_more')) $('learn_more').fade(0);
  if ($('socs')) $('socs').fade(0);
+ if ($('hea')) $('hea').fade(0);
 
  (function(){$('phones').fade(0);}).delay(1000);
  
@@ -292,7 +294,7 @@ if (na != null && na != 'null') {
  	ed();
 } else { //demo mode		
 	normal_mode = false; 
-	(function() {$('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=badge style="opacity:0;width:190px;margin:-120px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/demo_ru.html style="color:#369;">' + morer +'</a></div><div id=socs style="opacity:0;margin-top:120px;font-size:16px;"><a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;"><i class="bx bxl-telegram"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;"><i class="bx bx-book-open"></i></a></div></div>'; $('phones').style.cursor = 'pointer';$('phones').style.paddingTop = '39vh'; $('phones').fade(1); $('badge').fade(1); (function(){$('cont').fade(1);}).delay(500); (function(){$('learn_more').fade(1);$('socs').fade(1);}).delay(1000); $('phones').onclick = ed;}).delay(500); //let change_lang fill the i18n strings
+	(function() {$('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-160px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">'+hea+'</div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/demo_ru.html style="color:#369;">' + morer +'</a></div><div id=socs style="opacity:0;margin-top:60px;font-size:16px;"><a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;"><i class="bx bxl-telegram"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;"><i class="bx bx-book-open"></i></a></div></div>'; $('phones').style.cursor = 'pointer';$('phones').style.paddingTop = '39vh'; $('phones').fade(1); $('badge').fade(1); (function(){$('cont').fade(1);}).delay(500); (function(){$('learn_more').fade(1);$('socs').fade(1);$('hea').fade(1);}).delay(1000); $('phones').onclick = ed;}).delay(500); //let change_lang fill the i18n strings
 }
 
 } else if (event.origin == 'https://cube.room-house.com:8449') {
