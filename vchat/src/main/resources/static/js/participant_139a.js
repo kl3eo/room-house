@@ -39,9 +39,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
 	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
-	
-	if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only
-			
+				
 	var coo_volume = loadData(name+'_volume');
 
 	if (coo_volume === null || coo_volume === 'null') coo_volume = 0.5;
@@ -51,6 +49,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		saveData(name+'_volume', coo_volume, 1440);
 	}
 
+	if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only
+	
 	var i_am_muted = loadData(myname+'_muted');
 	let am = getCookie('all_muted');
 	if (i_am_muted === null || i_am_muted === 'null') i_am_muted = (am === true || am === 'true') ? true  : false;
@@ -69,7 +69,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (typeof(mod3) != 'undefined' && mod3 !== null) mod3.content.innerHTML = left_content.get(altlang[ctr]);
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
 	
-	pcounter++;
+	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
+	
+	if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
 	
 	container.id = name;
 	container.style.position='relative';
@@ -448,7 +450,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		}
 		if (this.rtcPeer && typeof(this.rtcPeer != 'undefined') ) this.rtcPeer.dispose();
 		if (container && container.parentNode) container.parentNode.removeChild(container);
-		pcounter--;
+		pcounter--; 
+		if (name != myname || myrole != 0) real_pcnt--;
+		if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
+		
 		if ( guru_is_here == 0 & pcounter) i_am_guest = 1;
 		if ( guru_is_here == 1 & pcounter === 1) i_am_guest = 0;
 		if ( ct > 1) {i_am_guest = 0 ; guru_is_here = 1;}

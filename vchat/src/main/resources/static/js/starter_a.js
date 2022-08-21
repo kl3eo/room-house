@@ -29,7 +29,9 @@ var temporary = 0;
 
 var cammode = 0; 
 
-var voting_shown = w[0] === "club" && small_device ? 1 : 0;
+var voting_shown = w[0] === "club" && small_device ? 0 : 0;
+
+var stats_shown = w[0] === "club" && !small_device ? 1 : 1;
 
 var sp_shown = (w[0] === "skypirl" || w[0] === "africa") ? 1 : 0;
 

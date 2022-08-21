@@ -3,6 +3,8 @@ var participants = {};
 var name;
 
 var pcounter = 0;
+var real_pcnt = 0;
+var vcounter = 0;
 var i_am_guest = 0;
 var registered = 0;
 var guru_is_here = 0;
@@ -26,7 +28,6 @@ var now_playing = false;
 
 var audio = null;
 
-var audience_number = 0;
 var just_left = '';
 
 var connection_is_good = 1;
@@ -141,7 +142,8 @@ ws.onmessage = function(message) {
 		if ($('_au_'+suf)) {
 			$('_au_'+suf).dispose();
 			let cur = $('audience_numbers').innerHTML == '...' ? 0  :  parseInt($('audience_numbers').innerHTML)-1;
-			cur = cur > 0 ? cur : '...';
+			vcounter = cur > 0 ? cur : 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+			cur = cur > 0 ? cur : '...'; 
 			$('audience_numbers').innerHTML = cur;
 			let col = cur > 0 ? '#369' : '#ccc';
 			$('audience_numbers').setStyles({'color': col});
@@ -312,6 +314,7 @@ function register() {
 					if ($('_au_'+suf)) {
 						$('_au_'+suf).dispose();
 						let cur = $('audience_numbers').innerHTML == '...'  ?  0 : parseInt($('audience_numbers').innerHTML)-1;
+						vcounter = cur > 0 ? cur : 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
 						cur = cur > 0 ? cur : '...';
 						$('audience_numbers').innerHTML = cur;
 						let col = cur > 0 ? '#369' : '#ccc';
@@ -416,7 +419,8 @@ function register() {
  		(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
 
 		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
-		
+  
+  		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000); /*(function(){$('stats').style.display='none'; $('stats').fade(0);}).delay(3000);*/}		
 
 	}).catch(err => console.log(err));
 	
@@ -445,6 +449,8 @@ function onNewViewer(request) {
 		$('audience_numbers').innerHTML = cur;
 		let col = cur > 0 ? '#369' : '#ccc';
 		$('audience_numbers').setStyles({'color': col});
+		
+		vcounter = cur; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
 		
 		if (just_left != f && $('name').value != f && $('name').value != just_left) soundEffect.src = "/sounds/steps.mp3";
 	}).catch(err => console.log(err));
@@ -596,12 +602,12 @@ function onExistingViewers(msg) {
 	   }
 
 	   
-	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; audience_number = 0; } else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
+	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; vcounter = 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;} else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
 
-		if (arr.length > audience_number && arr.length > 0 && play_sound) {
+		if (arr.length > vcounter && arr.length > 0 && play_sound) {
 	   		soundEffect.src = "/sounds/steps.mp3";
 		}
-		audience_number = arr.length;
+		vcounter = arr.length; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
 	   }
 	   if ($('audience_boxx')) $('audience_boxx').innerHTML = audience;
 
