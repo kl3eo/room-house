@@ -141,7 +141,7 @@
         top:24px;
 	left:-140px;
  }
-
+ 
  .bigO {
         float:left;
         width:80px;
@@ -269,7 +269,7 @@
 	cursor: pointer;
 	z-index: 1001;
 	background: #369;
-	opacity: 0.5;
+	opacity: 1;
 	padding:3px;
 	font-size: 16px;
 }
@@ -353,6 +353,12 @@
 	font-family:Courier;
 	margin-bottom: -4vh;
     }
+    #stats_v {
+	float:left;
+	margin-left:16px;
+	padding:2px;
+	background:transparent;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -379,6 +385,13 @@
 	white-space:nowrap;
 	font-family:Courier;
 	margin-bottom: -3vh;
+    }
+
+    #stats_v {
+	float:right;
+	margin-right:36px;
+	padding:2px;
+	background:transparent;
     }
 }
 
@@ -523,6 +536,25 @@
 	display:table;
 	position:absolute;
 }
+
+#stats {
+	width:100%;
+	height:30px;
+	text-align:center;
+	margin:0 auto;
+	font-size:24px;
+	color:#fed;opacity:0;
+	display:none;
+	margin-top:12px;
+}
+
+#stats_p {
+	float:left;
+	margin-left:30px;
+	padding:2px;
+	background:transparent;	
+}
+
 </style>
 </head>
 <body style="background:#112;font-family:Sans;" onclick="cli1()">
@@ -677,6 +709,13 @@ if (!curIP.length) {
 
 </div><!-- av_selector -->
 <div style="clear:left;"></div>
+
+
+<div id="stats">
+	<div id="stats_p" title="presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
+	<div id="stats_v" title="viewers">&#128101;:&nbsp;<span id=vcounter></span></div>
+</div>
+
 </div><!-- controls -->
 
 <div id="subcontrols" class=subcontrols><!-- set top to -12px with sp container-->
@@ -684,7 +723,7 @@ if (!curIP.length) {
 <div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
-		<span id=leftnum>701</span>
+		<span id=leftnum>708</span>
 	</div>
 </div>
 
@@ -707,12 +746,13 @@ if (!curIP.length) {
 <div id="sub_selector9" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="rightlab" class=labsA style="opacity:0;"></div>
-		<span id=rightnum>446</span>
+		<span id=rightnum>449</span>
 	</div>
 </div>
 
 <div style="clear:left;"></div>
 </div><!-- subcontrols -->
+
 
 <div id="message_wrap" style="display:none;position:relative;" class="message_wrap">
 

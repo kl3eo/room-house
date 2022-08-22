@@ -28,6 +28,7 @@ var now_playing = false;
 
 var audio = null;
 
+var audience_numberr = 0; //restored after erroneous commit; THAT should be used for sounding steps.mp3, and not vcounter - or you miss ~50% of new viewers, perhaps due to race --ash
 var just_left = '';
 
 var connection_is_good = 1;
@@ -602,12 +603,12 @@ function onExistingViewers(msg) {
 	   }
 
 	   
-	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; vcounter = 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;} else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
+	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; audience_numberr = 0; vcounter = 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;} else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
 
-		if (arr.length > vcounter && arr.length > 0 && play_sound) {
+		if (arr.length > audience_numberr && arr.length > 0 && play_sound) {
 	   		soundEffect.src = "/sounds/steps.mp3";
 		}
-		vcounter = arr.length; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+		audience_numberr = arr.length; vcounter = arr.length; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
 	   }
 	   if ($('audience_boxx')) $('audience_boxx').innerHTML = audience;
 
