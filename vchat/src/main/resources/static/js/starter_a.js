@@ -19,7 +19,7 @@ var oldColor = null;
 
 var selectedFile = null;
 
-var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = '';
+var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = ''; var now = ''; var today = '';
 
 var chat_shown = 1;
 
@@ -70,6 +70,8 @@ function change_lang(l) {
 	learner = learner_.get(l);
 	morer = morer_.get(l);
 	hea = hea_.get(l);
+	now = now_.get(l);
+	today = today_.get(l);
 		
 	if (typeof(mod1) != 'undefined' && mod1 !== null) mod1.content.innerHTML = about_content.get(l);
 	if (typeof(mod2) != 'undefined' && mod2 !== null) mod2.content.innerHTML = help_content.get(l);
@@ -285,7 +287,10 @@ function ed() {
   }).delay(1000);
   
   if (voting_shown) {(function(){$('room-header').style.marginTop = small_device ? '12vw' : '8vw'; $('subcontrols').style.display='block'; $('subcontrols').fade(1);}).delay(1000);} else  {$('room-header').style.marginTop = small_device ?  '0vw' : '8vw';}
-
+	
+  stats_p.setAttribute('title', now + ' presenters');
+  stats_v.setAttribute('title', now + ' guests');
+  stats_ng.setAttribute('title', today);
 
  } //obj.name
  $('phones').onclick = '';$('phones').style.cursor = 'none';

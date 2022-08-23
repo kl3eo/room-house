@@ -46,6 +46,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 
 /**
@@ -100,8 +101,10 @@ public class CallHandler extends TextWebSocketHandler {
         	}
 		
 		String joinerToken = jsonMessage.get("token").getAsString();
-		String joinerRoom = jsonMessage.get("room").getAsString();
+		String joinerRoom = jsonMessage.get("room").getAsString(); 
 		String joinerRole = jsonMessage.get("role").getAsString();
+		
+		joinerRoom = joinerRoom.replaceAll("[;'\"]*", ""); //protect against sql injection
 	
 		String role = "0"; String _role = "0"; String noSuchRoom = "0"; String temporary = "0";
 
@@ -139,6 +142,8 @@ public class CallHandler extends TextWebSocketHandler {
 	
 		if (joinerRole.equals("3") && !role.equals("1") && _role.equals("3") && noSuchRoom.equals("0") ) { temporary = "1";}
 // now check if we're to let join
+// hack ash
+// if (role.equals("0") && joinerRoom.equals("club")) { role = "1"; }
 	
 		if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && temporary.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
@@ -261,11 +266,18 @@ public class CallHandler extends TextWebSocketHandler {
     final String mode = params.get("mode").getAsString();
     final String acc_id = params.get("acc_id").getAsString();    
     final String role = params.get("role").getAsString();
+    
+    final String pgurl = "jdbc:postgresql://localhost:5432/cp";
+    final String pguser = "postgres";
+    final String pgpass = "x";
 
     String already = "false";
     
     String curip = params.get("curip").getAsString();
-
+    
+    String country = "country";
+    String city = "city";
+		
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);
@@ -291,12 +303,42 @@ public class CallHandler extends TextWebSocketHandler {
 
         	final CityResponse response = reader.city(ipAddress);
 
-        	final String city = response.getCity().getName();
-        	final String country = response.getCountry().getIsoCode();
+        	city = response.getCity().getName();
+        	country = response.getCountry().getIsoCode();
         	curip = city + ", " + country;
 
     	} catch (final IOException e) {}
+        
+	//DB
+	// this piece of j*va displays a ton of compiler error - I don't know why, and I don't want to know. Life is too short, my friend.
+	/*
+	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+		PreparedStatement st = con.prepareStatement("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, ROOM, MODE, ROLE, DTM) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
+		st.setString(1, ipAddress);
+		st.setString(2, country);
+		st.setString(3, city);
+		st.setString(4, name);
+		st.setString(5, roomName);
+		st.setString(6, mode);
+		st.setString(7, role);
+		
+		st.executeUpdate();
+		st.close();
+		) {} catch (SQLException ex) {log.info("PG insert err from {}: ", name);}
+	*/
+	  	
+		//protect against sql injection
+		name = name.replaceAll("[;'\"]*", ""); 
+		roomName = roomName.replaceAll("[;'\"]*", "");
+		mode = mode.replaceAll("[;'\"]*", "");
+		role = role.replaceAll("[;'\"]*", "");
+		
+		try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+                Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, ROOM, MODE, ROLE, DTM) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp)")) {
+         	} catch (SQLException ex) {log.info("PG join err from {}: ", name);}
 
+	
     	final UserSession user = room.join(name, mode, curip, acc_id, session, role);
 
     	registry.register(user);

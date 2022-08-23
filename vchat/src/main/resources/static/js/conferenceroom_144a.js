@@ -143,7 +143,9 @@ ws.onmessage = function(message) {
 		if ($('_au_'+suf)) {
 			$('_au_'+suf).dispose();
 			let cur = $('audience_numbers').innerHTML == '...' ? 0  :  parseInt($('audience_numbers').innerHTML)-1;
-			vcounter = cur > 0 ? cur : 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+			vcounter = cur > 0 ? cur : 0; 
+			//if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+			if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
 			cur = cur > 0 ? cur : '...'; 
 			$('audience_numbers').innerHTML = cur;
 			let col = cur > 0 ? '#369' : '#ccc';
@@ -315,7 +317,9 @@ function register() {
 					if ($('_au_'+suf)) {
 						$('_au_'+suf).dispose();
 						let cur = $('audience_numbers').innerHTML == '...'  ?  0 : parseInt($('audience_numbers').innerHTML)-1;
-						vcounter = cur > 0 ? cur : 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+						vcounter = cur > 0 ? cur : 0;
+						//if ($('vcounter')) $('vcounter').innerHTML = vcounter; 
+						if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
 						cur = cur > 0 ? cur : '...';
 						$('audience_numbers').innerHTML = cur;
 						let col = cur > 0 ? '#369' : '#ccc';
@@ -429,6 +433,7 @@ function register() {
 
 function onNewViewer(request) {
 
+	if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
 	var myname = $('name').value;
 	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
@@ -459,6 +464,7 @@ function onNewViewer(request) {
 
 function onNewParticipant(request) {
 
+  if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
   fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
   	let myrole = respo || 0;
 
@@ -565,6 +571,8 @@ function onExistingViewers(msg) {
    var audience = '';
 
    var play_sound = myname == just_left ? false : true;
+   
+   if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
   
    if (msg.data) {
    	   var arr = msg.data.sort();
@@ -603,7 +611,7 @@ function onExistingViewers(msg) {
 	   }
 
 	   
-	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; audience_numberr = 0; vcounter = 0; if ($('vcounter')) $('vcounter').innerHTML = vcounter;} else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
+	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; audience_numberr = 0; vcounter = 0; if ($('vcounter')) (function(){$('vcounter').innerHTML = vcounter;}).delay(500);} else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
 
 		if (arr.length > audience_numberr && arr.length > 0 && play_sound) {
 	   		soundEffect.src = "/sounds/steps.mp3";
@@ -677,8 +685,7 @@ function onExistingParticipants(msg) {
 	
  	if (role_zero_has_square || role == 1 || role == 2 || role == 3) {
 
-		let fmode = getCookie('fmode') ? 'environment' : 'user';
-		
+		let fmode = getCookie('fmode') ? 'environment' : 'user';	
 			
 		var myname = $('name').value;
 		var i_am_muted = loadData(myname+'_muted');

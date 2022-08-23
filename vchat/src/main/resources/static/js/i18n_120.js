@@ -187,3 +187,21 @@ var hea_ = new Map ([
    ['cn', 'VIDEOCHAT WITHOUT REGISTER'],
    ['pt', 'VIDEOCHAT WITHOUT REGISTER'],
 ]);
+
+var today_ = new Map ([
+   ['en', 'today guests'],
+   ['ru', 'сегодня гостей'],
+   ['es', 'hoy huespedes'],
+   ['fr', 'hotes de jour'],
+   ['cn', 'today guests'],
+   ['pt', 'hoje hospedes'],
+]);
+
+var now_ = new Map ([
+   ['en', 'now'],
+   ['ru', 'сейчас'],
+   ['es', 'ahora'],
+   ['fr', 'ici'],
+   ['cn', 'now'],
+   ['pt', 'agora'],
+]);

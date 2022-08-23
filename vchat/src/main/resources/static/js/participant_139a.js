@@ -71,7 +71,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
 	
-	if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
+	//if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
+	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 	
 	container.id = name;
 	container.style.position='relative';
@@ -452,7 +453,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (container && container.parentNode) container.parentNode.removeChild(container);
 		pcounter--; 
 		if (name != myname || myrole != 0) real_pcnt--;
-		if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
+		//if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
+		if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 		
 		if ( guru_is_here == 0 & pcounter) i_am_guest = 1;
 		if ( guru_is_here == 1 & pcounter === 1) i_am_guest = 0;

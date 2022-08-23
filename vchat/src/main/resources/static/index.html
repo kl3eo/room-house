@@ -358,6 +358,14 @@
 	margin-left:16px;
 	padding:2px;
 	background:transparent;
+	cursor: pointer;
+    }
+    #stats_ng {
+	float:left;
+	margin-left:16px;
+	padding:2px;
+	background:transparent;
+	cursor: pointer;
     }
 }
 
@@ -392,6 +400,11 @@
 	margin-right:36px;
 	padding:2px;
 	background:transparent;
+	cursor: pointer;
+    }
+
+    #stats_ng {
+	display:none;
     }
 }
 
@@ -553,6 +566,7 @@
 	margin-left:30px;
 	padding:2px;
 	background:transparent;	
+	cursor: pointer;
 }
 
 </style>
@@ -709,8 +723,9 @@ if (!curIP.length) {
 
 
 <div id="stats">
-	<div id="stats_p" title="presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
-	<div id="stats_v" title="viewers">&#128101;:&nbsp;<span id=vcounter></span></div>
+	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
+	<div id="stats_v" title="now viewers">&#128101;:&nbsp;<span id=vcounter></span></div>
+	<div id="stats_ng" title="today viewers">&#128099;:&nbsp;<span id=num_guests></span></div>
 </div>
 
 </div><!-- controls -->
