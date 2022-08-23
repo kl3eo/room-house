@@ -451,3 +451,8 @@ fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credenti
 function cli7() {let sem  = screen.width > 1023 ? '7' : '';
 $('message_wrap').fade(0);$('chatter').fade(0);$('audience').fade(0);$('antichatter').fade(0);chat_shown = 0;$('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat';
 }
+
+function cli8() {
+fetch('https://'+window.location.hostname+':8453/cgi/genc/get_guests.pl', {credentials: 'include'}).then(function(response){if (response.status !== 200){console.log('Status Code: ' + response.status); return;} response.json().then(function(data) { if (data != 0) { let audi = ''; const array = Object.keys(data).map(key => data[key]); array.forEach(item => { let s = item[0].split('_'); let short = s[0]; let d= item[3].split(' '); let ti = d[1].split(':'); let tim = ti[0]+':'+ti[1]; audi = audi + '<div><span>' + short + '</span>,&nbsp;<span>' + item[1] + '</span>,&nbsp;<span>' + item[2] + '</span>&nbsp;<span>' + tim + '</span></div>';}); audi = audi + '<div style="line-height:60px;">&nbsp;</div>'; $('logger').click(); chat_shown = 0; $('message_box').innerHTML = audi; $('message_box').fade(1);
+}})}).catch(err => console.log(err));
+}

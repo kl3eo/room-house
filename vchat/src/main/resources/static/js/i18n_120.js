@@ -190,7 +190,7 @@ var hea_ = new Map ([
 
 var today_ = new Map ([
    ['en', 'today guests'],
-   ['ru', 'сегодня гостей'],
+   ['ru', 'сегодня следов'],
    ['es', 'hoy huespedes'],
    ['fr', 'hotes de jour'],
    ['cn', 'today guests'],
