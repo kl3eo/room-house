@@ -41,6 +41,8 @@ var scrolled = false;
 
 var heard_info = false;
 
+var who_to = '';
+
 
 function getIP(json) {
     curIP = json.ip;
@@ -227,7 +229,7 @@ function ed() {
   if(role == 0) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3'; (function() { soundEffect.volume=1; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(10000);}}).delay(3000);}
 */
   
-  if(role == 0 && sound_on_played && !heard_info) {(function() { heard_info = true; soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(5000);}
+  //if(role == 0 && sound_on_played && !heard_info) {(function() { heard_info = true; soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(5000);}
   
   if (role == 0 && hack) role = 1;
 

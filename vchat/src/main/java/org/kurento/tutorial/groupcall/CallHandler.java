@@ -261,11 +261,11 @@ public class CallHandler extends TextWebSocketHandler {
   }
 
   private void joinRoom(JsonObject params, WebSocketSession session) throws IOException, GeoIp2Exception {
-    final String roomName = params.get("room").getAsString();
-    final String name = params.get("name").getAsString();
-    final String mode = params.get("mode").getAsString();
+    String roomName = params.get("room").getAsString();
+    String name = params.get("name").getAsString();
+    String mode = params.get("mode").getAsString();
     final String acc_id = params.get("acc_id").getAsString();    
-    final String role = params.get("role").getAsString();
+    String role = params.get("role").getAsString();
     
     final String pgurl = "jdbc:postgresql://localhost:5432/cp";
     final String pguser = "postgres";
@@ -277,6 +277,7 @@ public class CallHandler extends TextWebSocketHandler {
     
     String country = "country";
     String city = "city";
+    int num_guests = 0;
 		
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
@@ -332,14 +333,21 @@ public class CallHandler extends TextWebSocketHandler {
 		roomName = roomName.replaceAll("[;'\"]*", "");
 		mode = mode.replaceAll("[;'\"]*", "");
 		role = role.replaceAll("[;'\"]*", "");
-		
+//insert		
 		try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, ROOM, MODE, ROLE, DTM) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp)")) {
          	} catch (SQLException ex) {log.info("PG join err from {}: ", name);}
 
-	
-    	final UserSession user = room.join(name, mode, curip, acc_id, session, role);
+//get daily stats
+
+	  	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+                Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("select count(distinct ipaddr) from joins where role = '0' and room = '" + roomName + "' and dtm > current_date")) {
+            		if (rs.next()) {num_guests  = rs.getInt(1);}
+         	} catch (SQLException ex) {log.info("PG sel stats1 err for room {}: ", roomName);}
+			
+    	final UserSession user = room.join(name, mode, curip, acc_id, session, role, num_guests);
 
     	registry.register(user);
     }
@@ -378,8 +386,9 @@ public class CallHandler extends TextWebSocketHandler {
   private void setAnno(UserSession user, JsonObject params) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());
     final String s = params.get("anno").getAsString();
-    log.info("USER {}: trying to set anno to {}!", user.getName(), s);
-    room.set_anno_to_text(user, s);
+    final String a = params.get("addr").getAsString();
+    log.info("USER {}: trying to set anno for {} to {}!", user.getName(), a, s);
+    room.set_anno_to_text(user, s, a);
   }
   
   private void setGuru(UserSession user, JsonObject params) throws IOException {

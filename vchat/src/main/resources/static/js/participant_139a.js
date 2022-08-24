@@ -36,9 +36,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//no sound from other guests on default, but from gurus ok
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
 	//or all allowed
-	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
-	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
 				
 	var coo_volume = loadData(name+'_volume');
 
@@ -49,7 +49,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		saveData(name+'_volume', coo_volume, 1440);
 	}
 
-	if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only
+	//if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only
 	
 	var i_am_muted = loadData(myname+'_muted');
 	let am = getCookie('all_muted');
@@ -177,14 +177,17 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	adder.className = 'adders';
 	adder.style.fontSize = '18px';
 	adder.style.cursor = 'pointer';
+	adder.style.background = name == myname ? '#369' : '#900';
 	adder.id = 'adder_' + name;
 	adder.appendChild(document.createTextNode('A'));
 	adder.onclick = setAnno;
-	adder.style.display = name == myname && myrole != 0 ? 'block' : 'none';
 	
+	//adder.style.display = name == myname && myrole != 0 ? 'block' : 'none';
 	//to be able to write anno to other streams:
-	//adder.style.display = myrole != 0 ? 'block' : 'none';
-	//adder.style.right = name == myname ? '0px' : '24px';
+	adder.style.display = myrole != 0 ? 'block' : 'none';
+	//don't add to gurus except myself
+	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
+	adder.style.right = name == myname ? '0px' : '24px';
 	//then set a var = who_to onclick and pass it with a signal to server
 	
 	container.appendChild(adder);
@@ -213,6 +216,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			let role = respo;
 			//if (role != 0) {
 				console.log('set anno');
+				who_to = name;
 				anno_adder.click();
 			//}
 	
