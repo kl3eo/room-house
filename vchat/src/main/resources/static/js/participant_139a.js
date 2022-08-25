@@ -184,7 +184,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	//adder.style.display = name == myname && myrole != 0 ? 'block' : 'none';
 	//to be able to write anno to other streams:
-	adder.style.display = myrole != 0 ? 'block' : 'none';
+	//adder.style.display = myrole != 0 ? 'block' : 'none';
+	adder.style.display = myrole == 0 && myname == name ? 'none': 'block';
 	//don't add to gurus except myself
 	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
 	adder.style.right = name == myname ? '0px' : '24px';
