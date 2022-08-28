@@ -199,6 +199,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(adder);
 		
 	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
+	$(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': $(video.id).style.maxHeight;
+	//$(video.id).style.display = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 'none' : 'block';
 
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
@@ -407,11 +409,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 				}
 				
-				// ?! taken care of in room.leave
-				//let p = participants[name];
-				//p.dispose();
-				//delete p;
-					
 	  		}).catch(err => console.log(err));
 			
 			
@@ -476,7 +473,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 		}
 		if (name != myname || myrole != 0) real_pcnt--;
-		//if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
 		if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 		
 		if ( guru_is_here == 0 & pcounter) i_am_guest = 1;

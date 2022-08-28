@@ -731,8 +731,8 @@ if (!curIP.length) {
 
 <div id="stats">
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
-	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); $('audience').click();">&#128101;:&nbsp;<span id=vcounter></span></div>
-	<div id="stats_ng" title="today viewers" onclick="cli8();">&#128099;:&nbsp;<span id=num_guests></span></div>
+	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); if ($('audience_box').style.display == 'none') $('audience').click();">&#128101;:&nbsp;<span id=vcounter></span></div>
+	<div id="stats_ng" title="today viewers" onclick="if ($('audience_box').style.display != 'none') $('audience').click(); cli8();">&#128099;:&nbsp;<span id=num_guests></span></div>
 </div>
 
 </div><!-- controls -->
@@ -742,7 +742,7 @@ if (!curIP.length) {
 <div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
-		<span id=leftnum>712</span>
+		<span id=leftnum>713</span>
 	</div>
 </div>
 
