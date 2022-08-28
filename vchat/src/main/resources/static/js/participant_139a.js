@@ -5,6 +5,7 @@ $('newacc').click();};
 
 const PARTICIPANT_MAIN_CLASS = check_iOS() || isAndroid ? 'participant main_i' : 'participant main';
 const PARTICIPANT_CLASS = 'participant';
+const PARTICIPANT_SOLO = 'participant solo'
 
 function Participant(name, myname, mode, myrole, new_flag) {
 	
@@ -36,9 +37,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//no sound from other guests on default, but from gurus ok
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
 	//or all allowed
-	if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
-	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
 				
 	var coo_volume = loadData(name+'_volume');
 
@@ -59,6 +60,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+	
 	i_am_guest = isPresentMainParticipant() & pcounter === 1 ? 1 : i_am_guest;
 
 	if ( myrole != 1) i_am_guest = 1 ;
@@ -70,6 +72,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
+	if (pcounter > 1) switchContainerClass();
+
+	(function() {container.className = pcounter === 1 && !role_zero_has_square && !small_device ? PARTICIPANT_SOLO : container.className;}).delay(2000);
 	
 	//if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
 	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
@@ -270,8 +275,13 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
 			elements.forEach(function(item) {
 
-					item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
-				});
+				item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+                        elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_SOLO));
+                        elements.forEach(function(item) {
+
+				item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
 
 				container.className = PARTICIPANT_MAIN_CLASS;
 			} else {
@@ -411,7 +421,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 
 	function isPresentMainParticipant() {
-		return ((document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0);
+		return ((document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0 || (document.getElementsByClassName(PARTICIPANT_SOLO)).length != 0);
 	}
 
 
@@ -457,6 +467,14 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (this.rtcPeer && typeof(this.rtcPeer != 'undefined') ) this.rtcPeer.dispose();
 		if (container && container.parentNode) container.parentNode.removeChild(container);
 		pcounter--; 
+		if (pcounter === 1) {
+                        var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
+                        elements.forEach(function(item) {
+
+                                item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_SOLO;
+                        });
+
+		}
 		if (name != myname || myrole != 0) real_pcnt--;
 		//if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
 		if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }

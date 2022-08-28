@@ -304,6 +304,12 @@ input[type=button]:active, input[type=submit]:active {
 	margin: 0 auto;
 }
 
+.participant.solo {
+	min-width: 480px;
+	width: 50%;
+	margin: 0 auto;
+}
+
 .participant.main_i {
 	width: 96%;
 	margin: 3vh auto 7vh auto;

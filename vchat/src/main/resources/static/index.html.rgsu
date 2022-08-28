@@ -358,6 +358,14 @@
 	margin-left:16px;
 	padding:2px;
 	background:transparent;
+	cursor: pointer;
+    }
+    #stats_ng {
+	float:left;
+	margin-left:16px;
+	padding:2px;
+	background:transparent;
+	cursor: pointer;
     }
 }
 
@@ -388,10 +396,22 @@
     }
 
     #stats_v {
-	float:right;
-	margin-right:36px;
+	!float:right;
+	!margin-right:36px;
+	float:left;
+	margin-left; 36px;
 	padding:2px;
 	background:transparent;
+	cursor: pointer;
+    }
+
+    #stats_ng {
+	!display:none;
+	float:right;
+	margin-right:36px;
+        padding:2px;
+        background:transparent;
+        !cursor: pointer;	
     }
 }
 
@@ -553,6 +573,7 @@
 	margin-left:30px;
 	padding:2px;
 	background:transparent;	
+	!cursor: pointer;
 }
 
 </style>
@@ -712,8 +733,9 @@ if (!curIP.length) {
 
 
 <div id="stats">
-	<div id="stats_p" title="presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
-	<div id="stats_v" title="viewers">&#128101;:&nbsp;<span id=vcounter></span></div>
+	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
+	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); $('audience').click();">&#128101;:&nbsp;<span id=vcounter></span></div>
+	<div id="stats_ng" title="today viewers" onclick="cli8();">&#128099;:&nbsp;<span id=num_guests></span></div>
 </div>
 
 </div><!-- controls -->
@@ -723,7 +745,7 @@ if (!curIP.length) {
 <div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
-		<span id=leftnum>708</span>
+		<span id=leftnum>711</span>
 	</div>
 </div>
 
@@ -764,6 +786,7 @@ if (!curIP.length) {
     <div id="audience_box" class="audience_box" style="display:none;">
     	<div id="audience_boxx" style="width:100%;margin:0 auto;display:table-cell;vertical-align:middle;"></div>
     </div>
+    <div id="guest_box" class="message_box" style="display:none;"></div>
     <div style="clear:left;"></div>
    <div id="grad" style="position:absolute; bottom:0; z-index:2400;"><img src="/icons/grad24.png" border=0></div>
 </div><!-- message_wrap -->

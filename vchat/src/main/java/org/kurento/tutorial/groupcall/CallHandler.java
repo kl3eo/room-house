@@ -333,6 +333,8 @@ public class CallHandler extends TextWebSocketHandler {
 		roomName = roomName.replaceAll("[;'\"]*", "");
 		mode = mode.replaceAll("[;'\"]*", "");
 		role = role.replaceAll("[;'\"]*", "");
+
+//create table joins (id serial, ipaddr text, country text, city text, name text, room text, mode text, role text, dtm timestamp);
 //insert		
 		try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
