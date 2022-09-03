@@ -330,17 +330,29 @@ public class Room implements Closeable {
   }  
 
   public void set_anno_to_text(UserSession user, String anno, String who_to) throws IOException {
+
     if (user != null) {
     	final JsonObject setAnno = new JsonObject();
 	
 	final String who_from = user.getName();
+	
+	String[] parts = user.getName().split("_");
+	String[] copy = new String[parts.length - 1];
+
+	for (int i = 0; i < parts.length-1; i++) {
+		copy[i] = parts[i];
+	}
+	
+	final String who_f = String.join("_", copy);
+
+	//final String who_from = user.getName();
 	String userName = who_to;
 	String full_anno = anno;
 	
 	//check to defend gurus against console attacks
 	if (who_to.substring(0,Math.min(5, who_to.length())).equals("GURU:")) {userName = who_from;}
 	
-	if (who_from.equals(who_to) || who_from.substring(0,Math.min(5, who_to.length())).equals("GURU:") ) {} else {full_anno = who_from + ": " + anno;}
+	if (who_from.equals(who_to) || who_from.substring(0,Math.min(5, who_to.length())).equals("GURU:") ) {} else {full_anno = who_f + ": " + anno;}
 	
     	setAnno.addProperty("id", "setAnno");
 	setAnno.addProperty("participant", userName);

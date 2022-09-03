@@ -88,6 +88,7 @@ window.onload = function(){
 
 	var vote = getCookie('vote');
 	he_votado = (vote === null || vote === 'null') ? he_votado : vote;
+
 }
 
 ws.onmessage = function(message) {
@@ -428,8 +429,10 @@ function register() {
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000); /*(function(){$('stats').style.display='none'; $('stats').fade(0);}).delay(3000);*/}		
 		
 		if (!small_device && w[0] === "club" && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
-	}).catch(err => console.log(err));
 	
+		
+	}).catch(err => console.log(err));
+
 }
 
 function onNewViewer(request) {
@@ -528,7 +531,7 @@ function onNewParticipant(request) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '0px';
         	} else if (pcounter > 4) {
-                	$('room').style.minWidth = '1240px';
+                	$('room').style.minWidth = '1260px';
                 	$('room').style.marginLeft = '-390px';
         	}
 	}
@@ -984,6 +987,9 @@ function onExistingParticipants(msg) {
 			$('anno_' + f).fade(1);
 		}
 	   }
+  
+	   if (pcounter < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
+	   if (pcounter > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
 
 	   if (!small_device) {
         	if (pcounter == 4) {
@@ -996,7 +1002,7 @@ function onExistingParticipants(msg) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '0px';
         	} else if (pcounter > 4) {
-                	$('room').style.minWidth = '1240px';
+                	$('room').style.minWidth = '1260px';
                 	$('room').style.marginLeft = '-390px';
         	}
 	   }	    
@@ -1097,7 +1103,8 @@ function setGuru(request) {
 			temporary = 0; chat_shown = 1; $('logger').click(); $('audience').click(); leaveRoom(); register();
 			cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');
 			$('av_toggler').style.display='none';
-			$('bell').style.display='block';	
+			$('bell').style.display='block';
+			hack = false; //?!	
 		}
 	}).catch(err => console.log(err));
 }
@@ -1203,7 +1210,7 @@ function onParticipantLeft(request) {
                 		$('room').style.minWidth = '480px';
                 		$('room').style.marginLeft = '0px';
         		} else if (pcounter > 4) {
-                		$('room').style.minWidth = '1240px';
+                		$('room').style.minWidth = '1260px';
                 		$('room').style.marginLeft = '-390px';
         		}			
 		}

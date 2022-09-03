@@ -72,7 +72,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
-	if (pcounter > room_limit) hack = false;
+	if (pcounter > room_limit - 1) {hack = false;}
+
 	if (pcounter > 1) switchContainerClass();
 
 	(function() {container.className = pcounter === 1 && !role_zero_has_square && !small_device ? PARTICIPANT_SOLO : container.className;}).delay(2000);
@@ -187,9 +188,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	adder.appendChild(document.createTextNode('A'));
 	adder.onclick = setAnno;
 	
-	//adder.style.display = name == myname && myrole != 0 ? 'block' : 'none';
-	//to be able to write anno to other streams:
-	//adder.style.display = myrole != 0 ? 'block' : 'none';
+
 	adder.style.display = myrole == 0 && myname == name ? 'none': 'block';
 	//don't add to gurus except myself
 	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
@@ -199,7 +198,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
 	$(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': $(video.id).style.maxHeight;
-	if (pcounter > 1) $(video.id).style.maxHeight = '190px'; //?!
+	
+	if (pcounter > 1) 
+		$(video.id).style.maxHeight = '190px'; //?!
 
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
@@ -463,7 +464,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (this.rtcPeer && typeof(this.rtcPeer != 'undefined') ) this.rtcPeer.dispose();
 		if (container && container.parentNode) container.parentNode.removeChild(container);
 		pcounter--; 
-		if (pcounter < room_limit + 1) hack = true;
+		if (pcounter < room_limit) {hack = true;}
 		if (pcounter === 1) {
                         var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
                         elements.forEach(function(item) {

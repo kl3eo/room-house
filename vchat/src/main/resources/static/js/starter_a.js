@@ -39,7 +39,7 @@ var sound_on_played = w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 
 
 var scrolled = false;
 
-var heard_info = false;
+var heard_info = getCookie('heard_info') || false;
 
 var who_to = '';
 
@@ -226,13 +226,10 @@ function ed() {
   register();
 
     
-  if(role == 0 && small_device) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit','tska']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3'; if (!heard_info) (function() { soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(10000);}}).delay(3000);}
+  if(role == 0 && small_device) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit','tska']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; setCookie('heard_info', true, 144000); soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3'; if (!heard_info) (function() { soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(10000);}}).delay(3000);}
 
   
-  if(role == 0 && sound_on_played && !heard_info && !small_device) {(function() { heard_info = true; soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(5000);}
-  
-  if (pcounter < room_limit + 1) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
-  if (pcounter > room_limit) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
+  if(role == 0 && sound_on_played && !heard_info && !small_device) {(function() { heard_info = true; setCookie('heard_info', true, 144000); soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}).delay(5000);}
 
   if (role == 0 && hack) role = 1;
 
@@ -433,11 +430,11 @@ if (!snd_clicked) {soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFg
 }
 
 function cli2() {let sem  = screen.width > 1023 ? '7' : '';
-fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f';  $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat #f78f3f'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('FRONT CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat';}} else {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1;  flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f';  $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat #f78f3f'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('FRONT CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat';}} else {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1;  flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
 function cli3() {let sem  = screen.width > 1023 ? '7' : '';
-fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; $('bcam').style.background = 'url(/icons/switch' + sem + '2.png) center center no-repeat #f78f3f'; $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat';}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo;  if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; $('bcam').style.background = 'url(/icons/switch' + sem + '2.png) center center no-repeat #f78f3f'; $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat';}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
 function cli4() {
