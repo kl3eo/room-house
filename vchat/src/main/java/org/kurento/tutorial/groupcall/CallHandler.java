@@ -82,6 +82,8 @@ public class CallHandler extends TextWebSocketHandler {
     final String pgurl = "jdbc:postgresql://localhost:5432/cp";
     final String pguser = "postgres";
     final String pgpass = "x";
+    
+    final int room_limit = 4;
 
     if (user != null) {
       log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
@@ -148,11 +150,10 @@ public class CallHandler extends TextWebSocketHandler {
                 for (final UserSession participant : roo.getParticipants()) {
                         cou++;
                 }
-// we allow 4 people join in many-to-many
-                if (role.equals("0") && cou < 5) { role = "1"; }
+// we allow room_limit joins in many-to-many
+                if (role.equals("0") && cou < room_limit+1) { role = "1"; }
 	
-		//if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && temporary.equals("0")) || noSuchRoom.equals("1") ) {
-if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0")) || noSuchRoom.equals("1") ) {
+		if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
 		} else {
         		joinRoom(jsonMessage, session);
