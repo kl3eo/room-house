@@ -519,6 +519,9 @@ function onNewParticipant(request) {
 			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
 		}
 	}	
+	
+	//if (pcounter < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
+	if (pcounter > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
 
 	if (!small_device) {
         	if (pcounter == 4) {
@@ -1196,6 +1199,7 @@ function onParticipantLeft(request) {
 	var participant = participants[request.name];
 	if (participant) {
 		participant.dispose();
+		if (pcounter < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device) {
