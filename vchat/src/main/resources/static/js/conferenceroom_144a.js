@@ -426,7 +426,8 @@ function register() {
 		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
   
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000); /*(function(){$('stats').style.display='none'; $('stats').fade(0);}).delay(3000);*/}		
-
+		
+		if (!small_device && w[0] === "club" && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
 	}).catch(err => console.log(err));
 	
 }
@@ -683,6 +684,8 @@ function onExistingParticipants(msg) {
 
 
 	let role = respo || 0; 
+	if (role == 0 && hack) role = 1;
+	if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
 
 	if (temporary && role == 0) role = 3; 
 	
@@ -738,7 +741,7 @@ function onExistingParticipants(msg) {
 			onicecandidate: participant.onIceCandidate.bind(participant)
 		}
 		
-   if (shareSomeScreen && (role == 1|| role == 2)) {
+   if (shareSomeScreen && (role == 1 || role == 2)) {
       
       shareSomeScreen = true;
       $('room-header').style.color = oldColor;
@@ -1033,7 +1036,7 @@ function leaveRoom() {
 function receiveVideo(sender, mode, role, n) {
 
 	let new_flag = (n === true) ? true : false;
-
+	
 	var participant = new Participant(sender, $('name').value, mode, role, new_flag );
 	participants[sender] = participant;
 	var video = participant.getVideoElement();

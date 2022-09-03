@@ -142,10 +142,17 @@ public class CallHandler extends TextWebSocketHandler {
 	
 		if (joinerRole.equals("3") && !role.equals("1") && _role.equals("3") && noSuchRoom.equals("0") ) { temporary = "1";}
 // now check if we're to let join
-// hack ash
-// if (role.equals("0") && joinerRoom.equals("club")) { role = "1"; }
+// count number of participants
+                Room roo = roomManager.getRoom(joinerRoom);
+                int cou = 0;
+                for (final UserSession participant : roo.getParticipants()) {
+                        cou++;
+                }
+// we allow 4 people join in many-to-many
+                if (role.equals("0") && cou < 5) { role = "1"; }
 	
-		if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && temporary.equals("0")) || noSuchRoom.equals("1") ) {
+		//if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && temporary.equals("0")) || noSuchRoom.equals("1") ) {
+if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
 		} else {
         		joinRoom(jsonMessage, session);
@@ -278,7 +285,7 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-		
+	
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);
@@ -345,7 +352,7 @@ public class CallHandler extends TextWebSocketHandler {
 
 	  	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select count(distinct ipaddr) from joins where role = '0' and room = '" + roomName + "' and dtm > current_date")) {
+		ResultSet rs = st.executeQuery("select count(distinct ipaddr) from joins where room = '" + roomName + "' and dtm > current_date")) {
             		if (rs.next()) {num_guests  = rs.getInt(1);}
          	} catch (SQLException ex) {log.info("PG sel stats1 err for room {}: ", roomName);}
 			

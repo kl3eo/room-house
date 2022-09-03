@@ -72,11 +72,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
+	if (pcounter > 4) hack = false;
 	if (pcounter > 1) switchContainerClass();
 
 	(function() {container.className = pcounter === 1 && !role_zero_has_square && !small_device ? PARTICIPANT_SOLO : container.className;}).delay(2000);
 	
-	//if ($('pcounter')) $('pcounter').innerHTML = real_pcnt;
 	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 	
 	container.id = name;
@@ -194,13 +194,12 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//don't add to gurus except myself
 	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
 	adder.style.right = name == myname ? '0px' : '24px';
-	//then set a var = who_to onclick and pass it with a signal to server
 	
 	container.appendChild(adder);
 		
 	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
 	$(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': $(video.id).style.maxHeight;
-	//$(video.id).style.display = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 'none' : 'block';
+	$(video.id).style.maxHeight = '190px'; //?!
 
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
@@ -464,6 +463,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (this.rtcPeer && typeof(this.rtcPeer != 'undefined') ) this.rtcPeer.dispose();
 		if (container && container.parentNode) container.parentNode.removeChild(container);
 		pcounter--; 
+		if (pcounter < 5) hack = true;
 		if (pcounter === 1) {
                         var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
                         elements.forEach(function(item) {

@@ -299,6 +299,7 @@ input[type=button]:active, input[type=submit]:active {
 }
 
 .participant.main {
+	!max-height: 360px;
 	min-width: 210px;
 	width: 25%;
 	margin: 0 auto;

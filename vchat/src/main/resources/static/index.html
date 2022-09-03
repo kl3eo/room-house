@@ -15,7 +15,7 @@
 <script src="./js/mBox.Core.js"></script>
 <script src="./js/mBox.Modal.js"></script>
 
-<script>var w = window.location.hostname.split('.'); var hack = w[0] === 'club' ? false : false; var normal_mode = true;</script>
+<script>var w = window.location.hostname.split('.'); /*var hack = w[0] === 'club' ? true : false;*/ var hack = false; var normal_mode = true;</script>
 <script src="https://en.room-house.com/files/cur_104.js"></script>
 <script src="./js/a12.js"></script>
 
@@ -138,8 +138,11 @@
         z-index:99;
         margin:0 auto 0 -24px;
         width:700px;
-        top:24px;
-	left:-140px;
+        !!sp_shown
+	!top:24px;
+	!sp_shown
+	top:-36px;
+	left:-135px;
  }
  
  .bigO {
@@ -684,18 +687,18 @@ if (!curIP.length) {
 
 <!-- dont remove!-->
 <div id="bundled" style="position:relative;width:50%;min-width:350px;margin:0 auto;text-align:center;">
-<!-- div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;">This is a demo cabin. Go to <a href='https://room-house.com'>the site</a> to read and find out more..</div -->
-<script>var w = window.location.hostname.split('.'); if (w[0] === 'cclub') document.write('<div id="demo_info" style="width:100%;font-size:20px;color:#fff;display:none;margin: -20px auto 30px auto;">Это демо-кабина. Узнать больше <a style="color:#f7f53f;" href="https://room-house.com">на сайте</a> Румхауса</div>');
-</script>
+<div id="subbundled">
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyPirl network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
+
 <div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
-<div id="slidein" style="display:none;"></div><!-- dummy -->
-<div id="anno_adder" style="display:none;"></div><!-- dummy -->
-<div id="leftpluss" style="display:none;"></div><!-- dummy -->
-<div id="rightpluss" style="display:none;"></div><!-- dummy -->
-<div id="removerB" style="color:#777;font-size:16px;line-height:24px;cursor:pointer;z-index:1001;position:absolute;right:3px;"></div>
-<script>document.write('<iframe id="sp_balance" name=sp_balance scrolling="no" style="display:none;border:0;background:transparent;text-align:right;height:84px;width:354px;margin-left:-8px;"></iframe>');</script>
-</div>
+	<div id="slidein" style="display:none;"></div><!-- dummy -->
+	<div id="anno_adder" style="display:none;"></div><!-- dummy -->
+	<div id="leftpluss" style="display:none;"></div><!-- dummy -->
+	<div id="rightpluss" style="display:none;"></div><!-- dummy -->
+	<div id="removerB" style="color:#777;font-size:16px;line-height:24px;cursor:pointer;z-index:1001;position:absolute;right:3px;"></div>
+	<script>document.write('<iframe id="sp_balance" name=sp_balance scrolling="no" style="display:none;border:0;background:transparent;text-align:right;height:84px;width:354px;margin-left:-8px;"></iframe>');</script>
+</div><!-- sp_cont -->
+</div><!-- subbundled -->
 <div id="controls" class=controls><!-- set top to -12px with sp container-->
 <div id="fmode_selector" style="display:none;float:left;margin-left:0px;">
 
@@ -733,6 +736,9 @@ if (!curIP.length) {
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter></span></div>
 	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); if ($('audience_box').style.display == 'none') $('audience').click();">&#128101;:&nbsp;<span id=vcounter></span></div>
 	<div id="stats_ng" title="today viewers" onclick="if ($('audience_box').style.display != 'none') $('audience').click(); cli8();">&#128099;:&nbsp;<span id=num_guests></span></div>
+
+	<div id="want" style="display:none;opacity:0;margin-top:-12px;padding-top:16px;border:0px #777 dotted; border-radius:10px; background: transparent; height:57px; width: 330px; margin-right:16px;float:right;font-size:14px;color:#9cf;">.. отдадим <span style="font-weight:normal;color:#ff1493;font-size:16px;">100PIRL</span>  .. <a href="https://room-house.com/sp_help/index.html" style="color:#9cf;" target=new>кому</a>?</div>
+	<div style="clear:both;"></div>
 </div>
 
 </div><!-- controls -->
@@ -742,7 +748,7 @@ if (!curIP.length) {
 <div id="sub_selector0" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="leftlab" class=labsA style="opacity:0;"></div>
-		<span id=leftnum>713</span>
+		<span id=leftnum>715</span>
 	</div>
 </div>
 
@@ -765,13 +771,12 @@ if (!curIP.length) {
 <div id="sub_selector9" style="float:left;margin-top:-5vh;">
 	<div class=bigO style="border:0;">
 		<div id="rightlab" class=labsA style="opacity:0;"></div>
-		<span id=rightnum>450</span>
+		<span id=rightnum>454</span>
 	</div>
 </div>
 
 <div style="clear:left;"></div>
 </div><!-- subcontrols -->
-
 
 <div id="message_wrap" style="display:none;position:relative;" class="message_wrap">
 
@@ -788,6 +793,10 @@ if (!curIP.length) {
    <div id="grad" style="position:absolute; bottom:0; z-index:2400;"><img src="/icons/grad24.png" border=0></div>
 </div><!-- message_wrap -->
 </div><!-- bundled -->
+
+<!-- div id="want" style="margin-top:-220px;display:none;opacity:0;font-size:24px;font-style:italic;font-family:Sans;font-weight:bold;color:#ff1493;text-align:right;float:right;">Хотите общаться по видео? кликните <img src=/icons/bell2.png style="margin-bottom:-10px;"> в меню!< --/div>
+<!-- div id="want" style="position:absolute;margin-top:-250px;z-index:3900;margin-right:-30px;display:none;opacity:0;font-size:20px;font-style:italic;font-family:Sans;font-weight:bold;color:#9cf;text-align:right;float:right;">Как стать <a style="color:#ff1493" href="https://room-house.com/sky_ru.html">стать гуру</a> Румхауса и зарабатывать коины SkyPirl?</div -->
+
 </div><!-- house -->
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
