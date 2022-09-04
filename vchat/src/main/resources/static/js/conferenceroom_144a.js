@@ -430,7 +430,7 @@ function register() {
   
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000); /*(function(){$('stats').style.display='none'; $('stats').fade(0);}).delay(3000);*/}		
 		
-		if (!small_device && w[0] === "club" && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
+		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
 	
 		
 	}).catch(err => console.log(err));
@@ -513,16 +513,19 @@ function onNewParticipant(request) {
 		if (!small_device) {
         	 if (pctr == 4) {
                 	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-225px';
+                	$('room').style.marginLeft = '-186px';
         	 } else if (pctr == 3) {
                 	$('room').style.minWidth = '690px';
                 	$('room').style.marginLeft = '-96px';
         	 } else if (pctr < 3) {
                 	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '0px';
+                	$('room').style.marginLeft = '30px';
+		 } else if (pctr < 2) {
+                	$('room').style.minWidth = '480px';
+                	$('room').style.marginLeft = '90px';
         	 } else if (pctr == 5) {
                 	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-330px';
+                	$('room').style.marginLeft = '-310px';
         	 } else if (pctr > 5) {
                 	$('room').style.minWidth = '1560px';
                 	$('room').style.marginLeft = '-440px';
@@ -971,16 +974,19 @@ function onExistingParticipants(msg) {
 			if (!small_device) {
 				if (pctr == 4) {
                 			$('room').style.minWidth = '960px';
-                			$('room').style.marginLeft = '-225px';
+                			$('room').style.marginLeft = '-186px';
         			} else if (pctr == 3) {
                 			$('room').style.minWidth = '690px';
                 			$('room').style.marginLeft = '-96px';
         			} else if (pctr < 3) {
                 			$('room').style.minWidth = '480px';
-                			$('room').style.marginLeft = '0px';
+                			$('room').style.marginLeft = '30px';
+        			} else if (pctr < 2) {
+                			$('room').style.minWidth = '480px';
+                			$('room').style.marginLeft = '90px';
         			} else if (pctr == 5) {
                 			$('room').style.minWidth = '1260px';
-                			$('room').style.marginLeft = '-330px';
+                			$('room').style.marginLeft = '-310px';
         			} else if (pctr > 5) {
                 			$('room').style.minWidth = '1560px';
                 			$('room').style.marginLeft = '-440px';
@@ -1223,16 +1229,19 @@ function onParticipantLeft(request) {
 
         	if (pcounter == 4) {
                 	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-225px';
+                	$('room').style.marginLeft = '-186px';
         	} else if (pcounter == 3) {
                 	$('room').style.minWidth = '690px';
                 	$('room').style.marginLeft = '-96px';
         	} else if (pcounter < 3) {
                 	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '0px';
+                	$('room').style.marginLeft = '30px';
+        	} else if (pcounter < 2) {
+                	$('room').style.minWidth = '480px';
+                	$('room').style.marginLeft = '90px';
         	} else if (pcounter == 5) {
                 	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-330px';
+                	$('room').style.marginLeft = '-310px';
         	} else if (pcounter > 5) {
                 	$('room').style.minWidth = '1560px';
                 	$('room').style.marginLeft = '-440px';
