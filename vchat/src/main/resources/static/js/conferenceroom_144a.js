@@ -35,6 +35,8 @@ var connection_is_good = 1;
 
 var new_message = 0;
 
+var i_am_viewer = true;
+
 var acc_id = getCookie('acc') || '';
 
 const ua = navigator.userAgent.toLowerCase();
@@ -469,8 +471,10 @@ function onNewViewer(request) {
 function onNewParticipant(request) {
 
   if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
-  fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-  	let myrole = respo || 0;
+  //fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+  	//let myrole = respo || 0;
+	
+	let myrole = role;
 
 	var theCookies = document.cookie.split(';');
     	var really_new = 1;
@@ -501,7 +505,30 @@ function onNewParticipant(request) {
 	if (really_new) soundEffect.src = "/sounds/coin.mp3";
 
 	if (!video_hidden) {
-	   	
+
+		//preparing logics in advance
+		let pctr = pcounter + 1;
+		if (pctr > room_limit - 1 && i_am_viewer) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
+
+		if (!small_device) {
+        	 if (pctr == 4) {
+                	$('room').style.minWidth = '960px';
+                	$('room').style.marginLeft = '-225px';
+        	 } else if (pctr == 3) {
+                	$('room').style.minWidth = '690px';
+                	$('room').style.marginLeft = '-96px';
+        	 } else if (pctr < 3) {
+                	$('room').style.minWidth = '480px';
+                	$('room').style.marginLeft = '0px';
+        	 } else if (pctr == 5) {
+                	$('room').style.minWidth = '1260px';
+                	$('room').style.marginLeft = '-330px';
+        	 } else if (pctr > 5) {
+                	$('room').style.minWidth = '1560px';
+                	$('room').style.marginLeft = '-440px';
+        	 }
+		}
+		   	
 		receiveVideo(request.name, request.mode, myrole, true);
 
 		if (request.curip.length && $('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
@@ -518,27 +545,12 @@ function onNewParticipant(request) {
 			$('acco_' + request.name).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
 			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
 		}
-	}	
-	
-	//if (pcounter < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
-	if (pcounter > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
 
-	if (!small_device) {
-        	if (pcounter == 4) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-225px';
-        	} else if (pcounter == 3) {
-                	$('room').style.minWidth = '690px';
-                	$('room').style.marginLeft = '-96px';
-        	} else if (pcounter < 3) {
-                	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '0px';
-        	} else if (pcounter > 4) {
-                	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-390px';
-        	}
-	}
-  }).catch(err => console.log(err));
+	}	
+
+	
+
+  //}).catch(err => console.log(err));
 }
 
 function receiveVideoResponse(result) {
@@ -688,7 +700,6 @@ function onExistingParticipants(msg) {
 
   fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
-
 	let role = respo || 0; 
 	if (role == 0 && hack) role = 1;
 	if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
@@ -697,7 +708,9 @@ function onExistingParticipants(msg) {
 	
  	if (role_zero_has_square || role == 1 || role == 2 || role == 3) {
 
-		let fmode = getCookie('fmode') ? 'environment' : 'user';	
+		let fmode = getCookie('fmode') ? 'environment' : 'user';
+		
+		if (!role_zero_has_square) i_am_viewer = false;	
 			
 		var myname = $('name').value;
 		var i_am_muted = loadData(myname+'_muted');
@@ -950,6 +963,29 @@ function onExistingParticipants(msg) {
 		let na = chu[0].split('_');
 	
 		if (f != myname) {
+			//prepare logics in advance
+			let pctr = pcounter +1;
+			if (pctr < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
+			if (pctr > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
+
+			if (!small_device) {
+				if (pctr == 4) {
+                			$('room').style.minWidth = '960px';
+                			$('room').style.marginLeft = '-225px';
+        			} else if (pctr == 3) {
+                			$('room').style.minWidth = '690px';
+                			$('room').style.marginLeft = '-96px';
+        			} else if (pctr < 3) {
+                			$('room').style.minWidth = '480px';
+                			$('room').style.marginLeft = '0px';
+        			} else if (pctr == 5) {
+                			$('room').style.minWidth = '1260px';
+                			$('room').style.marginLeft = '-330px';
+        			} else if (pctr > 5) {
+                			$('room').style.minWidth = '1560px';
+                			$('room').style.marginLeft = '-440px';
+        			}
+			}	    
 
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
@@ -989,26 +1025,7 @@ function onExistingParticipants(msg) {
 			$('anno_' + f).style.display='block';			
 			$('anno_' + f).fade(1);
 		}
-	   }
-  
-	   if (pcounter < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
-	   if (pcounter > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
-
-	   if (!small_device) {
-        	if (pcounter == 4) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-225px';
-        	} else if (pcounter == 3) {
-                	$('room').style.minWidth = '690px';
-                	$('room').style.marginLeft = '-96px';
-        	} else if (pcounter < 3) {
-                	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '0px';
-        	} else if (pcounter > 4) {
-                	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-390px';
-        	}
-	   }	    
+	   } //for
  }	   
 
   }).catch(err => console.log(err));
@@ -1199,24 +1216,27 @@ function onParticipantLeft(request) {
 	var participant = participants[request.name];
 	if (participant) {
 		participant.dispose();
-		if (pcounter < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
+		if (pcounter < room_limit) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device) {
 
-        		if (pcounter == 4) {
-                		$('room').style.minWidth = '960px';
-                		$('room').style.marginLeft = '-225px';
-        		} else if (pcounter == 3) {
-                		$('room').style.minWidth = '690px';
-                		$('room').style.marginLeft = '-96px';
-        		} else if (pcounter < 3) {
-                		$('room').style.minWidth = '480px';
-                		$('room').style.marginLeft = '0px';
-        		} else if (pcounter > 4) {
-                		$('room').style.minWidth = '1260px';
-                		$('room').style.marginLeft = '-390px';
-        		}			
+        	if (pcounter == 4) {
+                	$('room').style.minWidth = '960px';
+                	$('room').style.marginLeft = '-225px';
+        	} else if (pcounter == 3) {
+                	$('room').style.minWidth = '690px';
+                	$('room').style.marginLeft = '-96px';
+        	} else if (pcounter < 3) {
+                	$('room').style.minWidth = '480px';
+                	$('room').style.marginLeft = '0px';
+        	} else if (pcounter == 5) {
+                	$('room').style.minWidth = '1260px';
+                	$('room').style.marginLeft = '-330px';
+        	} else if (pcounter > 5) {
+                	$('room').style.minWidth = '1560px';
+                	$('room').style.marginLeft = '-440px';
+        	}			
 		}
 	}
 }
