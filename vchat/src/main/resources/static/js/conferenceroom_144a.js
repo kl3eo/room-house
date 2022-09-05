@@ -431,7 +431,7 @@ function register() {
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000); /*(function(){$('stats').style.display='none'; $('stats').fade(0);}).delay(3000);*/}		
 		
 		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
-	
+	//if (!hack && i_am_viewer) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';} //?!
 		
 	}).catch(err => console.log(err));
 
@@ -517,12 +517,12 @@ function onNewParticipant(request) {
         	 } else if (pctr == 3) {
                 	$('room').style.minWidth = '690px';
                 	$('room').style.marginLeft = '-96px';
-        	 } else if (pctr < 3) {
+        	 } else if (pctr == 2) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '30px';
-		 } else if (pctr < 2) {
+		 } else if (pctr == 1) {
                 	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '90px';
+                	$('room').style.marginLeft = '0px';
         	 } else if (pctr == 5) {
                 	$('room').style.minWidth = '1260px';
                 	$('room').style.marginLeft = '-310px';
@@ -978,12 +978,12 @@ function onExistingParticipants(msg) {
         			} else if (pctr == 3) {
                 			$('room').style.minWidth = '690px';
                 			$('room').style.marginLeft = '-96px';
-        			} else if (pctr < 3) {
+        			} else if (pctr == 2) {
                 			$('room').style.minWidth = '480px';
                 			$('room').style.marginLeft = '30px';
-        			} else if (pctr < 2) {
+        			} else if (pctr == 1) {
                 			$('room').style.minWidth = '480px';
-                			$('room').style.marginLeft = '90px';
+                			$('room').style.marginLeft = '0px';
         			} else if (pctr == 5) {
                 			$('room').style.minWidth = '1260px';
                 			$('room').style.marginLeft = '-310px';
@@ -1233,12 +1233,12 @@ function onParticipantLeft(request) {
         	} else if (pcounter == 3) {
                 	$('room').style.minWidth = '690px';
                 	$('room').style.marginLeft = '-96px';
-        	} else if (pcounter < 3) {
+        	} else if (pcounter == 2) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '30px';
-        	} else if (pcounter < 2) {
+        	} else if (pcounter == 1) {
                 	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '90px';
+                	$('room').style.marginLeft = '0px';
         	} else if (pcounter == 5) {
                 	$('room').style.minWidth = '1260px';
                 	$('room').style.marginLeft = '-310px';
