@@ -428,10 +428,9 @@ function register() {
 
 		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
   
-  		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000); /*(function(){$('stats').style.display='none'; $('stats').fade(0);}).delay(3000);*/}		
+  		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
 		
 		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
-	//if (!hack && i_am_viewer) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';} //?!
 		
 	}).catch(err => console.log(err));
 
@@ -440,9 +439,7 @@ function register() {
 function onNewViewer(request) {
 
 	if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
-	var myname = $('name').value;
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		let role = respo || 0;
+
 		let na = request.name.split('_');
 		let short_name = na[0];
 		let suf = na[na.length-1];
@@ -465,14 +462,11 @@ function onNewViewer(request) {
 		vcounter = cur; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
 		
 		if (just_left != f && $('name').value != f && $('name').value != just_left) soundEffect.src = "/sounds/steps.mp3";
-	}).catch(err => console.log(err));
 }
 
 function onNewParticipant(request) {
 
   if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
-  //fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-  	//let myrole = respo || 0;
 	
 	let myrole = role;
 
@@ -502,7 +496,7 @@ function onNewParticipant(request) {
 
     	}
 
-	if (really_new) soundEffect.src = "/sounds/coin.mp3";
+	if (really_new) soundEffect.src = "/sounds/coin.mp3";	
 
 	if (!video_hidden) {
 
@@ -513,19 +507,19 @@ function onNewParticipant(request) {
 		if (!small_device) {
         	 if (pctr == 4) {
                 	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-186px';
+                	$('room').style.marginLeft = '-200px';
         	 } else if (pctr == 3) {
                 	$('room').style.minWidth = '690px';
                 	$('room').style.marginLeft = '-96px';
         	 } else if (pctr == 2) {
                 	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '30px';
+                	$('room').style.marginLeft = '20px';
 		 } else if (pctr == 1) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '0px';
         	 } else if (pctr == 5) {
                 	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-310px';
+                	$('room').style.marginLeft = '-320px';
         	 } else if (pctr > 5) {
                 	$('room').style.minWidth = '1560px';
                 	$('room').style.marginLeft = '-440px';
@@ -549,11 +543,7 @@ function onNewParticipant(request) {
 			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
 		}
 
-	}	
-
-	
-
-  //}).catch(err => console.log(err));
+	}
 }
 
 function receiveVideoResponse(result) {
@@ -701,6 +691,7 @@ function isMicrophoneAllowed(){
 	
 function onExistingParticipants(msg) {
 
+  var myname = $('name').value;
   fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
 	let role = respo || 0; 
@@ -709,17 +700,16 @@ function onExistingParticipants(msg) {
 
 	if (temporary && role == 0) role = 3; 
 	
- 	if (role_zero_has_square || role == 1 || role == 2 || role == 3) {
+ 	if (role == 1 || role == 2 || role == 3)  {
 
 		let fmode = getCookie('fmode') ? 'environment' : 'user';
 		
-		if (!role_zero_has_square) i_am_viewer = false;	
+		i_am_viewer = false;	
 			
-		var myname = $('name').value;
 		var i_am_muted = loadData(myname+'_muted');
 		
 		let mode = aonly ? 'a' : 'v'; // maybe c if am guru?
-   	
+		
 		var participant = new Participant(name, myname, mode, role, false);
 		participants[name] = participant;
 		var video = participant.getVideoElement();
@@ -953,6 +943,7 @@ function onExistingParticipants(msg) {
    }
 
  }
+
  if (msg.data) {
 	   for (var i = 0; i < msg.data.length; i++) {
 		var chu = msg.data[i].split('_|_');
@@ -964,7 +955,6 @@ function onExistingParticipants(msg) {
 		let a = chu[4];
 		
 		let na = chu[0].split('_');
-	
 		if (f != myname) {
 			//prepare logics in advance
 			let pctr = pcounter +1;
@@ -974,25 +964,25 @@ function onExistingParticipants(msg) {
 			if (!small_device) {
 				if (pctr == 4) {
                 			$('room').style.minWidth = '960px';
-                			$('room').style.marginLeft = '-186px';
+                			$('room').style.marginLeft = '-200px';
         			} else if (pctr == 3) {
                 			$('room').style.minWidth = '690px';
                 			$('room').style.marginLeft = '-96px';
         			} else if (pctr == 2) {
                 			$('room').style.minWidth = '480px';
-                			$('room').style.marginLeft = '30px';
+                			$('room').style.marginLeft = '20px';
         			} else if (pctr == 1) {
                 			$('room').style.minWidth = '480px';
                 			$('room').style.marginLeft = '0px';
         			} else if (pctr == 5) {
                 			$('room').style.minWidth = '1260px';
-                			$('room').style.marginLeft = '-310px';
+                			$('room').style.marginLeft = '-320px';
         			} else if (pctr > 5) {
                 			$('room').style.minWidth = '1560px';
                 			$('room').style.marginLeft = '-440px';
         			}
 			}	    
-
+			
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
 			
@@ -1229,19 +1219,19 @@ function onParticipantLeft(request) {
 
         	if (pcounter == 4) {
                 	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-186px';
+                	$('room').style.marginLeft = '-200px';
         	} else if (pcounter == 3) {
                 	$('room').style.minWidth = '690px';
                 	$('room').style.marginLeft = '-96px';
         	} else if (pcounter == 2) {
                 	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '30px';
+                	$('room').style.marginLeft = '20px';
         	} else if (pcounter == 1) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '0px';
         	} else if (pcounter == 5) {
                 	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-310px';
+                	$('room').style.marginLeft = '-320px';
         	} else if (pcounter > 5) {
                 	$('room').style.minWidth = '1560px';
                 	$('room').style.marginLeft = '-440px';
@@ -1323,6 +1313,10 @@ function check_iOS() {
     return true;
   }
   return false;
+}
+
+function isFirefox() {
+  return navigator.userAgent.match("FxiOS");
 }
 
 function is_mobAndro() {

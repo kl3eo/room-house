@@ -1,9 +1,9 @@
 var fullscreen = false;
 
-var doSwitchOneMode = function(el) {if (false) console.log(el); let sp_setter = '<iframe id="sp_setter" name="sp_setter" src="https://cube.room-house.com:8449/#/binder/" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'});
+var doSwitchOneMode = function(el) {if (false) console.log(el); let sp_setter = isFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="https://cube.room-house.com:8449/#/binder/" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="https://cube.room-house.com:8449/#/binder/" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'});
 $('newacc').click();};
 
-const PARTICIPANT_MAIN_CLASS = check_iOS() || isAndroid ? 'participant main_i' : 'participant main';
+const PARTICIPANT_MAIN_CLASS = small_device ? 'participant main_i' : 'participant main';
 const PARTICIPANT_CLASS = 'participant';
 const PARTICIPANT_SOLO = 'participant solo'
 
@@ -76,7 +76,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	if (pcounter > 1) switchContainerClass();
 
-	(function() {container.className = pcounter === 1 && !role_zero_has_square && !small_device ? PARTICIPANT_SOLO : container.className;}).delay(2000);
+	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : container.className;}).delay(1000);
 	
 	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 	
@@ -199,9 +199,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
 	$(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': $(video.id).style.maxHeight;
 	
-	//if (pcounter > 1) 
-		$(video.id).style.maxHeight = '190px'; //?!
-
+	//if (pcounter > 1)  // bigger screen bad for notebooks
+		$(video.id).style.maxHeight = '190px';
+	
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
 	if (video.muted !== true){
@@ -272,23 +272,27 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	   if ( from_changing_slider) { 
 		if (!isAndroid) toggleMute();
 	   } else {
+	      if (!small_device) {
 
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
 			elements.forEach(function(item) {
 
-				item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
 			});
-                        elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_SOLO));
+                        
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_SOLO));
                         elements.forEach(function(item) {
 
-				item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
 			});
 
-				container.className = PARTICIPANT_MAIN_CLASS;
-			} else {
+			container.className = PARTICIPANT_MAIN_CLASS;
+		} else {
 			container.className = PARTICIPANT_CLASS;
-		}		
+		}
+				
+	      }
 	   }
 	}
 	
@@ -470,10 +474,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
                         var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
                         elements.forEach(function(item) {
 
-                                item.className = check_iOS() || isAndroid ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_SOLO;
+                                item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_SOLO;
                         });
 
 		}
+		
 		if (name != myname || myrole != 0) real_pcnt--;
 		if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 		
