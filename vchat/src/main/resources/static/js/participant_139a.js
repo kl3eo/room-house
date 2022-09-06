@@ -6,6 +6,8 @@ $('newacc').click();};
 const PARTICIPANT_MAIN_CLASS = small_device ? 'participant main_i' : 'participant main';
 const PARTICIPANT_CLASS = 'participant';
 const PARTICIPANT_SOLO = 'participant solo'
+const PARTICIPANT_DUO = 'participant duo'
+const PARTICIPANT_TRIO = 'participant trio'
 
 function Participant(name, myname, mode, myrole, new_flag) {
 	
@@ -59,7 +61,13 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (name == myname) saveData(myname+'_muted', i_am_muted, 1440);
 
 	var container = document.createElement('div');
-	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+	
+	container.className = PARTICIPANT_MAIN_CLASS;
+	//special case
+	container.className = (pcounter == 0 && !small_device) ? PARTICIPANT_SOLO : container.className;
+	container.className = (pcounter == 1 && !small_device) ? PARTICIPANT_DUO : container.className;
+	container.className = (pcounter == 2 && !small_device) ? PARTICIPANT_TRIO : container.className;
+	container.style.opacity=0;
 	
 	i_am_guest = isPresentMainParticipant() & pcounter === 1 ? 1 : i_am_guest;
 
@@ -72,11 +80,36 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
+
+	if (real_pcnt === 4) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
+                        elements.forEach(function(item) {
+
+				item.className = PARTICIPANT_MAIN_CLASS;
+			});
+	}
+		
+	if (real_pcnt === 3) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_DUO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_TRIO;
+			});
+	}
+
+	if (real_pcnt === 2) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_SOLO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_DUO;
+			});
+	}
+		
 	if (pcounter > room_limit) {hack = false;}
 
-	if (pcounter > 1) switchContainerClass();
+	if (pcounter > 3) switchContainerClass();
 
-	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : container.className;}).delay(1000);
+	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : (pcounter === 2 && !small_device) ? PARTICIPANT_DUO : (pcounter === 3 && !small_device) ? PARTICIPANT_TRIO : container.className;}).delay(500);
 	
 	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
 	
@@ -96,7 +129,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(video);
 	container.appendChild(span);
 	container.appendChild(speaker);
-	container.onclick = switchContainerClass;
+	//container.onclick = switchContainerClass;
 	container.ondblclick = rmPtcp;
 
 	var ar = name.split("_");
@@ -113,7 +146,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	speaker.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); if (name != myname) toggleSlider(); else toggleMute();});
 	slider.addEventListener('change', function(e) {e.preventDefault(); e.stopPropagation(); changeVolume();});
 	
-	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (check_iOS() || isAndroid) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});	
+	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (small_device) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});	
 	
 	onemode.onclick = setCinema;
 	dropper.onclick = rmPtcp;
@@ -223,7 +256,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			//if (role != 0) {
-				console.log('set anno');
+				//console.log('set anno');
 				who_to = name;
 				anno_adder.click();
 			//}
@@ -287,6 +320,18 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
 			});
 
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_DUO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+						
 			container.className = PARTICIPANT_MAIN_CLASS;
 		} else {
 			container.className = PARTICIPANT_CLASS;
@@ -311,7 +356,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	function toggleBigScreen(el) {
 
-			if (!isAndroid)  switchContainerClass();
+			if (!isAndroid) switchContainerClass();
 			if (isAndroid) {
 				if (container.className == PARTICIPANT_MAIN_CLASS) toggleFullScreen(el);
 				if (container.className == PARTICIPANT_CLASS) switchContainerClass();
@@ -422,7 +467,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 
 	function isPresentMainParticipant() {
-		return ((document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0 || (document.getElementsByClassName(PARTICIPANT_SOLO)).length != 0);
+		return ( (document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0 || (document.getElementsByClassName(PARTICIPANT_SOLO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_DUO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_TRIO)).length != 0 );
 	}
 
 
@@ -470,11 +515,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		pcounter--; 
 		if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) {hack = true;}
 
-		if (pcounter === 1) {
+		if (pcounter < 4) {
                         var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
                         elements.forEach(function(item) {
 
-                                item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_SOLO;
+                                item.className = small_device ? PARTICIPANT_MAIN_CLASS : pcounter === 1 ? PARTICIPANT_SOLO : pcounter === 2 ? PARTICIPANT_DUO : pcounter === 3 ? PARTICIPANT_TRIO : item.className;
                         });
 
 		}

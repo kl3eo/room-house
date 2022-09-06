@@ -299,7 +299,6 @@ input[type=button]:active, input[type=submit]:active {
 }
 
 .participant.main {
-	!max-height: 360px;
 	min-width: 210px;
 	width: 16%;
 	margin: 0 auto;
@@ -308,6 +307,18 @@ input[type=button]:active, input[type=submit]:active {
 .participant.solo {
 	min-width: 480px;
 	width: 50%;
+	margin: 0 auto;
+}
+
+.participant.duo {
+	min-width: 432px;
+	width: 45%;
+	margin: 0 auto;
+}
+
+.participant.trio {
+	min-width: 288px;
+	width: 30%;
 	margin: 0 auto;
 }
 

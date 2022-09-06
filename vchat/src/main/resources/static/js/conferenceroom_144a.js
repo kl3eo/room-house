@@ -367,8 +367,7 @@ function register() {
 		change_lang(altlang[l]);
 			
 		$('room-header').innerText = 'ROOM ' + room;
-		$('room-header').style.display = 'block';
-		$('room-backer').style.display = 'none';
+		//$('room-header').style.display = 'block';
 		$('join').style.display = 'none';
 		$('room').style.display = 'block';
 		$('preroom').innerHTML='&nbsp;';
@@ -509,11 +508,11 @@ function onNewParticipant(request) {
                 	$('room').style.minWidth = '960px';
                 	$('room').style.marginLeft = '-200px';
         	 } else if (pctr == 3) {
-                	$('room').style.minWidth = '690px';
-                	$('room').style.marginLeft = '-96px';
+                	$('room').style.minWidth = '960px';
+                	$('room').style.marginLeft = '-200px';
         	 } else if (pctr == 2) {
-                	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '20px';
+                	$('room').style.minWidth = '960px';
+                	$('room').style.marginLeft = '-200px';
 		 } else if (pctr == 1) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '0px';
@@ -527,6 +526,8 @@ function onNewParticipant(request) {
 		}
 		   	
 		receiveVideo(request.name, request.mode, myrole, true);
+		
+		(function() {$(request.name).fade(1);}).delay(500);
 
 		if (request.curip.length && $('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
 			$('loco_'+request.name).innerHTML = request.curip;
@@ -694,13 +695,13 @@ function onExistingParticipants(msg) {
   var myname = $('name').value;
   fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
-	let role = respo || 0; 
-	if (role == 0 && hack) role = 1;
-	if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
+   let role = respo || 0; 
+   if (role == 0 && hack) role = 1;
+   if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
 
-	if (temporary && role == 0) role = 3; 
+   if (temporary && role == 0) role = 3; 
 	
- 	if (role == 1 || role == 2 || role == 3)  {
+   if (role == 1 || role == 2 || role == 3)  {
 
 		let fmode = getCookie('fmode') ? 'environment' : 'user';
 		
@@ -799,7 +800,7 @@ function onExistingParticipants(msg) {
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  $(myname).style.float = 'none';
-					$(myname).className = PARTICIPANT_MAIN_CLASS; 
+					//$(myname).className = PARTICIPANT_MAIN_CLASS;
                           });
 			}
 
@@ -808,7 +809,7 @@ function onExistingParticipants(msg) {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  $(myname).style.float = 'none';
-			$(myname).className = PARTICIPANT_MAIN_CLASS; 
+			//$(myname).className = PARTICIPANT_MAIN_CLASS;
 		  }
 
 		  (function(){$('phones').fade(0);}).delay(1000);
@@ -888,7 +889,7 @@ function onExistingParticipants(msg) {
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  $(myname).style.float = 'none';
-					$(myname).className = PARTICIPANT_MAIN_CLASS; 					
+					//$(myname).className = PARTICIPANT_MAIN_CLASS; 					
 					$('room-header-file').style.display='none';
 
                           	}
@@ -900,7 +901,7 @@ function onExistingParticipants(msg) {
 			this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			
 			if (small_device)  $(myname).style.float = 'none';
-			$(myname).className = PARTICIPANT_MAIN_CLASS;
+			//$(myname).className = PARTICIPANT_MAIN_CLASS;
 			$('room-header-file').style.display='none';
                   }
 
@@ -925,7 +926,7 @@ function onExistingParticipants(msg) {
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  $(myname).style.float = 'none';
-					$(myname).className = PARTICIPANT_MAIN_CLASS; 
+					//$(myname).className = PARTICIPANT_MAIN_CLASS; 
                           });
 			}
 
@@ -934,17 +935,17 @@ function onExistingParticipants(msg) {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  $(myname).style.float = 'none';
-			$(myname).className = PARTICIPANT_MAIN_CLASS; 
+			//$(myname).className = PARTICIPANT_MAIN_CLASS; 
 		  }
 
 		  (function(){$('phones').fade(0);}).delay(1000);
           });
 
    }
+   (function() {$(myname).fade(1);}).delay(500);
+   }// if role
 
- }
-
- if (msg.data) {
+ 	if (msg.data) {
 	   for (var i = 0; i < msg.data.length; i++) {
 		var chu = msg.data[i].split('_|_');
 
@@ -966,11 +967,11 @@ function onExistingParticipants(msg) {
                 			$('room').style.minWidth = '960px';
                 			$('room').style.marginLeft = '-200px';
         			} else if (pctr == 3) {
-                			$('room').style.minWidth = '690px';
-                			$('room').style.marginLeft = '-96px';
+                			$('room').style.minWidth = '960px';
+                			$('room').style.marginLeft = '-200px';
         			} else if (pctr == 2) {
-                			$('room').style.minWidth = '480px';
-                			$('room').style.marginLeft = '20px';
+                			$('room').style.minWidth = '960px';
+                			$('room').style.marginLeft = '-200px';
         			} else if (pctr == 1) {
                 			$('room').style.minWidth = '480px';
                 			$('room').style.marginLeft = '0px';
@@ -988,6 +989,7 @@ function onExistingParticipants(msg) {
 			
 			$('slider_' + f).value = coo_volume;
 			$('video-' + f).volume = coo_volume;
+			(function() {$(f).fade(1);}).delay(500);
 
 		} else { 
 			var lang = getCookie('lang');
@@ -1022,8 +1024,8 @@ function onExistingParticipants(msg) {
 			$('anno_' + f).fade(1);
 		}
 	   } //for
- }	   
-
+ 	}	   
+	(function() {$('room-header').style.display = 'block';$('room-header').fade(1);}).delay(1500);
   }).catch(err => console.log(err));
 }
 
@@ -1221,11 +1223,11 @@ function onParticipantLeft(request) {
                 	$('room').style.minWidth = '960px';
                 	$('room').style.marginLeft = '-200px';
         	} else if (pcounter == 3) {
-                	$('room').style.minWidth = '690px';
-                	$('room').style.marginLeft = '-96px';
+                	$('room').style.minWidth = '960px';
+                	$('room').style.marginLeft = '-200px';
         	} else if (pcounter == 2) {
-                	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '20px';
+                	$('room').style.minWidth = '960px';
+                	$('room').style.marginLeft = '-200px';
         	} else if (pcounter == 1) {
                 	$('room').style.minWidth = '480px';
                 	$('room').style.marginLeft = '0px';

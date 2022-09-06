@@ -149,7 +149,7 @@ function flashText(t) {
 }
 
 function flashText_and_rejoin(t) {
-	$('phones').innerHTML = t; $('phones').fade(1); leaveRoom(); (function(){$('phones').fade(0); register();}).delay(1000);
+	$('room-header').style.display = 'none';$ ('room-header').fade(0); $('phones').innerHTML = t; $('phones').fade(1); leaveRoom(); (function(){$('phones').fade(0); register();}).delay(1000);
 }
 
 function toggleAllMuted() {
