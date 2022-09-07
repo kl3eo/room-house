@@ -21,6 +21,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (name.match(gi)) {guru_is_here = 1; this_is_guru = true;}
 	if (myname.match(gi)) i_am_guru = true;
 	
+	var this_is_unmuted = false;
+        var ai = new RegExp('^A:','g');
+        if (name.match(ai)) {this_is_unmuted = true; sound_on_played = 0;}
+	
 	let ct = 0;
 	for ( var key in participants) {
 		if (key.match(gi)) ct++;
@@ -41,11 +45,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//or all allowed
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
-	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : true;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 				
 	var coo_volume = loadData(name+'_volume');
 
-	if (coo_volume === null || coo_volume === 'null') coo_volume = 0.5;
+	if (coo_volume === null || coo_volume === 'null') coo_volume = this_is_unmuted ? 0.1 : 0.5;
 
 	if (name != myname) {
 		saveData(name+'_muted', coo_muted, 1440);
