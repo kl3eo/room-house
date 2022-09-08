@@ -46,6 +46,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
 	if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
+	
+	if (mode == 'm') coo_muted = true;
 				
 	var coo_volume = loadData(name+'_volume');
 
@@ -150,7 +152,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	span.onclick = back_to_audience;
 
-	speaker.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); if (name != myname) toggleSlider(); else toggleMute();});
+	if (mode != 'm' || myname == name) {
+		speaker.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); if (name != myname) toggleSlider(); else toggleMute();});
+		speaker.style.cursor = 'pointer';
+	}
+	
 	slider.addEventListener('change', function(e) {e.preventDefault(); e.stopPropagation(); changeVolume();});
 	
 	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (small_device) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});	
@@ -228,7 +234,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	adder.appendChild(document.createTextNode('A'));
 	adder.onclick = setAnno;
 	
-
 	adder.style.display = myrole == 0 && myname == name ? 'none': 'block';
 	//don't add to gurus except myself
 	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
@@ -248,7 +253,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));
 		
 	} else {
-		if (name != myname) speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
+		if (name != myname && mode != 'm') speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
+		if (name != myname && mode == 'm') speaker.appendChild(document.createTextNode('X'));
 		if (name == myname && (i_am_muted === true || i_am_muted === 'true')) speaker.appendChild(document.createTextNode('X'));
 		if (name == myname && (i_am_muted === false || i_am_muted === 'false') && myrole != 0) speaker.appendChild(document.createTextNode('\uD83C\uDFA4'));
 	}

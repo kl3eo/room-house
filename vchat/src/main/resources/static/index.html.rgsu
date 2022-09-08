@@ -15,7 +15,8 @@
 <script src="./js/mBox.Core.js"></script>
 <script src="./js/mBox.Modal.js"></script>
 
-<script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true;</script>
+<script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true; var i_am_muted = false;
+</script>
 <script src="https://en.room-house.com/files/cur_104.js"></script>
 <script src="./js/a12.js"></script>
 
@@ -241,7 +242,7 @@
 	right: 0px;
 	width: 36px;
 	height: 36px;
-	cursor: pointer;
+	!cursor: pointer;
 	border-radius: 20px;
 	z-index: 999;
 }
@@ -625,6 +626,7 @@
 
 </div><!-- preroom -->
 
+
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
 	<div id="container" style="margin-top:-5px;border:0px solid #ccc;">
 		<div id="wrapper">
@@ -657,8 +659,7 @@ RANDOM=7777
 				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;" onchange="getFile();"></div>
 				<div style="clear:left;"></div>
 				<div id="participants"></div>
-
-				<input style="margin:0 auto 0 -48px;width:90px;display:none;" type="button" id="button-leave" onmouseup="leaveRoom();location.reload();" value="Leave room">
+				<!-- input style="margin:0 auto 0 -48px;width:90px;display:none;" type="button" id="button-leave" onmouseup="leaveRoom();location.reload();" value="Leave room" -->
 			</div><!-- room -->
 		</div><!-- wrapper -->
 	</div><!-- container -->

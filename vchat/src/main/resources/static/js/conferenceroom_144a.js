@@ -382,7 +382,7 @@ function register() {
 	
 		$('fmode_selector').style.display = 'block';
 
-		var mode = aonly ? 'a' : 'v'; 	
+		let mode = aonly ? 'a' : (i_am_muted === true || i_am_muted === 'true') ? 'm' : 'v'; 	
 		
 		let tok = getCookie('authtoken') || '';
 		
@@ -561,11 +561,11 @@ async function startCapture(displayMediaOptions) {
 
 function onExistingViewers(msg) {
 
-   var myname = $('name').value;
+   let myname = $('name').value;
    
-   var audience = '';
+   let audience = '';
 
-   var play_sound = myname == just_left ? false : true;
+   let play_sound = myname == just_left ? false : true;
    
    if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
   
@@ -675,7 +675,7 @@ function isMicrophoneAllowed(){
 function onExistingParticipants(msg) {
 //sets up every video in the room I just joined
 
-  var myname = $('name').value; 
+  let myname = $('name').value; 
   
   fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
@@ -691,9 +691,9 @@ function onExistingParticipants(msg) {
 		
 	i_am_viewer = false;	
 			
-	i_am_muted = loadData(myname+'_muted');
+	//i_am_muted = loadData(myname+'_muted');
 		
-	let mode = aonly ? 'a' : 'v'; // maybe c if am guru?
+	let mode = aonly ? 'a' : (i_am_muted === true || i_am_muted === 'true') ? 'm' : 'v';
 		
 	var participant = new Participant(name, myname, mode, role, false);
 	participants[name] = participant;
