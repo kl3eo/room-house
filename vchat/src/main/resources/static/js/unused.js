@@ -77,3 +77,92 @@ var new_account = new Map([
 	       ['cn', 'Your account ID (copy/paste and hit Enter) <input type=text id=rsender style="width:210px;" value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length == 48 && this.value.substring(0,1) == \'5\') {setCookie(\'acc\',this.value,144000);mod6.close();$(\'sp_balance\').src=\'https://cube.room-house.com:8444/?acc=\'+this.value;leaveRoom();register();} else {this.value=\'\';this.placeholder = \'Please enter valid address\';}}"><br>Create <a href=\'https://wallet.room-house.com/#/accounts/0\' target=\'new\'>a new account</a>.'],
 	          ['ru', 'Your account ID (copy/paste and hit Enter) <input type=text id=rsender style="width:210px;" value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length == 48 && this.value.substring(0,1) == \'5\') {setCookie(\'acc\',this.value,144000);mod6.close();$(\'sp_balance\').src=\'https://cube.room-house.com:8444/?acc=\'+this.value;leaveRoom();register();} else {this.value=\'\';this.placeholder = \'Please enter valid address\';}}"><br>Create <a href=\'https://wallet.room-house.com/#/accounts/0\' target=\'new\'>a new account</a>.']
 ]);
+
+// good stuff -- 08.09.22
+//SDP_END_POINT_ALREADY_NEGOTIATED does not allow to change media in showMeAsParticipant() -- so in present we MUST leave room and register back
+function showMeAsParticipant() {
+
+	let participant;
+	let myname = $('name').value;
+	
+	let fmode = getCookie('fmode') ? 'environment' : 'user';			
+			
+	let i_am_muted = loadData(myname+'_muted');
+		
+	let mode = aonly ? 'a' : 'v'; // maybe c if am guru?
+	
+	for (var key in participants) {
+		   	 if (participants[key].name == myname) {participant = participants[key]; break;}
+	}
+		
+	if (typeof participant === 'undefined') {console.log('undef', myname);return;}
+
+//console.log('showAsParticipant:', participant.name, 'mode:', participant.mode);
+
+	let video = participant.getVideoElement();
+	let constraints = {
+                audio: true,
+                video: {
+                        maxWidth : wi_hq,
+                        maxFrameRate : fps_hq,
+                        minFrameRate : fps_hq,
+			facingMode: fmode
+                }
+	};
+
+	let constraints_vonly = {
+                audio: false,
+                video: {
+			facingMode: fmode
+               	}
+	};
+		
+	let constraints_aonly = {
+                audio: true,
+               	video: false
+	};
+
+	if (aonly) constraints = constraints_aonly;
+	if (i_am_muted === true || i_am_muted === 'true') constraints =  constraints_vonly;
+
+	let options = {
+              	localVideo: video,
+		mediaConstraints: constraints,
+		onicecandidate: participant.onIceCandidate.bind(participant)
+	}
+	
+	let constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
+	
+	let options_alt = {
+		localVideo: video,
+		mediaConstraints: constraints_alt,
+		onicecandidate: participant.onIceCandidate.bind(participant)
+	}
+
+         participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
+                  if(error) {
+			var ff = new RegExp('closed','ig');
+			if (error.toString().match(ff)) {
+			} else {
+                          participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_alt,
+                          function (error) {
+                                        if(error) {
+                                                return console.error(error);
+                                        }
+
+                                        startVideo(video);
+                                        this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+					if (small_device)  $(myname).style.float = 'none';
+                          });
+			}
+
+			return false;
+                  } else {
+                  	startVideo(video);
+                  	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+			if (small_device)  $(myname).style.float = 'none';
+		  }
+
+		  (function(){$('phones').fade(0);}).delay(1000);
+         });
+}

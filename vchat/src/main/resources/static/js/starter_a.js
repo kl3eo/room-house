@@ -149,7 +149,9 @@ function flashText(t) {
 }
 
 function flashText_and_rejoin(t) {
-	$('room-header').style.display = 'none';$ ('room-header').fade(0); $('phones').innerHTML = t; $('phones').fade(1); leaveRoom(); (function(){register();}).delay(100); (function(){$('phones').fade(0);}).delay(1000); 
+	//SDP_END_POINT_ALREADY_NEGOTIATED does not allow to change media as in showMeAsParticipant() -- so in present we leave room and register again
+	$('room-header').style.display = 'none';$ ('room-header').fade(0); $('phones').innerHTML = t; $('phones').fade(1); if (i_am_viewer || true) {leaveRoom(); register();} else {/*showMeAsParticipant();*/}
+	(function(){$('phones').fade(0);}).delay(1000); 
 }
 
 function toggleAllMuted() {
@@ -165,7 +167,8 @@ function toggleAllMuted() {
 		setCookie('all_muted', n, 1440);
 
 		this.title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
-	
+		
+		//remove all to reset them in Participant
 		if (Object.keys(participants).length) {	
 			for (var key in participants) {
 		   	 if (participants[key].name != $('name').value) {

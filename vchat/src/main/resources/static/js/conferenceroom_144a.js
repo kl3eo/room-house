@@ -8,12 +8,10 @@ var vcounter = 0;
 var i_am_guest = 0;
 var registered = 0;
 var guru_is_here = 0;
-var rejoined = 0;
 
 var problems = 0;
 var altlang = ['en','ru','es','fr','cn','pt'];
 
-var waiting = 1;
 var waiting_period = 633000;
 var logo_added = 0;
 
@@ -39,6 +37,7 @@ var i_am_viewer = true;
 
 var acc_id = getCookie('acc') || '';
 
+
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -60,13 +59,13 @@ window.onload = function(){
 
 
    setInterval(function(){
-       if ((registered && !now_playing)|| problems) rejoin();
+       if ((registered && !now_playing)|| problems) {if (problems) rejoin();}
 
    }, 30000 + Math.random() * 10000);
 
    setInterval(function(){
 
-       if (registered && waiting && !now_playing) rejoin();
+       if (registered && !now_playing) {if (problems) rejoin();}
 
    }, waiting_period + Math.random() * 10000);
 
@@ -147,15 +146,14 @@ ws.onmessage = function(message) {
 			$('_au_'+suf).dispose();
 			let cur = $('audience_numbers').innerHTML == '...' ? 0  :  parseInt($('audience_numbers').innerHTML)-1;
 			vcounter = cur > 0 ? cur : 0; 
-			//if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+
 			if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
 			cur = cur > 0 ? cur : '...'; 
 			$('audience_numbers').innerHTML = cur;
 			let col = cur > 0 ? '#369' : '#ccc';
 			$('audience_numbers').setStyles({'color': col});
 			$('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : $('audience_boxx').innerHTML;
-			//if (cur == '...') 
-				{chat_shown = 1; $('logger').click(); $('audience').click();} 
+			chat_shown = 1; $('logger').click(); $('audience').click(); 
 		}
 		break;
 	case 'iceCandidate':
@@ -172,21 +170,7 @@ ws.onmessage = function(message) {
 }
 
 function rejoin(){
-	rejoined++;
-	if (problems) {leaveRoom(); register();} else {
-
-	
-	   /*
-	   (function() { if ( i_am_guest && !guru_is_here ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
-	   }).delay(200);
-	   */
-		
-	   //console.log ('here pcounter is', pcounter, 'registered:', registered);	   
-	/*   (function() { if ( pcounter === 0 && registered ) {soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = sorry; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);} else if (!i_am_guest & pcounter === 1 & rejoined % 2 == 0) {}
-	   }).delay(1000);
-	*/
-	//NB: very difficult stuff :)
-	}
+	leaveRoom(); register();
 }
 
 function check_connection() {
@@ -194,13 +178,13 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { console.log('resetting connection'); problems = 1; leaveRoom(); register();}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { console.log('resetting connection'); problems = 1; rejoin();}}, 1200);
 }
 
 function check_fullscreen() {
 
 	if (fullscreen) {
-		if ( !acc_id || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) { fullscreen = false; if (!acc_id) {leaveRoom(); register();} else {fullscreen = true;}}
+		if ( !acc_id || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) { fullscreen = false; if (!acc_id) {rejoin();} else {fullscreen = true;}}
 			
 	}
 }
@@ -328,8 +312,7 @@ function register() {
 						let col = cur > 0 ? '#369' : '#ccc';
 						$('audience_numbers').setStyles({'color': col});
 						$('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : $('audience_boxx').innerHTML;
-						//if (cur == '...') 
-							{chat_shown = 1; $('logger').click(); $('audience').click();} 
+						chat_shown = 1; $('logger').click(); $('audience').click(); 
 					}
 					break;
 				case 'iceCandidate':
@@ -367,7 +350,7 @@ function register() {
 		change_lang(altlang[l]);
 			
 		$('room-header').innerText = 'ROOM ' + room;
-		//$('room-header').style.display = 'block';
+
 		$('join').style.display = 'none';
 		$('room').style.display = 'block';
 		$('preroom').innerHTML='&nbsp;';
@@ -416,8 +399,7 @@ function register() {
 			role: role
 		}
 	
-		sendMessage(message);
-		
+		sendMessage(message);		
 
  		if (problems) {
 			$('phones').style.paddingTop = small_device ? '39vh' : '45vh'; $('phones').style.lineHeight = '36px'; $('phones').innerHTML = warning; (function() { $('phones').fade(1)}).delay(1000);
@@ -527,7 +509,7 @@ function onNewParticipant(request) {
 		   	
 		receiveVideo(request.name, request.mode, myrole, true);
 		
-		(function() {$(request.name).fade(1);}).delay(500);
+		(function() {$(request.name).style.display='block'; $(request.name).fade(1);}).delay(500); //need this animation because the new video appears under the row, so we hide it
 
 		if (request.curip.length && $('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
 			$('loco_'+request.name).innerHTML = request.curip;
@@ -654,7 +636,7 @@ function set_guru(par, who) {
 		} else {
 
 			if ($('name').value == who ) {
-				chat_shown = 1; $('logger').click(); $('audience').click(); leaveRoom(); register();
+				chat_shown = 1; $('logger').click(); $('audience').click(); rejoin();
 			}
 		}
 	}).catch(err => console.log(err));
@@ -691,8 +673,10 @@ function isMicrophoneAllowed(){
 }
 	
 function onExistingParticipants(msg) {
+//sets up every video in the room I just joined
 
-  var myname = $('name').value;
+  var myname = $('name').value; 
+  
   fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
    let role = respo || 0; 
@@ -703,69 +687,68 @@ function onExistingParticipants(msg) {
 	
    if (role == 1 || role == 2 || role == 3)  {
 
-		let fmode = getCookie('fmode') ? 'environment' : 'user';
+	let fmode = getCookie('fmode') ? 'environment' : 'user';
 		
-		i_am_viewer = false;	
+	i_am_viewer = false;	
 			
-		var i_am_muted = loadData(myname+'_muted');
+	i_am_muted = loadData(myname+'_muted');
 		
-		let mode = aonly ? 'a' : 'v'; // maybe c if am guru?
+	let mode = aonly ? 'a' : 'v'; // maybe c if am guru?
 		
-		var participant = new Participant(name, myname, mode, role, false);
-		participants[name] = participant;
-		var video = participant.getVideoElement();
-
-		var constraints = {
-                	audio : true,
-                	video : {
-                        	maxWidth : wi_hq,
-                        	maxFrameRate : fps_hq,
-                        	minFrameRate : fps_hq,
-				facingMode: fmode
-                	}
-		};
-
-		var constraints_vonly = {
-                	audio : false,
-                	video : {
-				facingMode: fmode
-               		}
-		};
-		
-		var constraints_aonly = {
-                	audio : true,
-               	 video: false
-		};
-
-		if (aonly) constraints = constraints_aonly;
-		if (i_am_muted === true || i_am_muted === 'true') constraints =  constraints_vonly;
-
-		var options = {
-              		localVideo: video,
-			mediaConstraints: constraints,
-			onicecandidate: participant.onIceCandidate.bind(participant)
-		}
+	var participant = new Participant(name, myname, mode, role, false);
+	participants[name] = participant;
 	
-		var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
-	
-		var options_alt = {
-			localVideo: video,
-			mediaConstraints: constraints_alt,
-			onicecandidate: participant.onIceCandidate.bind(participant)
-		}
-		
-   if (shareSomeScreen && (role == 1 || role == 2)) {
-      
-      shareSomeScreen = true;
-      $('room-header').style.color = oldColor;
-      
-      startCapture({video: true}).then(stream => {
+	var video = participant.getVideoElement();
 
+	var constraints = {
+                audio: true,
+                video: {
+                        maxWidth : wi_hq,
+                        maxFrameRate : fps_hq,
+                        minFrameRate : fps_hq,
+			facingMode: fmode
+                }
+	};
+
+	var constraints_vonly = {
+                audio: false,
+                video: {
+			facingMode: fmode
+               	}
+	};
+		
+	var constraints_aonly = {
+                audio: true,
+               	video: false
+	};
+
+	if (aonly) constraints = constraints_aonly;
+	if (i_am_muted === true || i_am_muted === 'true') constraints =  constraints_vonly;
+
+	var options = {
+              	localVideo: video,
+		mediaConstraints: constraints,
+		onicecandidate: participant.onIceCandidate.bind(participant)
+	}
+	
+	var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
+	
+	var options_alt = {
+		localVideo: video,
+		mediaConstraints: constraints_alt,
+		onicecandidate: participant.onIceCandidate.bind(participant)
+	}
+		
+	if (shareSomeScreen && (role == 1 || role == 2)) {
+      
+		shareSomeScreen = true;
+		$('room-header').style.color = oldColor;
+      
+		startCapture({video: true}).then(stream => {
 /* mix microphone
 */
-
-	navigator.mediaDevices.getUserMedia({audio: true})
-	.then(function(mediaStream) {
+		navigator.mediaDevices.getUserMedia({audio: true})
+		.then(function(mediaStream) {
 		var audioTrack = mediaStream.getAudioTracks()[0] ? mediaStream.getAudioTracks()[0] : null;
 		if (audioTrack && i_am_muted !== true && i_am_muted !== 'true') stream.addTrack(audioTrack);
 
@@ -785,14 +768,13 @@ function onExistingParticipants(msg) {
 			sendSource : 'screen'
         	}
 	
-        	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_sshare,
-                 function (error) {
+        	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_sshare, function(error) {
                   if(error) {
 			var ff = new RegExp('closed','ig');
 			if (error.toString().match(ff)) {
 			} else {
                           participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_alt,
-                                function (error) {
+                                function(error) {
                                         if(error) {
                                                 return console.error(error);
                                         }
@@ -800,7 +782,6 @@ function onExistingParticipants(msg) {
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  $(myname).style.float = 'none';
-					//$(myname).className = PARTICIPANT_MAIN_CLASS;
                           });
 			}
 
@@ -809,74 +790,63 @@ function onExistingParticipants(msg) {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  $(myname).style.float = 'none';
-			//$(myname).className = PARTICIPANT_MAIN_CLASS;
 		  }
 
 		  (function(){$('phones').fade(0);}).delay(1000);
         	});
-
-		
-	}).catch(function(err){console.log(err.name + ": " + err.message);});
-
-      }).catch(e => console.log(e));
+		}).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
+		}).catch(e => console.log(e)); //startCapture
    
-   } else if (playSomeMusic && (role == 1|| role == 2)) {
+	} else if (playSomeMusic && (role == 1|| role == 2)) {
   
-	video.autoplay = true;
-	video.playsInline = true;
-	video.controls = true;
-	video.crossOrigin = 'anonymous';
-	video.volume = 1;
-	video.loop = true;
-	video.src = selectedFile ? selectedFile : "/a.mp4";
-	video.muted = false;
+		video.autoplay = true;
+		video.playsInline = true;
+		video.controls = true;
+		video.crossOrigin = 'anonymous';
+		video.volume = 1;
+		video.loop = true;
+		video.src = selectedFile ? selectedFile : "/a.mp4";
+		video.muted = false;
 	
-	video.addEventListener('canplay', (event) => {
-
-	  now_playing = true;
-
-	  if (!already_being_played) {
-	  	
-	   already_being_played = true;
-	
-	   let captureStream = null;
-
-
-	   if (video.captureStream) {
-		captureStream = video.captureStream(fps_hq);
-
-	   } else if (video.mozCaptureStream) {
-
-		captureStream = video.mozCaptureStream(fps_hq);
-
-	   } else {
-    			console.error('Stream capture is not supported');
-
-	   }
-
-	   var cstrx = {
-		audio: true,
-		video:{
-                        maxWidth : wi_hq,
-                        maxFrameRate : fps_hq,
-                        minFrameRate : fps_hq
-                }
-	   };
-
-	   options = {
-		videoStream: captureStream,
-		onicecandidate: participant.onIceCandidate.bind(participant),
-		mediaConstraints : cstrx
-	   }
-	   option_alt = {
-		videoStream: captureStream,
-		onicecandidate: participant.onIceCandidate.bind(participant),
-		mediaConstraints :{audio: true, video: false}
-	   }
+		video.addEventListener('canplay', (event) => {
 		
-	   participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-		function (error) {
-                  if(error) {
+		  now_playing = true;
+		
+		  if (!already_being_played) {
+	  	
+			already_being_played = true;
+			let captureStream = null;
+
+			if (video.captureStream) {
+				captureStream = video.captureStream(fps_hq);
+			} else if (video.mozCaptureStream) {
+				captureStream = video.mozCaptureStream(fps_hq);
+			} else {
+				console.error('Stream capture is not supported');
+			}
+
+			var cstrx = {
+				audio: true,
+				video:{
+					maxWidth : wi_hq,
+					maxFrameRate : fps_hq,
+					minFrameRate : fps_hq
+				}
+			};
+
+			options = {
+				videoStream: captureStream,
+				onicecandidate: participant.onIceCandidate.bind(participant),
+				mediaConstraints : cstrx
+			}
+			option_alt = {
+				videoStream: captureStream,
+				onicecandidate: participant.onIceCandidate.bind(participant),
+				mediaConstraints :{audio: true, video: false}
+			}
+		
+			participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
+                  	if(error) {
 			var ff = new RegExp('closed','ig');
 			if (error.toString().match(ff)) {
 			} else {
@@ -888,31 +858,29 @@ function onExistingParticipants(msg) {
 
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-					if (small_device)  $(myname).style.float = 'none';
-					//$(myname).className = PARTICIPANT_MAIN_CLASS; 					
+					if (small_device)  $(myname).style.float = 'none'; 					
 					$('room-header-file').style.display='none';
 
                           	}
 			);
 			}
 			return false;
-                  } else {
+                  	} else {
 			startVideo(video);			  	
 			this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			
 			if (small_device)  $(myname).style.float = 'none';
-			//$(myname).className = PARTICIPANT_MAIN_CLASS;
 			$('room-header-file').style.display='none';
-                  }
+                  	}
 
-		  (function(){$('phones').fade(0);}).delay(1000);
-		});
-	  }
-	}); 
-   } else {
+		  	(function(){$('phones').fade(0);}).delay(1000);
+			});
+	  	  } //already_being_played
+		});//video.addEventListener 
 
-         participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-                function (error) {
+	} else {
+
+         	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
                   if(error) {
 			var ff = new RegExp('closed','ig');
 			if (error.toString().match(ff)) {
@@ -926,7 +894,6 @@ function onExistingParticipants(msg) {
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  $(myname).style.float = 'none';
-					//$(myname).className = PARTICIPANT_MAIN_CLASS; 
                           });
 			}
 
@@ -935,17 +902,18 @@ function onExistingParticipants(msg) {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  $(myname).style.float = 'none';
-			//$(myname).className = PARTICIPANT_MAIN_CLASS; 
 		  }
 
 		  (function(){$('phones').fade(0);}).delay(1000);
-          });
+         	});
 
-   }
-   (function() {$(myname).fade(1);}).delay(500);
+	}
+	
+	(function() {$(myname).style.display='block'; $(myname).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
    }// if role
 
- 	if (msg.data) {
+   if (msg.data) {
+
 	   for (var i = 0; i < msg.data.length; i++) {
 		var chu = msg.data[i].split('_|_');
 
@@ -989,7 +957,7 @@ function onExistingParticipants(msg) {
 			
 			$('slider_' + f).value = coo_volume;
 			$('video-' + f).volume = coo_volume;
-			(function() {$(f).fade(1);}).delay(500);
+			(function() {$(f).style.display='block'; $(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
 
 		} else { 
 			var lang = getCookie('lang');
@@ -1024,9 +992,11 @@ function onExistingParticipants(msg) {
 			$('anno_' + f).fade(1);
 		}
 	   } //for
- 	}	   
-	(function() {$('room-header').style.display = 'block';$('room-header').fade(1);}).delay(1500);
-  }).catch(err => console.log(err));
+   } // msg.data
+   	   
+   (function() {$('room-header').style.display = 'block';$('room-header').fade(1);}).delay(1500);
+   
+  }).catch(err => console.log(err)); //fetch
 }
 
 function copy(that){
@@ -1112,13 +1082,13 @@ function setGuru(request) {
 
 		if (request.mode == '1' && role != 1) {
 		
-			temporary = 1; chat_shown = 1; $('logger').click(); $('audience').click(); leaveRoom(); register();
+			temporary = 1; chat_shown = 1; $('logger').click(); $('audience').click(); rejoin();
 			$('av_toggler').style.display='block';
 			$('bell').style.display='none';	
 		}
 		if (request.mode == '0' && temporary) {
 
-			temporary = 0; chat_shown = 1; $('logger').click(); $('audience').click(); leaveRoom(); register();
+			temporary = 0; chat_shown = 1; $('logger').click(); $('audience').click(); rejoin();
 			cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');
 			$('av_toggler').style.display='none';
 			$('bell').style.display='block';

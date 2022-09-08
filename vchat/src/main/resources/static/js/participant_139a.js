@@ -35,7 +35,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	var from_changing_slider = false;
 
-	var all_muted = getCookie('all_muted');
+	all_muted = getCookie('all_muted');
 	if (all_muted === null || all_muted === 'null') all_muted = false;
  	
 	var coo_muted = loadData(name+'_muted');
@@ -56,11 +56,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		saveData(name+'_volume', coo_volume, 1440);
 	}
 
-	//if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only
-	
-	var i_am_muted = loadData(myname+'_muted');
-	let am = getCookie('all_muted');
-	if (i_am_muted === null || i_am_muted === 'null') i_am_muted = (am === true || am === 'true') ? true  : false;
+	//if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only	
+	i_am_muted = loadData(myname+'_muted');
+
+	//switch off microphone if all_muted
+	if ((i_am_muted === null || i_am_muted === 'null') && name == myname) i_am_muted = (all_muted === true || all_muted === 'true') ? true  : false;
 	
 	if (name == myname) saveData(myname+'_muted', i_am_muted, 1440);
 
@@ -71,6 +71,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.className = (pcounter == 0 && !small_device) ? PARTICIPANT_SOLO : container.className;
 	container.className = (pcounter == 1 && !small_device) ? PARTICIPANT_DUO : container.className;
 	container.className = (pcounter == 2 && !small_device) ? PARTICIPANT_TRIO : container.className;
+	
+	//need this trick because new participant breaks the row and appears underneath it -- make it appear after 0.5 sec delay in onNewParticipant and at once in onExistingParticipants
+	container.style.display='none';
 	container.style.opacity=0;
 	
 	i_am_guest = isPresentMainParticipant() & pcounter === 1 ? 1 : i_am_guest;
@@ -85,8 +88,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
 
-
-//(function() {
 	if (real_pcnt === 4) {
 			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
                         elements.forEach(function(item) {
@@ -110,7 +111,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_DUO;
 			});
 	}
-//}).delay(2000);
 		
 	if (pcounter > room_limit) {hack = false;}
 
@@ -421,11 +421,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				}
 				if (name == myname && !playSomeMusic) {
 					if (i_am_muted === true || i_am_muted === 'true') {
-						saveData(myname+'_muted', false, 1440); i_am_muted=false;
+						saveData(myname+'_muted', false, 1440); i_am_muted = false;
 						flashText_and_rejoin('microphone ON!');
 					} 
 					else {
-						saveData(myname+'_muted', true, 1440); i_am_muted=true;
+						saveData(myname+'_muted', true, 1440); i_am_muted = true;
 						flashText_and_rejoin('microphone OFF!');
 					}
 				}
