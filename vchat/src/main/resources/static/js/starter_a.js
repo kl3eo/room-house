@@ -149,7 +149,7 @@ function flashText(t) {
 }
 
 function flashText_and_rejoin(t) {
-	$('room-header').style.display = 'none';$ ('room-header').fade(0); $('phones').innerHTML = t; $('phones').fade(1); leaveRoom(); (function(){$('phones').fade(0); register();}).delay(1000);
+	$('room-header').style.display = 'none';$ ('room-header').fade(0); $('phones').innerHTML = t; $('phones').fade(1); leaveRoom(); (function(){register();}).delay(100); (function(){$('phones').fade(0);}).delay(1000); 
 }
 
 function toggleAllMuted() {
@@ -223,7 +223,7 @@ function ed() {
   
   register();
 
-  if(role == 0 && small_device) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit','tska']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; setCookie('heard_info', true, 144000); if (sound_on_played) {soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3';} if (!heard_info) (function() { if (sound_on_played) {soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}}).delay(10000);}}).delay(3000);}
+  if(role == 0 && small_device) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit','tska']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; setCookie('heard_info', true, 144000); if (sound_on_played && false) {soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3';} if (!heard_info) (function() { if (sound_on_played) {soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}}).delay(10000);}}).delay(3000);}
 
   
   if(role == 0 && !heard_info && !small_device) {(function() { heard_info = true; setCookie('heard_info', true, 144000); if (sound_on_played) {soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}}).delay(5000);}
@@ -311,8 +311,7 @@ if (na != null && na != 'null') {
 			$('sp_balance').src='https://cube.room-house.com:8444/?acc=' + obj.from; 
 			acc_id = obj.from; 
 			let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
-			scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);		
-			//leaveRoom(); register();
+			scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);
 		}
 	} else {
 		console.log('Undefined action received from wallet!');

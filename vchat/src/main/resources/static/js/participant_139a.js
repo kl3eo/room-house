@@ -23,7 +23,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	var this_is_unmuted = false;
         var ai = new RegExp('^A:','g');
-        if (name.match(ai)) {this_is_unmuted = true; sound_on_played = 0;}
+        //if (name.match(ai)) {this_is_unmuted = true; sound_on_played = 0;}
 	
 	let ct = 0;
 	for ( var key in participants) {
@@ -85,6 +85,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
 
+
+//(function() {
 	if (real_pcnt === 4) {
 			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
                         elements.forEach(function(item) {
@@ -108,6 +110,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_DUO;
 			});
 	}
+//}).delay(2000);
 		
 	if (pcounter > room_limit) {hack = false;}
 
@@ -306,9 +309,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	function switchContainerClass() {
 
-	   if ( from_changing_slider) { 
-		if (!isAndroid) toggleMute();
-	   } else {
 	      if (!small_device) {
 
 		if (container.className === PARTICIPANT_CLASS) {
@@ -342,7 +342,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		}
 				
 	      }
-	   }
 	}
 	
 	function toggleFullScreen(el) {
@@ -368,10 +367,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 		
 	function toggleSlider() {
-		if (check_iOS()) {from_changing_slider = false; toggleMute();}
-		else {slider.style.display = slider.style.display == 'block' ? 'none' : 'block'; 
-			toggleMute();
-		}
+		if (check_iOS()) from_changing_slider = false;
+		else slider.style.display = slider.style.display == 'block' ? 'none' : 'block';
+
+		toggleMute();
 	}
 	
 	function changeVolume() {
@@ -384,10 +383,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		video.volume = coo_volume;
 		from_changing_slider = true;
 		
-		if (isAndroid) {
-			toggleMute();
-		}
-
+		if ( (video.volume === 0 && !video.muted) || (video.volume && video.muted) ) toggleMute();
 	}
 
 	function check_iPad() {
@@ -402,11 +398,12 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if ( $('video-' + name) ) {
 		
 		   var video = $('video-' + name);
-	   	   if ( !from_changing_slider || (from_changing_slider && ((video.volume === 0 && !video.muted) || (video.volume > 0 && video.muted))) ) {
-			
+
+		if ( !from_changing_slider || (from_changing_slider && ((video.volume === 0 && !video.muted) || (video.volume > 0))) ) {
+	
 			if (name != myname) 
 			{
-				video.muted = !video.muted;
+				video.muted = video.volume === 0 ? true : !video.muted;
 				slider.value =  video.volume;
 
 
@@ -422,7 +419,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				if (name != myname)  {
 					speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
 				}
-				if (name == myname) {
+				if (name == myname && !playSomeMusic) {
 					if (i_am_muted === true || i_am_muted === 'true') {
 						saveData(myname+'_muted', false, 1440); i_am_muted=false;
 						flashText_and_rejoin('microphone ON!');
