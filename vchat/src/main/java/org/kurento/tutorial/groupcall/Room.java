@@ -70,14 +70,14 @@ public class Room implements Closeable {
     this.close();
   }
 
-  public UserSession join(String userName, String userMode, String userCurip, String userAccId, WebSocketSession session, String roleId, int num_guests) throws IOException {
+  public UserSession join(String userName, String userMode, String userCurip, String userAccId, WebSocketSession session, String roleId, int num_guests, int room_limit) throws IOException {
 
     final String empty_anno = "";
     final UserSession participant = new UserSession(userName, userMode, userCurip, userAccId, roleId, empty_anno, this.name, session, this.pipeline);
     
     if (roleId.equals("1") || roleId.equals("2") || roleId.equals("3")) {
     	log.info("ROOM {}: adding participant {}", this.name, userName);
-    	joinRoom(participant, num_guests);
+    	joinRoom(participant, num_guests, room_limit);
     	participants.put(participant.getName(), participant);
     } else {
     	
@@ -86,14 +86,14 @@ public class Room implements Closeable {
 	if(viewers.size() < 100) {
 		log.info("ROOM {}: adding viewer {}", this.name, userName);
 		viewers.put(participant.getName(), participant);
-		viewRoom(participant, num_guests);
+		viewRoom(participant, num_guests, room_limit);
 	} else {
 		log.info("ROOM {}: reached limit of viewers {}", this.name, viewers.size());
 	}
     }
     
     sendParticipantNamesModesCuripsAccIdsAnnos(participant);
-    sendViewerNamesCurips(participant, num_guests);
+    sendViewerNamesCurips(participant, num_guests, room_limit);
     return participant;
   }
   
@@ -432,7 +432,7 @@ public class Room implements Closeable {
     }
   }
   
-  private Collection<String> joinRoom(UserSession newParticipant, int ng) throws IOException {
+  private Collection<String> joinRoom(UserSession newParticipant, int ng, int rl) throws IOException {
     final JsonObject newParticipantMsg = new JsonObject();
     newParticipantMsg.addProperty("id", "newParticipantArrived");
     newParticipantMsg.addProperty("name", newParticipant.getName());
@@ -440,6 +440,7 @@ public class Room implements Closeable {
     newParticipantMsg.addProperty("curip", newParticipant.getCurip());
     newParticipantMsg.addProperty("acc_id", newParticipant.getAccId());
     newParticipantMsg.addProperty("ng", ng);
+    newParticipantMsg.addProperty("rl", rl);
 //    newParticipantMsg.addProperty("role", newParticipant.getRole());
     final List<String> participantsList = new ArrayList<>(participants.values().size());
     log.debug("ROOM {}: notifying other participants of new participant {}", name,
@@ -468,12 +469,13 @@ public class Room implements Closeable {
     return participantsList;
   }
 
-  private void viewRoom(UserSession newViewer, int ng) throws IOException {
+  private void viewRoom(UserSession newViewer, int ng, int rl) throws IOException {
     final JsonObject newViewerMsg = new JsonObject();
     newViewerMsg.addProperty("id", "newViewerArrived");
     newViewerMsg.addProperty("name", newViewer.getName());
     newViewerMsg.addProperty("curip", newViewer.getCurip());
-    newViewerMsg.addProperty("ng", ng); 
+    newViewerMsg.addProperty("ng", ng);
+    newViewerMsg.addProperty("rl", rl); 
 
     for (final UserSession participant : participants.values()) {
       try {
@@ -600,12 +602,13 @@ public class Room implements Closeable {
     final JsonObject existingParticipantsMsg = new JsonObject();
     existingParticipantsMsg.addProperty("id", "existingParticipants");
     existingParticipantsMsg.add("data", participantsArray);
+    
     log.debug("SOMEONE {}: sending him a list of {} participants", user.getName(),
         participantsArray.size());
     user.sendMessage(existingParticipantsMsg);
   }
 
-  public void sendViewerNamesCurips(UserSession user, int ng) throws IOException {
+  public void sendViewerNamesCurips(UserSession user, int ng, int rl) throws IOException {
 
     final JsonArray viewersArray = new JsonArray();
     for (final UserSession viewer : this.getViewers()) {
@@ -618,6 +621,7 @@ public class Room implements Closeable {
     final JsonObject existingViewersMsg = new JsonObject();
     existingViewersMsg.addProperty("id", "existingViewers");
     existingViewersMsg.addProperty("ng", ng);
+    existingViewersMsg.addProperty("rl", rl);
     existingViewersMsg.add("data", viewersArray);
     log.debug("SOMEONE {}: sending him a list of {} viewers", user.getName(),
         viewersArray.size());

@@ -83,7 +83,7 @@ public class CallHandler extends TextWebSocketHandler {
     final String pguser = "postgres";
     final String pgpass = "x";
     
-    final int room_limit = 4;
+    int room_limit = 0;
 
     if (user != null) {
       log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
@@ -101,13 +101,31 @@ public class CallHandler extends TextWebSocketHandler {
                         	leaveRoom(who);
                 	}
         	}
-		
+
 		String joinerToken = jsonMessage.get("token").getAsString();
 		String joinerRoom = jsonMessage.get("room").getAsString(); 
 		String joinerRole = jsonMessage.get("role").getAsString();
 		
 		joinerRoom = joinerRoom.replaceAll("[;'\"]*", ""); //protect against sql injection
-	
+
+		BufferedReader br = new BufferedReader(new FileReader("/home/nobody/"+joinerRoom+"_room_limit"));
+		try {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				line = br.readLine();
+			}
+			
+			room_limit = Integer.parseInt(sb.toString().replaceAll("\r", "").replaceAll("\n", ""));
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+      		} finally {
+			br.close();
+		}
+			
 		String role = "0"; String _role = "0"; String noSuchRoom = "0"; String temporary = "0";
 
 // check if guru
@@ -137,7 +155,7 @@ public class CallHandler extends TextWebSocketHandler {
             		if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";}} else {noSuchRoom = "1";}
          	} catch (SQLException ex) {log.info("PG join err from {}: ", joinerName);}
 	  
-        	log.info("JOINER {}: SESSION {}, ROLE TOKEN {}, ROLE RECEIVED {}, ROOM STATUS {}", joinerName, session, role, joinerRole, sta);
+        	log.info("JOINER {}: SESSION {}, ROLE TOKEN {}, ROLE RECEIVED {}, ROOM STATUS {}, ROOM LIMIT {}", joinerName, session, role, joinerRole, sta, room_limit);
 // now make temp permissson if required
 	
 		if (user != null) {_role = user.getRole();}
@@ -156,7 +174,7 @@ public class CallHandler extends TextWebSocketHandler {
 		if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
 		} else {
-        		joinRoom(jsonMessage, session);
+        		joinRoom(jsonMessage, session, room_limit);
 		}
         break;
       case "receiveVideoFrom":
@@ -268,7 +286,7 @@ public class CallHandler extends TextWebSocketHandler {
     if (user != null) roomManager.getRoom(user.getRoomName()).leave(user);
   }
 
-  private void joinRoom(JsonObject params, WebSocketSession session) throws IOException, GeoIp2Exception {
+  private void joinRoom(JsonObject params, WebSocketSession session, int room_limit) throws IOException, GeoIp2Exception {
     String roomName = params.get("room").getAsString();
     String name = params.get("name").getAsString();
     String mode = params.get("mode").getAsString();
@@ -286,7 +304,7 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-	
+		
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);
@@ -357,7 +375,7 @@ public class CallHandler extends TextWebSocketHandler {
             		if (rs.next()) {num_guests  = rs.getInt(1);}
          	} catch (SQLException ex) {log.info("PG sel stats1 err for room {}: ", roomName);}
 			
-    	final UserSession user = room.join(name, mode, curip, acc_id, session, role, num_guests);
+    	final UserSession user = room.join(name, mode, curip, acc_id, session, role, num_guests, room_limit);
 
     	registry.register(user);
     }

@@ -382,7 +382,7 @@ function register() {
 	
 		$('fmode_selector').style.display = 'block';
 
-		let mode = aonly ? 'a' : (i_am_muted === true || i_am_muted === 'true') ? 'm' : 'v'; 	
+		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
 		
 		let tok = getCookie('authtoken') || '';
 		
@@ -420,6 +420,7 @@ function register() {
 function onNewViewer(request) {
 
 	if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
+	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
 
 		let na = request.name.split('_');
 		let short_name = na[0];
@@ -454,6 +455,8 @@ function onNewParticipant(request) {
 	var theCookies = document.cookie.split(';');
     	var really_new = 1;
 	var video_hidden = 0;
+	
+	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
 		
     	for (var i = 1 ; i <= theCookies.length; i++) {
 
@@ -568,6 +571,8 @@ function onExistingViewers(msg) {
    let play_sound = myname == just_left ? false : true;
    
    if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
+   
+   room_limit = (typeof msg.rl !== 'undefined') ? msg.rl : room_limit;
   
    if (msg.data) {
    	   var arr = msg.data.sort();
@@ -693,7 +698,7 @@ function onExistingParticipants(msg) {
 			
 	//i_am_muted = loadData(myname+'_muted');
 		
-	let mode = aonly ? 'a' : (i_am_muted === true || i_am_muted === 'true') ? 'm' : 'v';
+	let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
 		
 	var participant = new Participant(name, myname, mode, role, false);
 	participants[name] = participant;
@@ -723,7 +728,7 @@ function onExistingParticipants(msg) {
 	};
 
 	if (aonly) constraints = constraints_aonly;
-	if (i_am_muted === true || i_am_muted === 'true') constraints =  constraints_vonly;
+	//if (i_am_muted === true || i_am_muted === 'true') constraints =  constraints_vonly;
 
 	var options = {
               	localVideo: video,
