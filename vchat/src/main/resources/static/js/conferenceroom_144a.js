@@ -86,6 +86,19 @@ window.onload = function(){
 	ctr = lang;
 
 	change_lang(altlang[ctr]);
+	elements = Array.prototype.slice.call(document.getElementsByClassName("pricee"));
+
+	elements.forEach(function(item) {
+		let buy = buy_.get(altlang[ctr]);
+        	item.innerHTML = buy;
+	});
+
+        elements = Array.prototype.slice.call(document.getElementsByClassName("gowee"));
+
+        elements.forEach(function(item) {
+                let go = go_.get(altlang[ctr]);
+                item.innerHTML = go;
+        });
 
 	var vote = getCookie('vote');
 	he_votado = (vote === null || vote === 'null') ? he_votado : vote;

@@ -52,4 +52,3 @@ buB.addEventListener('click', function handleClick(event) {
 });
 
 if ($(w[0])) $(w[0]).dispose(); // drop current room from available rooms list
-

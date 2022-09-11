@@ -205,3 +205,31 @@ var now_ = new Map ([
    ['cn', 'now'],
    ['pt', 'agora'],
 ]);
+
+var roo_ = new Map ([
+   ['en', 'ROOM'],
+   ['ru', 'КОМНАТА'],
+   ['es', 'QUARTO'],
+   ['fr', 'CHAMBRE'],
+   ['cn', 'ROOM'],
+   ['pt', 'QUARTO'],
+]);
+
+var buy_ = new Map ([
+   ['en', '<a href="https://room-house.com/contact_en.html" target=new style="color:#ff1493;">buy it!</a> for $75'],
+   ['ru', '<a href="https://room-house.com/contact_ru.html" target=new style="color:#ff1493;">купить!</a> за 4990 руб'],
+   ['es', '<a href="https://room-house.com/contact_en.html" target=new style="color:#ff1493;">buy it!</a> for 75 EURO'],
+   ['fr', '<a href="https://room-house.com/contact_en.html" target=new style="color:#ff1493;">buy it!</a> for 75 EURO'],
+   ['cn', '<a href="https://room-house.com/contact_en.html" target=new style="color:#ff1493;">buy it!</a> for 500CNY'],
+   ['pt', '<a href="https://room-house.com/contact_en.html" target=new style="color:#ff1493;">buy it!</a> for 75 EURO'],
+]);
+
+var go_ = new Map ([
+   ['en', 'go to room: '],
+   ['ru', 'перейти в: '],
+   ['es', 'pasar a: '],
+   ['fr', 'aller a: '],
+   ['cn', 'goo to room: '],
+   ['pt', 'pasar a: '],
+]);
+
