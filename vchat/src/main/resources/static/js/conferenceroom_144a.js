@@ -381,6 +381,8 @@ function register() {
         	}
 	
 		$('fmode_selector').style.display = 'block';
+		
+		if (!small_device) $('slide_container').style.display = 'block';
 
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
 		

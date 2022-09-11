@@ -50,3 +50,6 @@ buB.addEventListener('click', function handleClick(event) {
 	if (box) box.remove();
 	$('controls').style.top = '-12px';
 });
+
+if ($(w[0])) $(w[0]).dispose(); // drop current room from available rooms list
+
