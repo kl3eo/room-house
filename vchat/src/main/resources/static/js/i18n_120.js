@@ -225,11 +225,11 @@ var buy_ = new Map ([
 ]);
 
 var go_ = new Map ([
-   ['en', 'go to room: '],
-   ['ru', 'перейти в: '],
-   ['es', 'pasar a: '],
-   ['fr', 'aller a: '],
-   ['cn', 'goo to room: '],
-   ['pt', 'pasar a: '],
+   ['en', 'go to room '],
+   ['ru', 'перейти в '],
+   ['es', 'pasar a '],
+   ['fr', 'aller a '],
+   ['cn', 'go to room '],
+   ['pt', 'pasar a '],
 ]);
 

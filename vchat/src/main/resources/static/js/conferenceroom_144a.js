@@ -86,19 +86,22 @@ window.onload = function(){
 	ctr = lang;
 
 	change_lang(altlang[ctr]);
-	elements = Array.prototype.slice.call(document.getElementsByClassName("pricee"));
+	
+	if (!small_device) {
+		elements = Array.prototype.slice.call(document.getElementsByClassName("pricee"));
 
-	elements.forEach(function(item) {
-		let buy = buy_.get(altlang[ctr]);
-        	item.innerHTML = buy;
-	});
+		elements.forEach(function(item) {
+			let buy = buy_.get(altlang[ctr]);
+        		item.innerHTML = buy;
+		});
 
-        elements = Array.prototype.slice.call(document.getElementsByClassName("gowee"));
+        	elements = Array.prototype.slice.call(document.getElementsByClassName("gowee"));
 
-        elements.forEach(function(item) {
-                let go = go_.get(altlang[ctr]);
-                item.innerHTML = go;
-        });
+        	elements.forEach(function(item) {
+                	let go = go_.get(altlang[ctr]);
+                	item.innerHTML = go;
+        	});
+	}
 
 	var vote = getCookie('vote');
 	he_votado = (vote === null || vote === 'null') ? he_votado : vote;
@@ -395,7 +398,8 @@ function register() {
 	
 		$('fmode_selector').style.display = 'block';
 		
-		if (!small_device) $('slide_container').style.display = 'block';
+		if (!small_device) 
+			$('slide_container').style.display = 'block';
 
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
 		
