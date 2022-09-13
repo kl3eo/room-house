@@ -1,3 +1,18 @@
+/*
+#   Copyright (c) 2021-22 Alex Shevlakov alex@motivation.ru
+#   All Rights Reserved.
+
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+*/
+
 var fullscreen = false;
 
 var doSwitchOneMode = function(el) {if (false) console.log(el); let sp_setter = isFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="https://cube.room-house.com:8449/#/binder/" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="https://cube.room-house.com:8449/#/binder/" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'});
@@ -43,9 +58,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//no sound from other guests on default, but from gurus ok
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
 	//or all allowed
-	//if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	  if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
-	if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
 	if (mode == 'm') coo_muted = true;
 				
