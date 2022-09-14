@@ -1,4 +1,18 @@
 /*
+ * (C) Copyright 2014 Kurento (http://kurento.org/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
 #   Copyright (c) 2021-22 Alex Shevlakov alex@motivation.ru
 #   All Rights Reserved.
 
@@ -413,8 +427,7 @@ function register() {
 	
 		$('fmode_selector').style.display = 'block';
 		
-		if (!small_device) 
-			$('slide_container').style.display = 'block';
+		if (!small_device && !w[0].match(new RegExp('rgsu','g'))) $('slide_container').style.display = 'block';
 
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
 		
@@ -446,6 +459,7 @@ function register() {
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
 		
 		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
+		if ($('helpdoc')) (function() {$('helpdoc').style.display = "block"; $('helpdoc').fade(1);}).delay(1500);
 		
 	}).catch(err => console.log(err));
 

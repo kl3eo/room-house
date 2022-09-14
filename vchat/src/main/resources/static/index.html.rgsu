@@ -6,10 +6,16 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta http-equiv="Vary" content="*">
-    
-<link rel="styleSheet" href="style.css" type="text/css" media="screen">
+ 
 <title>Welcome to Rumhaus</title>
+   
+<link rel="styleSheet" href="style.css" type="text/css" media="screen">
 
+<!-- slider -->
+<link rel="stylesheet" href="./css/splide.min.css" />
+<script type="text/javascript" src="./js/splide.min.js"></script>
+
+<!-- moo -->
 <script src="./js/mootools-core-1.4.5-full-compat-yc.js"></script>
 <script src="./js/mootools-more-1.4.0.1a.js"></script>
 <script src="./js/mBox.Core.js"></script>
@@ -25,6 +31,37 @@
 <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 
 <style>
+
+.roomer {
+	position:absolute;
+	top:8px;
+	left:0px;
+	width:290px;
+}
+
+.nextroom {
+	color:#fed;
+	font-size:16px;
+	font-family: Sans;
+	font-weight:normal;
+	padding-right:5px;
+}
+
+.nextroom_name {
+
+	color:#9cf;
+	font-size:18px;
+	font-family: Sans;
+	font-weight:normal;
+	cursor:pointer;
+}
+
+.pricer {
+	position:absolute;
+	top:8px;
+	left:420px;
+	width:290px;
+}
 
 .phones {
 	visibility:hidden;
@@ -45,6 +82,9 @@
 
 @media screen and (max-width: 1024px) {
  
+ #slide_container {
+ 	display:none;
+ }
  .subcontrols {
         position:relative;
 	z-index:99;
@@ -124,6 +164,15 @@
 
 @media screen and (min-width: 1024px) {
 
+ #slide_container {
+ 	position:absolute;
+	z-index:1001;
+	margin:20px auto 0 -168px;
+	width:700px;
+	height:36px;
+	display:none;
+ }
+ 
  .subcontrols {
         position:relative;
 	z-index:99;
@@ -139,10 +188,6 @@
         z-index:99;
         margin:0 auto 0 -24px;
         width:700px;
-        !!sp_shown
-	!top:24px;
-	!sp_shown
-	top:-36px;
 	left:-135px;
  }
  
@@ -357,6 +402,15 @@
 	font-family:Courier;
 	margin-bottom: -4vh;
     }
+
+    #stats_p {
+	float:left;
+	margin-left:30px;
+	padding:2px;
+	background:transparent;	
+	!cursor: pointer;
+    }
+        
     #stats_v {
 	float:left;
 	margin-left:16px;
@@ -398,10 +452,16 @@
 	font-family:Courier;
 	margin-bottom: -3vh;
     }
-
+    
+    #stats_p {
+	float:left;
+	margin-left:20px;
+	padding:2px;
+	background:transparent;	
+	!cursor: pointer;
+    }
+    
     #stats_v {
-	!float:right;
-	!margin-right:36px;
 	float:left;
 	margin-left; 36px;
 	padding:2px;
@@ -410,12 +470,10 @@
     }
 
     #stats_ng {
-	!display:none;
-	float:right;
-	margin-right:36px;
+	float:left;
+	margin-left:16px;
         padding:2px;
-        background:transparent;
-        !cursor: pointer;	
+        background:transparent;	
     }
 }
 
@@ -567,18 +625,42 @@
 	text-align:center;
 	margin:0 auto;
 	font-size:24px;
-	color:#fed;opacity:0;
+	color:#fed;
+	opacity:0;
 	display:none;
 	margin-top:12px;
 }
 
-#stats_p {
-	float:left;
-	margin-left:30px;
-	padding:2px;
-	background:transparent;	
-	!cursor: pointer;
-}
+
+     .splide {
+        margin: 0 auto;
+      }
+
+      .thumbnails {
+        display: flex;
+        margin: 1rem auto 0;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .thumbnail {
+        width: 70px;
+        height: 70px;
+        overflow: hidden;
+        list-style: none;
+        margin: 0 0.2rem;
+        cursor: pointer;
+        opacity: 0.3;
+      }
+
+      .thumbnail.is-active {
+        opacity: 1;
+      }
+
+      .thumbnail img {
+        width: 100%;
+        height: auto;
+      }
 
 </style>
 </head>
@@ -625,7 +707,6 @@
 <div style="clear:both;"></div>
 
 </div><!-- preroom -->
-
 
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
 	<div id="container" style="margin-top:-5px;border:0px solid #ccc;">
@@ -741,7 +822,8 @@ if (!curIP.length) {
 	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); if ($('audience_box').style.display == 'none') $('audience').click();">&#128101;:&nbsp;<span id=vcounter>0</span></div>
 	<div id="stats_ng" title="today viewers" onclick="if ($('audience_box').style.display != 'none') $('audience').click(); cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
 
-	<div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px;float:right;font-size:22px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;">100PIRL</span></a></div>
+	<div id="helpdoc" style="display:none;opacity:0;background:transparent; width:90px; margin-right:3vw; float:right; font-size:24px; padding-top:0.3vh;"><a href="https://github.com/kl3eo/room-house/blob/main/R-H_manual_RUS.pdf#page=15" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;">HELP</span></a></div>
+	<div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px; padding-top:0.3vh;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;">100PIRL</span></a></div>
 	<div style="clear:both;"></div>
 </div>
 
@@ -782,6 +864,67 @@ if (!curIP.length) {
 <div style="clear:left;"></div>
 </div><!-- subcontrols -->
 
+<div id="slide_container">
+<section id="main-slider" class="splide" aria-label="Lolo">
+  <div class="splide__track">
+		<ul class="splide__list">
+			<li id="milan" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://milan.room-house.com';"><img src="/img/bg_slider.png?sig=1">
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Milan</span></div>
+				<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<!-- li id="warsaw" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://warsaw.room-house.com';"><img src="/img/bg_slider.png?sig=2"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Warsaw</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li -->
+			<li id="habana" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://habana.room-house.com';"><img src="/img/bg_slider.png?sig=3"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Habana</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<li id="wien" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://wien.room-house.com';"><img src="/img/bg_slider.png?sig=4"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Wien</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<li id="riga" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https:/riga.room-house.com';"><img src="/img/bg_slider.png?sig=5">
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Riga</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<!-- li id="stamboul" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://stamboul.room-house.com';"><img src="/img/bg_slider.png?sig=6"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Stamboul</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li -->
+			<li id="split" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://split.room-house.com';"><img src="/img/bg_slider.png?sig=7"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Split</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<li id="firenze" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://firenze.room-house.com';"><img src="/img/bg_slider.png?sig=8"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Firenze</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<li id="olomouc" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https:/olomouc.room-house.com';"><img src="/img/bg_slider.png?sig=9">
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Olomouc</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<!-- li id="barna" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://barna.room-house.com';"><img src="/img/bg_slider.png?sig=10"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Barna</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li -->
+			<li id="munchen" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://munchen.room-house.com';"><img src="/img/bg_slider.png?sig=11"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Munchen</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+			<!-- li id="trent" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://trent.room-house.com';"><img src="/img/bg_slider.png?sig=12"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Trent</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li -->
+			<li id="lisboa" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://lisboa.room-house.com';"><img src="/img/bg_slider.png?sig=13"/>
+				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Lisboa</span></div>
+			<div class="pricer"><span class="nextroom pricee"></span></div>
+			</li>
+		</ul>
+  </div>
+</section>
+</div><!-- slide_container -->
+
 <div id="message_wrap" style="display:none;position:relative;" class="message_wrap">
 
    <div id="chatter" style="display:none;font-size:36px;color:#777;cursor:pointer;border:1px solid #777;border-radius:30px;width:60px;height:60px;z-index:1300;position:absolute;background:#000;line-height:84px;margin:-36px -24px;" >&nbsp;+</div>
@@ -803,6 +946,22 @@ if (!curIP.length) {
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
 <script>let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) $('phones').style.visibility='hidden'}, 2400);}</script>
+
+    <script>
+
+var splide = new Splide( "#main-slider", {
+  type    : 'loop',
+  drag   : 'free',
+  snap   : true,
+  perPage: 1,
+  perMove: 1,
+  autoWidth: true,
+} );
+
+splide.mount();
+
+    </script>
+    
 </body>
 </html>
 
