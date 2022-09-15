@@ -72,9 +72,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//no sound from other guests on default, but from gurus ok
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
 	//or all allowed
-	  if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	// if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
-	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
 	if (mode == 'm') coo_muted = true;
 				

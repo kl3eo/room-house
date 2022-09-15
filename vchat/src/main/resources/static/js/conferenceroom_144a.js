@@ -459,7 +459,7 @@ function register() {
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
 		
 		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
-		if ($('helpdoc')) (function() {$('helpdoc').style.display = "block"; $('helpdoc').fade(1);}).delay(1500);
+		if ($('helpdoc')) (function() {$('helpdoc').style.display = "block"; if (small_device) {$('helpdoc').style.paddingTop = "0.4vh";$('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(1500);
 		
 	}).catch(err => console.log(err));
 
