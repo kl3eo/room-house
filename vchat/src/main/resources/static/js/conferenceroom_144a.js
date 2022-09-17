@@ -786,7 +786,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	if (aonly) constraints = constraints_aonly;
 
 	var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
-	constraints = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
+//	constraints = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints;
 
 	var options = {
               	localVideo: video,
