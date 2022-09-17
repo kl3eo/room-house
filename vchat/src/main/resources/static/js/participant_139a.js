@@ -495,6 +495,14 @@ function Participant(name, myname, mode, myrole, new_flag) {
 					}		
 					sendMessage(message);	
 
+				} else {
+
+					for ( var key in participants) {
+						if (participants[key].name === name) {
+							participants[key].dispose();
+							delete participants[key];
+						}
+					}					
 				}
 				
 	  		}).catch(err => console.log(err));

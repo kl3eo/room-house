@@ -543,25 +543,7 @@ function onNewParticipant(request) {
 		if (pctr > room_limit - 1 && i_am_viewer) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
 
 		if (!small_device) {
-        	 if (pctr == 4) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-200px';
-        	 } else if (pctr == 3) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-200px';
-        	 } else if (pctr == 2) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-200px';
-		 } else if (pctr == 1) {
-                	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '0px';
-        	 } else if (pctr == 5) {
-                	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-320px';
-        	 } else if (pctr > 5) {
-                	$('room').style.minWidth = '1560px';
-                	$('room').style.marginLeft = '-440px';
-        	 }
+			resizer(pctr)
 		}
 		   	
 		receiveVideo(request.name, request.mode, myrole, true);
@@ -992,25 +974,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			if (pctr > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
 
 			if (!small_device) {
-				if (pctr == 4) {
-                			$('room').style.minWidth = '960px';
-                			$('room').style.marginLeft = '-200px';
-        			} else if (pctr == 3) {
-                			$('room').style.minWidth = '960px';
-                			$('room').style.marginLeft = '-200px';
-        			} else if (pctr == 2) {
-                			$('room').style.minWidth = '960px';
-                			$('room').style.marginLeft = '-200px';
-        			} else if (pctr == 1) {
-                			$('room').style.minWidth = '480px';
-                			$('room').style.marginLeft = '0px';
-        			} else if (pctr == 5) {
-                			$('room').style.minWidth = '1260px';
-                			$('room').style.marginLeft = '-320px';
-        			} else if (pctr > 5) {
-                			$('room').style.minWidth = '1560px';
-                			$('room').style.marginLeft = '-440px';
-        			}
+				resizer(pctr);
 			}	    
 			
 			receiveVideo(f, s, role, false);
@@ -1249,26 +1213,7 @@ function onParticipantLeft(request) {
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device) {
-
-        	if (pcounter == 4) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-200px';
-        	} else if (pcounter == 3) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-200px';
-        	} else if (pcounter == 2) {
-                	$('room').style.minWidth = '960px';
-                	$('room').style.marginLeft = '-200px';
-        	} else if (pcounter == 1) {
-                	$('room').style.minWidth = '480px';
-                	$('room').style.marginLeft = '0px';
-        	} else if (pcounter == 5) {
-                	$('room').style.minWidth = '1260px';
-                	$('room').style.marginLeft = '-320px';
-        	} else if (pcounter > 5) {
-                	$('room').style.minWidth = '1560px';
-                	$('room').style.marginLeft = '-440px';
-        	}			
+			resizer(pcounter);			
 		}
 	}
 }

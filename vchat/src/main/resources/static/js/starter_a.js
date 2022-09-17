@@ -171,6 +171,29 @@ function flashText_and_rejoin(t) {
 	(function(){$('phones').fade(0);}).delay(1000); 
 }
 
+function resizer(pctr) {
+
+	if (pctr == 4) {
+		$('room').style.minWidth = '960px';
+		$('room').style.marginLeft = '-200px';
+	} else if (pctr == 3) {
+		$('room').style.minWidth = '960px';
+		$('room').style.marginLeft = '-200px';
+	} else if (pctr == 2) {
+		$('room').style.minWidth = '960px';
+		$('room').style.marginLeft = '-200px';
+		} else if (pctr == 1) {
+		$('room').style.minWidth = '480px';
+		$('room').style.marginLeft = '0px';
+	} else if (pctr == 5) {
+		$('room').style.minWidth = '1260px';
+		$('room').style.marginLeft = '-320px';
+	} else if (pctr > 5) {
+		$('room').style.minWidth = '1560px';
+		$('room').style.marginLeft = '-440px';
+	}
+}
+
 function toggleAllMuted() {
 
 	if (check_iOS()) {
