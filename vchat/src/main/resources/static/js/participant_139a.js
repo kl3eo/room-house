@@ -70,11 +70,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var coo_muted = loadData(name+'_muted');
 	
 	//no sound from other guests on default, but from gurus ok
-	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
 	//or all allowed
 	// if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
-	if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
 	if (mode == 'm') coo_muted = true;
 				
@@ -87,11 +87,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		saveData(name+'_volume', coo_volume, 1440);
 	}
 
-	//if (this_is_guru && mode === 'a') coo_muted = false; //let gurus be heard if they are audio-only	
-	i_am_muted = loadData(myname+'_muted');
-
 	//switch off microphone if all_muted
-	if ((i_am_muted === null || i_am_muted === 'null') && name == myname) i_am_muted = (all_muted === true || all_muted === 'true') ? true  : false;
+	//if ((i_am_muted === null || i_am_muted === 'null') && name == myname) i_am_muted = (all_muted === true || all_muted === 'true') ? true  : false;
+
+	//?! the same as above, but brute force
+	if ((all_muted === true || all_muted === 'true') && name == myname) i_am_muted = true;
 	
 	if (name == myname) saveData(myname+'_muted', i_am_muted, 1440);
 
@@ -458,7 +458,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				}
 				if (name == myname && !playSomeMusic) {
 					if (i_am_muted === true || i_am_muted === 'true') {
-						saveData(myname+'_muted', false, 1440); i_am_muted = false;
+						saveData(myname+'_muted', false, 1440); i_am_muted = false; 
+						setCookie('all_muted', false, 1440);// have to add this too
 						flashText_and_rejoin('microphone ON!');
 					} 
 					else {

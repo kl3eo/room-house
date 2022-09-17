@@ -429,11 +429,17 @@ function register() {
 		
 		if (!small_device && !w[0].match(new RegExp('rgsu','g'))) $('slide_container').style.display = 'block';
 
+//?! brute force
+all_muted = getCookie('all_muted');
+if (all_muted === true || all_muted === 'true') i_am_muted = true;
+
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
 		
 		let tok = getCookie('authtoken') || '';
 		
 		if (role == 0 && hack) role = 1;	
+
+//console.log('registering, mode is' ,mode);
 
 		var message = {
 			id : 'joinRoom',
@@ -743,9 +749,11 @@ function onExistingParticipants(msg) {
 	let fmode = getCookie('fmode') ? 'environment' : 'user';
 		
 	i_am_viewer = false;	
-			
-	//i_am_muted = loadData(myname+'_muted');
-		
+
+//?! brute force
+all_muted = getCookie('all_muted');
+if (all_muted === true || all_muted === 'true') i_am_muted = true;
+
 	let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
 		
 	var participant = new Participant(name, myname, mode, role, false);
@@ -776,15 +784,15 @@ function onExistingParticipants(msg) {
 	};
 
 	if (aonly) constraints = constraints_aonly;
-	//if (i_am_muted === true || i_am_muted === 'true') constraints =  constraints_vonly;
+
+	var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
+	constraints = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
 
 	var options = {
               	localVideo: video,
 		mediaConstraints: constraints,
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
-	
-	var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
 	
 	var options_alt = {
 		localVideo: video,
