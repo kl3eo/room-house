@@ -87,9 +87,9 @@ function change_lang(l) {
 	hea = hea_.get(l);
 	now = now_.get(l);
 	today = today_.get(l);
+	//helpcapo = he_.get(l);
 	roo = roo_.get(l); roo = roo.match(new RegExp('room-house','g')) ? '' : roo;// hack --ash
-	buy = buy_.get(l);
-	helpcapo = he_.get(l);
+	//buy = buy_.get(l);	
 		
 	if (typeof(mod1) != 'undefined' && mod1 !== null) mod1.content.innerHTML = about_content.get(l);
 	if (typeof(mod2) != 'undefined' && mod2 !== null) mod2.content.innerHTML = help_content.get(l);
@@ -262,6 +262,8 @@ function ed() {
   $('roomName').value = obj.room;    
   //let role = obj.role;
   role = obj.role;
+  
+  if (role.length == 0) role = 0;
   
   if (obj.curip)  {
         $('curip').value = obj.curip;

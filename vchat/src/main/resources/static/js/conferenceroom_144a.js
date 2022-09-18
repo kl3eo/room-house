@@ -109,7 +109,7 @@ window.onload = function(){
 
    }, 1000);
       
-	var lang = getCookie('lang');
+	let lang = getCookie('lang');
 	lang = (lang === null || lang === 'null' || lang === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : lang;
 	ctr = lang;
 
@@ -129,6 +129,9 @@ window.onload = function(){
                 	let go = go_.get(altlang[ctr]);
                 	item.innerHTML = go;
         	});
+		
+		let he = he_.get(altlang[ctr]);
+		$('helpcapo').innerHTML = he;
 	}
 
 	var vote = getCookie('vote');
@@ -390,8 +393,7 @@ function register() {
 		if (role == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
 
 		//define in case the onload retarded; doesn't help in iOS?
-		let l = getCookie('lang');
-		l = (l === null || l === 'null' || l === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l;
+		let l = checkLang();		
 		change_lang(altlang[l]);
 			
 		$('room-header').innerText = 'ROOM ' + room;
@@ -439,7 +441,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		
 		if (role == 0 && hack) role = 1;	
 
-//console.log('registering, mode is' ,mode);
+//console.log('registering, mode is' ,mode, 'role is', role);
 
 		var message = {
 			id : 'joinRoom',
@@ -464,14 +466,19 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
   
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
 		
-		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
+		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(500);
 		
-		if ($('helpdoc')) (function() {if (!small_device) $('helpcapo').innerHTML = helpcapo; $('helpdoc').style.display = "block"; if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(1500);
+		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device && l === 1) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
 		
 //	}).catch(err => console.log(err));
 
 }
 
+function checkLang() {
+	let l = getCookie('lang');
+	l = (l === null || l === 'null' || l === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l;
+	return l;
+}
 function onNewViewer(request) {
 
 	if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
