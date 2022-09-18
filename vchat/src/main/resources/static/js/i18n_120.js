@@ -248,3 +248,11 @@ var go_ = new Map ([
    ['pt', 'pasar a '],
 ]);
 
+var he_ = new Map ([
+   ['en', 'HELP'],
+   ['ru', 'ПОМОЩЬ'],
+   ['es', 'AYUDA'],
+   ['fr', 'HELP'],
+   ['cn', 'HELP'],
+   ['pt', 'AJUDA'],
+]);

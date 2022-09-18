@@ -66,7 +66,6 @@ var i_am_viewer = true;
 
 var acc_id = getCookie('acc') || '';
 
-
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -78,7 +77,7 @@ const wi = 640;
 const fps_hq = 24;
 const wi_hq = 1920;
 
-const role  = 0;
+//const role  = 0;
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -382,9 +381,10 @@ function register() {
 	var curip = $('curip').value;
 	registered = 1;
 
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	//fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
  
-		let role = respo || 0; 
+		//let role = respo || 0; 
+
 		if (temporary && role == 0) role = 3;
 
 		if (role == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
@@ -411,7 +411,7 @@ function register() {
 		if (voting_shown) {$('leftnum').style.display = 'block'; $('rightnum').style.display = 'block';}
 	
 		var curr_all_muted = getCookie('all_muted') || false;
-		let sem  = screen.width > 1023 ? '7' : '';
+
 		$('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
 		$('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
 	
@@ -465,9 +465,10 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
 		
 		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(1500);
-		if ($('helpdoc')) (function() {$('helpdoc').style.display = "block"; if (small_device) {$('helpdoc').style.paddingTop = "0.4vh";$('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(1500);
 		
-	}).catch(err => console.log(err));
+		if ($('helpdoc')) (function() {if (!small_device) $('helpcapo').innerHTML = helpcapo; $('helpdoc').style.display = "block"; if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(1500);
+		
+//	}).catch(err => console.log(err));
 
 }
 
@@ -684,7 +685,7 @@ function set_guru(par, who) {
 }
 
 function drop_guest(who) {
-console.log('drop_guest:',who);
+//console.log('drop_guest:',who);
 	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 
@@ -718,13 +719,14 @@ function onExistingParticipants(msg) {
 
   let myname = $('name').value; 
   
-  fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+  //fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
-   let role = respo || 0; 
+   //let role = respo || 0;
+   
    if (role == 0 && hack) role = 1;
    if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
 
-   if (temporary && role == 0) role = 3; 
+   if (temporary && role == 0) role = 3;
 	
    if (role == 1 || role == 2 || role == 3)  {
 
@@ -1021,7 +1023,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
    	   
    (function() {$('room-header').style.display = 'block';$('room-header').fade(1);}).delay(1500);
    
-  }).catch(err => console.log(err)); //fetch
+//  }).catch(err => console.log(err)); //fetch
 }
 
 function copy(that){
@@ -1101,8 +1103,8 @@ function receiveVideo(sender, mode, role, n) {
 }
 
 function setGuru(request) {
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		let role = respo || 0;
+//	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+//		let role = respo || 0;
 		let sem  = screen.width > 1023 ? '7' : '';
 
 		if (request.mode == '1' && role != 1) {
@@ -1113,13 +1115,15 @@ function setGuru(request) {
 		}
 		if (request.mode == '0' && temporary) {
 
-			temporary = 0; chat_shown = 1; $('logger').click(); $('audience').click(); rejoin();
-			cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');
+			role = 0; temporary = 0; chat_shown = 1; $('logger').click(); $('audience').click(); 
+			cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; 
 			$('av_toggler').style.display='none';
 			$('bell').style.display='block';
-			hack = false; //?!	
+			hack = false; //?!
+			i_am_viewer = true;
+			flashText_and_rejoin('AUDIO-ONLY');
 		}
-	}).catch(err => console.log(err));
+//	}).catch(err => console.log(err));
 }
 
 function askGuru(request) {
@@ -1138,15 +1142,15 @@ function askGuru(request) {
 	$('audience_boxx').innerHTML = audi;
 	$('au_'+suf).setStyles({'color':'#faa'});
 
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		let role = respo || 0;
+	//fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	//	let role = respo || 0;
 		//if (role == 1 || request.name == $('name').value) {
 			soundEffect.src = "/sounds/wood_" + window.location.hostname + ".mp3";
 			chat_shown = 0; $('logger').click();
 			$('message_box').style.display = 'none';
 			$('audience_box').style.display = 'table';
 		//}
-	}).catch(err => console.log(err));
+	//}).catch(err => console.log(err));
 
 }
 

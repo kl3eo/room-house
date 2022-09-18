@@ -78,6 +78,7 @@ var new_account = new Map([
 	          ['ru', 'Your account ID (copy/paste and hit Enter) <input type=text id=rsender style="width:210px;" value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length == 48 && this.value.substring(0,1) == \'5\') {setCookie(\'acc\',this.value,144000);mod6.close();$(\'sp_balance\').src=\'https://cube.room-house.com:8444/?acc=\'+this.value;leaveRoom();register();} else {this.value=\'\';this.placeholder = \'Please enter valid address\';}}"><br>Create <a href=\'https://wallet.room-house.com/#/accounts/0\' target=\'new\'>a new account</a>.']
 ]);
 
+
 // good stuff -- 08.09.22
 //SDP_END_POINT_ALREADY_NEGOTIATED does not allow to change media in showMeAsParticipant() -- so in present we MUST leave room and register back
 function showMeAsParticipant() {
@@ -166,3 +167,10 @@ function showMeAsParticipant() {
 		  (function(){$('phones').fade(0);}).delay(1000);
          });
 }
+/*
+<!-- script src="./js/conferenceroom_144a.js"></script>
+<script src="./js/participant_139a.js"></script>
+<script src="./js/i18n_120.js"></script>
+<script src="./js/kure.js"></script>
+<script src="./js/starter_a.js"></script -->
+*/

@@ -297,15 +297,14 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 
 	function setAnno() {
-		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-			let role = respo;
+		//fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			//let role = respo;
 			//if (role != 0) {
 				//console.log('set anno');
 				who_to = name;
 				anno_adder.click();
 			//}
-	
-		}).catch(err => console.log(err));		
+		//}).catch(err => console.log(err));		
 	}
 	
 	function setCinema() {
