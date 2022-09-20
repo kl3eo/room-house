@@ -183,7 +183,7 @@ function resizer(pctr) {
 	} else if (pctr == 2) {
 		$('room').style.minWidth = '960px';
 		$('room').style.marginLeft = '-200px';
-		} else if (pctr == 1) {
+	} else if (pctr == 1) {
 		$('room').style.minWidth = '480px';
 		$('room').style.marginLeft = '0px';
 	} else if (pctr == 5) {
@@ -243,7 +243,7 @@ window.addEventListener("message", function(event) {
  //doesn't help here?
 	soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
 
-function ed() {
+function ed() { //code to run on receive message from join_ frame
 
  if ($('cont')) $('cont').fade(0);
  if ($('badge')) $('badge').fade(0);
@@ -263,13 +263,16 @@ function ed() {
   //let role = obj.role;
   role = obj.role;
   
-  if (role.length == 0) role = 0;
+  //because checker.pl returns empty when no credentials set in http_only coo
+  if (role.length != 0) {if (role == 0) i_am_dummy_guest = true;}
+  else {role = 0;};//this is a guest, too, but not dummy
   
   if (obj.curip)  {
         $('curip').value = obj.curip;
         curIP = $('curip').value;
   }
   
+  //dummy_guest set, check it when you register!
   register();
 
   if(role == 0 && small_device) {(function() {let titles = ['nato','torp','neft','shavlo','dzuba','zenit','tska']; const rnd = (min,max) => { return Math.floor(Math.random() * (max - min + 1) + min) }; if (w[0] === "club" && !heard_info) {heard_info = true; setCookie('heard_info', true, 144000); if (sound_on_played && false) {soundEffect.volume=0.5; soundEffect.src = '/sounds/'+titles[rnd(0,titles.length-1)]+'.mp3';} if (!heard_info) (function() { if (sound_on_played) {soundEffect.volume=0.4; soundEffect.src = '/sounds/sound_on2.mp3';}}).delay(10000);}}).delay(3000);}

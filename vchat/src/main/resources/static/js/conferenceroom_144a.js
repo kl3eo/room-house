@@ -65,6 +65,8 @@ var new_message = 0;
 var i_am_viewer = true;
 
 var acc_id = getCookie('acc') || '';
+ 
+var i_am_dummy_guest = false; //check demo dummy from join_
 
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
@@ -375,22 +377,37 @@ function register() {
 		} 
 	} else {}
 		
-	name = $('name').value; var cookie_name = loadData('name');
+	name = $('name').value; let cookie_name = loadData('name');
 	if (!name.length) name = cookie_name; 
 	if (!name.length || name === 'null') {name=makeid(8); name = name+'_'+name; saveData('name', name, 1440);}
-	
-	var w = window.location.hostname.split('.'); var room = $('roomName').value == '' ? w[0] : $('roomName').value;
-	
-	var curip = $('curip').value;
-	registered = 1;
 
-	//fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	
+	if (i_am_dummy_guest) { //it wouldn't help?!
+
+		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
  
-		//let role = respo || 0; 
+			let role = respo || 0;
+//console.log('registering as dummy guest, after fetch');
+			register_body(role);
+			i_am_dummy_guest = false; //only one time is enough?! 
+		
+		}).catch(err => console.log(err));
+	} else { register_body(role);}
 
-		if (temporary && role == 0) role = 3;
+}
 
-		if (role == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
+function register_body(ro) {
+	
+		let w = window.location.hostname.split('.'); 
+		let room = $('roomName').value == '' ? w[0] : $('roomName').value;
+	
+		let curip = $('curip').value;
+		registered = 1;
+	
+		let sem  = screen.width > 1023 ? '7' : '';
+		if (temporary && ro == 0) role = 3;
+
+		if (ro == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
 
 		//define in case the onload retarded; doesn't help in iOS?
 		let l = checkLang();		
@@ -412,7 +429,7 @@ function register() {
 		$('poll').style.display = 'block';
 		if (voting_shown) {$('leftnum').style.display = 'block'; $('rightnum').style.display = 'block';}
 	
-		var curr_all_muted = getCookie('all_muted') || false;
+		let curr_all_muted = getCookie('all_muted') || false;
 
 		$('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
 		$('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
@@ -420,7 +437,7 @@ function register() {
 		$('leftplus').style.display = 'block';
 		$('rightplus').style.display = 'block';
 
-        	if (( (role == 1) || !he_votado) && firstTime) {
+        	if (( (ro == 1) || !he_votado) && firstTime) {
 
                 	$('leftplus').addEventListener('click', leftHandler);
                 	$('rightplus').addEventListener('click', rightHandler);
@@ -431,19 +448,19 @@ function register() {
 		
 		if (!small_device && !w[0].match(new RegExp('rgsu','g'))) $('slide_container').style.display = 'block';
 
-//?! brute force
-all_muted = getCookie('all_muted');
-if (all_muted === true || all_muted === 'true') i_am_muted = true;
+		// brute force
+		all_muted = getCookie('all_muted');
+		if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
 		
 		let tok = getCookie('authtoken') || '';
 		
-		if (role == 0 && hack) role = 1;	
+		if (ro == 0 && hack) role = 1;	
 
 //console.log('registering, mode is' ,mode, 'role is', role);
 
-		var message = {
+		let message = {
 			id : 'joinRoom',
 			name : name,
 			mode : mode,
@@ -468,9 +485,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		
 		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(500);
 		
-		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device && l === 1) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
-		
-//	}).catch(err => console.log(err));
+		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device && l === 1) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; 
+		if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
 
 }
 
