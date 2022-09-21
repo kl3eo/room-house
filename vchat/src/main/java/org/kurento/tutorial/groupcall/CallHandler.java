@@ -13,6 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
+#   Copyright (c) 2021-22 Alex Shevlakov alex@motivation.ru
+#   All Rights Reserved.
+
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
  */
 
 package org.kurento.tutorial.groupcall;
@@ -98,7 +110,11 @@ public class CallHandler extends TextWebSocketHandler {
 
         	if (who != null) {
                 	if (user == null) {
-                        	leaveRoom(who);
+				//if you do correct, they would re-connect; hack and let them stay idle in goodConnection
+				//WebSocketSession sess = who.getSession();
+    				//UserSession us = registry.removeBySession(sess);
+                        	//leaveRoom(us);
+				leaveRoom(who);
                 	}
         	}
 
@@ -359,6 +375,8 @@ public class CallHandler extends TextWebSocketHandler {
 		roomName = roomName.replaceAll("[;'\"]*", "");
 		mode = mode.replaceAll("[;'\"]*", "");
 		role = role.replaceAll("[;'\"]*", "");
+		city = city.replaceAll("[;'\"]*", "");
+		country = country.replaceAll("[;'\"]*", "");
 
 //create table joins (id serial, ipaddr text, country text, city text, name text, room text, mode text, role text, dtm timestamp);
 //insert		
@@ -432,8 +450,12 @@ public class CallHandler extends TextWebSocketHandler {
     final UserSession who = registry.getByName(n);
     if (who != null) {
 		who.setRole("0");
+		//if you do correct, they would re-connect; hack and let them stay idle in goodConnection
+		//WebSocketSession sess = who.getSession();
+    		//UserSession us = registry.removeBySession(sess);
+		//leaveRoom(us);
 		leaveRoom(who);
-    }    
+	    }    
     log.info("GURU {}: trying to drop {} viewer!", user.getName(), n);
   }
   
