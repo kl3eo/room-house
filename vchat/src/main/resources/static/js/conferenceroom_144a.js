@@ -721,10 +721,11 @@ function drop_guest(who) {
 			}		
 			sendMessage(message);
 console.log('dropped:',who);
-		} else {
+		} 
+		//else {
 			let l = who.split('_');
 			if ($('_au_'+l[1])) $('_au_'+l[1]).dispose(); //let it happen	
-		}
+		//}
 		
 	}).catch(err => console.log(err));
 }

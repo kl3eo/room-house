@@ -231,12 +231,12 @@ var roo_ = new Map ([
 ]);
 
 var buy_ = new Map ([
-   ['en', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">buy it!</a> for $75'],
-   ['ru', '<a href="https://room-house.com/contact_ru.html" style="color:#ff1493;">купить!</a> за 4990 руб'],
-   ['es', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">buy it!</a> for 75 EURO'],
-   ['fr', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">buy it!</a> for 75 EURO'],
-   ['cn', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">buy it!</a> for 500CNY'],
-   ['pt', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">buy it!</a> for 75 EURO'],
+   ['en', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">BUY IT!</a> for $75'],
+   ['ru', '<a href="https://room-house.com/contact_ru.html" style="color:#ff1493;">КУПИТЬ!</a> за 4990 руб'],
+   ['es', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">BUY IT!</a> for 75 EURO'],
+   ['fr', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">BUY IT!</a> for 75 EURO'],
+   ['cn', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">BUY IT!</a> for 500CNY'],
+   ['pt', '<a href="https://room-house.com/contact_en.html" style="color:#ff1493;">BUY IT!</a> for 75 EURO'],
 ]);
 
 var go_ = new Map ([
