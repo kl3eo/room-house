@@ -297,7 +297,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 
 	function setAnno() {
-		//fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			//let role = respo;
 			//if (role != 0) {
 				//console.log('set anno');
@@ -308,7 +308,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function setCinema() {
-		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			if (role == 1) {
 				let p = participants[name]; let g = p.getMode();
@@ -327,7 +327,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function back_to_audience() {
-		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			if (role == 1) set_guru(0, name);
 	
@@ -481,7 +481,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	  	var yon = window.confirm('Drop '+rname+'?!');
 		if (yon) {
 
-	  		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	  		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 				let role = respo;
 				if (role == 1) {
 

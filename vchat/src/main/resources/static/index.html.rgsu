@@ -22,6 +22,7 @@
 <script src="./js/mBox.Modal.js"></script>
 
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true; var i_am_muted = false; var role = 0;
+const port = w[0] === '185' ? '18443' : '8453';
 </script>
 <script src="https://en.room-house.com/files/cur_104.js"></script>
 <script src="./js/a12.js"></script>
@@ -723,7 +724,7 @@
                                 <div style="display:none;">
 RANDOM=7777
                                 </div>
-<script>var roo = window.location.hostname.split('.'); var port = roo[0] === '185' ? ':1443' : ':8453'; document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+port+'/join_'+roo[0]+'.html" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:60vw;max-width:240px;"></iframe>');</script>
+<script>document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:60vw;max-width:240px;"></iframe>');</script>
 
 				</div>
 			   </div>

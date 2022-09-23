@@ -249,7 +249,7 @@ function signalGuru(e) {
 }
 
 function leftHandler(e) {
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 		e.preventDefault();
 		e.stopPropagation(); 
@@ -268,7 +268,7 @@ function leftHandler(e) {
 }
 
 function rightHandler(e) {
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
         	e.preventDefault();
         	e.stopPropagation(); 
@@ -384,7 +384,7 @@ function register() {
 	
 	if (i_am_dummy_guest) { //it wouldn't help?!
 
-		fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
  
 			let role = respo || 0;
 //console.log('registering as dummy guest, after fetch');
@@ -685,7 +685,7 @@ function onExistingViewers(msg) {
 }
 
 function set_guru(par, who) {
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 
 		if (role == 1) {
@@ -708,8 +708,8 @@ function set_guru(par, who) {
 }
 
 function drop_guest(who) {
-//console.log('drop_guest:',who);
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+
+	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 
 		if (role == 1) {
@@ -720,12 +720,11 @@ function drop_guest(who) {
 				token: tok
 			}		
 			sendMessage(message);
-console.log('dropped:',who);
+
 		} 
-		//else {
-			let l = who.split('_');
-			if ($('_au_'+l[1])) $('_au_'+l[1]).dispose(); //let it happen	
-		//}
+
+		let l = who.split('_');
+		if ($('_au_'+l[1])) $('_au_'+l[1]).dispose(); //let it happen	
 		
 	}).catch(err => console.log(err));
 }
@@ -743,7 +742,7 @@ function onExistingParticipants(msg) {
 
   let myname = $('name').value; 
   
-  //fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+  //fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
    //let role = respo || 0;
    
@@ -1127,7 +1126,7 @@ function receiveVideo(sender, mode, role, n) {
 }
 
 function setGuru(request) {
-//	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+//	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 //		let role = respo || 0;
 		let sem  = screen.width > 1023 ? '7' : '';
 
@@ -1166,7 +1165,7 @@ function askGuru(request) {
 	$('audience_boxx').innerHTML = audi;
 	$('au_'+suf).setStyles({'color':'#faa'});
 
-	//fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 	//	let role = respo || 0;
 		//if (role == 1 || request.name == $('name').value) {
 			soundEffect.src = "/sounds/wood_" + window.location.hostname + ".mp3";
@@ -1180,7 +1179,7 @@ function askGuru(request) {
 
 function setCinema(request) {
 
-	fetch('https://'+window.location.hostname+':8453/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let myrole = respo || 0;	
 		let p = participants[request.name];
 		p.setMode(request.mode);
@@ -1201,7 +1200,7 @@ function newChatMessage() {
 	new_message = 1;
 	let intervalID = setInterval(function() { if (new_message) {$('logger').style.background = cnt % 2 == 0 ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #90ee90' : 'url(/icons/chat' + sem + '2.png) center center no-repeat'; cnt++;} else {$('logger').style.background = old_color; clearInterval(intervalID)}}, 1000);
 	
-	fetch('https://'+window.location.hostname+':8453/log.html').then(response => response.text()).then((response) => {$('message_box').innerHTML = response; }).catch(err => console.log(err));
+	fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {$('message_box').innerHTML = response; }).catch(err => console.log(err));
 
 		soundEffect.src = "/sounds/buzz.mp3";
 }
