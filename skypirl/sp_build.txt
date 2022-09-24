@@ -9,7 +9,12 @@ cargo build --release
 rm -rf ./target/release/deps/finality_grandpa-*
 rm -rf ./target/release/.fingerprint/finality-grandpa-*
 
+search for "finality-grandpa-0.14.1/src/voter_set.rs" in your ~/.cargo/:
+
 vi ~/.cargo/registry/src/github.com-1ecc6299db9ec823/finality-grandpa-0.14.1/src/voter_set.rs
+
+replace just one line:
+
         //hack ash
         //VoterWeight::new(total_weight.get() - faulty).expect("subtrahend > minuend; qed")
         VoterWeight::new(1).expect("subtrahend > minuend; qed")
