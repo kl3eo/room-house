@@ -79,6 +79,11 @@ const wi = 640;
 const fps_hq = 24;
 const wi_hq = 1920;
 
+//const sp_setter_url = "https://cube.room-house.com:8449";
+//const sp_container_url = "https://cube.room-house.com:8444";
+const sp_setter_url = "https://aspen.room-house.com:8447";
+const sp_container_url = "https://aspen.room-house.com:8446";
+
 //const role  = 0;
 
 window.onbeforeunload = function() {
