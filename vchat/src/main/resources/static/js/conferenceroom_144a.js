@@ -193,21 +193,7 @@ ws.onmessage = function(message) {
 		break;
 	case 'viewerLeft':
 		just_left = parsedMessage.name;
-		let na = just_left.split('_');
-		let suf = na[na.length-1];	
-		if ($('_au_'+suf)) {
-			$('_au_'+suf).dispose();
-			let cur = $('audience_numbers').innerHTML == '...' ? 0  :  parseInt($('audience_numbers').innerHTML)-1;
-			vcounter = cur > 0 ? cur : 0; 
-
-			if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
-			cur = cur > 0 ? cur : '...'; 
-			$('audience_numbers').innerHTML = cur;
-			let col = cur > 0 ? '#369' : '#ccc';
-			$('audience_numbers').setStyles({'color': col});
-			$('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : $('audience_boxx').innerHTML;
-			chat_shown = 1; $('logger').click(); $('audience').click(); 
-		}
+		onViewerLeft(just_left);
 		break;
 	case 'iceCandidate':
 		participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
@@ -352,21 +338,7 @@ function register() {
 					break;
 				case 'viewerLeft':
 					just_left = parsedMessage.name;
-					let na = just_left.split('_');
-					let suf = na[na.length-1];	
-					if ($('_au_'+suf)) {
-						$('_au_'+suf).dispose();
-						let cur = $('audience_numbers').innerHTML == '...'  ?  0 : parseInt($('audience_numbers').innerHTML)-1;
-						vcounter = cur > 0 ? cur : 0;
-						//if ($('vcounter')) $('vcounter').innerHTML = vcounter; 
-						if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
-						cur = cur > 0 ? cur : '...';
-						$('audience_numbers').innerHTML = cur;
-						let col = cur > 0 ? '#369' : '#ccc';
-						$('audience_numbers').setStyles({'color': col});
-						$('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : $('audience_boxx').innerHTML;
-						chat_shown = 1; $('logger').click(); $('audience').click(); 
-					}
+					onViewerLeft(just_left);
 					break;
 				case 'iceCandidate':
 					participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
@@ -725,7 +697,9 @@ function drop_guest(who) {
 			}		
 			sendMessage(message);
 
-		} 
+		} else {
+			onViewerLeft(who);
+		}
 
 		let l = who.split('_');
 		if ($('_au_'+l[1])) $('_au_'+l[1]).dispose(); //let it happen	
@@ -1249,6 +1223,24 @@ function onParticipantLeft(request) {
 	}
 }
 
+function onViewerLeft(n) {
+	
+	let na = n.split('_');
+	let suf = na[na.length-1];	
+	if ($('_au_'+suf)) {
+		$('_au_'+suf).dispose();
+		let cur = $('audience_numbers').innerHTML == '...'  ?  0 : parseInt($('audience_numbers').innerHTML)-1;
+		vcounter = cur > 0 ? cur : 0;
+
+		if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
+		cur = cur > 0 ? cur : '...';
+		$('audience_numbers').innerHTML = cur;
+		let col = cur > 0 ? '#369' : '#ccc';
+		$('audience_numbers').setStyles({'color': col});
+		$('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : $('audience_boxx').innerHTML;
+		chat_shown = 1; $('logger').click(); $('audience').click(); 
+	}
+}
 
 function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message);
