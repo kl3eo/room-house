@@ -137,9 +137,11 @@ window.onload = function(){
 		
 		let he = he_.get(altlang[ctr]);
 		$('helpcapo').innerHTML = he;
-		$('helplink').href = ctr == 1 ? 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_RUS.pdf' : 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_ENG.pdf';
+		
 	}
-
+	
+	$('helplink').href = ctr == 1 ? 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_RUS.pdf' : 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_ENG.pdf';
+	
 	var vote = getCookie('vote');
 	he_votado = (vote === null || vote === 'null') ? he_votado : vote;
 
