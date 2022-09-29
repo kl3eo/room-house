@@ -22,7 +22,7 @@
 <script src="./js/mBox.Modal.js"></script>
 
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true; var i_am_muted = false; var role = 0;
-const port = w[0] === '185' ? '18443' : '8453';
+const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
 </script>
 <script src="https://en.room-house.com/files/cur_104.js"></script>
 <script src="./js/a12.js"></script>
@@ -818,7 +818,7 @@ if (!curIP.length) {
 
 <div id="stats">
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter>0</span></div>
-	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); if ($('audience_box').style.display == 'none') $('audience').click();">&#128101;:&nbsp;<span id=vcounter>0</span></div>
+	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); $('message_box').style.display='none'; $('audience_box').style.display='table';/*if ($('audience_box').style.display == 'none') $('audience').click();*/">&#128101;:&nbsp;<span id=vcounter>0</span></div>
 	<div id="stats_ng" title="today viewers" onclick="$('message_box').style.display='block'; $('audience_box').style.display='none'; cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
 	<div id="helpdoc" style="display:none;opacity:0;background:transparent; width:90px; margin-right:3vw; float:right; font-size:24px;"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal;color:#fed;font-size:22px;">HELP</span></a></div>
 	<div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;">100PIRL</span></a></div>
