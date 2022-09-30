@@ -68,6 +68,8 @@ var acc_id = getCookie('acc') || '';
  
 var i_am_dummy_guest = false; //check demo dummy from join_
 
+var nump = 0; var numv = 0;
+
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -186,6 +188,11 @@ ws.onmessage = function(message) {
 		break;
 	case 'goodConnection':
 		connection_is_good = 1;
+		break;
+	case 'roomConnection':
+		//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
+		nump = parsedMessage.nump; numv = parsedMessage.numv;  (function(){if ($('bstats')) $('bstats').fade(1);}).delay(2000);
+		//if ($('bnump')) $('bnump').innerHTML = nump; if ($('bnumv')) $('bnumv').innerHTML = numv;
 		break;
 	case 'newChatMessage':
 		newChatMessage();
@@ -331,6 +338,11 @@ function register() {
 					break;
 				case 'goodConnection':
 					connection_is_good = 1;
+					break;
+				case 'roomConnection':
+					//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
+					nump = parsedMessage.nump; numv = parsedMessage.numv; (function(){if ($('bstats')) $('bstats').fade(1);}).delay(2000);
+					//if ($('bnump')) $('bnump').innerHTML = nump; if ($('bnumv')) $('bnumv').innerHTML = numv;
 					break;
 				case 'newChatMessage':
 					newChatMessage();

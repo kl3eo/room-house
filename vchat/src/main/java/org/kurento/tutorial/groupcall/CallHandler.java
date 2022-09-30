@@ -88,8 +88,7 @@ public class CallHandler extends TextWebSocketHandler {
   public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     final JsonObject jsonMessage = gson.fromJson(message.getPayload(), JsonObject.class);
 
-    final UserSession user = registry.getBySession(session);
-    
+    final UserSession user = registry.getBySession(session);    
     
     final String pgurl = "jdbc:postgresql://localhost:5432/cp";
     final String pguser = "postgres";
@@ -123,6 +122,7 @@ public class CallHandler extends TextWebSocketHandler {
 		String joinerRole = jsonMessage.get("role").getAsString();
 		
 		joinerRoom = joinerRoom.replaceAll("[;'\"]*", ""); //protect against sql injection
+		joinerRole = joinerRole.replaceAll("[;'\"]*", "");
 
 		BufferedReader br = new BufferedReader(new FileReader("/home/nobody/"+joinerRoom+"_room_limit"));
 		try {
@@ -283,6 +283,28 @@ public class CallHandler extends TextWebSocketHandler {
       case "checkConnection":
         	if (user != null) checkConn(user);
         break;
+      case "checkRoom":
+		if (user == null) {
+        		final String jRoom = jsonMessage.get("room").getAsString();
+			final Room ro = roomManager.getRoom(jRoom);
+                	int co = 0; int vi = 0;
+                	for (final UserSession participant : ro.getParticipants()) {
+                        	co++;
+                	}
+                	for (final UserSession viewer : ro.getViewers()) {
+                        	vi++;
+                	}
+			
+			log.info("ROOM {}: got {} participants, {} viewers", ro.getName(), co, vi);
+			synchronized (session) {
+				final JsonObject checkRoomJson = new JsonObject();	
+    				checkRoomJson.addProperty("id", "roomConnection");
+				checkRoomJson.addProperty("nump", co);
+				checkRoomJson.addProperty("numv", vi);			
+				session.sendMessage(new TextMessage(checkRoomJson.toString()));
+			}		
+		}
+        break;
       case "onIceCandidate":
         if (user != null) {
 	  	JsonObject candidate = jsonMessage.get("candidate").getAsJsonObject();
@@ -320,7 +342,7 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-		
+	
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);

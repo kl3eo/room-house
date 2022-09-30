@@ -250,6 +250,7 @@ function ed() { //code to run on receive message from join_ frame
  if ($('learn_more')) $('learn_more').fade(0);
  if ($('socs')) $('socs').fade(0);
  if ($('hea')) $('hea').fade(0);
+ if ($('bstats')) $('bstats').fade(0);
 
  (function(){$('phones').fade(0);}).delay(1000);
  
@@ -259,7 +260,8 @@ function ed() { //code to run on receive message from join_ frame
   $('name').value = obj.name;
   saveData('name', obj.name, 1440);
    
-  $('roomName').value = obj.room;    
+  $('roomName').value = obj.room;
+  //let mes={id : 'checkRoom', room : obj.room}; sendMessage(mes);   
   //let role = obj.role;
   role = obj.role;
   
@@ -352,8 +354,8 @@ if (na != null && na != 'null') {
  	ed();
 } else { //demo mode		
 	normal_mode = false; let mgn = small_device ? 120 : 90;
-	
-	(function() {$('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-'+mgn+'px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">ROOM <span style="color:#369;">'+w[0]+'</span></div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/demo_ru.html style="color:#369;">' + morer +'</a></div><div id="socs" style="opacity:0;margin-top:60px;font-size:20px;margin-right:-2px;"><!-- a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;margin:0 5px;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;margin:0 5px;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;margin:0 5px;"><i class="bx bxl-telegram"></i></a>< &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;margin:0 5px;"><i class="bx bx-book-open"></i></a --></div></div>'; $('phones').style.cursor = 'pointer';$('phones').style.paddingTop = '39vh'; $('phones').fade(1); $('badge').fade(1); (function(){$('cont').fade(1);}).delay(500); (function(){$('learn_more').fade(1);$('socs').fade(1);$('hea').fade(1);}).delay(1000); $('phones').onclick = ed;}).delay(500); //let change_lang fill the i18n strings
+	let mes={id : 'checkRoom', room : w[0]}; sendMessage(mes); 
+	(function() {$('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-'+mgn+'px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">ROOM <span style="color:#369;">'+w[0]+'</span></div><div id="bstats" style="width:130px;margin:0 auto;opacity:0;"><div style="float:left; font-size:18px; color:#fed;"><span>&#128100;</span>:&nbsp;<span id="bnump">'+nump+'</span></div><div style="float:right;font-size:18px;color:#fed;"><span id="bnumv">'+numv+'</span>&nbsp;:<span>&#128065;</span></div><div style="clear:both;"></div></div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/demo_ru.html style="color:#369;">' + morer +'</a></div><div id="socs" style="opacity:0;margin-top:60px;font-size:20px;margin-right:-2px;"><!-- a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;margin:0 5px;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;margin:0 5px;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;margin:0 5px;"><i class="bx bxl-telegram"></i></a>< &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;margin:0 5px;"><i class="bx bx-book-open"></i></a --></div></div>'; $('phones').style.cursor = 'pointer';$('phones').style.paddingTop = '39vh'; $('phones').fade(1); $('badge').fade(1); (function(){$('cont').fade(1);}).delay(500); (function(){$('learn_more').fade(1);$('socs').fade(1);$('hea').fade(1);}).delay(1000); $('phones').onclick = ed;}).delay(500); //let change_lang fill the i18n strings
 }
 
 } else if (event.origin == sp_setter_url) {
