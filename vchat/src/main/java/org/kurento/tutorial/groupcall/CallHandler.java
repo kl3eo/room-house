@@ -186,6 +186,7 @@ public class CallHandler extends TextWebSocketHandler {
                 }
 // we allow room_limit joins in many-to-many
                 if (role.equals("0") && cou < room_limit) { role = "1"; }
+		if (room_limit == 2 && cou >= room_limit) { noSuchRoom = "1"; }
 	
 		if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
@@ -287,22 +288,38 @@ public class CallHandler extends TextWebSocketHandler {
 		if (user == null) {
         		final String jRoom = jsonMessage.get("room").getAsString();
 			final Room ro = roomManager.getRoom(jRoom);
-                	int co = 0; int vi = 0;
+			
+                	int co = 0; int vi = 0; String an = ""; String cu = "";
                 	for (final UserSession participant : ro.getParticipants()) {
-                        	co++;
+                        	an = participant.getAnno();
+				cu = participant.getCurip();
+				co++;
                 	}
                 	for (final UserSession viewer : ro.getViewers()) {
                         	vi++;
                 	}
+			if ( co != 1) {an = ""; cu = "";} else {an = "\".."+an+"\"";}
 			
-			log.info("ROOM {}: got {} participants, {} viewers", ro.getName(), co, vi);
+			log.info("ROOM {}: got {} participants, {} viewers", jRoom, co, vi);
 			synchronized (session) {
 				final JsonObject checkRoomJson = new JsonObject();	
     				checkRoomJson.addProperty("id", "roomConnection");
 				checkRoomJson.addProperty("nump", co);
-				checkRoomJson.addProperty("numv", vi);			
+				checkRoomJson.addProperty("numv", vi);
+				checkRoomJson.addProperty("anno", an);
+				checkRoomJson.addProperty("curip", cu);			
 				session.sendMessage(new TextMessage(checkRoomJson.toString()));
-			}		
+			}
+			
+			final String jTok = jsonMessage.get("tok").getAsString();
+			
+			if (jTok.equals("lol")) {
+				try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+                		Statement st = con.createStatement();
+				ResultSet rs = st.executeQuery("UPDATE rooms SET nump=" + co + ", numv=" + vi + ", dtm=current_timestamp WHERE name='" + jRoom + "'")) {
+         	} catch (SQLException ex) {log.info("PG update err for room {}", jRoom);}
+					
+			}					
 		}
         break;
       case "onIceCandidate":
@@ -342,6 +359,10 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
+   
+    //need this hack to avoid DB errors
+    curip = curip.replaceAll("[;'\"]*", "");
+    if (curip.equals("127.0.0.1") || curip.equals("")) {curip = "164.68.105.131";}
 	
     final InetAddress ipAddress = InetAddress.getByName(curip);
 

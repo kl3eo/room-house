@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "dependencies": {
+    "pg": "^8.6.0",
+    "random-int": "^3.0.0",
+    "ws": "^7.4.6"
+  }
+}
