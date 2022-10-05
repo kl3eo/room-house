@@ -123,7 +123,7 @@ var central_content = new Map([
 
 var anno_adder_content = new Map([
    ['en', 'SET ANNOTATION: <input type=text id=asender value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {sendMessage({id : \'setAnno\', anno:this.value.replace(/\'/g, \'\'), addr: who_to});mod7.close();} else {this.placeholder = \'???\';}}">'],
-   ['ru', 'SET ANNOTATION: <input type=text id=asender value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {sendMessage({id : \'setAnno\', anno:this.value.replace(/\'/g, \'\'), addr: who_to});mod7.close();} else {this.placeholder = \'???\';}}">'],
+   ['ru', 'КОММЕНТАРИЙ: <input type=text id=asender value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {sendMessage({id : \'setAnno\', anno:this.value.replace(/\'/g, \'\'), addr: who_to});mod7.close();} else {this.placeholder = \'???\';}}">'],
    ['es', 'SET ANNOTATION: <input type=text id=asender value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {sendMessage({id : \'setAnno\', anno:this.value.replace(/\'/g, \'\'), addr: who_to});mod7.close();} else {this.placeholder = \'???\';}}">'],
    ['fr', 'SET ANNOTATION: <input type=text id=asender value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {sendMessage({id : \'setAnno\', anno:this.value.replace(/\'/g, \'\'), addr: who_to});mod7.close();} else {this.placeholder = \'???\';}}">'],
    ['cn', 'SET ANNOTATION: <input type=text id=asender value="" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {sendMessage({id : \'setAnno\', anno:this.value.replace(/\'/g, \'\'), addr: who_to});mod7.close();} else {this.placeholder = \'???\';}}">'],   
@@ -255,4 +255,22 @@ var he_ = new Map ([
    ['fr', 'HELP'],
    ['cn', 'HELP'],
    ['pt', 'AJUDA'],
+]);
+
+var du_ = new Map ([
+   ['en', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['ru', 'КЛИКНИ МЕНЮ ДЛЯ АКТИВАЦИИ ВЕБКАМЕРЫ!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['es', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['fr', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['cn', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['pt', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+]);
+
+var du2_ = new Map ([
+   ['en', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['ru', '..ПОТОМ НАЖМИ<br>на КРУЖОК "A"<br>И ДОБАВЬ КОММЕНТ<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['es', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['fr', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['cn', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['pt', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
 ]);

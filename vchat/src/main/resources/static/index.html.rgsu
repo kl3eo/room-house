@@ -359,9 +359,9 @@ const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
 	color: #fed;
 	z-index: 999;
 	font-size: 16px;
-	width: 18px;
-	height: 18px;
-	border-radius: 10px;
+	width: 27px;
+	height: 27px;
+	border-radius: 15px;
 }
 
 .poll_container {
@@ -671,7 +671,7 @@ const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
 </style>
 </head>
 <body style="background:#112;font-family:Sans;" onclick="cli1()">
-<div id="phones" class=phones></div>
+<div id="phones" class=phones><span id="loading_span">..loading..</span></div>
 <script>let wlh = small_device ? '' : window.location.hostname; $('phones').style.visibility = 'visible'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;">');</script>
 
 <div id="poll_container" class=poll_container>
@@ -714,6 +714,8 @@ const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
 
 </div><!-- preroom -->
 
+<div id="dummy_p" class="participant" style="position:absolute; left:0; top:50%; color:#369;font-size:16px;display:none;">CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png"></div>
+<div id="dummy2_p" class="participant" style="position:absolute; right:0; top:50%; color:#369;font-size:16px;display:none;">..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div></div>
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
 	<div id="container" style="margin-top:-5px;border:0px solid #ccc;">
 		<div id="wrapper">
@@ -740,7 +742,7 @@ RANDOM=7777
 			</div><!-- join -->
 
 			<div id="room" style="display:none; position:relative; width:100%; min-width:40vw; margin:0 auto; border: 0px solid #9cf;">
-
+				
 				<div style="float:left;margin-bottom:20px;"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
 				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="$('room-backer').style.display='none'; fullscreen = false; leaveRoom(); register();">BACK TO ROOM</h2></div>
 				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;" onchange="getFile();"></div>
@@ -769,7 +771,8 @@ RANDOM=7777
 <!-- script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script -->
 
 <script>
-if (!curIP.length) {
+if (!curIP.length && false) {
+	console.log('ipify');
 	let script = document.createElement('script');
 	script.src = "https://api.ipify.org?format=jsonp&callback=getIP";
 	document.head.append(script);
@@ -825,7 +828,7 @@ if (!curIP.length) {
 
 <div id="stats">
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter>0</span></div>
-	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); $('message_box').style.display='none'; $('audience_box').style.display='table';/*if ($('audience_box').style.display == 'none') $('audience').click();*/">&#128065;:&nbsp;<span id=vcounter>0</span></div>
+	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); $('message_box').style.display='none'; $('audience_box').style.display='table';/*if ($('audience_box').style.display == 'none') $('audience').click();*/">&#128101;:&nbsp;<span id=vcounter>0</span></div>
 	<div id="stats_ng" title="today viewers" onclick="$('message_box').style.display='block'; $('audience_box').style.display='none'; cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
 	<div id="helpdoc" style="display:none;opacity:0;background:transparent; width:90px; margin-right:3vw; float:right; font-size:24px;"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal;color:#fed;font-size:22px;">HELP</span></a></div>
 	<div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;">100PIRL</span></a></div>
@@ -950,7 +953,7 @@ if (!curIP.length) {
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<script>let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) $('phones').style.visibility='hidden'}, 2400);}</script>
+<script>let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {$('phones').style.visibility='hidden'; if ($('loading_span')) $('loading_span').style.display='none';}}, 3000);}</script>
 
     <script>
 

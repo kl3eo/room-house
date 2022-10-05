@@ -45,7 +45,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	let this_is_guru = false;
 	let i_am_guru = false;	
-
+	
+	if ( $('dummy_p')) $('dummy_p').style.display = 'none';
+	if ( $('dummy2_p')) $('dummy2_p').style.display = 'none';
+	
 	var gi = new RegExp('GURU:','g');
 	if (name.match(gi)) {guru_is_here = 1; this_is_guru = true;}
 	if (myname.match(gi)) i_am_guru = true;
@@ -70,9 +73,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var coo_muted = loadData(name+'_muted');
 	
 	//no sound from other guests on default, but from gurus ok
-	if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
 	//or all allowed
-	// if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
 	//or only guru can hear others
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
@@ -118,6 +121,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	if (typeof(mod3) != 'undefined' && mod3 !== null) mod3.content.innerHTML = left_content.get(altlang[ctr]);
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
+
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
 

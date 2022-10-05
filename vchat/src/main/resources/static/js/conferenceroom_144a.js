@@ -117,7 +117,7 @@ window.onload = function(){
    }, 1000);
       
 	let lang = getCookie('lang');
-	lang = (lang === null || lang === 'null' || lang === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : lang;
+	lang = (lang === null || lang === 'null' || lang === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 1 : lang;
 	ctr = lang;
 
 	change_lang(altlang[ctr]);
@@ -191,7 +191,7 @@ ws.onmessage = function(message) {
 		break;
 	case 'roomConnection':
 		//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
-		nump = parsedMessage.nump; numv = parsedMessage.numv;  (function(){if ($('bstats')) $('bstats').fade(1);}).delay(2000);
+		nump = parsedMessage.nump; numv = parsedMessage.numv;  (function(){if ($('bstats')) $('bstats').fade(1);}).delay(1000);
 		//if ($('bnump')) $('bnump').innerHTML = nump; if ($('bnumv')) $('bnumv').innerHTML = numv;
 		break;
 	case 'newChatMessage':
@@ -370,7 +370,6 @@ function register() {
 	name = $('name').value; let cookie_name = loadData('name');
 	if (!name.length) name = cookie_name; 
 	if (!name.length || name === 'null') {name=makeid(8); name = name+'_'+name; saveData('name', name, 1440);}
-
 	
 	if (i_am_dummy_guest) { //it wouldn't help?!
 
@@ -477,6 +476,8 @@ function register_body(ro) {
 		
 		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device && l === 1) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; 
 		if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
+		
+		(function() {dummies = true;}).delay(3000);
 
 }
 
