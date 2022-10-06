@@ -500,7 +500,7 @@ function cli4() {
 if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMusic) flashText('PLAYING VIDEO! STOP?'); if (shareSomeScreen) flashText('SHARING SCREEN! STOP?');}
 }
 
-function cli5() {let sem  = screen.width > 1023 ? '7' : '';
+function cli5() {let sem  = screen.width > 1023 ? '7' : ''; $('message_box').style.display = 'block'; $('audience_box').style.display = 'none';
 new_message = 0; if (chat_shown) {$('message_wrap').fade(0); $('chatter').fade(0); $('audience').fade(0); $('antichatter').fade(0);chat_shown = 0; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat';} else {
 if (!small_device) {let roomRect = $('room').getBoundingClientRect();let roomTop = parseInt(roomRect.top); $('message_wrap').style.top = voting_shown ? '0vh' : roomTop > 400 ? '6vh' : roomTop > 360 ? '4vh' : roomTop > 320 ? '2vh' : roomTop > 280 ? '0vh' : '0vh'; if ($('sp_container') && sp_shown) $('message_wrap').style.top = '0vh';} $('chatter').style.display='block'; $('antichatter').style.display='block'; $('audience').style.display='block'; $('message_wrap').fade(1); $('chatter').fade(1); $('audience').fade(1); $('antichatter').fade(1); chat_shown = 1; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f'; if (voting_shown) { (function(){$('subcontrols').style.display='block';
 (function() {if ($('ball1')) (function() {$('ball1').fade(0);$('leftlab').fade(1);}).delay(2000);if ($('ball2')) (function() {$('ball2').fade(0);$('rightlab').fade(1);}).delay(2000);(function() {$('leftplus').innerHTML = '+';$('rightplus').innerHTML = '+';}).delay(2000);}).delay(2000);
