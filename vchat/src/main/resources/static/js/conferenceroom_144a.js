@@ -555,7 +555,7 @@ function onNewParticipant(request) {
 
 		//preparing logics in advance
 		let pctr = pcounter + 1;
-		if (pctr > room_limit - 1 && i_am_viewer) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
+		if (pctr > room_limit - 1 && i_am_viewer) {if ($('bell')) $('bell').style.display = 'block'; if ($('av_toggler')) $('av_toggler').style.display='none';}
 
 		if (!small_device) {
 			resizer(pctr)
@@ -563,7 +563,7 @@ function onNewParticipant(request) {
 		   	
 		receiveVideo(request.name, request.mode, myrole, true);
 		
-		(function() {$(request.name).style.display='block'; $(request.name).fade(1);}).delay(500); //need this animation because the new video appears under the row, so we hide it
+		(function() {if ($(request.name)) {$(request.name).style.display='block'; $(request.name).fade(1);}}).delay(500); //need this animation because the new video appears under the row, so we hide it
 
 		if (request.curip.length && $('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
 			$('loco_'+request.name).innerHTML = request.curip;
