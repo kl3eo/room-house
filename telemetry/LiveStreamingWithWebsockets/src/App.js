@@ -29,7 +29,7 @@ class App extends React.Component {
 //      { Header: 'City', accessor: 'city', width: 120 },
 //      { Header: 'Country', accessor: 'country', width: 120 },
 	{ Header: '1/0', accessor: 'nump', width: 60 },
-	{ Header: 'КОМНАТА', accessor: 'name',Cell: props => <a href={"https://"+props.value+".room-house.com"}>{props.value}</a>, width: 120},      
+	{ Header: 'КОМНАТА', accessor: 'name', Cell: props => <a style={{color:"#9cf", fontSize:"24px"}} href={"https://"+props.value+".room-house.com"}>{props.value}</a>, width: 120 },      
         { Header: 'ОТКУДА', accessor: 'curip', width: 150 },
         { Header: 'КОММЕНТ', accessor: 'anno', getProps: (state, rowInfo, column) => {
                 return {
@@ -56,7 +56,7 @@ class App extends React.Component {
     	  this.setState({ sortOptions: val }) }}
           data={this.state.currentData}
           columns={columns}
-	  style={{fontSize:"20px"}}
+	  style={{fontSize:"20px", color:"#fed"}}
         />
       </div>
 	);

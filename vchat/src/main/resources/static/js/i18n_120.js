@@ -267,10 +267,10 @@ var du_ = new Map ([
 ]);
 
 var du2_ = new Map ([
-   ['en', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
-   ['ru', '..ПОТОМ НАЖМИ<br>на КРУЖОК "A"<br>И ДОБАВЬ КОММЕНТ<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
-   ['es', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
-   ['fr', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
-   ['cn', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
-   ['pt', '..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['en', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['ru', '..ПОТОМ НАЖМИ &rarr;<br>на КРУЖОК "A"<br>И ДОБАВЬ КОММЕНТ<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['es', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['fr', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['cn', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['pt', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
 ]);

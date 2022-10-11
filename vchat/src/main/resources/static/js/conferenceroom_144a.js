@@ -74,8 +74,6 @@ const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
-
 const fps = 15;
 const wi = 640;
 const fps_hq = 24;
@@ -85,6 +83,8 @@ const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-ho
 const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
 
 //const role  = 0;
+
+const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -122,7 +122,7 @@ window.onload = function(){
 
 	change_lang(altlang[ctr]);
 	
-	if (!small_device) {
+	if (!small_device && window == window.top) {
 		elements = Array.prototype.slice.call(document.getElementsByClassName("pricee"));
 
 		elements.forEach(function(item) {
@@ -291,7 +291,7 @@ function register() {
 
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
-	let sem  = screen.width > 1023 ? '7' : '';
+	let sem  = window.innerWidth > 1024 ? '7' : '';
 	
 	if (!aonly) { if ($('av_toggler')) $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; } else { if ($('av_toggler')) $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; }
 	
@@ -393,7 +393,7 @@ function register_body(ro) {
 		let curip = $('curip').value;
 		registered = 1;
 	
-		let sem  = screen.width > 1023 ? '7' : '';
+		let sem  = window.innerWidth > 1024 ? '7' : '';
 		if (temporary && ro == 0) role = 3;
 
 		if (ro == -1) {soundEffect.src = "/sounds/lock.mp3"; setTimeout(function() {location.reload()}, 1200); console.log('Knock out2'); return false;}
@@ -435,7 +435,7 @@ function register_body(ro) {
 	
 		$('fmode_selector').style.display = 'block';
 		
-		if (!small_device && !w[0].match(new RegExp('rgsu','g'))) $('slide_container').style.display = 'block';
+		if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top ) $('slide_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -472,9 +472,9 @@ function register_body(ro) {
   
   		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
 		
-		if (!small_device && $('want')) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(500);
+		if (!small_device && $('want') && window == window.top) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(500);
 		
-		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device && l === 1) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; 
+		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; 
 		if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
 		
 		(function() {dummies = true;}).delay(3000);
@@ -1037,7 +1037,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	   } //for
    } // msg.data
    	   
-   (function() {$('room-header').style.display = 'block';$('room-header').fade(1);}).delay(1500);
+   //if (role == 1 || role == 2 || role == 3) (function() {$('room-header').style.display = 'block'; $('room-header').fade(1);}).delay(1500);
    
 //  }).catch(err => console.log(err)); //fetch
 }
@@ -1121,7 +1121,7 @@ function receiveVideo(sender, mode, role, n) {
 function setGuru(request) {
 //	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 //		let role = respo || 0;
-		let sem  = screen.width > 1023 ? '7' : '';
+		let sem  = window.innerWidth > 1024 ? '7' : '';
 
 		if (request.mode == '1' && role != 1) {
 		
@@ -1188,7 +1188,7 @@ function setCinema(request) {
 }
 
 function newChatMessage() {
-	let cnt = 0; let sem  = screen.width > 1023 ? '7' : '';
+	let cnt = 0; let sem  = window.innerWidth > 1024 ? '7' : '';
 	let old_color = $('logger').style.background == 'url(/icons/chat' + sem + '2.png) center center no-repeat' ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/chat' + sem + '2.png) center center no-repeat;';
 	new_message = 1;
 	let intervalID = setInterval(function() { if (new_message) {$('logger').style.background = cnt % 2 == 0 ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #90ee90' : 'url(/icons/chat' + sem + '2.png) center center no-repeat'; cnt++;} else {$('logger').style.background = old_color; clearInterval(intervalID)}}, 1000);

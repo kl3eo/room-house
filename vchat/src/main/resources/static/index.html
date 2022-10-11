@@ -27,6 +27,14 @@ const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
 <script src="https://en.room-house.com/files/cur_104.js"></script>
 <script src="./js/a12.js"></script>
 
+<!-- script>
+function check_small_device() {
+	small_device = window.innerWidth <= 1024 ? true : false;
+//console.log('small', small_device);
+}
+window.addEventListener('resize', check_small_device);
+</script -->
+
 <link rel="stylesheet" href="./css/mBoxCore.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="./css/mBoxModal.css" type="text/css" media="screen" />
 <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -206,7 +214,7 @@ const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
         font-family:Courier;
         cursor:pointer;
  }
- 
+
  .fcam {
  	background:url(/icons/webcam72.png) center center no-repeat;
  }
@@ -670,7 +678,7 @@ const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
 
 </style>
 </head>
-<body style="background:#112;font-family:Sans;" onclick="cli1()">
+<body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
 <div id="phones" class=phones><span id="loading_span">..loading..</span></div>
 <script>let wlh = small_device ? '' : window.location.hostname; $('phones').style.visibility = 'visible'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;">');</script>
 

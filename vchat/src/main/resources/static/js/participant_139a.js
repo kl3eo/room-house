@@ -174,6 +174,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(span);
 	container.appendChild(speaker);
 	//container.onclick = switchContainerClass;
+	if (name == myname) container.onclick = showRoomHeader;
 	container.ondblclick = rmPtcp;
 
 	var ar = name.split("_");
@@ -299,7 +300,19 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	this.getVideoElement = function() {
 		return video;
 	}
+	
+	function showRoomHeader() {
+		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			//let role = respo;
 
+			//if (role == 1 || role == 2 || role == 3) {
+				$('room-header').style.display = 'block'; $('room-header').fade(1);
+			//}	
+
+	
+		//}).catch(err => console.log(err));	
+		
+	}
 	function setAnno() {
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			//let role = respo;
