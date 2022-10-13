@@ -223,6 +223,7 @@ public class Room implements Closeable {
 
 	final JsonObject checkConnJson = new JsonObject();	
     	checkConnJson.addProperty("id", "goodConnection");
+	checkConnJson.addProperty("room", this.name);
 	
 	try {
 		user.sendMessage(checkConnJson);

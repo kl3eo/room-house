@@ -67,3 +67,6 @@ buB.addEventListener('click', function handleClick(event) {
 });
 
 if ($(w[0])) $(w[0]).dispose(); // drop current room from available rooms list
+
+if (small_device) document.body.style.overflowY = 'auto';
+//document.body.style.overflowX = 'hidden';

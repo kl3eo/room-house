@@ -86,6 +86,7 @@ const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room
 
 const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
 
+
 window.onbeforeunload = function() {
 	ws.close();
 };
@@ -475,7 +476,8 @@ function register_body(ro) {
 		if (!small_device && $('want') && window == window.top) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(500);
 		
 		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; 
-		if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
+		if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} 
+		if (!small_device && window != window.top) {$('helpdoc').style.marginRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
 		
 		(function() {dummies = true;}).delay(3000);
 
@@ -1053,7 +1055,8 @@ function copy(that){
 
 function leaveRoom() {
 	
-	if (Object.keys(participants).length && !problems) {
+	//if (Object.keys(participants).length && !problems) { //?!
+	if (Object.keys(participants).length) {
 	
 		for ( var key in participants) {
 			participants[key].dispose();
