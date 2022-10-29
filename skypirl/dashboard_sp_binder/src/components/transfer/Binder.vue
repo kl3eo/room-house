@@ -96,7 +96,30 @@ export default class Binder extends Vue {
       this.$store.state.explorer.provider)
   }
 
+  inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+  }
 
+  getParentOrigin() {
+    const locationAreDisctint = (window.location !== window.parent.location);
+    const parentOrigin = ((locationAreDisctint ? document.referrer : document.location) || "").toString();
+
+    if (parentOrigin) {
+      return new URL(parentOrigin).origin;
+    }
+
+    const currentLocation = document.location;
+
+    if (currentLocation.ancestorOrigins && currentLocation.ancestorOrigins.length) {
+      return currentLocation.ancestorOrigins[0];
+    }
+
+    return "";
+  }
 
   public async shipIt(): Promise<void> {
     const { api } = Connector.getInstance();
@@ -105,10 +128,42 @@ export default class Binder extends Vue {
 //console.log([this.accountTo.address, this.balance])
 	//const pirl = this.balance/1000;
 	const pirl = 10000000000; //0.01Pirl
-	const accountToConst = '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx';
-	const tx = await exec(this.accountFrom.address, this.password, api.tx.balances.transfer, [accountToConst, pirl?.toString()]);
+	//const accountToConst = '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx';
+
+    let getVars:string = '';
+    let uri = window.location.href.split('?');
+    if(uri.length == 2) {
+      let vars = uri[1].split('#');
+      vars.forEach(function(v) {
+        let tmp = v.split('=');
+        if(tmp.length == 2)
+          getVars = tmp[1];
+      });
+//      console.log(getVars);
+    }
+        const accountToConst = getVars.length == 48 ? getVars : '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx';
+
+        const tx = await exec(this.accountFrom.address, this.password, api.tx.balances.transfer, [accountToConst, pirl?.toString()]);
         this.sender(this.accountFrom, accountToConst, pirl?.toString());
-        showNotification(tx, this.snackbarTypes.success);
+// update db
+        let checker_port = '8453';
+        let h = this.getParentOrigin();
+        let formData = new FormData();
+        formData.append('sess', getVars);
+        formData.append('pass', 'lol');
+        formData.append('acc_id', this.accountFrom.address);
+        fetch(h + ':' + checker_port + '/cgi/genc/tester.pl', {body: formData, method: 'post', mode: 'no-cors'}).then(
+                function(response) {
+        /*
+                        if (response.status !== 200) {
+                                console.log('Looks like there was a problem. Status Code: ' + response.status);
+                                return;
+                        }
+                                console.log(response);
+        */
+
+        }).catch(function(err) {console.log('Fetch Error', err);});
+//
       } catch (e) {
         console.error('[ERR: TRANSFER SUBMIT]', e)
         showNotification(e.message, this.snackbarTypes.danger);
