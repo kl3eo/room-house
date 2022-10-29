@@ -45,9 +45,9 @@ var cammode = 0;
 
 var stats_shown = 1;
 
-var sp_shown = (window != window.top || w[0].match(new RegExp('rgsu','g')) ) ? 0 : 0;
+var sp_shown = (window == window.top && (w[0].match(new RegExp('skypirl','g')) || w[0].match(new RegExp('club','g')) || w[0].match(new RegExp('milan','g')) )) ? 1 : 0;
 
-var voting_shown = w[0] === "club" && small_device && !sp_shown ? 1 : 0;
+var voting_shown = w[0] === "club" && small_device && !sp_shown ? 0 : 0;
 
 var sound_on_played = w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0;
 
@@ -56,6 +56,8 @@ var scrolled = false;
 var heard_info = getCookie('heard_info') || false;
 
 var who_to = '';
+
+var afterBinding = false;
 
 
 function getIP(json) {
@@ -246,7 +248,7 @@ window.addEventListener("message", function(event) {
  //doesn't help here?
 	soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
 
-function ed() { //code to run on receive message from join_ frame
+const ed = () => { //code to run on receive message from join_ frame
 
  if ($('cont')) $('cont').fade(0);
  if ($('badge')) $('badge').fade(0);
@@ -326,9 +328,11 @@ e.stopPropagation();
   $('room-header').addEventListener('dblclick', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(2);});
 
   if (role != -1) {
-  	setTimeout(function() { if ($('removerA')) {$('removerA').innerHTML = 'Error: Service unavailable'; (function() { $('removerA').fade(0)}).delay(1000);}},10000);
-  	(function() { if ($('sp_balance')) { $('sp_balance').style.display='block'; $('sp_balance').src = sp_container_url + '/?acc=' + acc_id;} }).delay(1000);
-  	setInterval(function() { if ($('sp_balance')) { $('sp_balance').style.display='block'; $('sp_balance').src = sp_container_url + '/?acc=' + acc_id;} }, 300000);
+  	acc_id.then(data => {
+  	   setTimeout(function() { if ($('removerA')) {$('removerA').innerHTML = 'Error: Service unavailable'; (function() { $('removerA').fade(0)}).delay(1000);}},10000);
+  	   (function() { if ($('sp_balance')) { $('sp_balance').style.display='block'; $('sp_balance').src = sp_container_url + '/?acc=' + data;} }).delay(1000);
+  	   setInterval(function() { if ($('sp_balance')) { $('sp_balance').style.display='block'; $('sp_balance').src = sp_container_url + '/?acc=' + data;} }, 300000);
+	});
   }
   
   $('logger').click();
@@ -357,6 +361,7 @@ let na = getCookie('name');
 if (na != null && na != 'null') {   
  	if ( $('dummy2_p')) $('dummy_p').style.display = 'block'; if ( $('dummy2_p') && !small_device) $('dummy2_p').style.display = 'block'; if ($('loading_span')) $('loading_span').fade(0);
 	ed();
+
 } else { //demo mode		
 	normal_mode = false; let mgn = small_device ? 135 : 90;
 	
@@ -368,13 +373,16 @@ if (na != null && na != 'null') {
 } else if (event.origin == sp_setter_url) {
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'Bound') {
-		if (obj.to == '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx' && obj.sum == '10000000000') {
-			setCookie('acc', obj.from, 144000); mod6.close();
+		//if (obj.to == '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx' && obj.sum == '10000000000') {
+			//setCookie('acc', obj.from, 144000); 
+
+			mod6.close();
 			$('sp_balance').src = sp_container_url + '/?acc=' + obj.from; 
-			acc_id = obj.from; 
+			//acc_id = obj.from;
+			afterBinding = true;
 			let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
 			scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);
-		}
+		//}
 	} else {
 		console.log('Undefined action received from wallet!');
 	}
@@ -482,6 +490,7 @@ window.addEvent('domready', function() {
 	setInterval(function() { if ($('message_box') && $('message_wrap') && $('message_wrap').style.display == 'block' && chat_shown ) {ajax_chat()} }, 3000);
 
 });
+
 
 function cli1() {
 if ( $('dummy_p') && dummies) $('dummy_p').style.display='none';

@@ -29,8 +29,18 @@
 
 var fullscreen = false;
 
-var doSwitchOneMode = function(el) {if (false) console.log(el); let sp_setter = isFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/#/binder/" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/#/binder/" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'});
-$('newacc').click();};
+var doSwitchOneMode = function(el) {if (false) console.log(el);
+	acc_id.then(data => { 
+	   if (!data.length) {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let sess = respo;
+			let sp_setter = isFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'}); $('newacc').click();			
+		}).catch(err => console.log(err));
+	   } else {
+		if(!playSomeMusic&&!shareSomeScreen){fullscreen=true; chat_shown=1;$("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=$("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){$("room-header").style.display="none";$("room-backer").style.display="block";if (!small_device) {$("room").style.minWidth = "480px";$("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}let c=$("one-"+a);if (c) c.fade(0);}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}
+	   }
+	});	
+};
 
 const PARTICIPANT_MAIN_CLASS = small_device ? 'participant main_i' : 'participant main';
 const PARTICIPANT_CLASS = 'participant';
@@ -350,14 +360,16 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 		}).catch(err => console.log(err));		
 	}
-	
-	function switchOneMode(el) {
 
-		if (acc_id) {
-			doSwitchOneMode(el);
-		} else {
-			$('phones').innerHTML = creatu; $('phones').fade(1); (function(){$('phones').fade(0);}).delay(2000);
-		}
+	const switchOneMode = (el) => {
+		acc_id.then(data => {
+			if (data.length) {
+				doSwitchOneMode(el);
+			} else {
+				$('phones').innerHTML = afterBinding ? '..PLEASE WAIT..' : creatu; $('phones').fade(1); (function(){$('phones').fade(0); if (afterBinding) location.reload();}).delay(1000);
+			}
+		});
+
 	}
 	
 	function switchContainerClass() {

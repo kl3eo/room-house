@@ -64,7 +64,8 @@ var new_message = 0;
 
 var i_am_viewer = true;
 
-var acc_id = getCookie('acc') || '';
+//var acc_id = getCookie('acc') || '';
+//let acc_id = '';
  
 var i_am_dummy_guest = false; //check demo dummy from join_
 
@@ -86,6 +87,15 @@ const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room
 
 const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
 
+const controller = new AbortController();
+
+const fetchTimeout = (url, ms, { signal, ...options } = {}) => {
+    const controller = new AbortController();
+    const promise = fetch(url, { signal: controller.signal, ...options });
+    if (signal) signal.addEventListener("abort", () => controller.abort());
+    const timeout = setTimeout(() => controller.abort(), ms);
+    return promise.finally(() => clearTimeout(timeout));
+};
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -231,11 +241,13 @@ function check_connection() {
 }
 
 function check_fullscreen() {
-
-	if (fullscreen) {
-		if ( !acc_id || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) { fullscreen = false; if (!acc_id) {rejoin();} else {fullscreen = true;}}
-			
-	}
+	acc_id.then(data => {
+	   if (fullscreen) {
+		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
+			fullscreen = false; if (!data.length) rejoin(); else {fullscreen = true;}
+		}		
+	   }
+	});
 }
 
 function signalGuru(e) {
@@ -386,7 +398,7 @@ function register() {
 
 }
 
-function register_body(ro) {
+const register_body = (ro) => {
 	
 		let w = window.location.hostname.split('.'); 
 		let room = $('roomName').value == '' ? w[0] : $('roomName').value;
@@ -450,18 +462,22 @@ function register_body(ro) {
 
 //console.log('registering, mode is' ,mode, 'role is', role);
 
-		let message = {
+		acc_id.then(data=>{
+//console.log('reg: acc_id is', data);
+		   let message = {
 			id : 'joinRoom',
 			name : name,
 			mode : mode,
 			room : room,
 			curip: curip,
-			acc_id: acc_id,
+			acc_id: data,
 			token: tok,
 			role: role
-		}
+		   }
 	
-		sendMessage(message);		
+		   sendMessage(message);		
+
+		});
 
  		if (problems) {
 			$('phones').style.paddingTop = small_device ? '39vh' : '45vh'; $('phones').style.lineHeight = '36px'; $('phones').innerHTML = warning; (function() { $('phones').fade(1)}).delay(1000);
@@ -1055,16 +1071,21 @@ function copy(that){
 
 function leaveRoom() {
 	
+	let myname = $('name').value;
+	
 	//if (Object.keys(participants).length && !problems) { //?!
 	if (Object.keys(participants).length) {
 	
 		for ( var key in participants) {
-			participants[key].dispose();
-			delete participants[key];
+			//if (!problems || (problems && key != myname)) {
+				participants[key].dispose();
+				delete participants[key];
+			//}
 		}
 
 	}
 
+	//pcounter = problems ? 1 : 0;
 	pcounter = 0;
 	i_am_guest = 0;
 	registered = 0;
