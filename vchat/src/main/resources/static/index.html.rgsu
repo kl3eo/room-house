@@ -32,6 +32,21 @@ const request = async (url) => {
 
 const acc_id = (async () => await request('https://'+window.location.hostname+':'+port+'/cgi/genc/get_acc_id.pl'))();
 
+/*
+(function() {
+    var call = Function.prototype.call;
+   
+    Function.prototype.call = function() {
+
+       	console.log(this.name, arguments); // Here you can do whatever actions you want
+	let h = arguments[0] && arguments[0][0] && (arguments[0][0] == 'resize' || arguments[0][0] == 'resized' || arguments[0][0] == 'hidden') && arguments[1] == 1 && typeof(arguments[2]) === 'undefined';
+console.log('h', h);
+       if (h === false || typeof(h) === 'undefined') {console.log('return apply'); return call.apply(this, arguments)} else {console.log('return null'); return;}
+    };
+}());
+*/
+
+
 </script>
 
 <script src="https://en.room-house.com/files/cur_104.js"></script>
@@ -755,7 +770,7 @@ RANDOM=7777
 			<div id="room" style="display:none; position:relative; width:100%; min-width:40vw; margin:0 auto; border: 0px solid #9cf;">
 				
 				<div style="float:left;margin-bottom:20px;"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
-				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="$('room-backer').style.display='none'; fullscreen = false; leaveRoom(); register();">BACK TO ROOM</h2></div>
+				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="$('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
 				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;" onchange="getFile();"></div>
 				<div style="clear:left;"></div>
 				<div id="participants"></div>

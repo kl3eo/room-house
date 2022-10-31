@@ -241,7 +241,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if (name != myname) video.style.cursor = 'pointer';
 
 //console.log('name is', name);
-	if (name === "DUMMY") {
+
+	if (ar[0] === "DUMMY") {
 		let l = creatu_long_.get(altlang[ctr]);
 		var dummee = document.createElement('div');	
 		dummee.style.fontSize = "18px";

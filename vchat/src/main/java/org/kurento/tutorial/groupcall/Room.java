@@ -610,7 +610,19 @@ public class Room implements Closeable {
     for (final UserSession participant : this.getParticipants()) {
 
         final JsonElement participantNameModeCuripAccIdAnno = new JsonPrimitive(participant.getName() + "_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
-	final JsonElement participantNameModeCuripAccIdAnno_DUMMY = new JsonPrimitive("DUMMY_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
+	
+	String[] parts = participant.getName().split("_");
+	
+	String[] copy = new String[parts.length];
+
+	for (int i = 1; i < parts.length; i++) {
+		copy[i] = parts[i];
+	}
+	copy[0] = "DUMMY";
+	
+	String str = String.join("_", copy);
+	
+	final JsonElement participantNameModeCuripAccIdAnno_DUMMY = new JsonPrimitive(str + "_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
         if (user.getAccId().length() == 0 && participant.getMode().equals("c")) {participantsArray.add(participantNameModeCuripAccIdAnno_DUMMY);} else {participantsArray.add(participantNameModeCuripAccIdAnno);}
 
     }
