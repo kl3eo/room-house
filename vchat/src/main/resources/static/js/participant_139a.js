@@ -27,9 +27,9 @@
 #   GNU General Public License for more details.
 */
 
-var fullscreen = false;
+var fullscreen = false; var cinemaEnabled = false;
 
-var doSwitchOneMode = function(el) {if (false) console.log(el);
+const doSwitchOneMode = (el) => {if (false) console.log(el);
 	acc_id.then(data => { 
 	   if (!data.length) {
 		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
@@ -312,26 +312,13 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function showRoomHeader() {
-		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-			//let role = respo;
 
-			//if (role == 1 || role == 2 || role == 3) {
-				$('room-header').style.display = 'block'; $('room-header').fade(1);
-			//}	
-
-	
-		//}).catch(err => console.log(err));	
-		
+			$('room-header').style.display = 'block'; $('room-header').fade(1);
 	}
+	
 	function setAnno() {
-		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-			//let role = respo;
-			//if (role != 0) {
-				//console.log('set anno');
 				who_to = name;
-				anno_adder.click();
-			//}
-		//}).catch(err => console.log(err));		
+				anno_adder.click();		
 	}
 	
 	function setCinema() {
@@ -366,7 +353,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			if (data.length) {
 				doSwitchOneMode(el);
 			} else {
-				$('phones').innerHTML = afterBinding ? '..PLEASE WAIT..' : creatu; $('phones').fade(1); (function(){$('phones').fade(0); if (afterBinding) location.reload();}).delay(1000);
+				$('phones').innerHTML = afterBinding ? '..PLEASE WAIT..' : creatu; $('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){$('phones').fade(0);}).delay(1000);
 			}
 		});
 
@@ -412,11 +399,15 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	function toggleFullScreen(el) {
 		
 		if (!el.fullscreenElement) {
+			fullscreen = true;
 			el.requestFullscreen();
+			
 	
 		} else {
 			if (el.exitFullscreen) {		
+				fullscreen = false;
 				el.exitFullscreen();
+				
 			}
 		}
 

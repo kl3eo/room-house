@@ -69,7 +69,7 @@ var i_am_viewer = true;
  
 var i_am_dummy_guest = false; //check demo dummy from join_
 
-var nump = 0; var numv = 0;
+var nump = 0; var numv = 0; var num_cinemas = 0;
 
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
@@ -240,14 +240,18 @@ function check_connection() {
 	setTimeout(function() { if (!connection_is_good) { console.log('resetting connection'); problems = 1; rejoin();}}, 1200);
 }
 
-function check_fullscreen() {
+const check_fullscreen = () => {
 	acc_id.then(data => {
 	   if (fullscreen) {
 		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
-			fullscreen = false; if (!data.length) rejoin(); else {fullscreen = true;}
+			fullscreen = false; if (!data.length && cinemaEnabled) rejoin(); else fullscreen = true;
 		}		
+	   } else {
+	   	if ((window.innerWidth == screen.width && window.innerHeight == screen.height) || (!window.screenTop && !window.screenY) || window.fullScreen )
+			if (!data.length) rejoin();
 	   }
 	});
+	
 }
 
 function signalGuru(e) {
@@ -300,7 +304,7 @@ function rightHandler(e) {
 }
 
 
-function register() {
+const register = () => {
 
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
@@ -504,7 +508,7 @@ function checkLang() {
 	l = (l === null || l === 'null' || l === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l;
 	return l;
 }
-function onNewViewer(request) {
+const onNewViewer = (request) => {
 
 	if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
@@ -533,7 +537,7 @@ function onNewViewer(request) {
 		if (just_left != f && $('name').value != f && $('name').value != just_left) soundEffect.src = "/sounds/steps.mp3";
 }
 
-function onNewParticipant(request) {
+const onNewParticipant = (request) => {
 
   if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
 	
@@ -631,7 +635,7 @@ async function startCapture(displayMediaOptions) {
 	return captureStream;
 }
 
-function onExistingViewers(msg) {
+const onExistingViewers = (msg) => {
 
    let myname = $('name').value;
    
@@ -693,7 +697,7 @@ function onExistingViewers(msg) {
     
 }
 
-function set_guru(par, who) {
+const set_guru = (par, who) => {
 	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 
@@ -748,7 +752,7 @@ function isMicrophoneAllowed(){
     });
 }
 	
-function onExistingParticipants(msg) {
+const onExistingParticipants = (msg) => {
 //sets up every video in the room I just joined
 
   let myname = $('name').value; 
@@ -992,7 +996,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
    }// if role
 
    if (msg.data) {
-
+	   
+	   cinemaEnabled = false; num_cinemas = 0;
 	   for (var i = 0; i < msg.data.length; i++) {
 		var chu = msg.data[i].split('_|_');
 
@@ -1003,6 +1008,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		let a = chu[4];
 		
 		let na = chu[0].split('_');
+		
+		if (s === 'c') {cinemaEnabled = true; num_cinemas += 1;}
 		if (f != myname) {
 			//prepare logics in advance
 			let pctr = pcounter +1;
@@ -1069,7 +1076,7 @@ function copy(that){
 	inp.remove();
 }
 
-function leaveRoom() {
+const leaveRoom = () => {
 	
 	let myname = $('name').value;
 	
@@ -1094,7 +1101,7 @@ function leaveRoom() {
 	just_left = $('name').value;
 }
 
-function receiveVideo(sender, mode, role, n) {
+const receiveVideo = (sender, mode, role, n) => {
 
 	let new_flag = (n === true) ? true : false;
 	
@@ -1142,7 +1149,7 @@ function receiveVideo(sender, mode, role, n) {
 	
 }
 
-function setGuru(request) {
+const setGuru = (request) => {
 //	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 //		let role = respo || 0;
 		let sem  = window.innerWidth > 1024 ? '7' : '';
@@ -1194,7 +1201,7 @@ function askGuru(request) {
 
 }
 
-function setCinema(request) {
+const setCinema = (request) => {
 
 	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let myrole = respo || 0;	
@@ -1208,6 +1215,13 @@ function setCinema(request) {
 		o.style.fontWeight = m == 'c' ? 'bold' : 'normal';
 		o.style.display = m == 'c' ? 'block' : myrole == 1 ? 'block' : 'none';
 		o.innerHTML = m == 'c' ? 'CINEMA!' : 'CINEMA?';
+		
+		num_cinemas = m == 'c' ? num_cinemas + 1 : num_cinemas - 1;
+		
+
+		cinemaEnabled = m == 'c' ? true : num_cinemas ? cinemaEnabled : false;
+//console.log('num_cinemas', num_cinemas, 'enabled', cinemaEnabled);
+
 	}).catch(err => console.log(err));	
 }
 
@@ -1248,7 +1262,7 @@ function clearTimeoutAndLeave() {
 
 }
 
-function onParticipantLeft(request) {
+const onParticipantLeft = (request) => {
 
 	var participant = participants[request.name];
 	if (participant) {
@@ -1262,7 +1276,7 @@ function onParticipantLeft(request) {
 	}
 }
 
-function onViewerLeft(n) {
+const onViewerLeft = (n) => {
 	
 	let na = n.split('_');
 	let suf = na[na.length-1];	
@@ -1281,7 +1295,7 @@ function onViewerLeft(n) {
 	}
 }
 
-function sendMessage(message) {
+const sendMessage = (message) => {
 	var jsonMessage = JSON.stringify(message);
 	if (!problems) ws.send(jsonMessage);
 }

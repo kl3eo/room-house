@@ -45,7 +45,7 @@ var cammode = 0;
 
 var stats_shown = 1;
 
-var sp_shown = (window == window.top && (w[0].match(new RegExp('skypirl','g')) || w[0].match(new RegExp('club','g')) || w[0].match(new RegExp('milan','g')) )) ? 1 : 0;
+var sp_shown = (window == window.top && (w[0].match(new RegExp('skypirl','g')) || w[0].match(new RegExp('club','g')) || w[0].match(new RegExp('milan','g')) )) ? 1 : 1;
 
 var voting_shown = w[0] === "club" && small_device && !sp_shown ? 0 : 0;
 
@@ -380,8 +380,8 @@ if (na != null && na != 'null') {
 			$('sp_balance').src = sp_container_url + '/?acc=' + obj.from; 
 			//acc_id = obj.from;
 			afterBinding = true;
-			let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
-			scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);
+			//let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
+			//scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);
 		//}
 	} else {
 		console.log('Undefined action received from wallet!');
@@ -487,45 +487,45 @@ window.addEvent('domready', function() {
 	
 	oldColor = $('room-header').style.color;
 	
-	setInterval(function() { if ($('message_box') && $('message_wrap') && $('message_wrap').style.display == 'block' && chat_shown ) {ajax_chat()} }, 3000);
+	//setInterval(function() { if ($('message_box') && $('message_wrap') && $('message_wrap').style.display == 'block' && chat_shown ) {ajax_chat()} }, 3000);
 
 });
 
 
-function cli1() {
+const cli1 = () => {
 if ( $('dummy_p') && dummies) $('dummy_p').style.display='none';
 if ( $('dummy2_p') && dummies) $('dummy2_p').style.display='none';
 if (!snd_clicked) {soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'; snd_clicked=true;}
 }
 
-function cli2() {let sem  = window.innerWidth > 1024 ? '7' : '';
+const cli2 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f';  $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat #f78f3f'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('FRONT CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat';}} else {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1;  flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
-function cli3() {let sem  = window.innerWidth > 1024 ? '7' : '';
+const cli3 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo;  if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; $('bcam').style.background = 'url(/icons/switch' + sem + '2.png) center center no-repeat #f78f3f'; $('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat';}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
-function cli4() {
+const cli4 = () => {
 if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMusic) flashText('PLAYING VIDEO! STOP?'); if (shareSomeScreen) flashText('SHARING SCREEN! STOP?');}
 }
 
-function cli5() {let sem  = window.innerWidth > 1024 ? '7' : ''; $('message_box').style.display = 'block'; $('audience_box').style.display = 'none';
+const cli5 = () => {let sem  = window.innerWidth > 1024 ? '7' : ''; $('message_box').style.display = 'block'; $('audience_box').style.display = 'none';
 new_message = 0; if (chat_shown) {$('message_wrap').fade(0); $('chatter').fade(0); $('audience').fade(0); $('antichatter').fade(0);chat_shown = 0; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat';} else {
 if (!small_device) {let roomRect = $('room').getBoundingClientRect();let roomTop = parseInt(roomRect.top); $('message_wrap').style.top = voting_shown ? '0vh' : roomTop > 400 ? '6vh' : roomTop > 360 ? '4vh' : roomTop > 320 ? '2vh' : roomTop > 280 ? '0vh' : '0vh'; if ($('sp_container') && sp_shown) $('message_wrap').style.top = '0vh';} $('chatter').style.display='block'; $('antichatter').style.display='block'; $('audience').style.display='block'; $('message_wrap').fade(1); $('chatter').fade(1); $('audience').fade(1); $('antichatter').fade(1); chat_shown = 1; $('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f'; if (voting_shown) { (function(){$('subcontrols').style.display='block';
 (function() {if ($('ball1')) (function() {$('ball1').fade(0);$('leftlab').fade(1);}).delay(2000);if ($('ball2')) (function() {$('ball2').fade(0);$('rightlab').fade(1);}).delay(2000);(function() {$('leftplus').innerHTML = '+';$('rightplus').innerHTML = '+';}).delay(2000);}).delay(2000);
 $('subcontrols').fade(1);}).delay(500);}}
 }
 
-function cli6() {let sem  = window.innerWidth > 1024 ? '7' : '';
+const cli6 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; $('room-header').style.color = oldColor; $('room-header-file').style.display = 'none'; $('av_toggler').style.background='url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  $('av_toggler').style.background='url(/icons/vcall' + sem + '2.png) center center no-repeat';}} else {cammode = 0; playSomeMusic = false; shareSomeScreen = false; $('av_toggler').style.color='#777'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');}}).catch(err => console.log(err));
 }
 
-function cli7() {let sem  = window.innerWidth > 1024 ? '7' : '';
+const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 $('message_wrap').fade(0);$('chatter').fade(0);$('audience').fade(0);$('antichatter').fade(0);chat_shown = 0;$('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat';
 }
 
-function cli8() {
+const cli8 = () => {
 fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_guests.pl?room='+w[0], {credentials: 'include'}).then(function(response){if (response.status !== 200){console.log('Status Code: ' + response.status); return;} response.json().then(function(data) { if (data != 0) { let audi = ''; const array = Object.keys(data).map(key => data[key]); array.forEach(item => { let s = item[0].split('_'); let short = s[0]; let d= item[3].split(' '); let ti = d[1].split(':'); let tim = ti[0]+':'+ti[1]; audi = audi + '<div><span>' + short + '</span>,&nbsp;<span>' + item[1] + '</span>,&nbsp;<span>' + item[2] + '</span>&nbsp;<span>' + tim + '</span></div>';}); audi = audi + '<div style="line-height:60px;">&nbsp;</div>'; $('logger').click(); chat_shown = 0; $('message_box').innerHTML = audi; $('message_box').fade(1);
 }})}).catch(err => console.log(err));
 }
