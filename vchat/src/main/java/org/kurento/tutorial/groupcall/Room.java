@@ -606,10 +606,12 @@ public class Room implements Closeable {
   public void sendParticipantNamesModesCuripsAccIdsAnnos(UserSession user) throws IOException {
 
     final JsonArray participantsArray = new JsonArray();
+    
     for (final UserSession participant : this.getParticipants()) {
 
         final JsonElement participantNameModeCuripAccIdAnno = new JsonPrimitive(participant.getName() + "_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
-        participantsArray.add(participantNameModeCuripAccIdAnno);
+	final JsonElement participantNameModeCuripAccIdAnno_DUMMY = new JsonPrimitive("DUMMY_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
+        if (user.getAccId().length() == 0 && participant.getMode().equals("c")) {participantsArray.add(participantNameModeCuripAccIdAnno_DUMMY);} else {participantsArray.add(participantNameModeCuripAccIdAnno);}
 
     }
 

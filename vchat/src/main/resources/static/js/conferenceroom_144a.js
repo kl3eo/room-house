@@ -240,7 +240,7 @@ function check_connection() {
 	setTimeout(function() { if (!connection_is_good) { console.log('resetting connection'); problems = 1; rejoin();}}, 1200);
 }
 
-const check_fullscreen = () => {
+const check_fullscreen_strict = () => {
 	acc_id.then(data => {
 	   if (fullscreen) {
 		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
@@ -252,6 +252,16 @@ const check_fullscreen = () => {
 	   }
 	});
 	
+}
+
+function check_fullscreen() {
+	acc_id.then(data => {
+	   if (fullscreen) {
+		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
+			fullscreen = false; if (!data.length) rejoin(); else {fullscreen = true;}
+		}		
+	   }
+	});
 }
 
 function signalGuru(e) {
@@ -808,7 +818,6 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	if (aonly) constraints = constraints_aonly;
 
 	var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
-//	constraints = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints;
 
 	var options = {
               	localVideo: video,

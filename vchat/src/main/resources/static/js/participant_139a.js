@@ -240,6 +240,21 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	video.volume = coo_volume;
 	if (name != myname) video.style.cursor = 'pointer';
 
+//console.log('name is', name);
+	if (name === "DUMMY") {
+		let l = creatu_long_.get(altlang[ctr]);
+		var dummee = document.createElement('div');	
+		dummee.style.fontSize = "18px";
+		dummee.style.color = "#c50";
+		dummee.style.width = "50%";
+		dummee.style.textAlign = "center";
+		dummee.appendChild(document.createTextNode(l));
+		dummee.style.float="none";
+		dummee.style.margin = "0 auto";
+		container.appendChild(dummee);
+		
+	}
+
 	slider.type = 'range';
 	slider.id = 'slider_' + name;
 	slider.min = 0;
@@ -399,13 +414,13 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	function toggleFullScreen(el) {
 		
 		if (!el.fullscreenElement) {
-			fullscreen = true;
+			//fullscreen = true; //uncomment for 'strict' chasing
 			el.requestFullscreen();
 			
 	
 		} else {
 			if (el.exitFullscreen) {		
-				fullscreen = false;
+				//fullscreen = false; //uncomment for 'strict' chasing 
 				el.exitFullscreen();
 				
 			}

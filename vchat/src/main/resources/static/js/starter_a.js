@@ -487,7 +487,7 @@ window.addEvent('domready', function() {
 	
 	oldColor = $('room-header').style.color;
 	
-	//setInterval(function() { if ($('message_box') && $('message_wrap') && $('message_wrap').style.display == 'block' && chat_shown ) {ajax_chat()} }, 3000);
+	setInterval(function() { if ($('message_box') && $('message_wrap') && $('message_wrap').style.display == 'block' && chat_shown ) {ajax_chat()} }, 3000);
 
 });
 

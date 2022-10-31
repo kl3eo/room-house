@@ -186,12 +186,21 @@ var requ_ = new Map ([
 ]);
 
 var creatu_ = new Map ([
-   ['en', 'CREATE or bind account!'],
-   ['ru', 'СОЗДАЙТЕ АККАУНТ!'],
-   ['es', 'CREATE or bind account!'],
-   ['fr', 'CREATE or bind account!'],
-   ['cn', 'CREATE or bind account!'],
-   ['pt', 'CREATE or bind account!'],
+   ['en', 'BIND an account!'],
+   ['ru', 'ПРИВЯЖИТЕ АККАУНТ!'],
+   ['es', 'BIND an account!'],
+   ['fr', 'BIND an account!'],
+   ['cn', 'BIND an account!'],
+   ['pt', 'BIND an account!'],
+]);
+
+var creatu_long_ = new Map ([
+   ['en', 'BIND an account TO WATCH CINEMA!'],
+   ['ru', 'ПРИВЯЖИТЕ АККАУНТ ДЛЯ ПРОСМОТРА!'],
+   ['es', 'BIND an account TO WATCH CINEMA!'],
+   ['fr', 'BIND an account TO WATCH CINEMA!'],
+   ['cn', 'BIND an account TO WATCH CINEMA!'],
+   ['pt', 'BIND an account TO WATCH CINEMA!'],
 ]);
 
 var hea_ = new Map ([
