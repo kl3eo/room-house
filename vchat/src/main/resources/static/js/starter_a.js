@@ -357,13 +357,12 @@ e.stopPropagation();
  $('phones').onclick = '';$('phones').style.cursor = 'none';
 }; //ed()
 
-let na = getCookie('name');
-if (na != null && na != 'null') {   
+let na = getCookie('name');if (na != null && na != 'null') {   
  	if ( $('dummy2_p')) $('dummy_p').style.display = 'block'; if ( $('dummy2_p') && !small_device) $('dummy2_p').style.display = 'block'; if ($('loading_span')) $('loading_span').fade(0);
 	ed();
 
 } else { //demo mode		
-	normal_mode = false; let mgn = small_device ? 135 : 90;
+	normal_mode = false; let mgn = small_device ? 135 : 90; sp_shown = 0;
 	
 	let mes={id : 'checkRoom', room : w[0], tok : ''}; sendMessage(mes);
 	if ( $('dummy2_p')) $('dummy_p').style.display = 'block'; if ( $('dummy2_p') && !small_device) $('dummy2_p').style.display = 'block'; if ($('loading_span')) $('loading_span').fade(0);

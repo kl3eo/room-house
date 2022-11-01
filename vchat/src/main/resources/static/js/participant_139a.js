@@ -191,8 +191,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var rname = ar.slice(0, ar.length - 1).join("_");
 	
 	let rrname = rname.length > 11 ? rname.substr(0,11) + '..' : rname;
-
-	span.appendChild(document.createTextNode(rrname));
+	//rrname.replace('DUMMY','..PLAYING..');
+	if (ar[0] !== "DUMMY") span.appendChild(document.createTextNode(rrname));
 	span.style.zIndex = '1002';
 	span.style.cursor = 'pointer';
 	
@@ -243,6 +243,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 //console.log('name is', name);
 
 	if (ar[0] === "DUMMY") {
+	
 		let l = creatu_long_.get(altlang[ctr]);
 		var dummee = document.createElement('div');	
 		dummee.style.fontSize = "18px";
