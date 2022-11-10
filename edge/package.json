@@ -1,0 +1,8 @@
+{
+  "type": "module",
+
+  "dependencies": {
+    "@polkadot/api": "^4.7.1",
+    "minimist": "^1.2.5"
+  }
+}
