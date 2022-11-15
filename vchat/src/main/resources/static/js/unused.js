@@ -174,3 +174,18 @@ function showMeAsParticipant() {
 <script src="./js/kure.js"></script>
 <script src="./js/starter_a.js"></script -->
 */
+
+/*
+(function() {
+    var call = Function.prototype.call;
+   
+    Function.prototype.call = function() {
+
+       	console.log(this.name, arguments); // Here you can do whatever actions you want
+	let h = arguments[0] && arguments[0][0] && (arguments[0][0] == 'resize' || arguments[0][0] == 'resized' || arguments[0][0] == 'hidden') && arguments[1] == 1 && typeof(arguments[2]) === 'undefined';
+console.log('h', h);
+       if (h === false || typeof(h) === 'undefined') {console.log('return apply'); return call.apply(this, arguments)} else {console.log('return null'); return;}
+    };
+}());
+*/
+

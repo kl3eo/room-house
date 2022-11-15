@@ -191,7 +191,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var rname = ar.slice(0, ar.length - 1).join("_");
 	
 	let rrname = rname.length > 11 ? rname.substr(0,11) + '..' : rname;
-	//rrname.replace('DUMMY','..PLAYING..');
+
 	if (ar[0] !== "DUMMY") span.appendChild(document.createTextNode(rrname));
 	span.style.zIndex = '1002';
 	span.style.cursor = 'pointer';
