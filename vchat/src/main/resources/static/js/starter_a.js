@@ -366,6 +366,7 @@ let na = getCookie('name');if (na != null && na != 'null') {
 
 } else { //demo mode		
 	normal_mode = false; let mgn = small_device ? 135 : 90; sp_shown = 0;
+	setCookie('new_cache', true, 14400);
 	
 	let mes={id : 'checkRoom', room : w[0], tok : ''}; sendMessage(mes);
 	if ( $('dummy2_p')) $('dummy_p').style.display = 'block'; if ( $('dummy2_p') && !small_device) $('dummy2_p').style.display = 'block'; if ($('loading_span')) $('loading_span').fade(0);

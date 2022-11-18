@@ -961,7 +961,7 @@ if (!curIP.length && false) {
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<script>let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {$('phones').style.visibility='hidden'; if ($('loading_span')) $('loading_span').style.display='none';}}, 2000);}</script>
+<script>let pause = getCookie('new_cache') ? 2000 : 3000;  let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {$('phones').style.visibility='hidden'; if ($('loading_span')) $('loading_span').style.display='none';}}, pause);}</script>
 
     <script>
 
