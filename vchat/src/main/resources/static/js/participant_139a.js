@@ -93,7 +93,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				
 	var coo_volume = loadData(name+'_volume');
 
-	if (coo_volume === null || coo_volume === 'null') coo_volume = this_is_unmuted ? 0.1 : this_is_guru ? 0.9 : 0.5;
+	if (coo_volume === null || coo_volume === 'null') coo_volume = this_is_unmuted ? 0.1 : this_is_guru ? 0.7 : 0.5;
 
 	if (name != myname) {
 		saveData(name+'_muted', coo_muted, 1440);
