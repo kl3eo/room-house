@@ -1093,18 +1093,22 @@ const leaveRoom = () => {
 	if (Object.keys(participants).length) {
 	
 		for ( var key in participants) {
-			//if (!problems || (problems && key != myname)) {
+			if (!problems || (problems && key != myname)) {
 				participants[key].dispose();
 				delete participants[key];
-			//}
+			}
 		}
 
 	}
 
-	//pcounter = problems ? 1 : 0;
-	pcounter = 0;
+	pcounter = problems ? 1 : 0;
+	//pcounter = 0;
+	vcounter = 0;
 	i_am_guest = 0;
 	registered = 0;
+	
+	if ($('num_quests')) $('num_quests').innerHTML = 0;
+	if ($('vcounter')) $('vcounter').innerHTML = vcounter;
 	
 	sendMessage({id : 'leaveRoom'});
 	just_left = $('name').value;

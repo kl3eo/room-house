@@ -13,6 +13,32 @@
 
 <!-- slider -->
 <link rel="stylesheet" href="./css/splide.min.css" />
+      <link rel="manifest" href="manifest.json" />
+      <script>
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then(function (registration) {
+              // Registration was successful
+              // console.log("ServiceWorker registration successful with scope: ",registration.scope);
+            })
+            .catch(function (err) {
+              // registration failed :(
+              console.log("ServiceWorker registration failed: ", err);
+            });
+        }
+        window.addEventListener("beforeinstallprompt", function (e) {
+          e.userChoice.then(function (choiceResult) {
+            console.log(choiceResult.outcome);
+            if (choiceResult.outcome == "dismissed") {
+              console.log("User cancelled home screen install");
+            } else {
+              console.log("User added to home screen");
+            }
+          });
+        });
+      </script>
+
 <script type="text/javascript" src="./js/splide.min.js"></script>
 
 <!-- moo -->
@@ -697,7 +723,8 @@ const acc_id = (async () => await request('https://'+window.location.hostname+':
 <div id="preroom" style="position:relative;z-index:20;width:100%;text-align:center;margin-top:4vh;opacity:0;"><!-- div style="color:#fff;padding-top:10px;">&#9733;&#9733;&#9733;</div -->
 <div style="width:100%;text-align:center;white-space:nowrap;margin:0 auto;font-size:30px;padding:5px;margin-bottom:17px;font-weight:bold;cursor:pointer;color:#fff;" onclick="location.href='https://room-house.com';" onmouseover="this.style.color='#9cf';" onmouseout="this.style.color='#fff';"> &nbsp; </div>
 <!-- div style="width:60%;margin:0 auto;font-size:20px;color:#fff;white-space:nowrap;cursor:pointer;" onclick="location.href='https://skypirl.net';">SkyPirl Blockchain -->
-<div style="width:60%;margin:0 auto;font-size:20px;color:#fff;white-space:nowrap;"> &nbsp;
+<div id="room_name_id" style="width:60%;margin:0 auto;font-size:48px;font-weight:bold;color:#fff;white-space:nowrap;opacity:0;"></div>
+<div style="width:60%; margin:0 auto; font-size:20px; color:#fff; white-space:nowrap;"> &nbsp;
 <br>
 <br>
 &nbsp;
@@ -705,8 +732,8 @@ const acc_id = (async () => await request('https://'+window.location.hostname+':
 &nbsp;
 <br>
 </div>
-<div id="langs" style="text-align:center;width:264px;margin:120px auto 0 auto;z-index:1000;padding-left:8px;visibility:hidden;"><!-- rgsu -->
-<!-- div id="langs" style="text-align:center;width:264px;margin:24px auto 0 auto;z-index:1000;padding-left:8px;" -->
+<!-- div id="langs" style="text-align:center;width:264px;margin:120px auto 0 auto;z-index:1000;padding-left:8px;visibility:hidden;" --><!-- rgsu -->
+<div id="langs" style="text-align:center;width:264px;margin:7.5vw auto 0 auto;z-index:1000;padding-left:8px;">
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:10px;" onclick="change_lang('en');ctr=0;setCookie('lang',ctr,144000);"><img src=/flags/gb.png width=24></div>
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:5px;" onclick="change_lang('ru');ctr=1;setCookie('lang',ctr,144000);"><img src=/flags/ru.png width=24></div>
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:5px;" onclick="change_lang('es');ctr=2;setCookie('lang',ctr,144000);"><img src=/flags/es.png width=24></div>
@@ -715,12 +742,8 @@ const acc_id = (async () => await request('https://'+window.location.hostname+':
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:5px;" onclick="change_lang('pt');ctr=5;setCookie('lang',ctr,144000);"><img src=/flags/pt.png width=24></div>
         <div style="clear:left;"></div>
 </div>
-<!-- div id="abouter" class=modal style="float:left;margin-left:20px;margin-top:0.5vw;">about R-H</div>
-<div id="helper" class=modal style="float:right;margin-right:20px;margin-top:0.5vw;">help</div>
-<div style="clear:both;"></div -->
-
 <div id=abouter class=modal style="float:left;margin-left:20px;margin-top:-3.5vw;color:#222;visibility:hidden;">about R-H</div>
-<div id=helper class=modal style="float:right;margin-right:20px;margin-top:-5vh;color:#222;">help</div>
+<div id=helper class=modal style="float:right;margin-right:20px;margin-top:0vh;color:#222;">help</div>
 <div style="clear:both;"></div>
 
 </div><!-- preroom -->
@@ -775,7 +798,7 @@ RANDOM=7777
 		</div>
 	</div><!-- postroom -->
                         <div id="cr" style="position:absolute;width:60%;margin:0px auto;font-size:12px;text-align:center;bottom:3vh;left:20%;color:#9cf;z-index:-1000;">
-                                2022 (C) Powered by <a href="https://eco-xtr.com" target=new>xTER</a><!-- with <a href="https://www.kurento.org" target=new>Kurento</a> -->
+                                2022 (C) Powered by <a href="https://room-house.com/space/" target=new>xTER</a><!-- with <a href="https://www.kurento.org" target=new>Kurento</a> -->
                         </div>
 </div><!-- preco -->
 <script>checkWebRTC()</script>
@@ -966,7 +989,7 @@ if (!curIP.length && false) {
 <script src="./js/finisher_a.js"></script>
 <script>let pause = getCookie('new_cache') ? 2000 : 3000;  let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {$('phones').style.visibility='hidden'; if ($('loading_span')) $('loading_span').style.display='none';}}, pause);}</script>
 
-    <script>
+<script>
 
 var splide = new Splide( "#main-slider", {
   type    : 'loop',
@@ -979,8 +1002,16 @@ var splide = new Splide( "#main-slider", {
 
 splide.mount();
 
-    </script>
+if (!w[0].match(new RegExp('rgsu','g'))) {
+	$('room_name_id').innerHTML = w[0];
+	$('room_name_id').fade(1);
+}
+
+$('langs').style.marginTop = small_device ? '9vw' : '5vw';
+
+window.setTimeout( function() {if ($('room').style.display == 'none' && $('join').style.display !== 'none') window.location.reload();}, 120000);
+
+</script>
     
 </body>
 </html>
-
