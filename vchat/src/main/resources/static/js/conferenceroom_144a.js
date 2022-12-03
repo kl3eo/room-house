@@ -498,6 +498,8 @@ const register_body = (ro) => {
 		}
 
  		//(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
+		
+		(function() { if (pcounter == 0 && vcounter == 0 && parseInt($('num_guests').innerHTML) == 0) {console.log('problems?'); problems = 1; $('phones').innerHTML = warning; $('phones').fade(1); }}).delay(2000);
 
 		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
   
