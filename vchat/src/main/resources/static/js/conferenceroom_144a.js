@@ -499,7 +499,7 @@ const register_body = (ro) => {
 
  		//(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
 		
-		(function() { if (pcounter == 0 && vcounter == 0 && parseInt($('num_guests').innerHTML) == 0) {console.log('problems?'); problems = 1; $('phones').innerHTML = warning; $('phones').fade(1); }}).delay(2000);
+		(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; $('phones').innerHTML = warning; $('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
 
 		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
   
@@ -591,9 +591,8 @@ const onNewParticipant = (request) => {
 		let pctr = pcounter + 1;
 		if (pctr > room_limit - 1 && i_am_viewer) {if ($('bell')) $('bell').style.display = 'block'; if ($('av_toggler')) $('av_toggler').style.display='none';}
 
-		if (!small_device) {
-			resizer(pctr)
-		}
+		if (!small_device) resizer(pctr);
+
 		   	
 		receiveVideo(request.name, request.mode, myrole, true);
 		
@@ -1027,9 +1026,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			if (pctr < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
 			if (pctr > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
 
-			if (!small_device) {
-				resizer(pctr);
-			}	    
+			if (!small_device) resizer(pctr);
+	    
 			
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
@@ -1103,8 +1101,8 @@ const leaveRoom = () => {
 
 	}
 
-	pcounter = problems ? 1 : 0;
-	//pcounter = 0;
+	//pcounter = problems ? 1 : 0;
+	pcounter = 0;
 	vcounter = 0;
 	i_am_guest = 0;
 	registered = 0;
@@ -1285,9 +1283,8 @@ const onParticipantLeft = (request) => {
 		if (pcounter < room_limit) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
 		delete participants[request.name];
 		just_left = request.name;
-        	if (!small_device) {
-			resizer(pcounter);			
-		}
+        	if (!small_device) resizer(pcounter);			
+
 	}
 }
 

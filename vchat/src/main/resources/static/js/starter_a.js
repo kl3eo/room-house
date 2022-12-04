@@ -381,11 +381,10 @@ let na = getCookie('name');if (na != null && na != 'null') {
 			//acc_id = obj.from;
 			mod6.close();
 			$('sp_balance').src = sp_container_url + '/?acc=' + obj.from; 
-			afterBinding = true;			
-		   (function() {
-
-			flashText('CLICK ON VIDEO TO RELOAD');
-		   }).delay(1000);
+			afterBinding = true;
+			$('phones').innerHTML = '..PLEASE RE-ENTER..'; $('phones').fade(1); (function(){location.reload();}).delay(500);
+			//rejoin();//?!			
+		   	//(function() {flashText('CLICK ON VIDEO TO RELOAD');}).delay(1000);
 		   
 			//let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
 			//scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);

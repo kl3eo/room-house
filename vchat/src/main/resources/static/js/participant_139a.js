@@ -370,7 +370,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			if (data.length) {
 				doSwitchOneMode(el);
 			} else {
-				$('phones').innerHTML = afterBinding ? '..PLEASE WAIT..' : creatu; $('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){$('phones').fade(0);}).delay(1000);
+				$('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; $('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){$('phones').fade(0);}).delay(1000);
 			}
 		});
 

@@ -187,7 +187,7 @@ var requ_ = new Map ([
 
 var creatu_ = new Map ([
    ['en', 'BIND an account!'],
-   ['ru', 'ПРИВЯЖИТЕ АККАУНТ!'],
+   ['ru', 'НУЖЕН АККАУНТ!'],
    ['es', 'BIND an account!'],
    ['fr', 'BIND an account!'],
    ['cn', 'BIND an account!'],
@@ -196,7 +196,7 @@ var creatu_ = new Map ([
 
 var creatu_long_ = new Map ([
    ['en', 'BIND an account TO WATCH CINEMA!'],
-   ['ru', 'ПРИВЯЖИТЕ АККАУНТ ДЛЯ ПРОСМОТРА!'],
+   ['ru', 'НУЖЕН АККАУНТ ДЛЯ ПРОСМОТРА!'],
    ['es', 'BIND an account TO WATCH CINEMA!'],
    ['fr', 'BIND an account TO WATCH CINEMA!'],
    ['cn', 'BIND an account TO WATCH CINEMA!'],
