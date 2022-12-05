@@ -107,7 +107,7 @@ window.onload = function(){
    setInterval(function(){
        if ((registered && !now_playing)|| problems) {if (problems) rejoin();}
 
-   }, 30000 + Math.random() * 10000);
+   }, 10000 + Math.random() * 10000);
 
    setInterval(function(){
 
@@ -1093,10 +1093,10 @@ const leaveRoom = () => {
 	if (Object.keys(participants).length) {
 	
 		for ( var key in participants) {
-			if (!problems || (problems && key != myname)) {
+			//if (!problems || (problems && key != myname)) {
 				participants[key].dispose();
 				delete participants[key];
-			}
+			//}
 		}
 
 	}

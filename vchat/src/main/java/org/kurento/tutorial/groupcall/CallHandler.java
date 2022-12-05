@@ -99,11 +99,15 @@ public class CallHandler extends TextWebSocketHandler {
     if (user != null) {
       log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
     } else {
-      log.info("Incoming message from new user: {}", jsonMessage);
+      //if (jsonMessage.get("token").getAsString().equals("")) 
+      	//log.info("Incoming message from new user: {}", jsonMessage);
     }
     
     switch (jsonMessage.get("id").getAsString()) {
       case "joinRoom":
+      
+      		if (user == null) {log.info("Incoming message from new user: {}", jsonMessage);}
+		
         	final String joinerName = jsonMessage.get("name").getAsString();
         	final UserSession who = registry.getByName(joinerName);
 
@@ -161,7 +165,7 @@ public class CallHandler extends TextWebSocketHandler {
                 	Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("select md5(concat(proj_code, pass)) from members where proj_code != 'admin' and room = '" + joinerRoom + "'")) {
             			while(rs.next()) {if (rs.getString(1).equals(joinerToken)) {role = "2"; break;}}
-          		} catch (SQLException ex) {log.info("PG join err from {}: ", joinerName);}
+          		} catch (SQLException ex) {log.debug("PG join err from {}: ", joinerName);}
 		}
 // now check if room is closed
 		String sta = "0";
@@ -169,7 +173,7 @@ public class CallHandler extends TextWebSocketHandler {
                 Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("select status from rooms where name='" + joinerRoom + "'")) {
             		if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";}} else {noSuchRoom = "1";}
-         	} catch (SQLException ex) {log.info("PG join err from {}: ", joinerName);}
+         	} catch (SQLException ex) {log.debug("PG join err from {}: ", joinerName);}
 	  
         	log.info("JOINER {}: SESSION {}, ROLE TOKEN {}, ROLE RECEIVED {}, ROOM STATUS {}, ROOM LIMIT {}", joinerName, session, role, joinerRole, sta, room_limit);
 // now make temp permissson if required
@@ -300,7 +304,7 @@ public class CallHandler extends TextWebSocketHandler {
                 	}
 			if ( co != 1) {an = ""; cu = "";} else {an = "\".."+an+"\"";}
 			
-			log.info("ROOM {}: got {} participants, {} viewers", jRoom, co, vi);
+			//log.info("ROOM {}: got {} participants, {} viewers", jRoom, co, vi);
 			synchronized (session) {
 				final JsonObject checkRoomJson = new JsonObject();	
     				checkRoomJson.addProperty("id", "roomConnection");
@@ -313,11 +317,11 @@ public class CallHandler extends TextWebSocketHandler {
 			
 			final String jTok = jsonMessage.get("tok").getAsString();
 			
-			if (jTok.equals("lol")) {
+			if (jTok.equals("enebeneraba")) {
 				try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 		Statement st = con.createStatement();
 				ResultSet rs = st.executeQuery("UPDATE rooms SET nump=" + co + ", numv=" + vi + ", dtm=current_timestamp WHERE name='" + jRoom + "'")) {
-         	} catch (SQLException ex) {log.info("PG update err for room {}", jRoom);}
+         	} catch (SQLException ex) {log.debug("PG update err for room {}", jRoom);}
 					
 			}					
 		}
@@ -345,7 +349,7 @@ public class CallHandler extends TextWebSocketHandler {
     String roomName = params.get("room").getAsString();
     String name = params.get("name").getAsString();
     String mode = params.get("mode").getAsString();
-    final String acc_id = params.get("acc_id").getAsString();    
+    String acc_id = params.get("acc_id").getAsString();    
     String role = params.get("role").getAsString();
     
     final String pgurl = "jdbc:postgresql://localhost:5432/cp";
@@ -359,7 +363,7 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-   
+    
     //need this hack to avoid DB errors
     curip = curip.replaceAll("[;'\"]*", "");
     if (curip.equals("127.0.0.1") || curip.equals("")) {curip = "164.68.105.131";}
@@ -410,7 +414,7 @@ public class CallHandler extends TextWebSocketHandler {
 		
 		st.executeUpdate();
 		st.close();
-		) {} catch (SQLException ex) {log.info("PG insert err from {}: ", name);}
+		) {} catch (SQLException ex) {log.debug("PG insert err from {}: ", name);}
 	*/
 	  	
 		//protect against sql injection
@@ -420,12 +424,13 @@ public class CallHandler extends TextWebSocketHandler {
 		role = role.replaceAll("[;'\"]*", "");
 		city = city.replaceAll("[;'\"]*", "");
 		country = country.replaceAll("[;'\"]*", "");
+		acc_id = acc_id.replaceAll("[;'\"]*", "");
 
-//create table joins (id serial, ipaddr text, country text, city text, name text, room text, mode text, role text, dtm timestamp);
+//create table joins (id serial, ipaddr text, country text, city text, name text, room text, mode text, role text, dtm timestamp, accid text);
 //insert		
 		try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, ROOM, MODE, ROLE, DTM) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp)")) {
+		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, ROOM, MODE, ROLE, DTM, ACCID) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp, '" + acc_id + "')")) {
          	} catch (SQLException ex) {log.info("PG join err from {}: ", name);}
 
 //get daily stats
@@ -434,7 +439,7 @@ public class CallHandler extends TextWebSocketHandler {
                 Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("select count(distinct ipaddr) from joins where room = '" + roomName + "' and dtm > current_date")) {
             		if (rs.next()) {num_guests  = rs.getInt(1);}
-         	} catch (SQLException ex) {log.info("PG sel stats1 err for room {}: ", roomName);}
+         	} catch (SQLException ex) {log.debug("PG sel stats1 err for room {}: ", roomName);}
 			
     	final UserSession user = room.join(name, mode, curip, acc_id, session, role, num_guests, room_limit);
 

@@ -1009,7 +1009,7 @@ if (!w[0].match(new RegExp('rgsu','g'))) {
 
 $('langs').style.marginTop = small_device ? '9vw' : '5vw';
 
-window.setTimeout( function() {if ($('room').style.display == 'none' && $('join').style.display !== 'none') window.location.reload();}, 120000);
+window.setTimeout( function() {if ($('room').style.display == 'none' && $('join').style.display !== 'none') window.location.reload();}, 300000);
 
 </script>
     
