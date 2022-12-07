@@ -793,6 +793,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	participants[name] = participant;
 	
 	var video = participant.getVideoElement();
+	var canvas = check_iOS() ? participant.getCanvasElement() : '';
 
 	var constraints = {
                 audio: true,
@@ -909,7 +910,16 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	  	
 			already_being_played = true;
 			let captureStream = null;
-
+/* mix microphone
+*/			
+			navigator.mediaDevices.getUserMedia({audio: true})
+			.then(function(mediaStream) {
+			var audioTrack = mediaStream.getAudioTracks()[0] ? mediaStream.getAudioTracks()[0] : null;
+			
+			if (canvas.captureStream) {
+			   	captureStream = canvas.captureStream(fps_hq);
+				if (audioTrack && i_am_muted !== true && i_am_muted !== 'true') captureStream.addTrack(audioTrack);
+			} else 
 			if (video.captureStream) {
 				captureStream = video.captureStream(fps_hq);
 			} else if (video.mozCaptureStream) {
@@ -959,15 +969,16 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			}
 			return false;
                   	} else {
-			startVideo(video);			  	
-			this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+				startVideo(video);			  	
+				this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			
-			if (small_device)  $(myname).style.float = 'none';
-			$('room-header-file').style.display='none';
+				if (small_device)  $(myname).style.float = 'none';
+					$('room-header-file').style.display='none';
                   	}
 
 		  	(function(){$('phones').fade(0);}).delay(1000);
-			});
+			}); //rtcPeer
+		    }).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
 	  	  } //already_being_played
 		});//video.addEventListener 
 

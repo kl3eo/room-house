@@ -177,12 +177,18 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var onemode = document.createElement('div');
 	var dropper = document.createElement('div');
 	var rtcPeer;
+///iOS 15.7 works with canvas
+	var canvas = document.createElement('canvas');
+	//canvas.width = screen.width;
+	//canvas.height = Math.round(0.67 * screen.width);
+	var ctx = canvas.getContext('2d');
 
 	$('participants').appendChild(container);
 
 	container.appendChild(video);
 	container.appendChild(span);
 	container.appendChild(speaker);
+	
 	//container.onclick = switchContainerClass;
 	if (name == myname) container.onclick = showRoomHeader;
 	container.ondblclick = rmPtcp;
@@ -206,7 +212,19 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	slider.addEventListener('change', function(e) {e.preventDefault(); e.stopPropagation(); changeVolume();});
 	
 	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (small_device) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});	
-	
+
+/// iOS
+	if (check_iOS()) {
+
+	   video.addEventListener('play', () => {
+    		function step() {
+      			ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      			window.requestAnimationFrame(step);
+    		}
+    		window.requestAnimationFrame(step);
+	   })
+	}
+///	
 	onemode.onclick = setCinema;
 	dropper.onclick = rmPtcp;
 
@@ -327,7 +345,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	this.getVideoElement = function() {
 		return video;
 	}
-	
+
+	this.getCanvasElement = function() {
+		return canvas;
+	}
+		
 	function showRoomHeader() {
 
 			$('room-header').style.display = 'block'; $('room-header').fade(1);
