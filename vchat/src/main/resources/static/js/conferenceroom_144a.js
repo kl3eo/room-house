@@ -494,7 +494,7 @@ const register_body = (ro) => {
 		});
 
  		if (problems) {
-			$('phones').style.paddingTop = small_device ? '39vh' : '45vh'; $('phones').style.lineHeight = '36px'; $('phones').innerHTML = warning; (function() { $('phones').fade(1)}).delay(1000);
+			$('phones').style.paddingTop = small_device ? '39vh' : '45vh'; $('phones').style.lineHeight = '36px'; $('phones').innerHTML = warning; $('phones').onclick=location.reload(); (function() { $('phones').fade(1)}).delay(1000);
 		}
 
  		//(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
