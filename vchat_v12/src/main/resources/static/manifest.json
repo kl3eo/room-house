@@ -1,0 +1,28 @@
+{
+  "short_name": "R-H",
+  "name": "Room-House",
+  "description": "Room-House PWA",
+  "version": "0.1",
+  "background_color": "#336699",
+  "theme_color": "#336699",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://room-house.com/img/room_house_button_60.png",
+      "type": "image/png",
+      "sizes": "60x60"
+    },
+    {
+      "src": "https://room-house.com/img/room_house_button_96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "https://room-house.com/img/room_house_button_190.png",
+      "type": "image/png",
+      "sizes": "190x190"
+    }
+  ],
+  "start_url": "/index.html"
+}

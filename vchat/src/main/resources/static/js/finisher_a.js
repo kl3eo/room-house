@@ -56,17 +56,17 @@ buC.addEventListener('click', function handleClick(event) {
 	buA.style.display = 'none';
 	if (buB) buB.remove();
 	if (box) box.remove();
-	$('controls').style.top = '-12px';
-	(function(){$('subcontrols').style.display='block';$('subcontrols').fade(1);}).delay(1000);
+	document.id('controls').style.top = '-12px';
+	(function(){document.id('subcontrols').style.display='block';document.id('subcontrols').fade(1);}).delay(1000);
 });
 buB.addEventListener('click', function handleClick(event) {
   	buA.style.display = 'none';
 	if (buB) buB.remove();
 	if (box) box.remove();
-	$('controls').style.top = '-12px';
+	document.id('controls').style.top = '-12px';
 });
 
-if ($(w[0])) $(w[0]).dispose(); // drop current room from available rooms list
+if (document.id(w[0])) document.id(w[0]).dispose(); // drop current room from available rooms list
 
 if (small_device) document.body.style.overflowY = 'auto';
 //document.body.style.overflowX = 'hidden';

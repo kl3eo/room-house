@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta name="viewport" content="width=500, initial-scale=0.7" />
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="private, no-cache, no-store, must-revalidate, max-age=0, proxy-revalidate, s-maxage=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Vary" content="*">
+ 
+<title>Welcome to Slot Machine</title>
+
+<!-- moo -->
+<script src="/js/mootools-core-1.4.5-full-compat-yc.js"></script>
+<script src="/js/mootools-more-1.4.0.1a.js"></script>
+<script src="/js/mBox.Core.js"></script>
+<script src="/js/mBox.Modal.js"></script>
+<script src="/js/md5.js"></script>
+
+<script>
+
+const soundEffect = new Audio();
+soundEffect.autoplay = true;
+
+var snd_clicked = false;
+
+const ua = navigator.userAgent.toLowerCase();
+const isAndroid = ua.indexOf("android") > -1;
+const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
+
+var w = window.location.hostname.split('.');
+const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
+const sp_setter_url = "https://aspen.room-house.com:8447";
+
+const request = async (url) => {
+		const response = await fetch(url,{credentials: 'include'});
+		const txt = await response.text();
+		return txt;
+}
+
+
+const acc_id = (async () => await request('https://'+window.location.hostname+':'+port+'/cgi/genc/get_acc_id.pl?par=1'))();
+
+const switchOneMode_SM = (el) => {
+	if (document.id('claimer').innerHTML != 'PLAY AGAIN') document.id('claimer').fade(0);
+	if (!snd_clicked) {soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'; snd_clicked=true;}
+	
+	acc_id.then(data => { 
+	   if (!data.length) {	
+		fetch('https://' + window.location.hostname + ':' + port + '/cgi/checker_sm.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let sess = respo;
+			
+			let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; 
+			let h = small_device ? '48vh' : 420; 
+			mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, zIndex: 103, title: 'SkyPirl wallet', attach: 'newacc'}); $('newacc').click();
+			let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '17vh';
+			document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; 
+			document.id('header').fade(0); document.id('wins').fade(0); (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function() {document.id('m6').style.display='none';document.id('header').fade(1);};	
+		}).catch(err => console.log(err));
+	   } else {
+	   	fetch('https://' + window.location.hostname + ':' + port + '/cgi/checker_sm.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let sess = respo;
+			document.forms['myForm'].elements['acc'].value = data;
+			document.forms['myForm'].elements['session'].value = sess;
+			document.id('form_submit').click();
+		}).catch(err => console.log(err));
+	   }
+	});	
+};
+
+function isIOSFirefox() {
+  return navigator.userAgent.match("FxiOS");
+}
+
+function check_iOS() {
+  var ua = navigator.userAgent;
+  if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ){
+    return true;
+  }
+  return false;
+}
+
+
+acc_id.then(data => { 
+	   if (data.length) {
+	   	document.id('container').style.background='url(/slot/images/slotmachine2.jpg) center center no-repeat';
+		 document.id('header').innerHTML="START GAME";		
+	   } else {
+	   	(function() {document.id('claimer').fade(1); /*if (small_device) document.id('wins').fade(1);*/}).delay(1000);
+	   }
+	   
+	   document.id('header').fade(1);
+});
+
+</script>
+
+<link rel="stylesheet" href="./css/mBoxCore.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="./css/mBoxModal.css" type="text/css" media="screen" />
+
+<script>
+window.addEvent('domready', function() {
+	//console.log('loaded!');
+	document.id('container').addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); switchOneMode_SM(e.target)});
+	document.forms['myForm'].action = 'https://' + window.location.hostname + ':' + port + '/cgi/genc/action_vg_sm';
+	
+	var g = '';
+	var only_once = true;
+	
+        document.forms['myForm'].addEvent('submit', function(e) {
+
+                e.stop();
+		
+		$('#form_submit').attr('disabled', true); 
+
+                this.set('send', {onComplete: function(response) {
+			const myJSON = JSON.stringify(response);
+                        if (myJSON.match(new RegExp('Wrong','g'))) {location.href='/slotmachine.html'; return false;}
+			
+			document.id('log_res').innerHTML=response;
+                        response = (response)? response:'';
+                        var h = response.split('>');
+                        g = (h[2]) ? h[2] : '';
+                        var rowTest = new RegExp('</div','g');
+                        g = g.replace(rowTest,'');			
+//disable capture - hack ash
+			document.id('srnum').value=g;
+			document.id('rnum').value='..code?';
+			setTimeout(function(){document.id('rnum').style.opacity=1;document.id('rnum_helper').style.opacity=1;},300);
+			document.id('form_submit').style.opacity=1;
+//disable capture - hack ash			
+			$('#form_submit').attr('disabled', false);
+                }});
+//disable capture - hack ash
+                if (!g.length || g != md5(document.id('rnum').value)) {
+
+			document.id('form_submit').style.opacity=0.9;
+			document.id('rnum').style.opacity=0;
+			document.id('rnum_helper').style.opacity=0;
+			this.send();
+		}		
+//disable capture - hack ash
+		if (g.length && g == md5(document.id('rnum').value) && only_once) {
+
+			//start slot machine
+			only_once = false;
+			document.id('header').fade(0);
+			
+			document.id('control').click();
+			soundEffect.volume=0.4; soundEffect.src = '/sounds/drop.mp3';
+			
+			document.id('container').style.background='url(/slot/images/slotmachine2_down.jpg) center center no-repeat';
+
+			let formData = new FormData();
+			formData.append('acc', document.forms['myForm'].elements['acc'].value);
+			formData.append('session', document.forms['myForm'].elements['session'].value);
+			formData.append('srnum', document.id('srnum').value);
+			formData.append('rnum', document.id('rnum').value);
+			
+			document.id('form_submit').innerHTML='<img src=/icon/spinner.gif>..working..';
+
+			document.id('log_res').style.opacity="0";
+			document.id('rnum').style.opacity="0";
+			document.id('rnum_helper').style.opacity="0";
+		
+			(function() {
+			fetch('https://' + window.location.hostname + ':' + port + '/cgi/genc/action_vg_sm',{body: formData, method: 'post', credentials: 'include'}).then(		
+			   function(response) {
+				//console.log('response is',response);
+				if (response.status !== 200) {
+					console.log('Looks like there was a problem. Status Code: ' + response.status);
+					var audio = new Audio("/sounds/drop.mp3");audio.play();
+					if (response.status == 413) setTimeout(function() {alert('The file is too big. Please limit < 10Mb')}, 500);
+					document.id('form_submit').innerHTML='Continue';
+					return;
+				}
+	
+				response.json().then(function(data) {
+					//console.log('data is', data);
+					
+					document.id('control').click(); //stop slot machine
+					
+					if (data.type1 && data.type2 && data.type3) {t1 = data.type1; t2 = data.type2; t3 = data.type3;}
+
+					if (data.result == 'Wrong way') {
+						document.id('form_submit').fade(0);
+						document.id('log_res').fade(0);
+						
+						var audio = new Audio("/sounds/drop.mp3");audio.play();
+						document.id('claimer').innerHTML='Some error occurred :(.';
+						document.id('claimer').style.display='block'; document.id('claimer').fade(1);
+
+						(function() {location.href='/slotmachine.html';}).delay(2000); return false;
+					}
+										
+					if (data.type1 && data.type2 && data.type3 && data.type1 == '0' && data.type2 == '0' && data.type3 == '0') {						
+						document.id('claimer').innerHTML='YOU WIN <strong>15</strong> PIRL!';
+						(function() {var audio = new Audio("/sounds/coin.mp3"); audio.volume = 0.5; audio.play();}).delay(3000);
+
+					} else if (data.type1 && data.type2 && data.type3 && data.type1 == '1' && data.type2 == '1' && data.type3 == '1') {
+						document.id('claimer').innerHTML='YOU WIN <strong>30</strong> PIRL!';
+						(function() {var audio = new Audio("/sounds/coin.mp3"); audio.volume = 0.5; audio.play();}).delay(3000);
+
+					} else if (data.type1 && data.type2 && data.type3 && data.type1 == '2' && data.type2 == '2' && data.type3 == '2') {
+						document.id('claimer').innerHTML='YOU WIN <strong>60</strong> PIRL!';
+						(function() {var audio = new Audio("/sounds/coin.mp3"); audio.volume = 0.5; audio.play();}).delay(3000);
+
+					} else if (data.type1 && data.type2 && data.type3 && data.type1 == '3' && data.type2 == '3' && data.type3 == '3') {
+						document.id('claimer').innerHTML='YOU WIN <strong>120</strong> PIRL!';
+						(function() {var audio = new Audio("/sounds/coin.mp3"); audio.volume = 0.5; audio.play();}).delay(3000);
+
+					} else if (data.type1 && data.type2 && data.type3 && data.type1 == '4' && data.type2 == '4' && data.type3 == '4') {
+						document.id('claimer').innerHTML='YOU WIN <strong>240</strong> PIRL!';
+						(function() {var audio = new Audio("/sounds/coin.mp3"); audio.volume = 0.5; audio.play();}).delay(3000);
+
+					} else if (data.type1 && data.type2 && data.type3 && data.type1 == '5' && data.type2 == '5' && data.type3 == '5') {
+						document.id('claimer').innerHTML='YOU WIN <strong>480</strong> PIRL!';
+						(function() {var audio = new Audio("/sounds/coin.mp3"); audio.volume = 0.5; audio.play();}).delay(3000);
+
+					} else if (data.type1 && data.type2 && data.type3 ) {
+						document.id('header').innerHTML="CAN'T ALWAYS WIN.";
+						(function() {
+							document.id('header').fade(1);
+						}).delay(3000);
+						document.id('claimer').innerHTML='PLAY AGAIN';
+						document.id('container').style.cursor='default';
+						document.id('claimer').addEventListener('click', function(e) {location.href="/slotmachine.html";});
+					} else {
+						document.id('claimer').innerHTML='Some error occurred :(.';
+
+					}
+
+
+					document.id('log_res').style.display = 'none';
+					document.id('claimer').style.display = 'block';
+
+					(function() {
+						document.id('claimer').style.cursor='pointer';
+						document.id('claimer').fade(1);
+					}).delay(3000);					
+				});
+
+			   }).catch(function(err) {console.log('Fetch Error', err);});return true;
+			   }).delay(2000);//+2sec to run, anyway
+//disable capture - hack ash
+		}
+        });
+	
+	if (small_device) document.id('wins').style.marginTop='8vh';
+	
+	document.id('info').addEventListener('click', function(e) {
+		e.preventDefault(); e.stopPropagation(); let a = document.id('wins').style.opacity == 1 ? 0 : 1; document.id('wins').fade(a);  document.id('claimer').fade(a);
+	});	
+});
+
+window.addEventListener("message", function(event) {
+
+  if (event.origin != 'https://' + window.location.hostname + ':' + port + '' && event.origin != sp_setter_url) {
+    return;
+  }
+  
+  if (event.origin == 'https://' + window.location.hostname + ':' + port + '') {
+  } else if (event.origin == sp_setter_url) {
+	var obj = JSON.parse(event.data);
+	if (obj.action == 'Bound') {
+
+			
+			(function(){document.id('m6').style.display='none'; location.href='/slotmachine.html';}).delay(2000);
+
+	} else {
+		console.log('Undefined action received from wallet!');
+	}
+  }  
+});
+
+</script>
+<style>
+  .slot {
+	position:absolute;
+	top:185px;
+	width:63px;
+	height:70px;
+	z-index:102;
+	background:#fff url('/slot/images/reel_normal.png') repeat-y;
+	background-position:-8px 5px;
+  }
+  .motion {
+	background:url("/slot/images/reel_blur.png") repeat-y;
+  }
+  #rnum {
+	margin-left:20px;
+	line-height:30px;
+	font-size:24px;
+	width:84px;
+	opacity:0;
+	border-radius:5px;
+	border:1px solid #222;
+	padding-left:2px;
+	color:#222;
+  }
+  .wins {
+  	font-size:18px;
+	font-weight:bold;
+	float:left;
+	margin-top:5px;
+	background:transparent;
+	padding:2px;
+	color:#fff;
+	text-align:center;
+	border: 0px solid #fff;
+  }
+}
+</style>
+</head>
+
+<body>
+<div id="newacc" style="display:none;"></div>
+
+<div id="main" style="position:relative; width:100%; height:100%; min-width:492px; z-index:100; background:#3d1257; text-align:center; border:1px solid #333;font-family:Times;">
+			<div id="wins" style="color:#fff;text-align:center;margin:10vh auto 0 auto;opacity:0;">
+				<div style="margin:0 auto; border:0px solid #fff; width:470px;">
+				   <div class=wins style="width:150px"><div style="background:#012;">
+					<img src='/slot/images/cherry.png' width=18 border=0>
+					<img src='/slot/images/cherry.png' width=18 border=0>
+					<img src='/slot/images/cherry.png' width=18 border=0> 15 Pirl</div>
+				   </div>
+				   <div class=wins style="width:150px"><div style="background:#012;">
+					<img src='/slot/images/banana.png' width=18 border=0>
+					<img src='/slot/images/banana.png' width=18 border=0>
+					<img src='/slot/images/banana.png' width=18 border=0> 30 Pirl</div>
+				   </div>
+				   <div class=wins style="width:150px"><div style="background:#012;">
+					<img src='/slot/images/guava.png' width=18 border=0>
+					<img src='/slot/images/guava.png' width=18 border=0>
+					<img src='/slot/images/guava.png' width=18 border=0> 60 Pirl</div>
+				   </div>
+				   <div style="clear:left;"></div>
+				</div>
+				<div style="margin:0 auto; border:0px solid #fff; max-width:470px;">
+				   <div class=wins style="width:150px"><div style="background:#012;">
+					<img src='/slot/images/orange.png' width=18 border=0>
+					<img src='/slot/images/orange.png' width=18 border=0>
+					<img src='/slot/images/orange.png' width=18 border=0> 120 Pirl</div>
+				   </div>
+				   <div class=wins style="width:150px"><div style="background:#012;">
+					<img src='/slot/images/bars.png' width=18 border=0>
+					<img src='/slot/images/bars.png' width=18 border=0>
+					<img src='/slot/images/bars.png' width=18 border=0> 240 Pirl</div>
+				   </div>
+				   <div class=wins style="width:150px"><div style="background:#012;">
+					<img src='/slot/images/seven.png' width=18 border=0>
+					<img src='/slot/images/seven.png' width=18 border=0>
+					<img src='/slot/images/seven.png' width=18 border=0> 480 Pirl</div>
+				   </div>
+				   <div style="clear:left;"></div>
+				</div>
+			</div>
+
+	<div id="header" style="opacity:0;font-size:36px;color:#fff;text-align:center;margin:2vh auto 0 auto;cursor:pointer;max-width:492px;" onclick="document.id('container').click();">PAY TO PLAY</div>
+	<div id="container" style="position:relative; width:492px; height:406px; z-index:101; background:url(/slot/images/slotmachine2_down.jpg) center center no-repeat; margin:2vh auto 0 auto; cursor:pointer;">
+		<div id="info" style="position:absolute;left:5px;top:5px;background:transparent;opacity:0.3;border:2px solid #fff; z-index:103;border-radius:32px;width:64px;height:64px;color:#fff;cursor:pointer;font-size:48px;">i</div>
+		<div id="slot1" class=slot style="left:118px;"></div>
+		<div id="slot2" class=slot style="left:214px;"></div>
+		<div id="slot3" class=slot style="left:311px;"></div>
+	</div>
+	<div id="buf" style="position:relative; width:492px; height:2vh; z-index:101; background: transparent; margin:2vh auto 25vh auto;">
+		<form id="myForm" action="/cgi/action_vg_sm" method="POST">
+			<input id="session" type="hidden" name="session" value="" />
+			<input id="acc" type="hidden" name="acc" value="" />
+			<button id="form_submit" style="display:none;float:left;" type="submit"></button>
+			<div style="position:relative;float:left;margin-top:-9px; margin-left:-60px;margin-right:-60px;">
+				<input type="text" id="rnum" name="rnum" value="" onclick="this.value=''" style="position:absolute;left:124px;z-index:105;" />
+				<div style="position:absolute;left:60px;z-index:104;" id="log_res"><!-- spanner --></div>
+				<div id="rnum_helper" style="display:none;">this code:</div>
+			</div>
+			<div id="claimer" style="color:#fff;text-align:center;font-size:36px;opacity:0;max-width:492px;">..dry? <a href="https://www.skypirl.com/airdrop" style="color:#090;" target=new>airdrop</a> is coming</div>
+			<div style="display:none;"><input id="srnum" type="hidden" name="srnum" value="" /></div>
+			<div style="clear:left;"></div>
+		</form>	
+	</div>
+	<div id="result" style="display:none;"></div>
+	<div><button id="control" style="display:none;">Start</button></div>
+</div><!-- main -->
+
+
+    <!-- slot machine -->
+
+    <script src="slot/jquery.min.1.6.js"></script>
+    <script src="slot/jquery.backgroundPosition.js"></script>
+    <script src="slot/jquery.spritely.js"></script>
+    <script src="slot/slot.js"></script>
+
+</body>
+
+</html>

@@ -34,10 +34,15 @@ const doSwitchOneMode = (el) => {if (false) console.log(el);
 	   if (!data.length) {
 		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let sess = respo;
-			let sp_setter = isFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'}); $('newacc').click();			
+			let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420;
+		//no jquery	 
+			mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl wallet', attach: 'newacc'}); document.id('newacc').click();			
+		//if we want to use both mBox and jQuery
+			//h = small_device ? '56vh' : h;
+			//mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl wallet', attach: 'newacc'}); document.id('newacc').click(); let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '12vh';document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function(){document.id('m6').style.display='none';};
 		}).catch(err => console.log(err));
 	   } else {
-		if(!playSomeMusic&&!shareSomeScreen){fullscreen=true; chat_shown=1;$("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=$("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){$("room-header").style.display="none";$("room-backer").style.display="block";if (!small_device) {$("room").style.minWidth = "480px";$("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}let c=$("one-"+a);if (c) c.fade(0);}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}
+		if(!playSomeMusic&&!shareSomeScreen){fullscreen=true; chat_shown=1;document.id("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=document.id("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){document.id("room-header").style.display="none";document.id("room-backer").style.display="block";if (!small_device) {document.id("room").style.minWidth = "480px";document.id("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}let c=document.id("one-"+a);if (c) c.fade(0);}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}
 	   }
 	});	
 };
@@ -56,8 +61,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	let this_is_guru = false;
 	let i_am_guru = false;	
 	
-	if ( $('dummy_p')) $('dummy_p').style.display = 'none';
-	if ( $('dummy2_p')) $('dummy2_p').style.display = 'none';
+	if ( document.id('dummy_p')) document.id('dummy_p').style.display = 'none';
+	if ( document.id('dummy2_p')) document.id('dummy2_p').style.display = 'none';
 	
 	var gi = new RegExp('GURU:','g');
 	if (name.match(gi)) {guru_is_here = 1; this_is_guru = true;}
@@ -73,7 +78,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	if (ct > 0) guru_is_here = 1;
 		
-	if ( $(name) ) {var old_container = $(name); old_container.parentNode.removeChild(old_container);}
+	if ( document.id(name) ) {var old_container = document.id(name); old_container.parentNode.removeChild(old_container);}
 	
 	var from_changing_slider = false;
 
@@ -127,7 +132,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if ( myrole != 1) i_am_guest = 1 ;
 	if ( myrole == 1 & pcounter === 0 & guru_is_here ) i_am_guest = 0 ;
 	
-	(function(){ $('phones').fade(0); (function(){ $('phones').innerHTML = '';}).delay(100);}).delay(500);
+	(function(){ document.id('phones').fade(0); (function(){ document.id('phones').innerHTML = '';}).delay(100);}).delay(500);
 	
 	if (typeof(mod3) != 'undefined' && mod3 !== null) mod3.content.innerHTML = left_content.get(altlang[ctr]);
 	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
@@ -165,7 +170,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : (pcounter === 2 && !small_device) ? PARTICIPANT_DUO : (pcounter === 3 && !small_device) ? PARTICIPANT_TRIO : container.className;}).delay(500);
 	
-	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
+	if (document.id('pcounter')) { if (!real_pcnt) {(function(){document.id('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {document.id('pcounter').innerHTML = real_pcnt;} }
 	
 	container.id = name;
 	container.style.position='relative';
@@ -183,7 +188,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//canvas.height = Math.round(0.67 * screen.width);
 	var ctx = canvas.getContext('2d');
 
-	$('participants').appendChild(container);
+	document.id('participants').appendChild(container);
 
 	container.appendChild(video);
 	container.appendChild(span);
@@ -322,11 +327,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	container.appendChild(adder);
 		
-	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
-	$(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': $(video.id).style.maxHeight;
+	document.id(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
+	document.id(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': document.id(video.id).style.maxHeight;
 	
 	//if (pcounter > 1)  // bigger screen bad for notebooks
-		$(video.id).style.maxHeight = '190px';
+		document.id(video.id).style.maxHeight = '190px';
 	
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
@@ -352,7 +357,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	function showRoomHeader() {
 
-			$('room-header').style.display = 'block'; $('room-header').fade(1);
+			document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);
 	}
 	
 	function setAnno() {
@@ -392,7 +397,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			if (data.length) {
 				doSwitchOneMode(el);
 			} else {
-				$('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; $('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){$('phones').fade(0);}).delay(1000);
+				document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; document.id('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){document.id('phones').fade(0);}).delay(1000);
 			}
 		});
 
@@ -490,9 +495,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function toggleMute() {
-		if ( $('video-' + name) ) {
+		if ( document.id('video-' + name) ) {
 		
-		   var video = $('video-' + name);
+		   var video = document.id('video-' + name);
 
 		if ( !from_changing_slider || (from_changing_slider && ((video.volume === 0 && !video.muted) || (video.volume > 0))) ) {
 	
@@ -630,7 +635,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		}
 		
 		if (name != myname || myrole != 0) real_pcnt--;
-		if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
+		if (document.id('pcounter')) { if (!real_pcnt) {(function(){document.id('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {document.id('pcounter').innerHTML = real_pcnt;} }
 		
 		if ( guru_is_here == 0 & pcounter) i_am_guest = 1;
 		if ( guru_is_here == 1 & pcounter === 1) i_am_guest = 0;

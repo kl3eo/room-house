@@ -40,7 +40,7 @@ var mBox = new Class({
 			footer: {}
 		},
 		
-		target: $(window),			// element reference or element-id where the mBox will be opened (use 'mouse' to show mBox on mouse-position)
+		target: document.id(window),			// element reference or element-id where the mBox will be opened (use 'mouse' to show mBox on mouse-position)
 		
 		attach: null,				// element reference or element-id or element-classes of the elements which will open / close the mBox
 		event: 'click',				// the event which will trigger the mBox to show (can be: 'click' || 'mouseover' (= 'mouseenter'))
@@ -154,7 +154,7 @@ var mBox = new Class({
 		
 		// set fixed to true or false depending on target
 		if (this.options.fixed == null) {
-			this.options.fixed = [$(window), $(document), $(document.body)].contains(this.target);
+			this.options.fixed = [document.id(window), document.id(document), document.id(document.body)].contains(this.target);
 		}
 		
 		// no pointer if target == 'mouse'
@@ -273,7 +273,7 @@ var mBox = new Class({
 		// get elements to add events to, if none given use this.options.attach
 		el = el || this.options.attach;
 		
-		elements = Array.from($(el)).combine(Array.from($$('.' + el))).combine(Array.from($$(el))).clean();
+		elements = Array.from(document.id(el)).combine(Array.from($$('.' + el))).combine(Array.from($$(el))).clean();
 		
 		if(!elements || elements.length == 0) return this;
 		
@@ -375,9 +375,9 @@ var mBox = new Class({
 				// set new content
 				if (this.options.setContent && this.source && this.source.getAttribute(this.options.setContent)) {
 					
-					if ($(this.source.getAttribute(this.options.setContent))) {
+					if (document.id(this.source.getAttribute(this.options.setContent))) {
 						this.content.getChildren().setStyle('display', 'none');
-						$(this.source.getAttribute(this.options.setContent)).setStyle('display', '');
+						document.id(this.source.getAttribute(this.options.setContent)).setStyle('display', '');
 					} else {
 						var attribute_array = this.source.getAttribute(this.options.setContent).split('|'),
 							content = attribute_array[0] || null,
@@ -542,7 +542,7 @@ var mBox = new Class({
 			}}).set('tween', {
 				duration: this.options.overlayFadeDuration,
 				link: 'cancel'
-			}).inject($(document.body), 'bottom');
+			}).inject(document.id(document.body), 'bottom');
 		}
 		this.overlay.setStyle('display', 'block')[instant ? 'set' : 'tween']('opacity', (this.options.overlayStyles.opacity || 0.001));
 		return this;
@@ -560,13 +560,13 @@ var mBox = new Class({
 	
 	// get the current or given target
 	getTarget: function(target) {
-		var target = $(target) || target || this.target || $(this.options.target) || this.options.target || $(this.options.attach);
-		return target == 'mouse' ? 'mouse' : this.fixOperaPositioning($(target));
+		var target = document.id(target) || target || this.target || document.id(this.options.target) || this.options.target || document.id(this.options.attach);
+		return target == 'mouse' ? 'mouse' : this.fixOperaPositioning(document.id(target));
 	},
 	
 	// get the target element from event target
 	getTargetFromEvent: function(ev) {
-		if(this.options.target) return this.fixOperaPositioning($(this.options.target));
+		if(this.options.target) return this.fixOperaPositioning(document.id(this.options.target));
 		return this.getTargetElementFromEvent(ev);
 	},
 	
@@ -588,14 +588,14 @@ var mBox = new Class({
 	
 	// TEMP: This function fixes temporarily the mootools 1.4.5 positioning bug in opera
 	fixOperaPositioning: function(el) {
-		if($(el) && !$(el).retrieve('OperaBugFixed') && el != window) {
+		if(document.id(el) && !document.id(el).retrieve('OperaBugFixed') && el != window) {
 			try {
-				if(!($(el).getStyle('border-top-width').toInt() + $(el).getStyle('border-right-width').toInt() + $(el).getStyle('border-bottom-width').toInt() + $(el).getStyle('border-left-width').toInt())) {
-					$(el).setStyle('border', 0);
+				if(!(document.id(el).getStyle('border-top-width').toInt() + document.id(el).getStyle('border-right-width').toInt() + document.id(el).getStyle('border-bottom-width').toInt() + document.id(el).getStyle('border-left-width').toInt())) {
+					document.id(el).setStyle('border', 0);
 				}
 			}
 			catch(e) {}
-			$(el).store('OperaBugFixed');
+			document.id(el).store('OperaBugFixed');
 		}
 		return el;
 	},
@@ -736,9 +736,9 @@ var mBox = new Class({
 		}
 		
 		// get dimensions and coordinates
-		if(!target || [$(window), $(document), $(document.body)].contains(target)) {
-			var windowScroll = this.wrapper.getStyle('position') == 'fixed' ? {x: 0, y: 0} : $(window).getScroll(),
-				targetDimensions = $(window).getSize();
+		if(!target || [document.id(window), document.id(document), document.id(document.body)].contains(target)) {
+			var windowScroll = this.wrapper.getStyle('position') == 'fixed' ? {x: 0, y: 0} : document.id(window).getScroll(),
+				targetDimensions = document.id(window).getSize();
 				targetDimensions.width = targetDimensions.totalWidth = targetDimensions.x;
 				targetDimensions.height = targetDimensions.totalHeight = targetDimensions.y;
 				
@@ -889,7 +889,7 @@ var mBox = new Class({
 		this.wrapper.setStyles({top: null, right: null, bottom: null, left: null});
 		
 		// calculate 'bottom' or 'right' positions if needed
-		var windowDimensions = $(window).getSize();
+		var windowDimensions = document.id(window).getSize();
 
 		if(position.xAttribute == 'right') {
 			posX = windowDimensions.x - (posX + wrapperDimensions.totalWidth);
@@ -910,9 +910,9 @@ var mBox = new Class({
 	// set up content
 	setContent: function(content, where) {
 		if(content != null) {
-			if($(content) || $$('.' + content).length > 0) {
-				this[where || 'content'].grab($(content) || $$('.' + content));
-				if($(content)) $(content).setStyle('display', '');
+			if(document.id(content) || $$('.' + content).length > 0) {
+				this[where || 'content'].grab(document.id(content) || $$('.' + content));
+				if(document.id(content)) document.id(content).setStyle('display', '');
 			} else if(content != null) {
 				this[where || 'content'].set('html', content);
 			}
@@ -1002,29 +1002,29 @@ var mBox = new Class({
 		}.bind(this);
 		
 		if(this.options.closeOnEsc) {
-			$(window).addEvent('keyup', this.escEvent);
+			document.id(window).addEvent('keyup', this.escEvent);
 		}
 		
 		// event: reposition mBox on window resize or scroll
 		this.resizeEvent = function(ev) {
 			this.setPosition();
 		}.bind(this);
-		$(window).addEvent('resize', this.resizeEvent);
+		document.id(window).addEvent('resize', this.resizeEvent);
 		
 		if(this.options.fixed && (Browser.ie6 || Browser.ie7)) {
-			$(window).addEvent('scroll', this.resizeEvent);
+			document.id(window).addEvent('scroll', this.resizeEvent);
 		}
 		
 		// event: close mBox when clicking anywhere
 		this.closeOnClickEvent = function(ev) {
-			if(this.isOpen && ($(this.options.attach) != ev.target && !$$('.' + this.options.attach).contains(ev.target))) {
+			if(this.isOpen && (document.id(this.options.attach) != ev.target && !$$('.' + this.options.attach).contains(ev.target))) {
 				this.ignoreDelayOnce = true;
 				this.close();
 			}
 		}.bind(this);
 		
 		if(this.options.closeOnClick) {
-			$(document).addEvent('mouseup', this.closeOnClickEvent);
+			document.id(document).addEvent('mouseup', this.closeOnClickEvent);
 		}
 		
 		// event: close mBox when clicking on wrapper or it's children
@@ -1036,7 +1036,7 @@ var mBox = new Class({
 		}.bind(this);
 		
 		if(this.options.closeOnBoxClick) {
-			$(document).addEvent('mouseup', this.closeOnBoxClickEvent);
+			document.id(document).addEvent('mouseup', this.closeOnBoxClickEvent);
 		}
 		
 		// event: close mBox when clicking on wrapper directly
@@ -1048,19 +1048,19 @@ var mBox = new Class({
 		}.bind(this);
 		
 		if(this.options.closeOnWrapperClick) {
-			$(document).addEvent('mouseup', this.closeOnWrapperClickEvent);
+			document.id(document).addEvent('mouseup', this.closeOnWrapperClickEvent);
 		}
 		
 		// event: close mBox when clicking on body
 		this.closeOnBodyClickEvent = function(ev) {
-			if(this.isOpen && ($(this.options.attach) != ev.target && !$$('.' + this.options.attach).contains(ev.target)) && ev.target != this.wrapper && !this.wrapper.contains(ev.target)) {
+			if(this.isOpen && (document.id(this.options.attach) != ev.target && !$$('.' + this.options.attach).contains(ev.target)) && ev.target != this.wrapper && !this.wrapper.contains(ev.target)) {
 				this.ignoreDelayOnce = true;
 				this.close();
 			}
 		}.bind(this);
 		
 		if(this.options.closeOnBodyClick) {
-			$(document).addEvent('mouseup', this.closeOnBodyClickEvent);
+			document.id(document).addEvent('mouseup', this.closeOnBodyClickEvent);
 		}
 		
 		// event: attach mBox to mouse position
@@ -1071,22 +1071,22 @@ var mBox = new Class({
 		}.bind(this);
 		
 		if(this.target == 'mouse') {
-			$(document).addEvent('mousemove', this.mouseMoveEvent);
+			document.id(document).addEvent('mousemove', this.mouseMoveEvent);
 		}
 	},
 	
 	// remove events from document or window
 	detachEvents: function() {
 		if(this.options.fixed && (Browser.ie6 || Browser.ie7)) {
-			$(window).removeEvent('scroll', this.resizeEvent);
+			document.id(window).removeEvent('scroll', this.resizeEvent);
 		}
-		$(window).removeEvent('keyup', this.keyEvent);
-		$(window).removeEvent('resize', this.resizeEvent);
-		$(document).removeEvent('mouseup', this.closeOnClickEvent);
-		$(document).removeEvent('mouseup', this.closeOnBoxClickEvent);
-		$(document).removeEvent('mouseup', this.closeOnWrapperClickEvent);
-		$(document).removeEvent('mouseup', this.closeOnBodyClickEvent);
-		$(document).removeEvent('mousemove', this.mouseMoveEvent);
+		document.id(window).removeEvent('keyup', this.keyEvent);
+		document.id(window).removeEvent('resize', this.resizeEvent);
+		document.id(document).removeEvent('mouseup', this.closeOnClickEvent);
+		document.id(document).removeEvent('mouseup', this.closeOnBoxClickEvent);
+		document.id(document).removeEvent('mouseup', this.closeOnWrapperClickEvent);
+		document.id(document).removeEvent('mouseup', this.closeOnBodyClickEvent);
+		document.id(document).removeEvent('mousemove', this.mouseMoveEvent);
 	},
 	
 	// dispose of wrapper and remove it from DOM 

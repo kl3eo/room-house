@@ -1,0 +1,648 @@
+/*
+ * (C) Copyright 2014 Kurento (http://kurento.org/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+#   Copyright (c) 2021-22 Alex Shevlakov alex@motivation.ru
+#   All Rights Reserved.
+
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+*/
+
+var fullscreen = false; var cinemaEnabled = false;
+
+const doSwitchOneMode = (el) => {if (false) console.log(el);
+	acc_id.then(data => { 
+	   if (!data.length) {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let sess = respo;
+			let sp_setter = isFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:450px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; let h = small_device ? '66vh' : 420; mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyPirl account', attach: 'newacc'}); $('newacc').click();			
+		}).catch(err => console.log(err));
+	   } else {
+		if(!playSomeMusic&&!shareSomeScreen){fullscreen=true; chat_shown=1;$("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=$("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){$("room-header").style.display="none";$("room-backer").style.display="block";if (!small_device) {$("room").style.minWidth = "480px";$("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}let c=$("one-"+a);if (c) c.fade(0);}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}
+	   }
+	});	
+};
+
+const PARTICIPANT_MAIN_CLASS = small_device ? 'participant main_i' : 'participant main';
+const PARTICIPANT_CLASS = 'participant';
+const PARTICIPANT_SOLO = 'participant solo'
+const PARTICIPANT_DUO = 'participant duo'
+const PARTICIPANT_TRIO = 'participant trio'
+
+function Participant(name, myname, mode, myrole, new_flag) {
+	
+	this.name = name;
+	this.mode = mode;
+	
+	let this_is_guru = false;
+	let i_am_guru = false;	
+	
+	if ( $('dummy_p')) $('dummy_p').style.display = 'none';
+	if ( $('dummy2_p')) $('dummy2_p').style.display = 'none';
+	
+	var gi = new RegExp('GURU:','g');
+	if (name.match(gi)) {guru_is_here = 1; this_is_guru = true;}
+	if (myname.match(gi)) i_am_guru = true;
+	
+	var this_is_unmuted = false;
+        var ai = new RegExp('^A:','g');
+        //if (name.match(ai)) {this_is_unmuted = true; sound_on_played = 0;}
+	
+	let ct = 0;
+	for ( var key in participants) {
+		if (key.match(gi)) ct++;
+	}
+	if (ct > 0) guru_is_here = 1;
+		
+	if ( $(name) ) {var old_container = $(name); old_container.parentNode.removeChild(old_container);}
+	
+	var from_changing_slider = false;
+
+	all_muted = getCookie('all_muted');
+	if (all_muted === null || all_muted === 'null') all_muted = false;
+ 	
+	var coo_muted = loadData(name+'_muted');
+	
+	//no sound from other guests on default, but from gurus ok
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = i_am_guru ? all_muted : this_is_guru ? all_muted: true;
+	//or all allowed
+	if (coo_muted === null || coo_muted === 'null') coo_muted = all_muted;
+	//or only guru can hear others
+	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
+	
+	if (mode == 'm') coo_muted = true;
+				
+	var coo_volume = loadData(name+'_volume');
+
+	if (coo_volume === null || coo_volume === 'null') coo_volume = this_is_unmuted ? 0.1 : this_is_guru ? 0.7 : 0.5;
+
+	if (name != myname) {
+		saveData(name+'_muted', coo_muted, 1440);
+		saveData(name+'_volume', coo_volume, 1440);
+	}
+
+	//switch off microphone if all_muted
+	//if ((i_am_muted === null || i_am_muted === 'null') && name == myname) i_am_muted = (all_muted === true || all_muted === 'true') ? true  : false;
+
+	//?! the same as above, but brute force
+	if ((all_muted === true || all_muted === 'true') && name == myname) i_am_muted = true;
+	
+	if (name == myname) saveData(myname+'_muted', i_am_muted, 1440);
+
+	var container = document.createElement('div');
+	
+	container.className = PARTICIPANT_MAIN_CLASS;
+	//special case
+	container.className = (pcounter == 0 && !small_device) ? PARTICIPANT_SOLO : container.className;
+	container.className = (pcounter == 1 && !small_device) ? PARTICIPANT_DUO : container.className;
+	container.className = (pcounter == 2 && !small_device) ? PARTICIPANT_TRIO : container.className;
+	
+	//need this trick because new participant breaks the row and appears underneath it -- make it appear after 0.5 sec delay in onNewParticipant and at once in onExistingParticipants
+	container.style.display='none';
+	container.style.opacity=0;
+	container.style.marginLeft='1px';
+	container.style.marginRight='1px';
+	
+	i_am_guest = isPresentMainParticipant() & pcounter === 1 ? 1 : i_am_guest;
+
+	if ( myrole != 1) i_am_guest = 1 ;
+	if ( myrole == 1 & pcounter === 0 & guru_is_here ) i_am_guest = 0 ;
+	
+	(function(){ $('phones').fade(0); (function(){ $('phones').innerHTML = '';}).delay(100);}).delay(500);
+	
+	if (typeof(mod3) != 'undefined' && mod3 !== null) mod3.content.innerHTML = left_content.get(altlang[ctr]);
+	if (typeof(mod4) != 'undefined' && mod4 !== null) mod4.content.innerHTML = right_content.get(altlang[ctr]);
+
+	
+	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
+
+	if (real_pcnt === 4) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
+                        elements.forEach(function(item) {
+
+				item.className = PARTICIPANT_MAIN_CLASS;
+			});
+	}
+		
+	if (real_pcnt === 3) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_DUO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_TRIO;
+			});
+	}
+
+	if (real_pcnt === 2) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_SOLO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_DUO;
+			});
+	}
+		
+	if (pcounter > room_limit) {hack = false;}
+
+	if (pcounter > 3) switchContainerClass();
+
+	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : (pcounter === 2 && !small_device) ? PARTICIPANT_DUO : (pcounter === 3 && !small_device) ? PARTICIPANT_TRIO : container.className;}).delay(500);
+	
+	if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
+	
+	container.id = name;
+	container.style.position='relative';
+	var span = document.createElement('span');
+	var speaker = document.createElement('div');
+	var slider = document.createElement('input');	
+	var video = document.createElement('video');
+	var loco = document.createElement('div');
+	var onemode = document.createElement('div');
+	var dropper = document.createElement('div');
+	var rtcPeer;
+///iOS 15.7 works with canvas
+	var canvas = document.createElement('canvas');
+	//canvas.width = screen.width;
+	//canvas.height = Math.round(0.67 * screen.width);
+	var ctx = canvas.getContext('2d');
+
+	$('participants').appendChild(container);
+
+	container.appendChild(video);
+	container.appendChild(span);
+	container.appendChild(speaker);
+	
+	//container.onclick = switchContainerClass;
+	if (name == myname) container.onclick = showRoomHeader;
+	container.ondblclick = rmPtcp;
+
+	var ar = name.split("_");
+	var rname = ar.slice(0, ar.length - 1).join("_");
+	
+	let rrname = rname.length > 11 ? rname.substr(0,11) + '..' : rname;
+
+	if (ar[0] !== "DUMMY") span.appendChild(document.createTextNode(rrname));
+	span.style.zIndex = '1002';
+	span.style.cursor = 'pointer';
+	
+	span.onclick = back_to_audience;
+
+	if (mode != 'm' || myname == name) {
+		speaker.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); if (name != myname) toggleSlider(); else toggleMute();});
+		speaker.style.cursor = 'pointer';
+	}
+	
+	slider.addEventListener('change', function(e) {e.preventDefault(); e.stopPropagation(); changeVolume();});
+	
+	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (small_device) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});	
+
+/// iOS
+	if (check_iOS()) {
+
+	   video.addEventListener('play', () => {
+    		function step() {
+      			ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      			window.requestAnimationFrame(step);
+    		}
+    		window.requestAnimationFrame(step);
+	   })
+	}
+///	
+	onemode.onclick = setCinema;
+	dropper.onclick = rmPtcp;
+
+	speaker.className = 'speak';
+	
+	let onemode_color = mode == 'c' ? '#ff0' : '#369';
+	onemode.style.fontWeight = mode == 'c' ? 'bold' : 'normal';
+	let onemode_label = mode == 'c' ? 'CINEMA!' : 'CINEMA?';
+	
+	onemode.className = 'onemode';
+	onemode.id = 'one-' + name;
+	onemode.style.fontSize = small_device ? '18px' : '14px';
+	onemode.style.color = onemode_color;
+	onemode.style.width = small_device ? '72px' : onemode.style.width;
+	onemode.appendChild(document.createTextNode(onemode_label));
+
+	if (this.mode != 'c' && myrole != 1) onemode.style.display = 'none'; //don't show own cinema or if flag not set
+	if (myrole == 1 || this.mode == 'c') onemode.style.display = 'block'; //but gurus should see it anyway, to click it
+	
+	dropper.className = 'dropper';
+	dropper.id = 'drop-' + name;
+	dropper.appendChild(document.createTextNode('X'));
+	dropper.style.fontSize = '16px';
+		
+	slider.style.zIndex = '1001';
+	
+	video.id = 'video-' + name;
+	video.autoplay = true;
+	video.playsInline = true;
+	video.controls = check_iPad() && isSafari ? false : false;
+	video.volume = coo_volume;
+	if (name != myname) video.style.cursor = 'pointer';
+
+//console.log('name is', name);
+
+	if (ar[0] === "DUMMY") {
+	
+		let l = creatu_long_.get(altlang[ctr]);
+		var dummee = document.createElement('div');	
+		dummee.style.fontSize = "18px";
+		dummee.style.color = "#c50";
+		dummee.style.width = "50%";
+		dummee.style.textAlign = "center";
+		dummee.appendChild(document.createTextNode(l));
+		dummee.style.float="none";
+		dummee.style.margin = "0 auto";
+		container.appendChild(dummee);
+		
+	}
+
+	slider.type = 'range';
+	slider.id = 'slider_' + name;
+	slider.min = 0;
+	slider.max = 1;
+	slider.step = 0.1;
+	slider.style.display='none';
+	slider.style.width='90px';
+	
+	loco.className = 'locos';
+	loco.id = 'loco_' + name;
+	
+	loco.style.fontSize = '14px';
+	loco.style.color = '#9cf';
+
+	var acco = document.createElement('div');
+	acco.id = 'acco_' + name;
+	acco.className = 'accos';
+	container.appendChild(acco);
+	
+	container.appendChild(slider);
+	container.appendChild(loco);
+	
+	container.appendChild(onemode);
+	if (name != myname) {container.appendChild(dropper);}
+	
+	var anno = document.createElement('div');
+	anno.className = 'annos';
+	anno.id = 'anno_' + name;
+	anno.style.fontSize = '14px';
+	container.appendChild(anno);
+	
+	var adder = document.createElement('div');	
+	adder.className = 'adders';
+	adder.style.fontSize = '18px';
+	adder.style.cursor = 'pointer';
+	adder.style.background = name == myname ? '#369' : '#900';
+	adder.id = 'adder_' + name;
+	adder.appendChild(document.createTextNode('A'));
+	adder.onclick = setAnno;
+	
+	adder.style.display = myrole == 0 && myname == name ? 'none': 'block';
+	//don't add to gurus except myself
+	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
+	adder.style.right = name == myname ? '0px' : '24px';
+	
+	container.appendChild(adder);
+		
+	$(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
+	$(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': $(video.id).style.maxHeight;
+	
+	//if (pcounter > 1)  // bigger screen bad for notebooks
+		$(video.id).style.maxHeight = '190px';
+	
+	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
+	
+	if (video.muted !== true){
+		speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));
+		
+	} else {
+		if (name != myname && mode != 'm') speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
+		if (name != myname && mode == 'm') speaker.appendChild(document.createTextNode('X'));
+		if (name == myname && (i_am_muted === true || i_am_muted === 'true')) speaker.appendChild(document.createTextNode('X'));
+		if (name == myname && (i_am_muted === false || i_am_muted === 'false') && myrole != 0) speaker.appendChild(document.createTextNode('\uD83C\uDFA4'));
+	}
+	
+	speaker.style.fontSize = "42px";
+
+	this.getVideoElement = function() {
+		return video;
+	}
+
+	this.getCanvasElement = function() {
+		return canvas;
+	}
+		
+	function showRoomHeader() {
+
+			$('room-header').style.display = 'block'; $('room-header').fade(1);
+	}
+	
+	function setAnno() {
+				who_to = name;
+				anno_adder.click();		
+	}
+	
+	function setCinema() {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let role = respo;
+			if (role == 1) {
+				let p = participants[name]; let g = p.getMode();
+				let m = g == 'c' ? 'v'  : 'c'; //toggle
+				let tok = getCookie('authtoken') || '';
+				let message = {
+					id : 'setCinema',
+					name : name,
+					mode : m,
+					token: tok
+				}		
+				sendMessage(message);	
+			}
+	
+		}).catch(err => console.log(err));		
+	}
+	
+	function back_to_audience() {
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let role = respo;
+			if (role == 1) set_guru(0, name);
+	
+		}).catch(err => console.log(err));		
+	}
+
+	const switchOneMode = (el) => {
+		acc_id.then(data => {
+			if (data.length) {
+				doSwitchOneMode(el);
+			} else {
+				$('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; $('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){$('phones').fade(0);}).delay(1000);
+			}
+		});
+
+	}
+	
+	function switchContainerClass() {
+
+	      if (!small_device) {
+
+		if (container.className === PARTICIPANT_CLASS) {
+			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
+			elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+                        
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_SOLO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_DUO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+						
+			container.className = PARTICIPANT_MAIN_CLASS;
+		} else {
+			container.className = PARTICIPANT_CLASS;
+		}
+				
+	      }
+	}
+	
+	function toggleFullScreen(el) {
+		
+		if (!el.fullscreenElement) {
+			//fullscreen = true; //uncomment for 'strict' chasing
+			el.requestFullscreen();
+			
+	
+		} else {
+			if (el.exitFullscreen) {		
+				//fullscreen = false; //uncomment for 'strict' chasing 
+				el.exitFullscreen();
+				
+			}
+		}
+
+	}
+
+	function toggleBigScreen(el) {
+
+			if (!isAndroid) switchContainerClass();
+			if (isAndroid) {
+				if (container.className == PARTICIPANT_MAIN_CLASS) toggleFullScreen(el);
+				if (container.className == PARTICIPANT_CLASS) switchContainerClass();
+			}
+	}
+		
+	function toggleSlider() {
+		if (check_iOS()) from_changing_slider = false;
+		else slider.style.display = slider.style.display == 'block' ? 'none' : 'block';
+
+		toggleMute();
+	}
+	
+	function changeVolume() {
+
+		coo_volume=slider.value;
+		saveData(name+'_volume', coo_volume, 1440);
+		coo_muted  = coo_volume > 0 ? false : true;
+		saveData(name+'_muted', coo_muted, 1440);
+			
+		video.volume = coo_volume;
+		from_changing_slider = true;
+		
+		if ( (video.volume === 0 && !video.muted) || (video.volume && video.muted) ) toggleMute();
+	}
+
+	function check_iPad() {
+  		var ua = navigator.userAgent;
+  		if (/iPad/.test(ua) ){
+    			return true;
+  		}
+  		return false;
+	}
+	
+	function toggleMute() {
+		if ( $('video-' + name) ) {
+		
+		   var video = $('video-' + name);
+
+		if ( !from_changing_slider || (from_changing_slider && ((video.volume === 0 && !video.muted) || (video.volume > 0))) ) {
+	
+			if (name != myname) 
+			{
+				video.muted = video.volume === 0 ? true : !video.muted;
+				slider.value =  video.volume;
+
+
+				from_changing_slider = false;
+				
+				saveData(name+'_muted', video.muted, 1440);
+				saveData(name+'_volume', video.volume, 1440);
+			}
+			
+			speaker.removeChild(speaker.childNodes[0]);
+			
+			if (video.muted){
+				if (name != myname)  {
+					speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
+				}
+				if (name == myname && !playSomeMusic) {
+					if (i_am_muted === true || i_am_muted === 'true') {
+						saveData(myname+'_muted', false, 1440); i_am_muted = false; 
+						setCookie('all_muted', false, 1440);// have to add this too
+						flashText_and_rejoin('microphone ON!');
+					} 
+					else {
+						saveData(myname+'_muted', true, 1440); i_am_muted = true;
+						flashText_and_rejoin('microphone OFF!');
+					}
+				}
+			} else {
+				speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));
+			}
+	   	   }
+		}
+		//big speaker on attention
+		//if ((check_iOS() || isAndroid)&& this_is_guru) {speaker.style.fontSize='42px'; let d = container.getBoundingClientRect(); speaker.style.top = d.height-30; speaker.style.left=d.width-36;}
+	}
+
+	
+	function rmPtcp() {
+	  if (name != myname) {
+	  	var yon = window.confirm('Drop '+rname+'?!');
+		if (yon) {
+
+	  		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+				let role = respo;
+				if (role == 1) {
+
+					let tok = getCookie('authtoken') || '';
+					
+					let message = {
+						id : 'dropGuest',
+						name : name,
+						token: tok
+					}		
+					sendMessage(message);	
+
+				} else {
+
+					for ( var key in participants) {
+						if (participants[key].name === name) {
+							participants[key].dispose();
+							delete participants[key];
+						}
+					}					
+				}
+				
+	  		}).catch(err => console.log(err));
+			
+			
+
+		}	  
+	  }
+	}
+
+	function isPresentMainParticipant() {
+		return ( (document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0 || (document.getElementsByClassName(PARTICIPANT_SOLO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_DUO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_TRIO)).length != 0 );
+	}
+
+
+	this.offerToReceiveVideo = function(error, offerSdp, wp){
+		if (error) return console.error ("sdp offer error")
+
+		var msg =  { id : "receiveVideoFrom",
+				sender : name,
+				sdpOffer : offerSdp
+			};
+		sendMessage(msg);
+	}
+
+
+	this.onIceCandidate = function (candidate, wp) {
+
+		  var message = {
+		    id: 'onIceCandidate',
+		    candidate: candidate,
+		    name: name
+		  };
+		  sendMessage(message);
+	}
+
+	Object.defineProperty(this, 'rtcPeer', { writable: true});
+
+	this.dispose = function() {
+
+		var gi = new RegExp('GURU:','g');
+		let ct = 0;
+		for ( var key in participants) {
+			if (key.match(gi)) ct++;
+		}
+		
+		if (name.match(gi) && ct == 1) {
+			guru_is_here = 0;
+			setTimeout(function() {
+				if (!guru_is_here && false) {
+					flashText(waiter);
+				}
+			}, 2000);
+		}
+		if (this.rtcPeer && typeof(this.rtcPeer != 'undefined') ) this.rtcPeer.dispose();
+		if (container && container.parentNode) container.parentNode.removeChild(container);
+		pcounter--; 
+		if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) {hack = true;}
+
+		if (pcounter < 4) {
+                        var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
+                        elements.forEach(function(item) {
+
+                                item.className = small_device ? PARTICIPANT_MAIN_CLASS : pcounter === 1 ? PARTICIPANT_SOLO : pcounter === 2 ? PARTICIPANT_DUO : pcounter === 3 ? PARTICIPANT_TRIO : item.className;
+                        });
+
+		}
+		
+		if (name != myname || myrole != 0) real_pcnt--;
+		if ($('pcounter')) { if (!real_pcnt) {(function(){$('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {$('pcounter').innerHTML = real_pcnt;} }
+		
+		if ( guru_is_here == 0 & pcounter) i_am_guest = 1;
+		if ( guru_is_here == 1 & pcounter === 1) i_am_guest = 0;
+		if ( ct > 1) {i_am_guest = 0 ; guru_is_here = 1;}
+		
+	}
+	
+	this.setMode = function(r) {
+		this.mode = r;
+	}
+	
+	this.getMode = function() {
+		return this.mode;
+	}
+}

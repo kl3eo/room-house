@@ -21,7 +21,7 @@
             .then(function (registration) {
               // Registration was successful
 		// console.log("ServiceWorker registration successful with scope: ",registration.scope);
-            })
+             })
             .catch(function (err) {
               // registration failed :(
               console.log("ServiceWorker registration failed: ", err);
@@ -38,7 +38,7 @@
           });
         });
       </script>
-      
+
 <script type="text/javascript" src="./js/splide.min.js"></script>
 
 <!-- moo -->
@@ -58,6 +58,7 @@ const request = async (url) => {
 
 const acc_id = (async () => await request('https://'+window.location.hostname+':'+port+'/cgi/genc/get_acc_id.pl'))();
 
+const city_or_main = 1;
 </script>
 
 <script src="https://en.room-house.com/files/cur_104.js"></script>
@@ -705,11 +706,22 @@ const acc_id = (async () => await request('https://'+window.location.hostname+':
         height: auto;
       }
 
+@media (max-width: 1024px) {
+
+      #sm_niche {
+        width: 135% !important;
+        height: 135% !important;
+        !-webkit-transform: scale(0.735);
+        transform: scale(0.735);
+        !-webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+      }
+}
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
 <div id="phones" class=phones><span id="loading_span">..loading..</span></div>
-<script>let wlh = small_device ? '' : window.location.hostname; $('phones').style.visibility = 'visible'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;">');</script>
+<script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
 <div id="poll_container" class=poll_container>
   <div id="poll" class=poll>
@@ -732,7 +744,7 @@ const acc_id = (async () => await request('https://'+window.location.hostname+':
 &nbsp;
 <br>
 </div>
-<!-- div id="langs" style="text-align:center;width:264px;margin:120px auto 0 auto;z-index:1000;padding-left:8px;visibility:hidden;" --><!-- rgsu -->
+<!-- div id="langs" style="text-align:center;width:264px;margin:120px auto 0 auto;z-index:1000;padding-left:8px;visibility:hidden;" --><!-- no flags -->
 <div id="langs" style="text-align:center;width:264px;margin:7.5vw auto 0 auto;z-index:1000;padding-left:8px;">
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:10px;" onclick="change_lang('en');ctr=0;setCookie('lang',ctr,144000);"><img src=/flags/gb.png width=24></div>
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:5px;" onclick="change_lang('ru');ctr=1;setCookie('lang',ctr,144000);"><img src=/flags/ru.png width=24></div>
@@ -755,7 +767,7 @@ const acc_id = (async () => await request('https://'+window.location.hostname+':
 		<div id="wrapper">
 			<div id="join" class="animate join" style="background:#9cf;max-width:80vw;max-height:210px;text-align:center;">	
 			   <div id="bigboat1" style="display:block;">
-<h1><span id="head1">Enter Rumhaus</span><span id="here1" style="display:none;text-decoration:underline;cursor:pointer;color:#009;" onclick="$('bigboat1').style.display='none';$('bigboat2').style.display='block';$('join').style.background='#871f78';">here</span></h1><br>
+<h1><span id="head1">Enter Rumhaus</span><span id="here1" style="display:none;text-decoration:underline;cursor:pointer;color:#009;" onclick="document.id('bigboat1').style.display='none';document.id('bigboat2').style.display='block';document.id('join').style.background='#871f78';">here</span></h1><br>
 				<div style="min-height:128px;">
 				<input type=hidden name=name id="name" value=''>
 				<input type=hidden name=room id="roomName" value=''>
@@ -769,7 +781,7 @@ RANDOM=7777
 				</div>
 			   </div>
 			   <div id="bigboat2" style="display:none;">
-				<h1><span id="head2">make a meeting!&nbsp;</span> --><span id="here2" style="text-decoration:underline;cursor:pointer;color:#009;" onclick="$('bigboat2').style.display='none';$('bigboat1').style.display='block';$('join').style.background='#9cf';">here</span> <--</h1><br>
+				<h1><span id="head2">make a meeting!&nbsp;</span> --><span id="here2" style="text-decoration:underline;cursor:pointer;color:#009;" onclick="document.id('bigboat2').style.display='none';document.id('bigboat1').style.display='block';document.id('join').style.background='#9cf';">here</span> <--</h1><br>
 				
 				<div style="min-height:128px;"></div>
 			   </div>
@@ -778,7 +790,7 @@ RANDOM=7777
 			<div id="room" style="display:none; position:relative; width:100%; min-width:40vw; margin:0 auto; border: 0px solid #9cf;">
 				
 				<div style="float:left;margin-bottom:20px;"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
-				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="$('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
+				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
 				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;" onchange="getFile();"></div>
 				<div style="clear:left;"></div>
 				<div id="participants"></div>
@@ -853,7 +865,7 @@ if (!curIP.length && false) {
 
 <div id="av_toggler" class="bigO av_toggler" style="float:left;" onclick="cli6()" title="Video ON/OFF"></div>
 
-<div class="bigO exiter" style="float:left;" onclick="$('spinner').style.display='block';(function(){location.reload();}).delay(1000);" title="Go away"></div>
+<div class="bigO exiter" style="float:left;" onclick="document.id('spinner').style.display='block';(function(){location.reload();}).delay(1000);" title="Go away"></div>
 <div style="clear:left;"></div>
 
 </div><!-- av_selector -->
@@ -862,10 +874,11 @@ if (!curIP.length && false) {
 
 <div id="stats">
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter>0</span></div>
-	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; $('logger').click(); $('message_box').style.display='none'; $('audience_box').style.display='table';">&#128101;:&nbsp;<span id=vcounter>0</span></div>
-	<div id="stats_ng" title="today viewers" onclick="$('message_box').style.display='block'; $('audience_box').style.display='none'; cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
+	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; document.id('logger').click(); document.id('message_box').style.display='none'; document.id('audience_box').style.display='table';">&#128101;:&nbsp;<span id=vcounter>0</span></div>
+	<div id="stats_ng" title="today viewers" onclick="document.id('message_box').style.display='block'; document.id('audience_box').style.display='none'; cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
 	<div id="helpdoc" style="display:none;opacity:0;background:transparent; width:90px; margin-right:3vw; float:right; font-size:24px;"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal;color:#fed;font-size:22px;">HELP</span></a></div>
-	<div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;">100PIRL</span></a></div>
+	<!-- div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;"></span></a></div -->
+	<div id="want" style="display:none; opacity:0; background:transparent; width:120px; font-size:24px; cursor:pointer; float:right; margin-right: 20px;" onclick="if (document.id('sm_niche')) {document.id('sm_niche').style.display='block'; document.id('sm_niche').style.zIndex='10100';document.id('sm_niche').fade(1);}">&#127920;&nbsp;=&nbsp;&#128176;</div>
 	<div style="clear:both;"></div>
 </div>
 
@@ -910,55 +923,55 @@ if (!curIP.length && false) {
 <section id="main-slider" class="splide" aria-label="Lolo">
   <div class="splide__track">
 		<ul class="splide__list">
-			<li id="milan" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://milan.room-house.com';"><img src="/img/bg_slider.png?sig=1">
+			<li id="milan" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://milan.room-house.com';"><img src="/img/bg_slider.png?sig=1">
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Milan</span></div>
 				<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="warsaw" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://warsaw.room-house.com';"><img src="/img/bg_slider.png?sig=2"/>
+			<!-- li id="warsaw" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://warsaw.room-house.com';"><img src="/img/bg_slider.png?sig=2"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Warsaw</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li -->
-			<li id="habana" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://habana.room-house.com';"><img src="/img/bg_slider.png?sig=3"/>
+			<li id="habana" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://habana.room-house.com';"><img src="/img/bg_slider.png?sig=3"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Habana</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<li id="wien" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://wien.room-house.com';"><img src="/img/bg_slider.png?sig=4"/>
+			<li id="wien" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://wien.room-house.com';"><img src="/img/bg_slider.png?sig=4"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Wien</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<li id="riga" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https:/riga.room-house.com';"><img src="/img/bg_slider.png?sig=5">
+			<li id="riga" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https:/riga.room-house.com';"><img src="/img/bg_slider.png?sig=5">
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Riga</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="stamboul" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://stamboul.room-house.com';"><img src="/img/bg_slider.png?sig=6"/>
+			<!-- li id="stamboul" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://stamboul.room-house.com';"><img src="/img/bg_slider.png?sig=6"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Stamboul</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li -->
-			<li id="split" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://split.room-house.com';"><img src="/img/bg_slider.png?sig=7"/>
+			<li id="split" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://split.room-house.com';"><img src="/img/bg_slider.png?sig=7"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Split</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<li id="firenze" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://firenze.room-house.com';"><img src="/img/bg_slider.png?sig=8"/>
+			<li id="firenze" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://firenze.room-house.com';"><img src="/img/bg_slider.png?sig=8"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Firenze</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<li id="olomouc" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https:/olomouc.room-house.com';"><img src="/img/bg_slider.png?sig=9">
+			<li id="olomouc" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https:/olomouc.room-house.com';"><img src="/img/bg_slider.png?sig=9">
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Olomouc</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="barna" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://barna.room-house.com';"><img src="/img/bg_slider.png?sig=10"/>
+			<!-- li id="barna" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://barna.room-house.com';"><img src="/img/bg_slider.png?sig=10"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Barna</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li -->
-			<li id="munchen" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://munchen.room-house.com';"><img src="/img/bg_slider.png?sig=11"/>
+			<li id="munchen" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://munchen.room-house.com';"><img src="/img/bg_slider.png?sig=11"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Munchen</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="trent" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://trent.room-house.com';"><img src="/img/bg_slider.png?sig=12"/>
+			<!-- li id="trent" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://trent.room-house.com';"><img src="/img/bg_slider.png?sig=12"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Trent</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li -->
-			<li id="lisboa" class="splide__slide" onclick="$('slide_container').style.display='none'; window.location.href='https://lisboa.room-house.com';"><img src="/img/bg_slider.png?sig=13"/>
+			<li id="lisboa" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://lisboa.room-house.com';"><img src="/img/bg_slider.png?sig=13"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Lisboa</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
@@ -970,8 +983,8 @@ if (!curIP.length && false) {
 <div id="message_wrap" style="display:none;position:relative;" class="message_wrap">
 
    <div id="chatter" style="display:none;font-size:36px;color:#777;cursor:pointer;border:1px solid #777;border-radius:30px;width:60px;height:60px;z-index:1300;position:absolute;background:#000;line-height:84px;margin:-36px -24px;" >&nbsp;+</div>
-    <div id="audience" style="display:none;font-size:36px;color:#777;cursor:pointer;border:1px solid #777;border-radius:30px;width:60px;height:60px;z-index:1300;position:absolute;background:#000;line-height:36px;margin:-36px 138px;" onclick="$('message_box').style.display = $('message_box').style.display == 'none' ? 'block' : 'none'; $('audience_box').style.display = $('message_box').style.display == 'block' ? 'none' : 'table';"><div id="audience_numbers" style="font-size:16px;font-family:Courier;color:#369;font-weight:bold;padding-top:27px;">...</div></div>
-    <div id="antichatter" style="display:none;font-size:36px;color:#777;cursor:pointer;border:1px solid #777;border-radius:30px;width:60px;height:60px;z-index:1300;position:absolute;background:#000;line-height:78px;margin:-36px 304px;" onclick="$('message_box').style.display = 'none'; cli7()">x&nbsp;</div>
+    <div id="audience" style="display:none;font-size:36px;color:#777;cursor:pointer;border:1px solid #777;border-radius:30px;width:60px;height:60px;z-index:1300;position:absolute;background:#000;line-height:36px;margin:-36px 138px;" onclick="document.id('message_box').style.display = document.id('message_box').style.display == 'none' ? 'block' : 'none'; document.id('audience_box').style.display = document.id('message_box').style.display == 'block' ? 'none' : 'table';"><div id="audience_numbers" style="font-size:16px;font-family:Courier;color:#369;font-weight:bold;padding-top:27px;">...</div></div>
+    <div id="antichatter" style="display:none;font-size:36px;color:#777;cursor:pointer;border:1px solid #777;border-radius:30px;width:60px;height:60px;z-index:1300;position:absolute;background:#000;line-height:78px;margin:-36px 304px;" onclick="document.id('message_box').style.display = 'none'; cli7()">x&nbsp;</div>
 
     <div id="message_box" class="message_box"><br><br><br>...loading chat..</div>
     <div id="audience_box" class="audience_box" style="display:none;">
@@ -987,7 +1000,7 @@ if (!curIP.length && false) {
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<script>let pause = getCookie('new_cache') ? 2000 : 3000;  let na = getCookie('name'); if (na != null && na != 'null') {$('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {$('phones').style.visibility='hidden'; if ($('loading_span')) $('loading_span').style.display='none';}}, pause);}</script>
+<script>let pause = getCookie('new_cache') ? 2000 : 3000;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
 
 <script>
 
@@ -1003,16 +1016,28 @@ var splide = new Splide( "#main-slider", {
 splide.mount();
 
 if (!w[0].match(new RegExp('rgsu','g'))) {
-	$('room_name_id').innerHTML = w[0];
-	$('room_name_id').fade(1);
+	document.id('room_name_id').innerHTML = w[0];
+	document.id('room_name_id').fade(1);
 }
 
-$('langs').style.marginTop = small_device ? '9vw' : '5vw';
+document.id('langs').style.marginTop = small_device ? '9vw' : '5vw';
 
-window.setTimeout( function() {if ($('room').style.display == 'none' && $('join').style.display !== 'none') window.location.reload();}, 300000);
+window.setTimeout( function() {if (document.id('room').style.display == 'none' && document.id('join').style.display !== 'none') window.location.reload();}, 300000);
 
 </script>
-    
+
+<!-- slot machine -->
+
+
+<script>
+document.write('<iframe id="sm_niche" src='+sm_url+' name=sm_niche scrolling="no" style="position:absolute; top:0; left:0; width:100%; height:100%; min-width:492px;min-height:780px; z-index:-10100; background:#3d1257; text-align:center; border:1px solid #333;font-family:Times;display:none; opacity:0;"></iframe>');
+</script>
+
+<!-- want jquery? hack mBox.Modal in participant, it's ugly but working -->
+<!-- script src="slot/jquery.min.1.6.js"></script>
+<script src="slot/jquery.backgroundPosition.js"></script>
+<script src="slot/jquery.spritely.js"></script>
+<script src="slot/slot.js"></script -->
+
 </body>
 </html>
-

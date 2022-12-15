@@ -82,6 +82,7 @@ const wi_hq = 1920;
 
 const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8449" : "https://aspen.room-house.com:8447";
 const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
+const sm_url = "https://slotmachine.room-house.com";
 
 //const role  = 0;
 
@@ -149,11 +150,11 @@ window.onload = function(){
         	});
 		
 		let he = he_.get(altlang[ctr]);
-		$('helpcapo').innerHTML = he;
+		document.id('helpcapo').innerHTML = he;
 		
 	}
 	
-	$('helplink').href = ctr == 1 ? 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_RUS.pdf' : 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_ENG.pdf';
+	document.id('helplink').href = ctr == 1 ? 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_RUS.pdf' : 'https://github.com/kl3eo/room-house/blob/main/R-H_manual_ENG.pdf';
 	
 	var vote = getCookie('vote');
 	he_votado = (vote === null || vote === 'null') ? he_votado : vote;
@@ -202,8 +203,8 @@ ws.onmessage = function(message) {
 		break;
 	case 'roomConnection':
 		//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
-		nump = parsedMessage.nump; numv = parsedMessage.numv;  (function(){if ($('bstats')) $('bstats').fade(1);}).delay(1000);
-		//if ($('bnump')) $('bnump').innerHTML = nump; if ($('bnumv')) $('bnumv').innerHTML = numv;
+		nump = parsedMessage.nump; numv = parsedMessage.numv;  (function(){if (document.id('bstats')) document.id('bstats').fade(1);}).delay(1000);
+		//if (document.id('bnump')) document.id('bnump').innerHTML = nump; if (document.id('bnumv')) document.id('bnumv').innerHTML = numv;
 		break;
 	case 'newChatMessage':
 		newChatMessage();
@@ -279,16 +280,16 @@ function leftHandler(e) {
 		let role = respo || 0;
 		e.preventDefault();
 		e.stopPropagation(); 
-		let n=parseInt($('leftnum').innerHTML)+1; 
-		$('leftnum').innerHTML = n.toString(); 
+		let n=parseInt(document.id('leftnum').innerHTML)+1; 
+		document.id('leftnum').innerHTML = n.toString(); 
 		var message={id :'plus', s: 'l', num: n}; 
 		sendMessage(message); 
 	
 		//if (role != 1) {
 			setCookie('vote',1,144000);
 			he_votado = true;
-			$('leftplus').removeEventListener('click', leftHandler);
-                	$('rightplus').removeEventListener('click', rightHandler);
+			document.id('leftplus').removeEventListener('click', leftHandler);
+                	document.id('rightplus').removeEventListener('click', rightHandler);
 		//}
 	}).catch(err => console.log(err));
 }
@@ -298,8 +299,8 @@ function rightHandler(e) {
 		let role = respo || 0;
         	e.preventDefault();
         	e.stopPropagation(); 
-        	let n=parseInt($('rightnum').innerHTML)+1; 
-        	$('rightnum').innerHTML = n.toString(); 
+        	let n=parseInt(document.id('rightnum').innerHTML)+1; 
+        	document.id('rightnum').innerHTML = n.toString(); 
         	var message={id :'plus', s: 'r', num: n}; 
         	sendMessage(message); 
 		he_votado = true;
@@ -307,8 +308,8 @@ function rightHandler(e) {
 		//if (role != 1) {
 			setCookie('vote',1,144000);
 			he_votado = true;
-			$('leftplus').removeEventListener('click', leftHandler);
-                	$('rightplus').removeEventListener('click', rightHandler);
+			document.id('leftplus').removeEventListener('click', leftHandler);
+                	document.id('rightplus').removeEventListener('click', rightHandler);
 		//}
 	}).catch(err => console.log(err));
 }
@@ -320,7 +321,7 @@ const register = () => {
 	if (av && guru_is_here) aonly = 0;
 	let sem  = window.innerWidth > 1024 ? '7' : '';
 	
-	if (!aonly) { if ($('av_toggler')) $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; } else { if ($('av_toggler')) $('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; }
+	if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; } else { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; }
 	
 	if (ws.readyState === WebSocket.OPEN) problems = 0;
 	
@@ -368,8 +369,8 @@ const register = () => {
 					break;
 				case 'roomConnection':
 					//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
-					nump = parsedMessage.nump; numv = parsedMessage.numv; (function(){if ($('bstats')) $('bstats').fade(1);}).delay(2000);
-					//if ($('bnump')) $('bnump').innerHTML = nump; if ($('bnumv')) $('bnumv').innerHTML = numv;
+					nump = parsedMessage.nump; numv = parsedMessage.numv; (function(){if (document.id('bstats')) document.id('bstats').fade(1);}).delay(2000);
+					//if (document.id('bnump')) document.id('bnump').innerHTML = nump; if (document.id('bnumv')) document.id('bnumv').innerHTML = numv;
 					break;
 				case 'newChatMessage':
 					newChatMessage();
@@ -394,7 +395,7 @@ const register = () => {
 		} 
 	} else {}
 		
-	name = $('name').value; let cookie_name = loadData('name');
+	name = document.id('name').value; let cookie_name = loadData('name');
 	if (!name.length) name = cookie_name; 
 	if (!name.length || name === 'null') {name=makeid(8); name = name+'_'+name; saveData('name', name, 1440);}
 	
@@ -415,9 +416,9 @@ const register = () => {
 const register_body = (ro) => {
 	
 		let w = window.location.hostname.split('.'); 
-		let room = $('roomName').value == '' ? w[0] : $('roomName').value;
+		let room = document.id('roomName').value == '' ? w[0] : document.id('roomName').value;
 	
-		let curip = $('curip').value;
+		let curip = document.id('curip').value;
 		registered = 1;
 	
 		let sem  = window.innerWidth > 1024 ? '7' : '';
@@ -429,40 +430,40 @@ const register_body = (ro) => {
 		let l = checkLang();		
 		change_lang(altlang[l]);
 			
-		$('room-header').innerText = 'ROOM ' + room;
+		document.id('room-header').innerText = 'ROOM ' + room;
 
-		$('join').style.display = 'none';
-		$('room').style.display = 'block';
-		$('preroom').innerHTML='&nbsp;';
-		$('postroom').style.display = 'none';
-		$('house').style.minHeight = '0px';
-		$('house').style.background = 'transparent';
+		document.id('join').style.display = 'none';
+		document.id('room').style.display = 'block';
+		document.id('preroom').innerHTML='&nbsp;';
+		document.id('postroom').style.display = 'none';
+		document.id('house').style.minHeight = '0px';
+		document.id('house').style.background = 'transparent';
 		
-		$('phones').style.display = 'block';
-		$('phones').style.visibility = 'visible';
-		$('cr').style.display = 'none';
-		$('av_selector').style.display = 'block';
-		$('poll').style.display = 'block';
-		if (voting_shown) {$('leftnum').style.display = 'block'; $('rightnum').style.display = 'block';}
+		document.id('phones').style.display = 'block';
+		document.id('phones').style.visibility = 'visible';
+		document.id('cr').style.display = 'none';
+		document.id('av_selector').style.display = 'block';
+		document.id('poll').style.display = 'block';
+		if (voting_shown) {document.id('leftnum').style.display = 'block'; document.id('rightnum').style.display = 'block';}
 	
 		let curr_all_muted = getCookie('all_muted') || false;
 
-		$('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
-		$('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
+		document.id('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
+		document.id('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
 	
-		$('leftplus').style.display = 'block';
-		$('rightplus').style.display = 'block';
+		document.id('leftplus').style.display = 'block';
+		document.id('rightplus').style.display = 'block';
 
         	if (( (ro == 1) || !he_votado) && firstTime) {
 
-                	$('leftplus').addEventListener('click', leftHandler);
-                	$('rightplus').addEventListener('click', rightHandler);
+                	document.id('leftplus').addEventListener('click', leftHandler);
+                	document.id('rightplus').addEventListener('click', rightHandler);
                 	firstTime = false;
         	}
 	
-		$('fmode_selector').style.display = 'block';
+		document.id('fmode_selector').style.display = 'block';
 		
-		if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top ) $('slide_container').style.display = 'block';
+		if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top ) document.id('slide_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -494,22 +495,25 @@ const register_body = (ro) => {
 		});
 
  		if (problems) {
-			$('phones').style.paddingTop = small_device ? '39vh' : '45vh'; $('phones').style.lineHeight = '36px'; $('phones').innerHTML = warning; $('phones').onclick=location.reload(); (function() { $('phones').fade(1)}).delay(1000);
+			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; document.id('phones').onclick=location.reload(); (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
- 		//(function(){ if (!problems) $('phones').fade(0);}).delay(2000);
+ 		//(function(){ if (!problems) document.id('phones').fade(0);}).delay(2000);
 		
-		(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; $('phones').innerHTML = warning; $('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
+		(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; document.id('phones').innerHTML = warning; document.id('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
 
 		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
   
-  		if(stats_shown) { (function(){$('stats').style.display='block'; $('stats').fade(1);}).delay(1000);}		
+  		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 		
-		if (!small_device && $('want') && window == window.top) (function() {$('want').style.display = "block"; $('want').fade(1);}).delay(500);
+		//hack for slotmachine
+		//if (!small_device && document.id('want') && window == window.top) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
+		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1); if (small_device) document.id('want').style.marginRight = "0px";}).delay(500);
 		
-		if ($('helpdoc')) (function() {let l = checkLang(); if (!small_device) $('helpdoc').style.marginRight = "5.5vw"; $('helpdoc').style.display = "block"; 
-		if (small_device) {$('helpdoc').style.paddingTop = "0.4vh"; $('helpdoc').style.paddingRight = "2vw";} 
-		if (!small_device && window != window.top) {$('helpdoc').style.marginRight = "2vw";} $('helpdoc').fade(1);}).delay(500);
+		/*if (document.id('helpdoc')) (function() {let l = checkLang(); if (!small_device) document.id('helpdoc').style.marginRight = "5.5vw"; document.id('helpdoc').style.display = "block"; 
+		if (small_device) {document.id('helpdoc').style.paddingTop = "0.4vh"; document.id('helpdoc').style.paddingRight = "2vw";} 
+		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
+		*/
 		
 		(function() {dummies = true;}).delay(3000);
 
@@ -522,7 +526,7 @@ function checkLang() {
 }
 const onNewViewer = (request) => {
 
-	if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
+	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
 
 		let na = request.name.split('_');
@@ -532,26 +536,26 @@ const onNewViewer = (request) => {
 		let f = request.name;
 		let t = request.curip;
 	
-		if ($('_au_'+suf)) $('_au_'+suf).dispose();
-		let audi = $('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : $('audience_boxx').innerHTML;	
+		if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
+		let audi = document.id('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : document.id('audience_boxx').innerHTML;	
 		audi = '<div id=_au_'+suf +'><span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;"  onclick="drop_guest(\'' + f + '\')" >X</span></div>' + audi;
-		$('audience_boxx').innerHTML = audi;
+		document.id('audience_boxx').innerHTML = audi;
 		
 		let ar_split = audi.split('_au_');
 		let cur = ar_split.length - 1;
 
-		$('audience_numbers').innerHTML = cur;
+		document.id('audience_numbers').innerHTML = cur;
 		let col = cur > 0 ? '#369' : '#ccc';
-		$('audience_numbers').setStyles({'color': col});
+		document.id('audience_numbers').setStyles({'color': col});
 		
-		vcounter = cur; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+		vcounter = cur; if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 		
-		if (just_left != f && $('name').value != f && $('name').value != just_left) soundEffect.src = "/sounds/steps.mp3";
+		if (just_left != f && document.id('name').value != f && document.id('name').value != just_left) soundEffect.src = "/sounds/steps.mp3";
 }
 
 const onNewParticipant = (request) => {
 
-  if (request.ng) {if ($('num_guests')) $('num_guests').innerHTML = request.ng;}
+  if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	
 	let myrole = role;
 
@@ -589,28 +593,28 @@ const onNewParticipant = (request) => {
 
 		//preparing logics in advance
 		let pctr = pcounter + 1;
-		if (pctr > room_limit - 1 && i_am_viewer) {if ($('bell')) $('bell').style.display = 'block'; if ($('av_toggler')) $('av_toggler').style.display='none';}
+		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
 		if (!small_device) resizer(pctr);
 
 		   	
 		receiveVideo(request.name, request.mode, myrole, true);
 		
-		(function() {if ($(request.name)) {$(request.name).style.display='block'; $(request.name).fade(1);}}).delay(500); //need this animation because the new video appears under the row, so we hide it
+		(function() {if (document.id(request.name)) {document.id(request.name).style.display='block'; document.id(request.name).fade(1);}}).delay(500); //need this animation because the new video appears under the row, so we hide it
 
-		if (request.curip.length && $('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
-			$('loco_'+request.name).innerHTML = request.curip;
-			$('loco_'+request.name).style.display='block';
-			$('loco_'+request.name).fade(1);			
+		if (request.curip.length && document.id('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
+			document.id('loco_'+request.name).innerHTML = request.curip;
+			document.id('loco_'+request.name).style.display='block';
+			document.id('loco_'+request.name).fade(1);			
 		}
 
-		if ($('acco_'+request.name) && ValidateAccountId(request.acc_id) ) {
-			$('acco_'+request.name).style.display='block';
+		if (document.id('acco_'+request.name) && ValidateAccountId(request.acc_id) ) {
+			document.id('acco_'+request.name).style.display='block';
 			let na = request.name.split('_');
 			let ac = request.acc_id;
-			$('acco_'+ request.name).fade(1);
-			$('acco_' + request.name).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
-			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_'+request.name).style.visibility='hidden';			
+			document.id('acco_'+ request.name).fade(1);
+			document.id('acco_' + request.name).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
+			if (document.id('sp_container' && sp_shown) && document.id('sp_container').style.display != 'block') document.id('acco_'+request.name).style.visibility='hidden';			
 		}
 
 	}
@@ -648,13 +652,13 @@ async function startCapture(displayMediaOptions) {
 
 const onExistingViewers = (msg) => {
 
-   let myname = $('name').value;
+   let myname = document.id('name').value;
    
    let audience = '';
 
    let play_sound = myname == just_left ? false : true;
    
-   if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
+   if (msg.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = msg.ng;}
    
    room_limit = (typeof msg.rl !== 'undefined') ? msg.rl : room_limit;
   
@@ -695,14 +699,14 @@ const onExistingViewers = (msg) => {
 	   }
 
 	   
-	   if (arr.length == 0) {audience = 'Audience is empty :(';$('audience_numbers').setStyles({'color':'#ccc'});$('audience_numbers').innerHTML = '...'; audience_numberr = 0; vcounter = 0; if ($('vcounter')) (function(){$('vcounter').innerHTML = vcounter;}).delay(500);} else {$('audience_numbers').setStyles({'color':'#369'}); $('audience_numbers').innerHTML = arr.length;
+	   if (arr.length == 0) {audience = 'Audience is empty :(';document.id('audience_numbers').setStyles({'color':'#ccc'});document.id('audience_numbers').innerHTML = '...'; audience_numberr = 0; vcounter = 0; if (document.id('vcounter')) (function(){document.id('vcounter').innerHTML = vcounter;}).delay(500);} else {document.id('audience_numbers').setStyles({'color':'#369'}); document.id('audience_numbers').innerHTML = arr.length;
 
 		if (arr.length > audience_numberr && arr.length > 0 && play_sound) {
 	   		soundEffect.src = "/sounds/steps.mp3";
 		}
-		audience_numberr = arr.length; vcounter = arr.length; if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+		audience_numberr = arr.length; vcounter = arr.length; if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 	   }
-	   if ($('audience_boxx')) $('audience_boxx').innerHTML = audience;
+	   if (document.id('audience_boxx')) document.id('audience_boxx').innerHTML = audience;
 
    }
     
@@ -724,8 +728,8 @@ const set_guru = (par, who) => {
 
 		} else {
 
-			if ($('name').value == who ) {
-				chat_shown = 1; $('logger').click(); $('audience').click(); rejoin();
+			if (document.id('name').value == who ) {
+				chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
 			}
 		}
 	}).catch(err => console.log(err));
@@ -750,7 +754,7 @@ function drop_guest(who) {
 		}
 
 		let l = who.split('_');
-		if ($('_au_'+l[1])) $('_au_'+l[1]).dispose(); //let it happen	
+		if (document.id('_au_'+l[1])) document.id('_au_'+l[1]).dispose(); //let it happen	
 		
 	}).catch(err => console.log(err));
 }
@@ -766,14 +770,14 @@ function isMicrophoneAllowed(){
 const onExistingParticipants = (msg) => {
 //sets up every video in the room I just joined
 
-  let myname = $('name').value; 
+  let myname = document.id('name').value; 
   
   //fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 
    //let role = respo || 0;
    
    if (role == 0 && hack) role = 1;
-   if (msg.ng) {if ($('num_guests')) $('num_guests').innerHTML = msg.ng;}
+   if (msg.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = msg.ng;}
 
    if (temporary && role == 0) role = 3;
 	
@@ -836,7 +840,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	if (shareSomeScreen && (role == 1 || role == 2)) {
       
 		shareSomeScreen = true;
-		$('room-header').style.color = oldColor;
+		document.id('room-header').style.color = oldColor;
       
 		startCapture({video: true}).then(stream => {
 /* mix microphone
@@ -875,7 +879,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-					if (small_device)  $(myname).style.float = 'none';
+					if (small_device)  document.id(myname).style.float = 'none';
                           });
 			}
 
@@ -883,10 +887,10 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                   } else {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-			if (small_device)  $(myname).style.float = 'none';
+			if (small_device)  document.id(myname).style.float = 'none';
 		  }
 
-		  (function(){$('phones').fade(0);}).delay(1000);
+		  (function(){document.id('phones').fade(0);}).delay(1000);
         	});
 		}).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
 		}).catch(e => console.log(e)); //startCapture
@@ -961,8 +965,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-					if (small_device)  $(myname).style.float = 'none'; 					
-					$('room-header-file').style.display='none';
+					if (small_device)  document.id(myname).style.float = 'none'; 					
+					document.id('room-header-file').style.display='none';
 
                           	}
 			);
@@ -972,11 +976,11 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				startVideo(video);			  	
 				this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			
-				if (small_device)  $(myname).style.float = 'none';
-					$('room-header-file').style.display='none';
+				if (small_device)  document.id(myname).style.float = 'none';
+					document.id('room-header-file').style.display='none';
                   	}
 
-		  	(function(){$('phones').fade(0);}).delay(1000);
+		  	(function(){document.id('phones').fade(0);}).delay(1000);
 			}); //rtcPeer
 		    }).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
 	  	  } //already_being_played
@@ -997,7 +1001,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
                                         startVideo(video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-					if (small_device)  $(myname).style.float = 'none';
+					if (small_device)  document.id(myname).style.float = 'none';
                           });
 			}
 
@@ -1005,15 +1009,15 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                   } else {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-			if (small_device)  $(myname).style.float = 'none';
+			if (small_device)  document.id(myname).style.float = 'none';
 		  }
 
-		  (function(){$('phones').fade(0);}).delay(1000);
+		  (function(){document.id('phones').fade(0);}).delay(1000);
          	});
 
 	}
 	
-	(function() {$(myname).style.display='block'; $(myname).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
+	(function() {document.id(myname).style.display='block'; document.id(myname).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
    }// if role
 
    if (msg.data) {
@@ -1034,8 +1038,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		if (f != myname) {
 			//prepare logics in advance
 			let pctr = pcounter +1;
-			if (pctr < room_limit && role == 0) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
-			if (pctr > room_limit - 1 && role == 0) {$('bell').style.display = 'block'; $('av_toggler').style.display='none';}
+			if (pctr < room_limit && role == 0) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
+			if (pctr > room_limit - 1 && role == 0) {document.id('bell').style.display = 'block'; document.id('av_toggler').style.display='none';}
 
 			if (!small_device) resizer(pctr);
 	    
@@ -1043,9 +1047,9 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
 			
-			$('slider_' + f).value = coo_volume;
-			$('video-' + f).volume = coo_volume;
-			(function() {$(f).style.display='block'; $(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
+			document.id('slider_' + f).value = coo_volume;
+			document.id('video-' + f).volume = coo_volume;
+			(function() {document.id(f).style.display='block'; document.id(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
 
 		} else { 
 			var lang = getCookie('lang');
@@ -1059,30 +1063,30 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			}
 		}
 		
-		if (t.length && $('loco_' + f) && !ValidateIPaddress(t)) {
-			$('loco_' + f).innerHTML = t;
-			$('loco_' + f).style.display='block';
-			$('loco_' + f).fade(1);			
+		if (t.length && document.id('loco_' + f) && !ValidateIPaddress(t)) {
+			document.id('loco_' + f).innerHTML = t;
+			document.id('loco_' + f).style.display='block';
+			document.id('loco_' + f).fade(1);			
 		}		
 		
-		if ($('acco_' + f) && ValidateAccountId(ac)) {
-			$('acco_' + f).style.display='block';
+		if (document.id('acco_' + f) && ValidateAccountId(ac)) {
+			document.id('acco_' + f).style.display='block';
 			
-			$('acco_' + f).fade(1);
-			$('acco_' + f).onclick = function() {copy(ac); flashText('copied '+ na[0]);}
-			if ($('sp_container' && sp_shown) && $('sp_container').style.display != 'block') $('acco_' + f).style.visibility='hidden';			
+			document.id('acco_' + f).fade(1);
+			document.id('acco_' + f).onclick = function() {copy(ac); flashText('copied '+ na[0]);}
+			if (document.id('sp_container' && sp_shown) && document.id('sp_container').style.display != 'block') document.id('acco_' + f).style.visibility='hidden';			
 		}	
 		
-		if ($('anno_' + f) && ValidateAnno(a)) {
+		if (document.id('anno_' + f) && ValidateAnno(a)) {
 		
-			$('anno_' + f).innerHTML = a;
-			$('anno_' + f).style.display='block';			
-			$('anno_' + f).fade(1);
+			document.id('anno_' + f).innerHTML = a;
+			document.id('anno_' + f).style.display='block';			
+			document.id('anno_' + f).fade(1);
 		}
 	   } //for
    } // msg.data
    	   
-   //if (role == 1 || role == 2 || role == 3) (function() {$('room-header').style.display = 'block'; $('room-header').fade(1);}).delay(1500);
+   //if (role == 1 || role == 2 || role == 3) (function() {document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);}).delay(1500);
    
 //  }).catch(err => console.log(err)); //fetch
 }
@@ -1098,7 +1102,7 @@ function copy(that){
 
 const leaveRoom = () => {
 	
-	let myname = $('name').value;
+	let myname = document.id('name').value;
 	
 	//if (Object.keys(participants).length && !problems) { //?!
 	if (Object.keys(participants).length) {
@@ -1118,18 +1122,18 @@ const leaveRoom = () => {
 	i_am_guest = 0;
 	registered = 0;
 	
-	if ($('num_quests')) $('num_quests').innerHTML = 0;
-	if ($('vcounter')) $('vcounter').innerHTML = vcounter;
+	if (document.id('num_quests')) document.id('num_quests').innerHTML = 0;
+	if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 	
 	sendMessage({id : 'leaveRoom'});
-	just_left = $('name').value;
+	just_left = document.id('name').value;
 }
 
 const receiveVideo = (sender, mode, role, n) => {
 
 	let new_flag = (n === true) ? true : false;
 	
-	var participant = new Participant(sender, $('name').value, mode, role, new_flag );
+	var participant = new Participant(sender, document.id('name').value, mode, role, new_flag );
 	participants[sender] = participant;
 	var video = participant.getVideoElement();
       
@@ -1165,8 +1169,8 @@ const receiveVideo = (sender, mode, role, n) => {
 			startVideo(video);
 			this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  {
-				$(sender).style.float = 'none';
-				$(sender).className = PARTICIPANT_MAIN_CLASS; 
+				document.id(sender).style.float = 'none';
+				document.id(sender).className = PARTICIPANT_MAIN_CLASS; 
 			}
 
 	});
@@ -1180,16 +1184,16 @@ const setGuru = (request) => {
 
 		if (request.mode == '1' && role != 1) {
 		
-			temporary = 1; chat_shown = 1; $('logger').click(); $('audience').click(); rejoin();
-			$('av_toggler').style.display='block';
-			$('bell').style.display='none';	
+			temporary = 1; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
+			document.id('av_toggler').style.display='block';
+			document.id('bell').style.display='none';	
 		}
 		if (request.mode == '0' && temporary) {
 
-			role = 0; temporary = 0; chat_shown = 1; $('logger').click(); $('audience').click(); 
-			cammode = 0; $('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; $('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; 
-			$('av_toggler').style.display='none';
-			$('bell').style.display='block';
+			role = 0; temporary = 0; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); 
+			cammode = 0; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; 
+			document.id('av_toggler').style.display='none';
+			document.id('bell').style.display='block';
 			hack = false; //?!
 			i_am_viewer = true;
 			flashText_and_rejoin('AUDIO-ONLY');
@@ -1203,23 +1207,23 @@ function askGuru(request) {
 	let short_name = na[0];
 	let suf = na[na.length-1];
 	
-	if ($('_au_'+suf)) $('_au_'+suf).dispose();
-	let audi = $('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : $('audience_boxx').innerHTML;	
+	if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
+	let audi = document.id('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : document.id('audience_boxx').innerHTML;	
 	audi = '<div id=_au_'+suf+'><span id=au_' + suf + ' style="color:#9cf;cursor:pointer;font-size:16px;font-weight:bold;" onclick="set_guru(1,\'' + request.name + '\');">'+short_name + '</span> ' + requ +  ' <span style="cursor:pointer;" onclick="drop_guest(\'' +request.name + '\')" >X</span></div>' + audi;
 	
 	let ar_split = audi.split('_au_');
 	let cur = ar_split.length - 1;
 	
-	$('audience_boxx').innerHTML = audi;
-	$('au_'+suf).setStyles({'color':'#faa'});
+	document.id('audience_boxx').innerHTML = audi;
+	document.id('au_'+suf).setStyles({'color':'#faa'});
 
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 	//	let role = respo || 0;
-		//if (role == 1 || request.name == $('name').value) {
+		//if (role == 1 || request.name == document.id('name').value) {
 			soundEffect.src = "/sounds/wood_" + window.location.hostname + ".mp3";
-			chat_shown = 0; $('logger').click();
-			$('message_box').style.display = 'none';
-			$('audience_box').style.display = 'table';
+			chat_shown = 0; document.id('logger').click();
+			document.id('message_box').style.display = 'none';
+			document.id('audience_box').style.display = 'table';
 		//}
 	//}).catch(err => console.log(err));
 
@@ -1232,7 +1236,7 @@ const setCinema = (request) => {
 		let p = participants[request.name];
 		p.setMode(request.mode);
 	
-		let o = $('one-' + request.name);
+		let o = document.id('one-' + request.name);
 		let m = request.mode;
 
 		o.style.color = m == 'c' ? '#ff0' : '#369';
@@ -1251,21 +1255,21 @@ const setCinema = (request) => {
 
 function newChatMessage() {
 	let cnt = 0; let sem  = window.innerWidth > 1024 ? '7' : '';
-	let old_color = $('logger').style.background == 'url(/icons/chat' + sem + '2.png) center center no-repeat' ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/chat' + sem + '2.png) center center no-repeat;';
+	let old_color = document.id('logger').style.background == 'url(/icons/chat' + sem + '2.png) center center no-repeat' ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/chat' + sem + '2.png) center center no-repeat;';
 	new_message = 1;
-	let intervalID = setInterval(function() { if (new_message) {$('logger').style.background = cnt % 2 == 0 ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #90ee90' : 'url(/icons/chat' + sem + '2.png) center center no-repeat'; cnt++;} else {$('logger').style.background = old_color; clearInterval(intervalID)}}, 1000);
+	let intervalID = setInterval(function() { if (new_message) {document.id('logger').style.background = cnt % 2 == 0 ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #90ee90' : 'url(/icons/chat' + sem + '2.png) center center no-repeat'; cnt++;} else {document.id('logger').style.background = old_color; clearInterval(intervalID)}}, 1000);
 	
-	fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {$('message_box').innerHTML = response; }).catch(err => console.log(err));
+	fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
 
 		soundEffect.src = "/sounds/buzz.mp3";
 }
 
 function setAnno(request) {
 //console.log("setting anno:", request.participant, "anno:",request.anno);
-	if ($('anno_' + request.participant)) {
-		$('anno_' + request.participant).innerHTML = request.anno;
-		$('anno_' + request.participant).style.display='block';			
-		$('anno_' + request.participant).fade(1);
+	if (document.id('anno_' + request.participant)) {
+		document.id('anno_' + request.participant).innerHTML = request.anno;
+		document.id('anno_' + request.participant).style.display='block';			
+		document.id('anno_' + request.participant).fade(1);
 	}
 	
 }
@@ -1273,16 +1277,16 @@ function setAnno(request) {
 function changeTabLR(request) {
 
 	if (request.side == 'l') {
-		if ($('leftnum')) $('leftnum').innerHTML = request.num.toString();
+		if (document.id('leftnum')) document.id('leftnum').innerHTML = request.num.toString();
 	}
 	if (request.side == 'r') {
-		if ($('rightnum')) $('rightnum').innerHTML = request.num.toString();
+		if (document.id('rightnum')) document.id('rightnum').innerHTML = request.num.toString();
 	}
 }
 
 function clearTimeoutAndLeave() {
 
-	if (role != 1) {eraseCookie('timeout_nc'); soundEffect.src = "/sounds/drop.mp3"; $('phones').innerHTML = 'Leaving room'; $('phones').fade(1); setTimeout(function() {location.reload()}, 1000);}
+	if (role != 1) {eraseCookie('timeout_nc'); soundEffect.src = "/sounds/drop.mp3"; document.id('phones').innerHTML = 'Leaving room'; document.id('phones').fade(1); setTimeout(function() {location.reload()}, 1000);}
 
 }
 
@@ -1291,7 +1295,7 @@ const onParticipantLeft = (request) => {
 	var participant = participants[request.name];
 	if (participant) {
 		participant.dispose();
-		if (pcounter < room_limit) {$('bell').style.display = 'none'; $('av_toggler').style.display='block';}
+		if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device) resizer(pcounter);			
@@ -1303,18 +1307,18 @@ const onViewerLeft = (n) => {
 	
 	let na = n.split('_');
 	let suf = na[na.length-1];	
-	if ($('_au_'+suf)) {
-		$('_au_'+suf).dispose();
-		let cur = $('audience_numbers').innerHTML == '...'  ?  0 : parseInt($('audience_numbers').innerHTML)-1;
+	if (document.id('_au_'+suf)) {
+		document.id('_au_'+suf).dispose();
+		let cur = document.id('audience_numbers').innerHTML == '...'  ?  0 : parseInt(document.id('audience_numbers').innerHTML)-1;
 		vcounter = cur > 0 ? cur : 0;
 
-		if ($('vcounter')) { if (!vcounter) {(function(){$('vcounter').innerHTML = vcounter;}).delay(1000);} else {$('vcounter').innerHTML = vcounter;} }
+		if (document.id('vcounter')) { if (!vcounter) {(function(){document.id('vcounter').innerHTML = vcounter;}).delay(1000);} else {document.id('vcounter').innerHTML = vcounter;} }
 		cur = cur > 0 ? cur : '...';
-		$('audience_numbers').innerHTML = cur;
+		document.id('audience_numbers').innerHTML = cur;
 		let col = cur > 0 ? '#369' : '#ccc';
-		$('audience_numbers').setStyles({'color': col});
-		$('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : $('audience_boxx').innerHTML;
-		chat_shown = 1; $('logger').click(); $('audience').click(); 
+		document.id('audience_numbers').setStyles({'color': col});
+		document.id('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : document.id('audience_boxx').innerHTML;
+		chat_shown = 1; document.id('logger').click(); document.id('audience').click(); 
 	}
 }
 
@@ -1392,7 +1396,7 @@ function check_iOS() {
   return false;
 }
 
-function isFirefox() {
+function isIOSFirefox() {
   return navigator.userAgent.match("FxiOS");
 }
 
