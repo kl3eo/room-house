@@ -46,6 +46,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+//import org.springframework.security.web.util.matcher.IpAddressMatcher;
+
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 
@@ -363,11 +365,12 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-    
+	
     //need this hack to avoid DB errors
     curip = curip.replaceAll("[;'\"]*", "");
-    if (curip.equals("127.0.0.1") || curip.equals("")) {curip = "164.68.105.131";}
-	
+    //if (curip.equals("127.0.0.1") || curip.equals("") || curip.equals("192.168.88.99")) {curip = "164.68.105.131";}
+    //if (matches(curip, "192.168.0.0/16") || matches(curip, "10.0.0.0/8") || matches(curip, "172.16.0.0/8") )
+    if (curip.equals("127.0.0.1") || curip.equals("") || isPrivateIP(curip)) {curip = "164.68.105.131";}
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);
@@ -526,4 +529,34 @@ public class CallHandler extends TextWebSocketHandler {
     //log.info("SOMEONE {}: checking connection", user.getName());
     room.check_conn(user);
   }
+/*  
+  private boolean matches(String ip, String subnet) {
+    IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(subnet);
+    return ipAddressMatcher.matches(ip);
+  }
+*/
+  public boolean isPrivateIP(String ipAddress) {
+        boolean isValid = false;
+
+        if (ipAddress != null && !ipAddress.isEmpty()) {
+            String[] ip = ipAddress.split("\\.");
+            short[] ipNumber = new short[] { 
+                    Short.parseShort(ip[0]), 
+                    Short.parseShort(ip[1]), 
+                    Short.parseShort(ip[2]),
+                    Short.parseShort(ip[3])
+                };
+
+            if (ipNumber[0] == 10) { // Class A
+                isValid = true;
+            } else if (ipNumber[0] == 172 && (ipNumber[1] >= 16 && ipNumber[1] <= 31)) { // Class B
+                isValid = true;
+            } else if (ipNumber[0] == 192 && ipNumber[1] == 168) { // Class C
+                isValid = true;
+            }
+        }
+
+        return isValid;
+  }
 }
+
