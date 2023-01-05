@@ -94,7 +94,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//or only guru can hear others
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
-	if (mode == 'm') coo_muted = true;
+	if (mode == 'm' || check_iOS()) coo_muted = true;
 				
 	var coo_volume = loadData(name+'_volume');
 

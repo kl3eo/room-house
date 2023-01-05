@@ -189,3 +189,7 @@ console.log('h', h);
 }());
 */
 
+// index.html
+/*
+	<!-- div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;"></span></a></div -->
+*/

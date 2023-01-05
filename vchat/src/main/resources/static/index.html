@@ -106,7 +106,6 @@ const city_or_main = 1;
 	width:100%;
 	height:100%;
 	text-align:center;
-	padding-top:45vh;
 	margin:0 auto;
 	color:#369;
 	font-size:24px;
@@ -179,6 +178,37 @@ const city_or_main = 1;
  	background:url(/icons/off2.png) center center no-repeat;
  }
 
+ .allmuter_off{
+ 	background:url(/icons/no_sound2.png) center center no-repeat #f78f3f;
+ }
+
+ .allmuter_on {
+ 	background:url(/icons/sound2.png) center center no-repeat;
+ }
+ 
+ .fcam_f {
+ 	background:url(/icons/webcam2.png) center center no-repeat #f78f3f;
+ }
+
+ .bcam_f {
+ 	background:url(/icons/switch2.png) center center no-repeat #f78f3f;
+ }
+
+ .logger_f {
+ 	background:url(/icons/chat2.png) center center no-repeat #f78f3f;
+ }
+
+ .bell_f {
+ 	background:url(/icons/bell2.png) center center no-repeat #f78f3f;
+ }
+ 
+ .av_toggler_f {
+ 	background:url(/icons/vcall2.png) center center no-repeat #f78f3f;
+ } 
+
+ .exiter_f {
+ 	background:url(/icons/off2.png) center center no-repeat #f78f3f;
+ }
  #sub_selector0 {
  	margin-left:4px;
  }
@@ -209,8 +239,7 @@ const city_or_main = 1;
 	width:700px;
 	height:36px;
 	display:none;
- }
- 
+ }   
  .subcontrols {
         position:relative;
 	z-index:99;
@@ -268,6 +297,39 @@ const city_or_main = 1;
  	background:url(/icons/off72.png) center center no-repeat;
  }
 
+ .allmuter_off{
+ 	background:url(/icons/no_sound72.png) center center no-repeat #f78f3f;
+ }
+
+ .allmuter_on {
+ 	background:url(/icons/sound72.png) center center no-repeat;
+ }
+ 
+ .fcam_f {
+ 	background:url(/icons/webcam72.png) center center no-repeat #f78f3f;
+ }
+
+ .bcam_f {
+ 	background:url(/icons/switch72.png) center center no-repeat #f78f3f;
+ }
+
+ .logger_f {
+ 	background:url(/icons/chat72.png) center center no-repeat #f78f3f;
+ }
+
+ .bell_f {
+ 	background:url(/icons/bell72.png) center center no-repeat #f78f3f;
+ }
+ 
+ .av_toggler_f {
+ 	background:url(/icons/vcall72.png) center center no-repeat #f78f3f;
+ } 
+
+ .exiter_f {
+ 	background:url(/icons/off72.png) center center no-repeat #f78f3f;
+ }
+ 
+ 
  #sub_selectorA {
  	margin-left:0px;
  }
@@ -432,6 +494,10 @@ const city_or_main = 1;
     #leftnum {
         margin-left:15px;
     }
+
+    #phones {
+ 	padding-top:45vh;
+    }
     
     #logger {
         !left:43vw;
@@ -452,6 +518,7 @@ const city_or_main = 1;
 	padding:2px;
 	background:transparent;	
 	!cursor: pointer;
+	font-size:24px;
     }
         
     #stats_v {
@@ -460,6 +527,7 @@ const city_or_main = 1;
 	padding:2px;
 	background:transparent;
 	cursor: pointer;
+	font-size:24px;
     }
     #stats_ng {
 	float:left;
@@ -467,6 +535,56 @@ const city_or_main = 1;
 	padding:2px;
 	background:transparent;
 	cursor: pointer;
+	font-size:24px;
+    }
+    #want {
+	display:none;
+	opacity:0;
+	background:transparent;
+	width:45px;
+	font-size:48px;
+	cursor:pointer;
+	float:right;
+	margin-right:48px;
+    }
+    #helpdoc {
+	display:none;
+	opacity:0;
+	background:transparent;
+	width:90px;
+	margin-right:2vw;
+	float:right;
+	font-size:48px;
+    }
+    #tex {
+	display:block;
+	opacity:0.8;
+	background:url(/img/poker48.png) top center no-repeat;
+	width:90px;
+	height:80px;
+	cursor:pointer;
+	float:right;
+	margin-right:5px;
+	margin-top:-12px;
+    }
+    #chess {
+	display:block;
+	opacity:0.8;
+	background:url(/img/chess48_c.png) top center no-repeat;
+	width:90px;
+	height:80px;
+	cursor:pointer;
+	float:right;
+	margin-right:-4px;
+	margin-top:-12px;
+    }
+    #air {
+	display:block;
+	cursor:pointer;
+	color:#9cf;
+	!text-decoration:underline;
+	font-size:42px;
+	margin-right:-12px;
     }
 }
 
@@ -483,6 +601,10 @@ const city_or_main = 1;
         z-index:1011;
 	display:none;
     }
+    #phones {
+ 	padding-top:39vh;
+    }
+    
     #logger {
         !left:36%;
         !bottom:5vh;
@@ -497,27 +619,86 @@ const city_or_main = 1;
     }
     
     #stats_p {
+	display:none;
 	float:left;
-	margin-left:20px;
+	margin-left:5px;
 	padding:2px;
 	background:transparent;	
 	!cursor: pointer;
+	font-size:24px;
     }
     
     #stats_v {
 	float:left;
-	margin-left; 36px;
+	!margin-right:-5px;
+	margin-left:12px;
 	padding:2px;
 	background:transparent;
 	cursor: pointer;
+	font-size:24px;
     }
 
     #stats_ng {
 	float:left;
-	margin-left:16px;
+	margin-left:5px;
         padding:2px;
         background:transparent;
-	cursor: pointer;	
+	cursor: pointer;
+	font-size:24px;	
+    }
+    #want {
+	display:none;
+	opacity:0;
+	background:transparent;
+	width:30px;
+	font-size:42px;
+	cursor:pointer;
+	float:right;
+	margin-top:-3px;
+	margin-right:26px;
+	border:0px solid #900;
+
+    }
+    #helpdoc {
+	display:none;
+	opacity:0;
+	background:transparent;
+	width:90px;
+	margin-right:3vw;
+	float:right;
+	font-size:24px;
+    }
+    #tex {
+	display:block;
+	opacity:0.8;
+	background:url(/img/poker36.png) top center no-repeat;
+	width:36px;
+	height:36px;
+	cursor:pointer;
+	float:right;
+	margin-right:15px;
+	margin-top:-10px;
+	border:0px solid #090;
+    }
+    #chess {
+	display:block;
+	opacity:0.8;
+	background:url(/img/chess36.png) top center no-repeat;
+	width:36px;
+	height:36px;
+	cursor:pointer;
+	float:right;
+	margin-right:15px;
+	margin-top:-12px;
+	border:0px solid #090;
+    }
+    #air {
+	display:inline;
+	cursor:pointer;
+	color:#9cf;
+	!text-decoration:underline;
+	font-size:36px;
+	margin-right:-6px;
     }
 }
 
@@ -609,6 +790,7 @@ const city_or_main = 1;
 	max-height:235px;
 	height:90vw;
 	max-width:340px;
+	min-width:340px;
 	position:relative;
 	overflow:hidden;
 	margin-top:10%;
@@ -673,6 +855,7 @@ const city_or_main = 1;
 	opacity:0;
 	display:none;
 	margin-top:12px;
+	border: 0px solid #fff;
 }
 
 
@@ -711,11 +894,41 @@ const city_or_main = 1;
       #sm_niche {
         width: 135% !important;
         height: 135% !important;
-        !-webkit-transform: scale(0.735);
         transform: scale(0.735);
-        !-webkit-transform-origin: 0 0;
         transform-origin: 0 0;
       }
+      #poker_niche {
+        width: 135% !important;
+        height: 135% !important;
+        transform: scale(0.735);
+        transform-origin: 0 0;
+      }
+      #chess_niche {
+        width: 135% !important;
+        height: 135% !important;
+        transform: scale(0.735);
+        transform-origin: 0 0;
+      }
+      #air_niche {
+        width: 135% !important;
+        height: 135% !important;
+        transform: scale(0.735);
+        transform-origin: 0 0;
+      }
+}
+
+.niches {
+	position:absolute;
+	top:0; left:0;
+	width:100%;
+	height:100%;
+	min-width:492px;
+	min-height:780px;
+	z-index:-10100;
+	text-align:center;
+	font-family:Times;
+	display:none;
+	opacity:0;
 }
 </style>
 </head>
@@ -842,11 +1055,11 @@ if (!curIP.length && false) {
 <div id="controls" class=controls><!-- set top to -12px with sp container-->
 <div id="fmode_selector" style="display:none;float:left;margin-left:0px;">
 
-<div id="fcam" class="bigO fcam" onclick="cli2()" title="Front camera"></div>
+<div id="fcam" class="bigO" onclick="cli2()" title="Front camera"></div>
 
-<div id="bcam" class="bigO bcam" onclick="cli3()" title="Back camera"></div>
+<div id="bcam" class="bigO" onclick="cli3()" title="Back camera"></div>
 
-<div id="all_muter" class=bigO onclick="cli4()" title="Turn off all sound"></div>
+<div id="all_muter" class="bigO" onclick="cli4()" title="Turn off all sound"></div>
 <div class="slider-wrapper">
   <input type="range" min="0" max="1" value="1" step="1">VOLUME:
 <!-- datalist id="tickmarks">
@@ -859,13 +1072,13 @@ if (!curIP.length && false) {
 
 <div id="av_selector" style="display:none;float:left;margin-right:0px;">
 
-<div id="logger" class="bigO logger" onclick="cli5()" title="Chat"></div>
+<div id="logger" class="bigO" style="float:left;" onclick="cli5();" title="Chat"></div>
 
 <div id="bell" class="bigO bell" style="display:none;" title="Call Guru"></div>
 
-<div id="av_toggler" class="bigO av_toggler" style="float:left;" onclick="cli6()" title="Video ON/OFF"></div>
+<div id="av_toggler" class="bigO" style="float:left;" onclick="cli6()" title="Video ON/OFF"></div>
 
-<div class="bigO exiter" style="float:left;" onclick="document.id('spinner').style.display='block';(function(){location.reload();}).delay(1000);" title="Go away"></div>
+<div id="exiter" class="bigO exiter" style="float:left;" onclick="document.id('spinner').style.display='block';(function(){location.reload();}).delay(1000);" title="Go away"></div>
 <div style="clear:left;"></div>
 
 </div><!-- av_selector -->
@@ -876,9 +1089,12 @@ if (!curIP.length && false) {
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter>0</span></div>
 	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; document.id('logger').click(); document.id('message_box').style.display='none'; document.id('audience_box').style.display='table';">&#128101;:&nbsp;<span id=vcounter>0</span></div>
 	<div id="stats_ng" title="today viewers" onclick="document.id('message_box').style.display='block'; document.id('audience_box').style.display='none'; cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
-	<div id="helpdoc" style="display:none;opacity:0;background:transparent; width:90px; margin-right:3vw; float:right; font-size:24px;"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal;color:#fed;font-size:22px;">HELP</span></a></div>
-	<!-- div id="want" style="display:none;opacity:0;background: transparent; width: 120px; margin-right:54px; float:right; font-size:24px;"><a href="https://room-house.com/sp_help/index.html" style="text-decoration:none;font-size:22px;" target=new>&#128176;&nbsp;<span style="font-weight:normal;color:#fed;font-size:22px;"></span></a></div -->
-	<div id="want" style="display:none; opacity:0; background:transparent; width:120px; font-size:24px; cursor:pointer; float:right; margin-right: 20px;" onclick="if (document.id('sm_niche')) {document.id('sm_niche').style.display='block'; document.id('sm_niche').style.zIndex='10100';document.id('sm_niche').fade(1);}">&#127920;&nbsp;=&nbsp;&#128176;</div>
+	<div id="helpdoc"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal; color:#fed; font-size:22px;">HELP</span></a></div>
+	<div id="want" onclick="if (document.id('sm_niche')) {document.id('sm_niche').src=sm_url; document.id('sm_niche').style.display='block'; document.id('sm_niche').style.zIndex='10100'; document.id('sm_niche').fade(1);}">&#127920;</div>
+	<div id="tex" onclick="if (document.id('poker_niche')) {document.id('poker_niche').src=poker_url; document.id('poker_niche').style.display='block'; document.id('poker_niche').style.zIndex='10100'; document.id('poker_niche').fade(1);}"></div>
+	<div id="chess" onclick="if (document.id('chess_niche')) {document.id('chess_niche').src=chess_url; document.id('chess_niche').style.display='block'; document.id('chess_niche').style.zIndex='10100'; document.id('chess_niche').fade(1);}"></div>
+	<div id="air" onclick="fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			var sess = respo; console.log('sess is ', sess); if (document.id('air_niche')) {document.id('air_niche').src=air_url+'/cgi/action_vg_print?session='+sess; document.id('air_niche').style.display='block'; document.id('air_niche').style.zIndex='10100'; document.id('air_niche').fade(1);}});">&#128176;</div>
 	<div style="clear:both;"></div>
 </div>
 
@@ -927,10 +1143,6 @@ if (!curIP.length && false) {
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Milan</span></div>
 				<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="warsaw" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://warsaw.room-house.com';"><img src="/img/bg_slider.png?sig=2"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Warsaw</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li -->
 			<li id="habana" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://habana.room-house.com';"><img src="/img/bg_slider.png?sig=3"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Habana</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
@@ -943,10 +1155,6 @@ if (!curIP.length && false) {
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Riga</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="stamboul" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://stamboul.room-house.com';"><img src="/img/bg_slider.png?sig=6"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Stamboul</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li -->
 			<li id="split" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://split.room-house.com';"><img src="/img/bg_slider.png?sig=7"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Split</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
@@ -959,18 +1167,10 @@ if (!curIP.length && false) {
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Olomouc</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="barna" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://barna.room-house.com';"><img src="/img/bg_slider.png?sig=10"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Barna</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li -->
 			<li id="munchen" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://munchen.room-house.com';"><img src="/img/bg_slider.png?sig=11"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Munchen</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
 			</li>
-			<!-- li id="trent" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://trent.room-house.com';"><img src="/img/bg_slider.png?sig=12"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Trent</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li -->
 			<li id="lisboa" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://lisboa.room-house.com';"><img src="/img/bg_slider.png?sig=13"/>
 				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Lisboa</span></div>
 			<div class="pricer"><span class="nextroom pricee"></span></div>
@@ -1028,9 +1228,14 @@ window.setTimeout( function() {if (document.id('room').style.display == 'none' &
 
 <!-- slot machine -->
 
-
 <script>
-document.write('<iframe id="sm_niche" src='+sm_url+' name=sm_niche scrolling="no" style="position:absolute; top:0; left:0; width:100%; height:100%; min-width:492px;min-height:780px; z-index:-10100; background:#3d1257; text-align:center; border:1px solid #333;font-family:Times;display:none; opacity:0;"></iframe>');
+document.write('<iframe id="sm_niche" name=sm_niche src="" scrolling="no" class="niches" style="background:#3d1257;"></iframe>');
+
+document.write('<iframe id="poker_niche" name=poker_niche src="" scrolling="no" class="niches"></iframe>');
+
+document.write('<iframe id="chess_niche" name=chess_niche src="" scrolling="no" class="niches"></iframe>');
+
+document.write('<iframe id="air_niche" name=air_niche src="" scrolling="no" class="niches"></iframe>');
 </script>
 
 <!-- want jquery? hack mBox.Modal in participant, it's ugly but working -->

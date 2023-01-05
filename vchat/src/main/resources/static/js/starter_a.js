@@ -240,7 +240,7 @@ window.addEventListener("message", function(event) {
 
 //console.log('eo:', event.origin, 'hn:', window.location.hostname);
 
-  if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url) {
+  if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url) {
     return;
   }
   if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
@@ -332,9 +332,12 @@ e.stopPropagation();
 
   if (role != -1) {
   	acc_id.then(data => {
-  	   setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}},10000);
-  	   (function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;} }).delay(1000);
-  	   setInterval(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;} }, 300000);
+//console.log('1: acc_id is', data);
+		setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}},10000);
+		(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
+//console.log('2: set sp_balance to', document.id('sp_balance').src);
+		}}).delay(1000);
+		setInterval(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;} }, 300000);	  
 	});
   }
   
@@ -344,7 +347,7 @@ e.stopPropagation();
   
   (function(){document.id('chatter').style.display='block';document.id('antichatter').style.display='block';document.id('audience').style.display='block';}).delay(1000);
   (function(){
-		document.id('phones').style.paddingTop = small_device ? '41vh' : '45vh';
+		document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh';
 		
   }).delay(1000);
   
@@ -379,8 +382,37 @@ let na = getCookie('name');if (na != null && na != 'null') {
 		document.id('sm_niche').fade(0);
 		document.id('sm_niche').style.zIndex='-10100';
 		document.id('sm_niche').style.display='none';
+		document.id('sm_niche').src='';
 	}
-	
+} else if (event.origin == "https://room-house.com" || event.origin == poker_url) {
+	var obj = JSON.parse(event.data);
+	if (obj.action == 'close_iframe' && document.id('poker_niche')) {
+
+		document.id('poker_niche').fade(0);
+		document.id('poker_niche').style.zIndex='-10100';
+		document.id('poker_niche').style.display='none';
+		document.id('poker_niche').src='';
+	}
+} else if (event.origin == chess_url) {
+	var obj = JSON.parse(event.data);
+	if (obj.action == 'close_iframe' && document.id('chess_niche')) {
+
+		document.id('chess_niche').fade(0);
+		document.id('chess_niche').style.zIndex='-10100';
+		document.id('chess_niche').style.display='none';
+		document.id('chess_niche').src='';
+	}
+
+} else if (event.origin == air_url) {
+	var obj = JSON.parse(event.data);
+	if (obj.action == 'close_iframe' && document.id('air_niche')) {
+
+		document.id('air_niche').fade(0);
+		document.id('air_niche').style.zIndex='-10100';
+		document.id('air_niche').style.display='none';
+		document.id('air_niche').src='';
+	}
+		
 } else if (event.origin == sp_setter_url) {
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'Bound') {
@@ -518,11 +550,12 @@ if (!snd_clicked) {soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFg
 }
 
 const cli2 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f';  document.id('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat #f78f3f'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('FRONT CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); document.id('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat';}} else {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1;  flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').className = "bigO av_toggler_f"; document.id('fcam').className = "bigO fcam_f"; document.id('bcam').className = "bigO bcam";
+ flashText_and_rejoin('FRONT CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); document.id('fcam').className = "bigO fcam";}} else {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('fcam').className = "bigO fcam"; setCookie('av', false, 144000); aonly = 1;  flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
 const cli3 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo;  if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; document.id('bcam').style.background = 'url(/icons/switch' + sem + '2.png) center center no-repeat #f78f3f'; document.id('fcam').style.background = 'url(/icons/webcam' + sem + '2.png) center center no-repeat'; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat';}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo;  if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').className = "bigO av_toggler_f"; document.id('fcam').className = "bigO fcam"; document.id('bcam').className = "bigO bcam_f"; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); document.id('bcam').className = "bigO bcam";}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('bcam').className = "bigO bcam"; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
 const cli4 = () => {
@@ -530,18 +563,18 @@ if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMu
 }
 
 const cli5 = () => {let sem  = window.innerWidth > 1024 ? '7' : ''; document.id('message_box').style.display = 'block'; document.id('audience_box').style.display = 'none';
-new_message = 0; if (chat_shown) {document.id('message_wrap').fade(0); document.id('chatter').fade(0); document.id('audience').fade(0); document.id('antichatter').fade(0);chat_shown = 0; document.id('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat';} else {
-if (!small_device) {let roomRect = document.id('room').getBoundingClientRect();let roomTop = parseInt(roomRect.top); document.id('message_wrap').style.top = voting_shown ? '0vh' : roomTop > 400 ? '6vh' : roomTop > 360 ? '4vh' : roomTop > 320 ? '2vh' : roomTop > 280 ? '0vh' : '0vh'; if (document.id('sp_container') && sp_shown) document.id('message_wrap').style.top = '0vh';} document.id('chatter').style.display='block'; document.id('antichatter').style.display='block'; document.id('audience').style.display='block'; document.id('message_wrap').fade(1); document.id('chatter').fade(1); document.id('audience').fade(1); document.id('antichatter').fade(1); chat_shown = 1; document.id('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f'; if (voting_shown) { (function(){document.id('subcontrols').style.display='block';
+new_message = 0; if (chat_shown) {document.id('message_wrap').fade(0); document.id('chatter').fade(0); document.id('audience').fade(0); document.id('antichatter').fade(0);chat_shown = 0; document.id('logger').className = "bigO logger";} else {
+if (!small_device) {let roomRect = document.id('room').getBoundingClientRect();let roomTop = parseInt(roomRect.top); document.id('message_wrap').style.top = voting_shown ? '0vh' : roomTop > 400 ? '6vh' : roomTop > 360 ? '4vh' : roomTop > 320 ? '2vh' : roomTop > 280 ? '0vh' : '0vh'; if (document.id('sp_container') && sp_shown) document.id('message_wrap').style.top = '0vh';} document.id('chatter').style.display='block'; document.id('antichatter').style.display='block'; document.id('audience').style.display='block'; document.id('message_wrap').fade(1); document.id('chatter').fade(1); document.id('audience').fade(1); document.id('antichatter').fade(1); chat_shown = 1; document.id('logger').className = "bigO logger_f"; if (voting_shown) { (function(){document.id('subcontrols').style.display='block';
 (function() {if (document.id('ball1')) (function() {document.id('ball1').fade(0);document.id('leftlab').fade(1);}).delay(2000);if (document.id('ball2')) (function() {document.id('ball2').fade(0);document.id('rightlab').fade(1);}).delay(2000);(function() {document.id('leftplus').innerHTML = '+';document.id('rightplus').innerHTML = '+';}).delay(2000);}).delay(2000);
 document.id('subcontrols').fade(1);}).delay(500);}}
 }
 
 const cli6 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').style.background='url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').style.background='url(/icons/vcall' + sem + '2.png) center center no-repeat';}} else {cammode = 0; playSomeMusic = false; shareSomeScreen = false; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {cammode = 0; playSomeMusic = false; shareSomeScreen = false; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');}}).catch(err => console.log(err));
 }
 
 const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-document.id('message_wrap').fade(0);document.id('chatter').fade(0);document.id('audience').fade(0);document.id('antichatter').fade(0);chat_shown = 0;document.id('logger').style.background='url(/icons/chat' + sem + '2.png) center center no-repeat';
+document.id('message_wrap').fade(0);document.id('chatter').fade(0);document.id('audience').fade(0);document.id('antichatter').fade(0);chat_shown = 0; document.id('logger').className = "bigO logger";
 }
 
 const cli8 = () => {

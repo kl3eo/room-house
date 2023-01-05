@@ -83,6 +83,10 @@ const wi_hq = 1920;
 const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8449" : "https://aspen.room-house.com:8447";
 const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
 const sm_url = "https://slotmachine.room-house.com";
+//const poker_url = "https://room-house.com/poker/";
+const poker_url = "https://poker.room-house.com";
+const chess_url = "https://chess.room-house.com";
+const air_url = "https://bot.skypirl.net";
 
 //const role  = 0;
 
@@ -149,8 +153,8 @@ window.onload = function(){
                 	item.innerHTML = go;
         	});
 		
-		let he = he_.get(altlang[ctr]);
-		document.id('helpcapo').innerHTML = he;
+		//let he = he_.get(altlang[ctr]);
+		//document.id('helpcapo').innerHTML = he;
 		
 	}
 	
@@ -321,7 +325,8 @@ const register = () => {
 	if (av && guru_is_here) aonly = 0;
 	let sem  = window.innerWidth > 1024 ? '7' : '';
 	
-	if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; } else { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; }
+	//if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; } else { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; }
+	if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').className = "bigO av_toggler_f" } else { if (document.id('av_toggler')) document.id('av_toggler').className = "bigO av_toggler"; document.id('bcam').className="bigO bcam"; document.id('fcam').className="bigO fcam"; }
 	
 	if (ws.readyState === WebSocket.OPEN) problems = 0;
 	
@@ -448,7 +453,9 @@ const register_body = (ro) => {
 	
 		let curr_all_muted = getCookie('all_muted') || false;
 
-		document.id('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
+		//document.id('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
+		document.id('all_muter').className = curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
+		
 		document.id('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
 	
 		document.id('leftplus').style.display = 'block';
@@ -498,23 +505,18 @@ const register_body = (ro) => {
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; document.id('phones').onclick=location.reload(); (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
- 		//(function(){ if (!problems) document.id('phones').fade(0);}).delay(2000);
-		
 		(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; document.id('phones').innerHTML = warning; document.id('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
 
-		//if (small_device && !scrolled) {(function() {var myFx = new Fx.Scroll(window, {wait: false, duration: 2000}).toBottom().chain(function(){ this.toTop.delay(1000, this);});}).delay(2000); scrolled = true;}
-  
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
+
+		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1); /*if (small_device) document.id('want').style.marginRight = "0px";*/}).delay(500);
 		
-		//hack for slotmachine
-		//if (!small_device && document.id('want') && window == window.top) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
-		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1); if (small_device) document.id('want').style.marginRight = "0px";}).delay(500);
+		if (!small_device && document.id('helpdoc')) (function() {let l = checkLang(); /*if (!small_device) document.id('helpdoc').style.marginRight = "4.8vw";*/
+
+		if (small_device) {document.id('helpdoc').style.paddingTop = "0.4vh"; document.id('helpdoc').style.paddingRight = "2vw";}
 		
-		/*if (document.id('helpdoc')) (function() {let l = checkLang(); if (!small_device) document.id('helpdoc').style.marginRight = "5.5vw"; document.id('helpdoc').style.display = "block"; 
-		if (small_device) {document.id('helpdoc').style.paddingTop = "0.4vh"; document.id('helpdoc').style.paddingRight = "2vw";} 
 		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
-		*/
-		
+				
 		(function() {dummies = true;}).delay(3000);
 
 }
@@ -1191,7 +1193,10 @@ const setGuru = (request) => {
 		if (request.mode == '0' && temporary) {
 
 			role = 0; temporary = 0; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); 
-			cammode = 0; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; setCookie('av', false, 144000); aonly = 1; 
+			cammode = 0; 
+			/*document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat';*/  
+			document.id('fcam').className = "bigO fcam"; document.id('bcam').className = "bigO bcam";
+			setCookie('av', false, 144000); aonly = 1; 
 			document.id('av_toggler').style.display='none';
 			document.id('bell').style.display='block';
 			hack = false; //?!
