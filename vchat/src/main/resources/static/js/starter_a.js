@@ -59,6 +59,8 @@ var who_to = '';
 
 var afterBinding = false;
 
+var ch_int;
+
 
 function getIP(json) {
     curIP = json.ip;
@@ -333,11 +335,12 @@ e.stopPropagation();
   if (role != -1) {
   	acc_id.then(data => {
 //console.log('1: acc_id is', data);
-		setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}},10000);
+		setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}}, 10000);
+		
 		(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
-//console.log('2: set sp_balance to', document.id('sp_balance').src);
 		}}).delay(1000);
-		setInterval(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;} }, 300000);	  
+		
+		ch_int = setInterval(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;} }, 300000);	  
 	});
   }
   
@@ -423,8 +426,10 @@ let na = getCookie('name');if (na != null && na != 'null') {
 			//mod6.close();
 			
 			(function(){document.id('m6').style.display='none';}).delay(2000);
-			
-			document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from; 
+
+			document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from;
+			clearInterval(ch_int);
+			ch_int = setInterval(function() {if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from;}}, 300000);
 			afterBinding = true;
 			
 			//document.id('phones').innerHTML = '..PLEASE RE-ENTER..'; document.id('phones').fade(1); (function(){location.reload();}).delay(500);
