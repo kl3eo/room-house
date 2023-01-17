@@ -91,6 +91,7 @@ const air_url = "https://bot.skypirl.net";
 //const role  = 0;
 
 const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
+const notebook = screen.height <= 800 ? true : false;
 
 const controller = new AbortController();
 
@@ -325,7 +326,6 @@ const register = () => {
 	if (av && guru_is_here) aonly = 0;
 	let sem  = window.innerWidth > 1024 ? '7' : '';
 	
-	//if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat #f78f3f'; } else { if (document.id('av_toggler')) document.id('av_toggler').style.background = 'url(/icons/vcall' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat'; document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; }
 	if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').className = "bigO av_toggler_f" } else { if (document.id('av_toggler')) document.id('av_toggler').className = "bigO av_toggler"; document.id('bcam').className="bigO bcam"; document.id('fcam').className="bigO fcam"; }
 	
 	if (ws.readyState === WebSocket.OPEN) problems = 0;
@@ -453,7 +453,6 @@ const register_body = (ro) => {
 	
 		let curr_all_muted = getCookie('all_muted') || false;
 
-		//document.id('all_muter').style.background = curr_all_muted ? 'url(/icons/no_sound' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/sound' + sem + '2.png) center center no-repeat';
 		document.id('all_muter').className = curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
 		
 		document.id('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
@@ -470,7 +469,7 @@ const register_body = (ro) => {
 	
 		document.id('fmode_selector').style.display = 'block';
 		
-		if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top ) document.id('slide_container').style.display = 'block';
+		if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -483,7 +482,13 @@ const register_body = (ro) => {
 		if (ro == 0 && hack) role = 1;	
 
 //console.log('registering, mode is' ,mode, 'role is', role);
-
+		let formData = new FormData();
+		formData.append('addr', curip);
+		
+		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {body: formData, method: 'post', credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			let role = respo || 0;
+		}).catch(err => console.log(err));
+	
 		acc_id.then(data=>{
 //console.log('reg: acc_id is', data);
 		   let message = {
@@ -1193,8 +1198,7 @@ const setGuru = (request) => {
 		if (request.mode == '0' && temporary) {
 
 			role = 0; temporary = 0; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); 
-			cammode = 0; 
-			/*document.id('fcam').style.background='url(/icons/webcam' + sem + '2.png) center center no-repeat'; document.id('bcam').style.background='url(/icons/switch' + sem + '2.png) center center no-repeat';*/  
+			cammode = 0;  
 			document.id('fcam').className = "bigO fcam"; document.id('bcam').className = "bigO bcam";
 			setCookie('av', false, 144000); aonly = 1; 
 			document.id('av_toggler').style.display='none';

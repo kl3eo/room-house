@@ -354,7 +354,7 @@ e.stopPropagation();
 		
   }).delay(1000);
   
-  if (voting_shown || sp_shown) {(function(){document.id('room-header').style.marginTop = small_device ? '14vw' : '8vw'; document.id('room-backer').style.marginTop = small_device ? '14vw' : '8vw'; 
+  if (voting_shown || sp_shown) {(function(){document.id('room-header').style.marginTop = small_device ? '4vw' : '8vw'; document.id('room-backer').style.marginTop = small_device ? '14vw' : '8vw'; 
   document.id('room-header').style.marginBottom = small_device ? '0px' : '20px'; document.id('room-backer').style.marginBottom = small_device ? '20px' : '40px'; 
   if (voting_shown) {document.id('subcontrols').style.display='block'; document.id('subcontrols').fade(1);}}).delay(1000);} else  {document.id('room-header').style.marginTop = small_device ?  '0vw' : '8vw';}
 	
