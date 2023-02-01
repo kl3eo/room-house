@@ -242,7 +242,7 @@ window.addEventListener("message", function(event) {
 
 //console.log('eo:', event.origin, 'hn:', window.location.hostname);
 
-  if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url) {
+  if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url) {
     return;
   }
   if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
@@ -405,7 +405,6 @@ let na = getCookie('name');if (na != null && na != 'null') {
 		document.id('chess_niche').style.display='none';
 		document.id('chess_niche').src='';
 	}
-
 } else if (event.origin == air_url) {
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('air_niche')) {
@@ -415,7 +414,15 @@ let na = getCookie('name');if (na != null && na != 'null') {
 		document.id('air_niche').style.display='none';
 		document.id('air_niche').src='';
 	}
-		
+} else if (event.origin == swap_url) {
+	var obj = JSON.parse(event.data);
+	if (obj.action == 'close_iframe' && document.id('swap_niche')) {
+
+		document.id('swap_niche').fade(0);
+		document.id('swap_niche').style.zIndex='-10100';
+		document.id('swap_niche').style.display='none';
+		document.id('swap_niche').src='';
+	}		
 } else if (event.origin == sp_setter_url) {
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'Bound') {
@@ -432,9 +439,7 @@ let na = getCookie('name');if (na != null && na != 'null') {
 			ch_int = setInterval(function() {if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from;}}, 300000);
 			afterBinding = true;
 			
-			//document.id('phones').innerHTML = '..PLEASE RE-ENTER..'; document.id('phones').fade(1); (function(){location.reload();}).delay(500);
-			//rejoin();//?!			
-		   	//(function() {flashText('CLICK ON VIDEO TO RELOAD');}).delay(1000);
+			document.id('phones').innerHTML = 'OK..PLEASE RE-ENTER..'; document.id('phones').fade(1); (function(){location.reload();}).delay(5000);
 		   
 			//let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
 			//scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);

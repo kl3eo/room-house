@@ -87,6 +87,7 @@ const sm_url = "https://slotmachine.room-house.com";
 const poker_url = "https://poker.room-house.com";
 const chess_url = "https://chess.room-house.com";
 const air_url = "https://bot.skypirl.net";
+const swap_url = "https://coins.room-house.com";
 
 //const role  = 0;
 

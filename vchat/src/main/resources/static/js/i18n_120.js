@@ -195,8 +195,8 @@ var creatu_ = new Map ([
 ]);
 
 var creatu_long_ = new Map ([
-   ['en', 'BIND an account TO WATCH CINEMA!'],
-   ['ru', 'НУЖЕН АККАУНТ ДЛЯ ПРОСМОТРА!'],
+   ['en', 'BUY a TICKET TO WATCH CINEMA!'],
+   ['ru', 'ДЛЯ ПРОСМОТРА НУЖЕН БИЛЕТ!'],
    ['es', 'BIND an account TO WATCH CINEMA!'],
    ['fr', 'BIND an account TO WATCH CINEMA!'],
    ['cn', 'BIND an account TO WATCH CINEMA!'],
