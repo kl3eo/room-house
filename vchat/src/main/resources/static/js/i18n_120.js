@@ -186,8 +186,8 @@ var requ_ = new Map ([
 ]);
 
 var creatu_ = new Map ([
-   ['en', 'BIND an account!'],
-   ['ru', 'НУЖЕН АККАУНТ!'],
+   ['en', 'BUY A TICKET!'],
+   ['ru', 'НУЖЕН TICKET!'],
    ['es', 'BIND an account!'],
    ['fr', 'BIND an account!'],
    ['cn', 'BIND an account!'],
