@@ -525,8 +525,7 @@ const city_or_main = 1;
 	margin-left:30px;
 	padding:2px;
 	background:transparent;	
-	!cursor: pointer;
-	font-size:24px;
+	font-size:30px;
     }
         
     #stats_v {
@@ -535,7 +534,7 @@ const city_or_main = 1;
 	padding:2px;
 	background:transparent;
 	cursor: pointer;
-	font-size:24px;
+	font-size:30px;
     }
     #stats_ng {
 	float:left;
@@ -543,7 +542,7 @@ const city_or_main = 1;
 	padding:2px;
 	background:transparent;
 	cursor: pointer;
-	font-size:24px;
+	font-size:30px;
     }
     #want {
 	display:none;
@@ -553,7 +552,7 @@ const city_or_main = 1;
 	font-size:48px;
 	cursor:pointer;
 	float:right;
-	margin-right:48px;
+	margin-right:54px;
     }
     #helpdoc {
 	display:none;
@@ -573,7 +572,7 @@ const city_or_main = 1;
 	cursor:pointer;
 	float:right;
 	margin-right:5px;
-	margin-top:-12px;
+	margin-top:-16px;
     }
     #chess {
 	display:block;
@@ -583,25 +582,26 @@ const city_or_main = 1;
 	height:80px;
 	cursor:pointer;
 	float:right;
-	margin-right:-4px;
-	margin-top:-12px;
+	margin-right:-16px;
+	margin-top:-16px;
     }
     #air {
 	display:block;
 	cursor:pointer;
 	color:#9cf;
-	!text-decoration:underline;
 	font-size:42px;
-	margin-right:54px;
+	margin-right:6px;
 	text-align:center;
-	width:60px;
+	width:42px;
 	border:0px solid #fff;
 	float:right;
     }
     #air_circle {
-    	border-radius:30px;
-	width:60px;
-	height:60px;
+    	border-radius:21px;
+	width:42px;
+	height:42px;
+	line-height:42px;
+	margin-top:-10px;
     }
 }
 
@@ -714,17 +714,19 @@ const city_or_main = 1;
 	cursor:pointer;
 	color:#9cf;
 	!text-decoration:underline;
-	font-size:36px;
-	margin-right:12px;
+	font-size:24px;
+	margin-right:18px;
 	margin-top:12px;
 	text-align:center;
-	width:36px;
+	width:24px;
 	float:right;
     }
     #air_circle {
     	border-radius:15px;
 	width:30px;
 	height:30px;
+	line-height:30px;
+	margin-top:-15px;
     }
 }
 
@@ -880,7 +882,7 @@ const city_or_main = 1;
 	color:#fed;
 	opacity:0;
 	display:none;
-	margin-top:12px;
+	margin-top:16px;
 	border: 0px solid #fff;
 }
 
@@ -1128,7 +1130,7 @@ if (!curIP.length && false) {
 	<!-- div id="air" onclick="fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			var sess = respo; /*console.log('sess is ', sess);*/ if (document.id('air_niche')) {document.id('air_niche').src=air_url+'/cgi/action_vg_print?session='+sess; document.id('air_niche').style.display='block'; document.id('air_niche').style.zIndex='10100'; document.id('air_niche').fade(1);}});"><div>&#128176;</div>
 			<span style="font-size:12px;color:#fff;font-weight:bold;">airdrop</span></div -->
-	<div id="air" onclick="if (document.id('swap_niche')) {document.id('swap_niche').src=swap_url; document.id('swap_niche').style.display='block'; document.id('swap_niche').style.zIndex='10100'; document.id('swap_niche').fade(1);}"><div id="air_circle" style="font-size:12px;color:#9cf;font-weight:bold;margin-top:-20px;margin-left:10px;border:1px solid #777;">&nbsp;<br>SWAP!</div></div>
+	<div id="air" onclick="if (document.id('swap_niche')) {document.id('swap_niche').src=swap_url; document.id('swap_niche').style.display='block'; document.id('swap_niche').style.zIndex='10100'; document.id('swap_niche').fade(1);}"><div id="air_circle" style="font-size:12px;color:#9cf;font-weight:bold;margin-left:10px;border:1px solid #777;">CLO</div></div>
 	<div style="clear:both;"></div>
 </div>
 

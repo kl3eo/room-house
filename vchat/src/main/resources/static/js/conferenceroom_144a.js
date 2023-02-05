@@ -470,7 +470,7 @@ const register_body = (ro) => {
 	
 		document.id('fmode_selector').style.display = 'block';
 		
-		if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
+		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
