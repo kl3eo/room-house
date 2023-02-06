@@ -439,7 +439,7 @@ let na = getCookie('name');if (na != null && na != 'null') {
 			ch_int = setInterval(function() {if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from;}}, 300000);
 			afterBinding = true;
 			
-			document.id('phones').innerHTML = 'OK..PLEASE RE-ENTER..'; document.id('phones').fade(1); (function(){location.reload();}).delay(4000);
+			document.id('phones').innerHTML = 'OK..PLEASE RE-ENTER..'; document.id('phones').fade(1); (function(){location.reload();}).delay(3600);
 		   
 			//let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
 			//scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);
