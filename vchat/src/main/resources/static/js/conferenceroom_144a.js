@@ -192,6 +192,9 @@ ws.onmessage = function(message) {
 	case 'changeTab':
 		changeTabLR(parsedMessage);
 		break;
+	case 'bongoKey':
+		bongoKey(parsedMessage);
+		break;
 	case 'clearCoo':
 		clearTimeoutAndLeave();
 		break;
@@ -281,6 +284,12 @@ function signalGuru(e) {
 
 }
 
+function eventHandler(n) {
+
+		var message={id :'keyDown', num: n}; 
+		sendMessage(message);
+}
+
 function leftHandler(e) {
 	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
@@ -291,15 +300,16 @@ function leftHandler(e) {
 		var message={id :'plus', s: 'l', num: n}; 
 		sendMessage(message); 
 	
-		//if (role != 1) {
+		if (role != 1) {
 			setCookie('vote',1,144000);
 			he_votado = true;
-			document.id('leftplus').removeEventListener('click', leftHandler);
-                	document.id('rightplus').removeEventListener('click', rightHandler);
-		//}
+			//document.id('leftplus').removeEventListener('click', leftHandler);
+                	//document.id('rightplus').removeEventListener('click', rightHandler);
+		}
 	}).catch(err => console.log(err));
 }
 
+function noHandler(e) { }
 function rightHandler(e) {
 	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
@@ -311,12 +321,12 @@ function rightHandler(e) {
         	sendMessage(message); 
 		he_votado = true;
 
-		//if (role != 1) {
+		if (role != 1) {
 			setCookie('vote',1,144000);
 			he_votado = true;
-			document.id('leftplus').removeEventListener('click', leftHandler);
-                	document.id('rightplus').removeEventListener('click', rightHandler);
-		//}
+			//document.id('leftplus').removeEventListener('click', leftHandler);
+                	//document.id('rightplus').removeEventListener('click', rightHandler);
+		}
 	}).catch(err => console.log(err));
 }
 
@@ -357,6 +367,9 @@ const register = () => {
 					break;
 				case 'changeTab':
 					changeTabLR(parsedMessage);
+					break;
+				case 'bongoKey':
+					bongoKey(parsedMessage);
 					break;
 				case 'clearCoo':
 					clearTimeoutAndLeave();
@@ -463,12 +476,19 @@ const register_body = (ro) => {
 
         	if (( (ro == 1) || !he_votado) && firstTime) {
 
-                	document.id('leftplus').addEventListener('click', leftHandler);
-                	document.id('rightplus').addEventListener('click', rightHandler);
+                	//document.id('leftplus').addEventListener('click', leftHandler);
+                	//document.id('rightplus').addEventListener('click', rightHandler);
+			addEventListener("keydown", (event) => {
+  				//event.keyCode === 65 ? leftHandler(event) : event.keyCode === 76 ? rightHandler(event) : noHandler(event);
+				let n = event.keyCode ? event.keyCode : 65;
+				eventHandler(n);
+			});
                 	firstTime = false;
         	}
 	
 		document.id('fmode_selector').style.display = 'block';
+		//if (document.id('newsub') && ro == 1) 
+			document.id('newsub').style.display = 'block';
 		
 		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
 
@@ -1288,10 +1308,100 @@ function changeTabLR(request) {
 
 	if (request.side == 'l') {
 		if (document.id('leftnum')) document.id('leftnum').innerHTML = request.num.toString();
+		soundEffect.src = "/sounds/track04.mp3";
 	}
 	if (request.side == 'r') {
 		if (document.id('rightnum')) document.id('rightnum').innerHTML = request.num.toString();
+		soundEffect.src = "/sounds/track01.mp3";
 	}
+}
+
+function bongoKey(request) {
+
+	let a = '';
+	
+	if (request.num == '65') {
+		soundEffect.src = "/sounds/track01.mp3";
+		a = 'a';
+
+	}
+	if (request.num == '66') {
+		soundEffect.src = "/sounds/track02.mp3";
+		a = 'b';
+
+	}
+	if (request.num == '67') {
+		soundEffect.src = "/sounds/track03.mp3";
+		a = 'c';
+
+	}
+	if (request.num == '68') {
+		soundEffect.src = "/sounds/track04.mp3";
+		a = 'd';
+
+	}
+	if (request.num == '69') {
+		soundEffect.src = "/sounds/track05.mp3";
+		a = 'e';
+
+	}
+	if (request.num == '70') {
+		soundEffect.src = "/sounds/track06.mp3";
+		a = 'f';
+
+	}
+	if (request.num == '71') {
+		soundEffect.src = "/sounds/track07.mp3";
+		a = 'g';
+
+	}
+	if (request.num == '72') {
+		soundEffect.src = "/sounds/track08.mp3";
+		a = 'h';
+
+	}
+	if (request.num == '73') {
+		soundEffect.src = "/sounds/track09.mp3";
+		a = 'i';
+
+	}
+	if (request.num == '74') {
+		soundEffect.src = "/sounds/track10.mp3";
+		a = 'j';
+
+	}
+	if (request.num == '75') {
+		soundEffect.src = "/sounds/track11.mp3";
+		a = 'k';
+
+	}
+	if (request.num == '76') {
+		soundEffect.src = "/sounds/track12.mp3";
+		a = 'l';
+
+	}
+	if (request.num == '77') {
+		soundEffect.src = "/sounds/track13.mp3";
+		a = 'm';
+
+	}	
+	if (request.num == '78') {
+		soundEffect.src = "/sounds/track14.mp3";
+		a = 'n';
+
+	}
+	if (request.num == '79') {
+		soundEffect.src = "/sounds/track15.mp3";
+		a = 'o';
+
+	}
+	if (request.num == '80') {
+		soundEffect.src = "/sounds/track16.mp3";
+		a = 'p';
+
+	}
+	
+	if (document.id('leftbongo')) {document.id('leftbongo').innerHTML = a; document.id('leftbongo').fade(1); (function(){document.id('leftbongo').fade(0);}).delay(300);}
 }
 
 function clearTimeoutAndLeave() {

@@ -131,6 +131,9 @@ const city_or_main = 1;
 	opacity:0;
 	display:none;
  }
+ .newsub {
+        display:none;
+ }
  .controls {
         position:relative;
         z-index:99;
@@ -247,6 +250,19 @@ const city_or_main = 1;
 	width:700px;
 	top:48px;
 	opacity:0;
+	display:none;
+ }
+  .newsub {
+        !position:relative;
+	z-index:99;
+	margin:0 auto;
+	width:100%;
+	top:48px;
+	opacity:1;
+	display:block;
+	height:60px;
+	border:0px solid #fff;
+	text-align:center;
 	display:none;
  }
  
@@ -526,6 +542,7 @@ const city_or_main = 1;
 	padding:2px;
 	background:transparent;	
 	font-size:30px;
+	margin-top:-4px;
     }
         
     #stats_v {
@@ -535,6 +552,7 @@ const city_or_main = 1;
 	background:transparent;
 	cursor: pointer;
 	font-size:30px;
+	margin-top:-4px;
     }
     #stats_ng {
 	float:left;
@@ -543,6 +561,7 @@ const city_or_main = 1;
 	background:transparent;
 	cursor: pointer;
 	font-size:30px;
+	margin-top:-4px;
     }
     #want {
 	display:none;
@@ -553,6 +572,7 @@ const city_or_main = 1;
 	cursor:pointer;
 	float:right;
 	margin-right:54px;
+	margin-top:-6px;
     }
     #helpdoc {
 	display:none;
@@ -572,7 +592,7 @@ const city_or_main = 1;
 	cursor:pointer;
 	float:right;
 	margin-right:5px;
-	margin-top:-16px;
+	margin-top:-20px;
     }
     #chess {
 	display:block;
@@ -583,7 +603,7 @@ const city_or_main = 1;
 	cursor:pointer;
 	float:right;
 	margin-right:-12px;
-	margin-top:-16px;
+	margin-top:-20px;
     }
     #air {
 	display:block;
@@ -591,6 +611,7 @@ const city_or_main = 1;
 	color:#9cf;
 	font-size:42px;
 	margin-right:6px;
+	margin-top:-6px;
 	text-align:center;
 	width:42px;
 	border:0px solid #fff;
@@ -760,7 +781,7 @@ const city_or_main = 1;
 }
 
 .plusA {
-	border: 1px solid #777;
+	border: 0px solid #777;
 	display:none;
 	font-size:36px;
 	cursor:pointer;
@@ -882,7 +903,7 @@ const city_or_main = 1;
 	color:#fed;
 	opacity:0;
 	display:none;
-	margin-top:16px;
+	margin-top:20px;
 	border: 0px solid #fff;
 }
 
@@ -1023,7 +1044,7 @@ const city_or_main = 1;
                                 <div style="display:none;">
 RANDOM=7777
                                 </div>
-<script>document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:60vw;max-width:240px;"></iframe>');</script>
+<script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:60vw;max-width:240px;"></iframe>');</script>
 
 				</div>
 			   </div>
@@ -1136,6 +1157,16 @@ if (!curIP.length && false) {
 
 </div><!-- controls -->
 
+<div id=newsub class="newsub">
+		<div id="leftplus" class=plusA style="float:left;">
+			<!-- img id="ball1" src="/img/gold_ball.png" width=60 border=0 style="position:relative;z-index:1002;" -->
+			<div id="leftbongo" style="opacity:0;width:60px;height:60px;border:1px solid #fff;border-radius:30px;color:#fff;"></div>
+		</div>
+		<div id="rightplus" class=plusA style="float:right;">
+			<!-- img id="ball2" src="/img/gold_ball2.png" width=60 border=0 style="position:relative;z-index:1002;" -->
+		</div>
+		
+</div>
 <div id="subcontrols" class=subcontrols><!-- set top to -12px with sp container-->
 
 <div id="sub_selector0" style="float:left;margin-top:-5vh;">
@@ -1146,9 +1177,9 @@ if (!curIP.length && false) {
 </div>
 
 <div id="sub_selectorA" style="float:left;">
-		<div id="leftplus" class=plusA>
+		<!-- div id="leftplus" class=plusA>
 			<img id="ball1" src="/img/gold_ball.png" width=60 border=0 style="position:relative;z-index:1002;">
-		</div>
+		</div --!>
 </div>
 
 <div id="sub_selectorB" style="float:left;margin-left:0px;">
@@ -1156,9 +1187,9 @@ if (!curIP.length && false) {
 </div>
 
 <div id="sub_selectorC" style="float:left;">
-		<div id="rightplus" class=plusA>
+		<!-- div id="rightplus" class=plusA>
 			<img id="ball2" src="/img/gold_ball2.png" width=60 border=0 style="position:relative;z-index:1002;">
-		</div>
+		</div -->
 </div>
 
 <div id="sub_selector9" style="float:left;margin-top:-5vh;">
