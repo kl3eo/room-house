@@ -296,6 +296,36 @@ public class Room implements Closeable {
     }
   }
 
+  public void notify_key_down(UserSession user, String num) throws IOException {
+    if (user != null) {
+    	final List<String> unnotifiedParticipants = new ArrayList<>();
+    	final JsonObject keyDownJson = new JsonObject();	
+    	keyDownJson.addProperty("id", "bongoKey");
+    	keyDownJson.addProperty("num", num);
+    	for (final UserSession participant : participants.values()) {
+	  try {
+		if (user.getName() != participant.getName()) participant.sendMessage(keyDownJson);
+	  } catch (final IOException e) {
+		unnotifiedParticipants.add(participant.getName());
+	  }
+	}
+// do the same for viewers, separately
+
+    	for (final UserSession viewer : viewers.values()) {
+	  try {
+		if (user.getName() != viewer.getName()) viewer.sendMessage(keyDownJson);
+	  } catch (final IOException e) {
+		unnotifiedParticipants.add(viewer.getName());
+	  }
+	}
+		
+	if (!unnotifiedParticipants.isEmpty()) {
+		log.debug("ROOM {}: The users {} could not be notified on key down", this.name, unnotifiedParticipants);
+	}
+	
+    }
+  }
+
   public void write_message_to_log(UserSession user, String mes) throws IOException {
     if (user != null) {
 
