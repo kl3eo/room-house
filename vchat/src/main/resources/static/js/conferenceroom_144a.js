@@ -51,7 +51,9 @@ var playSomeMusic = false;
 var shareSomeScreen = false;
 
 var already_being_played = false;
+
 var now_playing = false;
+var __playing = true;
 
 var audio = null;
 
@@ -286,7 +288,7 @@ function signalGuru(e) {
 
 function eventHandler(n) {
 
-		var message={id :'keyDown', num: n}; 
+		var message={id :'keyDown', num: n, name: ''}; 
 		sendMessage(message);
 }
 
@@ -335,6 +337,7 @@ const register = () => {
 
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
+	
 	let sem  = window.innerWidth > 1024 ? '7' : '';
 	
 	if (!aonly) { if (document.id('av_toggler')) document.id('av_toggler').className = "bigO av_toggler_f" } else { if (document.id('av_toggler')) document.id('av_toggler').className = "bigO av_toggler"; document.id('bcam').className="bigO bcam"; document.id('fcam').className="bigO fcam"; }
@@ -434,6 +437,8 @@ const register = () => {
 
 const register_body = (ro) => {
 	
+		var plr = getCookie('player');
+		
 		let w = window.location.hostname.split('.'); 
 		let room = document.id('roomName').value == '' ? w[0] : document.id('roomName').value;
 	
@@ -496,7 +501,9 @@ const register_body = (ro) => {
 		all_muted = getCookie('all_muted');
 		if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
-		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v'; 	
+		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
+		
+		mode = plr ? 'p' : mode;
 		
 		let tok = getCookie('authtoken') || '';
 		
@@ -554,6 +561,10 @@ function checkLang() {
 }
 const onNewViewer = (request) => {
 
+	let myname = document.id('name').value;
+	let myvideo = 'video-' + myname;	
+	if (now_playing) (function() {document.id(myvideo).play()}).delay(1000);
+
 	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
 
@@ -586,6 +597,10 @@ const onNewParticipant = (request) => {
   if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	
 	let myrole = role;
+	
+	let myname = document.id('name').value;
+	let myvideo = 'video-' + myname;	
+	if (now_playing) (function() {document.id(myvideo).play()}).delay(1000);
 
 	var theCookies = document.cookie.split(';');
     	var really_new = 1;
@@ -825,6 +840,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	participants[name] = participant;
 	
 	var video = participant.getVideoElement();
+	
 	var canvas = check_iOS() ? participant.getCanvasElement() : '';
 
 	var constraints = {
@@ -1059,7 +1075,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		let t = chu[2];
 		let ac = chu[3];
 		let a = chu[4];
-		
+
+console.log('here f is', f, 's is', s);		
 		let na = chu[0].split('_');
 		
 		if (s === 'c') {cinemaEnabled = true; num_cinemas += 1;}
@@ -1079,7 +1096,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('video-' + f).volume = coo_volume;
 			(function() {document.id(f).style.display='block'; document.id(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
 
-		} else { 
+		} else {
 			var lang = getCookie('lang');
 			if (t.length && (lang === null || lang === 'null')) {
 				let ar = /, AR$/.test(t);
@@ -1110,6 +1127,16 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('anno_' + f).innerHTML = a;
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
+		}
+
+		if (document.id('lol_' + f) && a.length && s === 'p') {
+		
+			document.id('lol_' + f).innerHTML = 'STOP/PLAY';
+			document.id('lol_' + f).style.display='block';			
+			document.id('lol_' + f).fade(1);
+			document.id('rew_' + f).innerHTML = '<< -10s';
+			document.id('rew_' + f).style.display='block';			
+			document.id('rew_' + f).fade(1);
 		}
 	   } //for
    } // msg.data
@@ -1319,6 +1346,10 @@ function changeTabLR(request) {
 function bongoKey(request) {
 
 	let a = '';
+	let myname = document.id('name').value;
+	let myvideo = 'video-' + myname;
+	
+	let video_controlable = request.name === myname || request.name === '' ? true : false; 
 	
 	if (request.num == '65') {
 		soundEffect.src = "/sounds/track01.mp3";
@@ -1348,6 +1379,7 @@ function bongoKey(request) {
 	if (request.num == '70') {
 		soundEffect.src = "/sounds/track06.mp3";
 		a = 'f';
+		if (now_playing && video_controlable) document.id(myvideo).currentTime += 10;
 
 	}
 	if (request.num == '71') {
@@ -1398,9 +1430,38 @@ function bongoKey(request) {
 	if (request.num == '80') {
 		soundEffect.src = "/sounds/track16.mp3";
 		a = 'p';
+		if (now_playing && video_controlable) document.id(myvideo).play();
 
 	}
-	
+	if (request.num == '81') {
+		soundEffect.src = "/sounds/track15.mp3";
+		a = 'q';
+
+	}
+	if (request.num == '82') {
+		soundEffect.src = "/sounds/track14.mp3";
+		a = 'r';
+		if (now_playing && video_controlable) document.id(myvideo).currentTime -= 10;
+
+	}
+	if (request.num == '83') {
+		soundEffect.src = "/sounds/track13.mp3";
+		a = 's';
+		if (now_playing && video_controlable) document.id(myvideo).pause();
+
+	}
+	if (request.num == '84') {
+		soundEffect.src = "/sounds/track12.mp3";
+		a = 't';
+
+	}
+	if (request.num == '85') {
+		soundEffect.src = "/sounds/track11.mp3";
+		a = 'u';
+		if (now_playing  && video_controlable && __playing) {document.id(myvideo).pause(); __playing = false;}
+		else if (now_playing  && video_controlable && !__playing) {document.id(myvideo).play(); __playing = true;}
+
+	}					
 	if (document.id('leftbongo')) {document.id('leftbongo').innerHTML = a; document.id('leftbongo').fade(1); (function(){document.id('leftbongo').fade(0);}).delay(300);}
 }
 
@@ -1412,6 +1473,10 @@ function clearTimeoutAndLeave() {
 
 const onParticipantLeft = (request) => {
 
+	//let myname = document.id('name').value;
+	//let myvideo = 'video-' + myname;	
+	//if (now_playing) document.id(myvideo).pause();
+	
 	var participant = participants[request.name];
 	if (participant) {
 		participant.dispose();

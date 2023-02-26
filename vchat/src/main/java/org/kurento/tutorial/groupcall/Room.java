@@ -296,12 +296,13 @@ public class Room implements Closeable {
     }
   }
 
-  public void notify_key_down(UserSession user, String num) throws IOException {
+  public void notify_key_down(UserSession user, String num, String namee) throws IOException {
     if (user != null) {
     	final List<String> unnotifiedParticipants = new ArrayList<>();
     	final JsonObject keyDownJson = new JsonObject();	
     	keyDownJson.addProperty("id", "bongoKey");
     	keyDownJson.addProperty("num", num);
+	keyDownJson.addProperty("name", namee);
     	for (final UserSession participant : participants.values()) {
 	  try {
 		if (user.getName() != participant.getName()) participant.sendMessage(keyDownJson);

@@ -367,10 +367,12 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-	    
+	
     //need this hack to avoid DB errors
     curip = curip.replaceAll("[;'\"]*", "");
-   if (curip.equals("127.0.0.1") || curip.equals("") || isPrivateIP(curip)) {curip = "164.68.105.131";}
+    //if (curip.equals("127.0.0.1") || curip.equals("") || curip.equals("192.168.88.99")) {curip = "164.68.105.131";}
+    //if (matches(curip, "192.168.0.0/16") || matches(curip, "10.0.0.0/8") || matches(curip, "172.16.0.0/8") )
+    if (curip.equals("127.0.0.1") || curip.equals("") || isPrivateIP(curip)) {curip = "164.68.105.131";}
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
     Room room = roomManager.getRoom(roomName);
@@ -469,7 +471,8 @@ public class CallHandler extends TextWebSocketHandler {
   private void keyDown(UserSession user, JsonObject params) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());
     final String num = params.get("num").getAsString();
-    room.notify_key_down(user,num);
+    final String namee = params.get("name").getAsString();
+    room.notify_key_down(user,num,namee);
   }
   
   private void makeLeave(UserSession user, JsonObject params) throws IOException {

@@ -310,7 +310,22 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	anno.id = 'anno_' + name;
 	anno.style.fontSize = '14px';
 	container.appendChild(anno);
-	
+
+	var lol = document.createElement('div');
+	lol.className = 'lols';
+	lol.id = 'lol_' + name;
+	lol.style.fontSize = '14px';
+	lol.onclick = toggleSignal;
+	container.appendChild(lol);
+
+	var rew = document.createElement('div');
+	rew.className = 'lols';
+	rew.id = 'rew_' + name;
+	rew.style.right = '120px';
+	rew.style.fontSize = '14px';
+	rew.onclick = rewind;
+	container.appendChild(rew);
+			
 	var adder = document.createElement('div');	
 	adder.className = 'adders';
 	adder.style.fontSize = '18px';
@@ -392,6 +407,20 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		}).catch(err => console.log(err));		
 	}
 
+	function toggleSignal() {
+		let message = {
+			id :'keyDown', num: 85, name: name //pause/play toggle
+		}		
+		sendMessage(message);
+	}
+
+	function rewind() {
+		let message = {
+			id :'keyDown', num: 82, name: name //rewind 10sec
+		}		
+		sendMessage(message);
+	}
+		
 	const switchOneMode = (el) => {
 		acc_id.then(data => {
 			if (data.length) {

@@ -137,6 +137,7 @@ function toggleHeader(i) {
 			document.id('room-header').style.color = document.id('room-header').style.color == 'rgb(153, 204, 255)' ? oldColor : '#9cf';
 			document.id('room-header-file').style.display = document.id('room-header-file').style.display == 'block' ? 'none' : 'block';
 			playSomeMusic = playSomeMusic == true ? false : true;
+			setCookie('player', playSomeMusic);
 		}
 		if (i == 2 && role == 1 && aonly)  {
 			document.id('room-header-file').style.display='none';
