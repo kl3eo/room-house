@@ -131,8 +131,9 @@ function checkWebRTC() {
 }
 
 function toggleHeader(i) {
-	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		let role = respo; if (role == 2) role = 1;
+	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		//let role = respo; if (role == 2) role = 1;
+		let role = 1; //hack ash
 		if (i == 1 && role == 1 && aonly)  {
 			document.id('room-header').style.color = document.id('room-header').style.color == 'rgb(153, 204, 255)' ? oldColor : '#9cf';
 			document.id('room-header-file').style.display = document.id('room-header-file').style.display == 'block' ? 'none' : 'block';
@@ -144,7 +145,7 @@ function toggleHeader(i) {
 			document.id('room-header').style.color = document.id('room-header').style.color == 'rgb(153, 255, 204)' ? oldColor : '#9fc';
 			shareSomeScreen = shareSomeScreen == true ? false : true;
 		}
-	}).catch(err => console.log(err));				
+	//}).catch(err => console.log(err));				
 }
 
 function getFile() {

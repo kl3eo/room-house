@@ -496,6 +496,7 @@ const register_body = (ro) => {
 			document.id('newsub').style.display = 'block';
 		
 		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
+		if (!small_device && window == window.top && room === 'club'&& !notebook) document.id('req_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -881,7 +882,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
 		
-	if (shareSomeScreen && (role == 1 || role == 2)) {
+	//if (shareSomeScreen && (role == 1 || role == 2)) {
+	if (shareSomeScreen) {
       
 		shareSomeScreen = true;
 		document.id('room-header').style.color = oldColor;
@@ -939,7 +941,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		}).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
 		}).catch(e => console.log(e)); //startCapture
    
-	} else if (playSomeMusic && (role == 1|| role == 2)) {
+	//} else if (playSomeMusic && (role == 1|| role == 2)) {
+	} else if (playSomeMusic) {
   
 		video.autoplay = true;
 		video.playsInline = true;
