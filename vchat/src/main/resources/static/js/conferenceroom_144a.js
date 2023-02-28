@@ -496,7 +496,7 @@ const register_body = (ro) => {
 			document.id('newsub').style.display = 'block';
 		
 		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
-		if (!small_device && window == window.top && room === 'club'&& !notebook) document.id('req_container').style.display = 'block';
+		if (window == window.top && room === 'club') document.id('req_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -564,7 +564,7 @@ const onNewViewer = (request) => {
 
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {document.id(myvideo).play()}).delay(1000);
+	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(1000);
 
 	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
@@ -601,7 +601,7 @@ const onNewParticipant = (request) => {
 	
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {document.id(myvideo).play()}).delay(1000);
+	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(1000);
 
 	var theCookies = document.cookie.split(';');
     	var really_new = 1;
@@ -1433,7 +1433,7 @@ function bongoKey(request) {
 	if (request.num == '80') {
 		soundEffect.src = "/sounds/track16.mp3";
 		a = 'p';
-		if (now_playing && video_controlable) document.id(myvideo).play();
+		if (now_playing && video_controlable) {document.id(myvideo).play();__playing = true;}
 
 	}
 	if (request.num == '81') {
@@ -1461,6 +1461,7 @@ function bongoKey(request) {
 	if (request.num == '85') {
 		soundEffect.src = "/sounds/track11.mp3";
 		a = 'u';
+//console.log('here, np is', now_playing, 'vc is ', video_controlable, 'pl is', __playing);
 		if (now_playing  && video_controlable && __playing) {document.id(myvideo).pause(); __playing = false;}
 		else if (now_playing  && video_controlable && !__playing) {document.id(myvideo).play(); __playing = true;}
 
