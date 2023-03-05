@@ -564,7 +564,7 @@ const onNewViewer = (request) => {
 
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(1000);
+	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(2000);
 
 	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
@@ -601,7 +601,7 @@ const onNewParticipant = (request) => {
 	
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(1000);
+	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(2000);
 
 	var theCookies = document.cookie.split(';');
     	var really_new = 1;
@@ -1450,7 +1450,7 @@ function bongoKey(request) {
 	if (request.num == '83') {
 		soundEffect.src = "/sounds/track13.mp3";
 		a = 's';
-		if (now_playing && video_controlable) document.id(myvideo).pause();
+		if (now_playing && video_controlable) {document.id(myvideo).pause();__playing = false;}
 
 	}
 	if (request.num == '84') {
