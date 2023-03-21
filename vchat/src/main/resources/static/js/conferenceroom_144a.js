@@ -1081,7 +1081,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		let ac = chu[3];
 		let a = chu[4];
 
-console.log('here f is', f, 's is', s);		
+//console.log('here f is', f, 's is', s);		
 		let na = chu[0].split('_');
 		
 		if (s === 'c') {cinemaEnabled = true; num_cinemas += 1;}

@@ -590,7 +590,7 @@ const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 document.id('message_wrap').fade(0);document.id('chatter').fade(0);document.id('audience').fade(0);document.id('antichatter').fade(0);chat_shown = 0; document.id('logger').className = "bigO logger";
 }
 
-const cli8 = () => {
+const cli8 = () => { homee = document.id('roomName').value !== w[0] && homee === w[0] ? document.id('roomName').value : homee;
 fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_guests.pl?room='+homee, {credentials: 'include'}).then(function(response){if (response.status !== 200){console.log('Status Code: ' + response.status); return;} response.json().then(function(data) { if (data != 0) { let audi = ''; const array = Object.keys(data).map(key => data[key]); array.forEach(item => { let s = item[0].split('_'); let short = s[0]; let d= item[3].split(' '); let ti = d[1].split(':'); let tim = ti[0]+':'+ti[1]; audi = audi + '<div><span>' + short + '</span>,&nbsp;<span>' + item[1] + '</span>,&nbsp;<span>' + item[2] + '</span>&nbsp;<span>' + tim + '</span></div>';}); audi = audi + '<div style="line-height:60px;">&nbsp;</div>'; document.id('logger').click(); chat_shown = 0; document.id('message_box').innerHTML = audi; document.id('message_box').fade(1);
 }})}).catch(err => console.log(err));
 }
