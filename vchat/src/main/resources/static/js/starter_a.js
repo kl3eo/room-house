@@ -45,7 +45,7 @@ var cammode = 0;
 
 var stats_shown = 1;
 
-var sp_shown = (window == window.top && (w[0].match(new RegExp('skypirl','g')) || w[0].match(new RegExp('club','g')) || w[0].match(new RegExp('milan','g')) )) ? 1 : 1;
+var sp_shown = (window == window.top && (w[0].match(new RegExp('skypirl','g')) || w[0].match(new RegExp('club','g')) || w[0].match(new RegExp('milan','g')) )) ? 0 : 0;
 
 var voting_shown = w[0] === "club" && small_device && !sp_shown ? 0 : 0;
 

@@ -497,6 +497,8 @@ const register_body = (ro) => {
 		
 		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
 		if (window == window.top && room === 'club') document.id('req_container').style.display = 'block';
+		
+		//if (window == window.top && room === 'club' && !small_device && !notebook) document.id('desktop_container').style.display = 'block';
 
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -543,7 +545,7 @@ const register_body = (ro) => {
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 
-		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1); /*if (small_device) document.id('want').style.marginRight = "0px";*/}).delay(500);
+		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
 		
 		if (!small_device && document.id('helpdoc')) (function() {let l = checkLang(); /*if (!small_device) document.id('helpdoc').style.marginRight = "4.8vw";*/
 

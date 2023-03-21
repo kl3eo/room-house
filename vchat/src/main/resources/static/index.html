@@ -145,7 +145,7 @@ const city_or_main = 1;
  }
 
  .bigO {
-        float:left;
+	float:left;
         width:40px;
         height:38px;
         line-height:42px;
@@ -157,6 +157,22 @@ const city_or_main = 1;
         color:#777;
         font-family:Courier;
         cursor:pointer;
+ }
+
+ .bigO:first-child:hover{
+	transform: rotate(45deg);
+ }
+ .bigO:nth-child(2):hover{
+	transform: rotate(-45deg);
+ }
+ .bigO:nth-child(3):hover{
+	transform: rotate(60deg);
+ }
+ .bigO:nth-child(4):hover{
+	transform: rotate(-60deg);
+ }
+ .bigO:last-child:hover{
+	transform: rotate(75deg);
  }
 
  .fcam {
@@ -288,7 +304,8 @@ const city_or_main = 1;
  }
  
  .bigO {
-        float:left;
+	transition:.5s ease-in-out;
+	float:left;
         width:80px;
         height:76px;
         line-height:84px;
@@ -300,6 +317,21 @@ const city_or_main = 1;
         color:#777;
         font-family:Courier;
         cursor:pointer;
+ }
+ .bigO:first-child:hover{
+	transform: rotate(45deg);
+ }
+ .bigO:nth-child(2):hover{
+	transform: rotate(-45deg);
+ }
+ .bigO:nth-child(3):hover{
+	transform: rotate(60deg);
+ }
+ .bigO:nth-child(4):hover{
+	transform: rotate(-60deg);
+ }
+ .bigO:last-child:hover{
+	transform: rotate(75deg);
  }
 
  .fcam {
@@ -525,6 +557,8 @@ const city_or_main = 1;
 	display: none;
 	opacity: 0;
 	font-size: 16px;
+	line-height:24px;
+	padding:4px;
 	border-radius: 10px;
 	cursor:pointer;
 }
@@ -647,7 +681,8 @@ const city_or_main = 1;
 	height:80px;
 	cursor:pointer;
 	float:right;
-	margin-right:2px;
+	!margin-right:2px;
+	margin-right:14px;
 	margin-top:-22px;
     }
     #chess {
@@ -662,7 +697,7 @@ const city_or_main = 1;
 	margin-top:-23px;
     }
     #air {
-	display:block;
+	display:none;
 	cursor:pointer;
 	color:#9cf;
 	font-size:42px;
@@ -679,6 +714,7 @@ const city_or_main = 1;
 	height:42px;
 	line-height:42px;
 	margin-top:-10px;
+	display:none;
     }
 }
 
@@ -780,7 +816,8 @@ const city_or_main = 1;
 	height:36px;
 	cursor:pointer;
 	float:right;
-	margin-right:8px;
+	!margin-right:8px;
+	margin-right:20px;
 	margin-top:-10px;
 	border:0px solid #090;
     }
@@ -797,7 +834,7 @@ const city_or_main = 1;
 	border:0px solid #090;
     }
     #air {
-	display:inline;
+	display:none;
 	cursor:pointer;
 	color:#9cf;
 	!text-decoration:underline;
@@ -814,6 +851,7 @@ const city_or_main = 1;
 	height:30px;
 	line-height:30px;
 	margin-top:-13px;
+	display:none;
     }
 }
 
@@ -1270,9 +1308,15 @@ if (!curIP.length && false) {
 <div style="clear:left;"></div>
 </div><!-- subcontrols -->
 
-<div id="req_container" style="display:none;">новые &#128682;<a href="https://room-house.com/contact_ru.html" target=new style="color:#f00;"><i>комнаты</i></a>
-<span style="width:20px;height:20px;color:#9cf;border:1px solid #9cf;border-radius:10px;font-size:12px;margin-top:-20px;cursor:pointer;line-height:20px;" onclick="document.id('req_container').style.display='none'">&nbsp;x&nbsp;</span>
+<div id="req_container" style="display:none;">открывай &#128682;<a href="https://room-house.com/contact_ru.html" target=new style="color:#f00;"><i>двери</i></a> румхауса
+<span style="width:30px;height:30px;color:#9cf;border:1px solid #9cf;border-radius:15px;font-size:12px;margin-top:-20px;cursor:pointer;line-height:24px;" onclick="document.id('req_container').style.display='none'">&nbsp;x&nbsp;</span>
 </div>
+
+<div id="desktop_container" style="display:none;width:100%;min-width:624px;font-size:16px;margin-top:30px;position:absolute;text-align:center;left:-120px;">
+<div style="float:left;">живи в <a href="https://room-house.com/contact_ru.html" target=new style="color:#0f0;"><i>румхаусе</i></a></div>
+<div style="float:right;">запомни <a href="https://room-house.com/contact_ru.html" target=new style="color:#f0f;"><i>румхаус</i></a>!</div>
+<span style="width:30px;height:30px;color:#ffa;border:1px solid #9cf;border-radius:15px;font-size:20px;margin-top:-30px;cursor:pointer;line-height:30px;" onclick="location.href='https://room-house.com/contact_ru.html'">GO!</span></div>
+
 <div id="slide_container">
 <section id="main-slider" class="splide" aria-label="Lolo">
   <div class="splide__track">
