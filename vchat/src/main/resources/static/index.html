@@ -50,7 +50,8 @@
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
 
-const port = w[0] === '185' ? '18443' : w[0] === '95' ? '8468' : '8453';
+const only_nums = /^\d+$/.test(w[0]);
+const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : only_nums ? '8443' : '8453';
 
 const request = async (url) => {
 		const response = await fetch(url,{credentials: 'include'});
@@ -1089,6 +1090,56 @@ const city_or_main = 1;
 	display:none;
 	opacity:0;
 }
+
+select:focus, input:focus, button:focus{
+  outline:none;
+}
+
+.rh_container {
+  cursor:pointer;
+  opacity: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30vh;
+  position:relative;
+}
+.rh_container .box {
+  transform-style: preserve-3d;
+  animation: animate 7s ease-in-out infinite alternate;
+}
+.rh_container .box span {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5) 90%, transparent);
+  text-transform: uppercase;
+  line-height: 0.76em;
+  position: absolute;
+  color: #fff;
+  font-size: 3.5em;
+  white-space: nowrap;
+  font-weight: bold;
+  padding: 0px 10px;
+  transform-style: preserve-3d;
+  text-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%) rotateX(calc(var(--i) * 22.5deg)) translateZ(109px);
+}
+.rh_container .box span i {
+  font-style: initial;
+}
+.rh_container .box span i:nth-child(1) {
+  color: #5c5fc4;
+}
+.rh_container .box span i:nth-child(2) {
+  color: #c4c15c;
+}
+
+@keyframes animate {
+  0%{
+    transform: perspective(1500px) rotateX(15deg) rotateY(92deg) rotateZ(-30deg) rotate(5deg);
+  }
+  100%{
+    transform: perspective(1000px) rotateX(0deg) rotate(5deg);
+  }
+}
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
@@ -1131,9 +1182,9 @@ const city_or_main = 1;
 <div style="clear:both;"></div>
 
 </div><!-- preroom -->
-
-<div id="dummy_p" class="participant" style="position:absolute; left:0; top:50%; color:#369;font-size:16px;display:none;">CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png"></div>
-<div id="dummy2_p" class="participant" style="position:absolute; right:0; top:50%; color:#369;font-size:16px;display:none;">..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div></div>
+    
+<div id="dummy_p" class="participant" style="position:absolute; left:0; top:70%; color:#369;font-size:16px;display:none;">CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png"></div>
+<div id="dummy2_p" class="participant" style="position:absolute; right:0; top:70%; color:#369;font-size:16px;display:none;">..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div></div>
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
 	<div id="container" style="margin-top:-5px;border:0px solid #ccc;">
 		<div id="wrapper">
@@ -1243,7 +1294,6 @@ if (!curIP.length && false) {
 </div><!-- av_selector -->
 <div style="clear:left;"></div>
 
-
 <div id="stats">
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter>0</span></div>
 	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; document.id('logger').click(); document.id('message_box').style.display='none'; document.id('audience_box').style.display='table';">&#128101;:&nbsp;<span id=vcounter>0</span></div>
@@ -1263,6 +1313,90 @@ if (!curIP.length && false) {
 
 </div><!-- controls -->
 
+    <div id="rh_container" class=rh_container ONCLICK="location.href='https://room-house.com/contact_ru.html';">
+      <div class=box>
+        <span style="--i: 1">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 2">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 3">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 4">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 5">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 6">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 7">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 8">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 9">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 10">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 11">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 12">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 13">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 14">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 15">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+        <span style="--i: 16">
+          <i>ROOM</i>
+          -
+          <i>HOUSE</i>
+        </span>
+      </div>
+    </div><!-- container -->
 <div id=newsub class="newsub">
 		<div id="leftplus" class=plusA style="float:left;">
 			<!-- img id="ball1" src="/img/gold_ball.png" width=60 border=0 style="position:relative;z-index:1002;" -->

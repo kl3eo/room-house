@@ -174,6 +174,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	container.id = name;
 	container.style.position='relative';
+	//container.style.zIndex = '21';
 	var span = document.createElement('span');
 	var speaker = document.createElement('div');
 	var slider = document.createElement('input');	
@@ -316,6 +317,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	lol.id = 'lol_' + name;
 	lol.style.fontSize = '14px';
 	lol.onclick = toggleSignal;
+	lol.style.position = 'absolute';
+	lol.style.zIndex = '1001';
 	container.appendChild(lol);
 
 	var rew = document.createElement('div');
@@ -324,6 +327,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	rew.style.right = '120px';
 	rew.style.fontSize = '14px';
 	rew.onclick = rewind;
+	rew.style.position = 'absolute';
+	rew.style.zIndex = '1001';
 	container.appendChild(rew);
 			
 	var adder = document.createElement('div');	

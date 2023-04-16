@@ -268,7 +268,7 @@ var he_ = new Map ([
 
 var du_ = new Map ([
    ['en', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
-   ['ru', 'КЛИКНИ МЕНЮ ДЛЯ АКТИВАЦИИ ВЕБКАМЕРЫ!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['ru', 'КЛИКНИТЕ МЕНЮ ДЛЯ АКТИВАЦИИ ВЕБКАМЕРЫ!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
    ['es', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
    ['fr', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
    ['cn', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
@@ -277,7 +277,7 @@ var du_ = new Map ([
 
 var du2_ = new Map ([
    ['en', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
-   ['ru', '..ПОТОМ НАЖМИ &rarr;<br>на КРУЖОК "A"<br>И ДОБАВЬ КОММЕНТ<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
+   ['ru', '..ПОТОМ НАЖМИТЕ &rarr;<br>на КРУЖОК "A"<br>И ДОБАВЬТЕ КОММЕНТ<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
    ['es', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
    ['fr', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],
    ['cn', '..THEN CLICK &rarr;<br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div>'],

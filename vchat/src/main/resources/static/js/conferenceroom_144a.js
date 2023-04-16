@@ -496,7 +496,11 @@ const register_body = (ro) => {
 			document.id('newsub').style.display = 'block';
 		
 		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
-		if (window == window.top && room === 'club') document.id('req_container').style.display = 'block';
+		//if (window == window.top && room === 'club') document.id('req_container').style.display = 'block';
+
+		//if (document.id('rh_container') && !small_device) {document.id('rh_container').style.marginTop = '14vh'; /*document.id('rh_container').style.zIndex = '19';*/}
+		//if (document.id('rh_container') && small_device) document.id('rh_container').style.display = 'none';
+		document.id('rh_container').style.display = 'none';
 		
 		//if (window == window.top && room === 'club' && !small_device && !notebook) document.id('desktop_container').style.display = 'block';
 
