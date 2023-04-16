@@ -91,7 +91,7 @@ Set up your new VM with minimum 4GB of RAM, 1 or 2 CPU cores, no audio, with EFI
 If you can, increase the RAM size and # of CPU cores according to what is actually there on your host computer:
 
 
-	VBoxManage modifyvm xTER --memory 4096 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
+	VBoxManage modifyvm xTER --memory 4096 --cpus 2 --audio none --firmware efi --nic1 nat --nictype1 Am79C973 --nataliasmode1 proxyonly
 
 
 Set up internal host-to-guest port forwarding for the Room-House audio/video chat and to the HTTPS admin web interface:
@@ -151,6 +151,8 @@ Type the following three commands, one by one (in command one, "FS0:" is FS+"zer
 FS0:
 cd efi\boot
 bootx64.efi
+
+NB: If you see a blue (not BLACK) screen with 5 fields, enter your login and password to fetch the needed files. You must have received both login and password from us, hopefully.
 
 After the xTER has booted, you'll see a confirmation in this window.
 
