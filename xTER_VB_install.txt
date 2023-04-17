@@ -33,6 +33,7 @@ Installation
 
 In case you're on a different OS, like Linux, the rest of this is true, too. You may use "create_rh.sh" script in "rh" folder to automate the VM creation.
 
+
 Setup xTER VM
 =============
 
@@ -158,7 +159,7 @@ Start the "headless" xTER VM with the command:
 	VBoxHeadless --startvm xTER
 
 
-Warning: You will NOT see any output from the loading xTER in this case - just wait a few minutes.
+Warning: You will NOT see any output from the loading xTER in this case - wait a few minutes.
 
 
 ----------------------------------------------------------------------------------
@@ -227,13 +228,11 @@ If your R-H node is NOT running, whatever you did, and an alert keeps telling yo
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
-Make sure the port forwarding is there and it's correct.
-
 Then make sure that your external IP is static and not dynamic - or contact your Internet provider and request a static IP.
 
-It is now NOT possible to run an R-H node on a dynamic IP, though you may boot xTER and use the Manager!
+It is NOT possible to run an R-H node using a dynamic external IP, though you may boot xTER and see the Manager locally!
 
-Note that the R-H node will also temporarily stop running when your external IP stops being visible from the outside. When this problem goes away,
+Note that the R-H node will also temporarily stop running when your static external IP stops being visible from the outside. When this problem goes away,
 your R-H node's up and running again, automatically.
 
 Now that your R-H node is up and running, proceed to go public.
