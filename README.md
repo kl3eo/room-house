@@ -7,7 +7,9 @@ bootx64.efi - RH bootloader "as is" - can be used with an EFI flash (/efi/boot/b
 
 loop.vdi - the same bootloader packed into VDI format for use with a VirtualBox. See script and text file in this github folder about how to use it with the VB.
 
-Download the "loop_rh.vdi" and set a VirtualBox by running "create_rh.sh" script from the "rh" folder, on Linux, or a similar line-by-line commands for Windows. See the instruction in detail on commands on Windows: "Setting up you own Room-House" - https://github.com/kl3eo/room-house/blob/main/xTER_VB_install.txt.
+Download the "loop_rh.vdi" and set a VirtualBox by running "create_rh.sh" script from the "rh" folder, on Linux, or a similar line-by-line commands for Windows. See the instruction in detail for all commands on Windows titled "Setting up you own Room-House" at https://github.com/kl3eo/room-house/blob/main/xTER_VB_install.txt. 
+
+Just restart the VM to fetch the latest Room-House release, or hit the reset button if you're on bare metal.
 
 # xTER releases with Room-House timeline
 15.04.23 -- v1.33 released; IP-based Room-House available on change EXT in settings; new certs upload allowed to everyone; domain change working

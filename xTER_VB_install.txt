@@ -31,13 +31,7 @@ Installation
 2. Run the installation of VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
 
 
-In case you're on a different OS, like Linux, congrats, the rest of this is true, too. 
-
-A shortcut of all the commands in one awesome script for you:
-
-
-https://github.com/kl3eo/room-house/blob/main/VM_create_RH_only.sh
-
+In case you're on a different OS, like Linux, the rest of this is true, too. You may use "create_rh.sh" script in "rh" folder to automate the VM creation.
 
 Setup xTER VM
 =============
@@ -45,7 +39,7 @@ Setup xTER VM
 
 Open the command line (terminal) - it usually prompts to "C:\Users\Bob" - if you're a User named Bob.
 
-Set a correct PATH to find the VirtualBox binary files:
+Set a correct PATH to find the VirtualBox binary files - this is the very first command.
 
 
 	set PATH=%PATH%;"C:\Program Files\Oracle\VirtualBox"
@@ -113,14 +107,13 @@ Create a virtual SATA controller:
 	VBoxManage storagectl xTER --name SATA --add sata
 
 
-Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/loop.vdi" and put it to "C:\Users\Bob\VMs\xTER"
+Download our bootloader file "https://github.com/kl3eo/room-house/blob/main/rh/loop_rh.vdi" and put it to "C:\Users\Bob\VMs\xTER"
 
-NB: for Validate.Guru install, download and use "loop_vg.vdi" instead of "loop.vdi".
 
 Attach this file to the VM as Disk 0:
 
 
-	VBoxManage storageattach xTER --storagectl SATA --medium loop.vdi --port 0 --type hdd
+	VBoxManage storageattach xTER --storagectl SATA --medium loop_rh.vdi --port 0 --type hdd
 
 
 Attach the 2Gb file as Disk 1:
@@ -142,17 +135,17 @@ Boot and post-install
 
 Now, boot the VM from the VirtualBox graphical manager. You should see another window open and xTER start in it. 
 
-If instead of seeing the bootloader's greeting you're in the command prompt, that means the VB can't find your bootloader. 
+If instead of seeing the bootloader's greeting you're in the command prompt, that means the VB can't find your bootloader! It happens :(
 
 It happened more than once, so there is a way to go on - just start the bootloader manually!
 
-Type the following three commands, one by one (in command one, "FS0:" is FS+"zero"+"column").
+Type the following three commands, one by one ("FS0:" = FS+"zero"+"column").
 
 FS0:
 cd efi\boot
 bootx64.efi
 
-NB: If you see a blue (not BLACK) screen with 5 fields, enter your login and password to fetch the needed files. You must have received both login and password from us, hopefully.
+NB: If you see a blue (not BLACK) screen with 5 fields, enter your login and password to fetch the needed files (you may leave the rest three fields empty; skip between fields by "Enter" or "Tab"). You must have received both login and password from us, hopefully.
 
 After the xTER has booted, you'll see a confirmation in this window.
 
@@ -172,19 +165,15 @@ Warning: You will NOT see any output from the loading xTER in this case - just w
 Use the admin's web admin interface ("Manager" program) in your browser at https://localhost:8843
 ----------------------------------------------------------------------------------
 
-[ The rest of this setup is also covered in Help at https://xter.tech/vbhelp/index.html - go to p.17 and browse to the end. ]
+If your browser complains that this site's certificate is "*.room-house.com", while you're trying to access it locally - that's OK. 
 
-If your browser complains that this site's certificate is "*.room-house.com" (or "*.validate.guru"), while you're trying to access it locally - that's OK. 
-
-We will allow access on the right URL later, and this certificate will then be good for your new Room-House/Validate.Guru node.
+Because later this certificate will be good for your new Room-House node.
 
 Use the default login/password, if it is the first time you log in the Manager. 
 
 These defaults are printed on the xTER boot "black" window next to the xTER greeting. 
 
-You may also find them in one of the pictures in the Help HTML file on the link given above.
-
-Don't forget to change the default admin password and "Save" it. See the Help file on the link above about the details. 
+Don't forget to change the default admin password in "Settings" and "Save" it.
 
 
 
@@ -192,42 +181,42 @@ Check your Room-House node is usable
 ====================================
 
 
-Before anything, do port forwarding to your host machine on your Internet router:
+Before anything, do port forwarding (PORT FORWARDING) to your host machine from your Internet router:
 
 
 1. First, forward the port 443. It's the workhorse port of the Room-House chat.
 
-You have to forward this port 443 from the router to the port 8443 on your host machine, R-443=>H-8443
+You have to forward this port 443 from the router to the port 8443 on your host machine, R-443 => H-8443
 
-[ Which we assume has an IP like 192.168.0.11 - or whatever, you know it better.]
+[ We assume the host computer has an IP like 192.168.0.11 - or you know better.]
 
 
-2. Second, forward the Manager program port 8443 from your router to the port 8843 on your host,  R-8443=>H-8843
+2. Second, forward the Manager port 8443 from your router to the port 8843 on your host,  R-8443 => H-8843
 
 Warning: Make sure that you've changed the default admin password in "Settings" menu of the Manager - as we hope you already did!!! Only you must know this password now.
 
 
-Now, it's time to check things in the Manager.
+Now, it's time to check some things in the Manager.
 
 Open the Manager menu "Info" page, search for Disk Use and Memory Use columns. 
 
 If you setup this VM with a recommended minimal amount of RAM (i.e. 4096M), then you're now with ~860M of free disk space and ~160M of free RAM. 
 
-Check that this is indeed the case. 
+Make sure that this is indeed the case. 
 
 If you'd allowed more RAM during setup, then of course there would be more disk space and more memory available now.
 
 Now, look at the list of running processes in the same page below the middle line inside a wide container. Check that the KMS is running.
 
-There must be a line ending with "kurento-media-server". If it's there, it's the first line on top.
+There MUST BE a line ending with "kurento-media-server". If it's there, it's the first line on top.
 
 Now, look at the bottom of the same container, there must be a very-very VERY long line containing hundreds of words, like "java", "spring", "guava", etc.
 
 If it's there, congratulations, your R-H node is running. 
 
-If it's not there, maybe the chat has not started automatically.
+If it's not there, maybe it has not started automatically.
 
-This is known to happen if your VM's power is low.
+This is known to sometimes happen if your VM resource is low!
  
 In this case, just hit the "Restart KMS" button in the left column. 
 
@@ -238,30 +227,16 @@ If your R-H node is NOT running, whatever you did, and an alert keeps telling yo
 
 Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
-Check this on your router again to be sure the port forwarding is there and it's correct.
+Make sure the port forwarding is there and it's correct.
 
-Also make sure that your external IP is static and not dynamic - or contact your Internet provider and request a static IP.
+Then make sure that your external IP is static and not dynamic - or contact your Internet provider and request a static IP.
 
-It is NOT possible to run an R-H node on a dynamic IP, though it is ok to boot xTER and use the Manager!
+It is now NOT possible to run an R-H node on a dynamic IP, though you may boot xTER and use the Manager!
 
-Note that the R-H node will also temporarily stop running when your external IP becomes invisible from the outside. When this problem disappears,
-so does the problem with the R-H node - it's up and running again, automatically.
+Note that the R-H node will also temporarily stop running when your external IP stops being visible from the outside. When this problem goes away,
+your R-H node's up and running again, automatically.
 
 Now that your R-H node is up and running, proceed to go public.
-
-
-Go public
-=========
-
-It's time we make your node visible to the world and after that you begin to earn Skypirl coins for the Room-House traffic.
-
-Use Twitter or Telegram and tell us what's your static IP.
-
-Example: IP 81.13.44.89 Your city: London
-
-We will add your node to our proxy servers list and it becomes visible to the world as "london.room-house.com"
-
-And as soon as we add your node to the list on our proxies, we will inform you.
 
 
 ==========
