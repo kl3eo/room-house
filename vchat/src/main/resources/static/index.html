@@ -50,8 +50,9 @@
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
 
-const only_nums = /^\d+$/.test(w[0]);
-const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : only_nums ? '8443' : '8453';
+//const only_nums = /^\d+$/.test(w[0]);
+//const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : only_nums ? '8443' : '8453';
+const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : w[1] === 'room-house' ? '8453' : '8443';
 
 const request = async (url) => {
 		const response = await fetch(url,{credentials: 'include'});
@@ -220,6 +221,10 @@ const city_or_main = 1;
  	background:url(/icons/chat2.png) center center no-repeat #f78f3f;
  }
 
+ .logger_g {
+ 	background:url(/icons/chat2.png) center center no-repeat #90ee90;
+ }
+ 
  .bell_f {
  	background:url(/icons/bell2.png) center center no-repeat #f78f3f;
  }
@@ -379,6 +384,10 @@ const city_or_main = 1;
  	background:url(/icons/chat72.png) center center no-repeat #f78f3f;
  }
 
+ .logger_g {
+ 	background:url(/icons/chat72.png) center center no-repeat #90ee90;
+ }
+ 
  .bell_f {
  	background:url(/icons/bell72.png) center center no-repeat #f78f3f;
  }
@@ -1226,14 +1235,14 @@ RANDOM=7777
 			<div style="border:0;height:12vh;min-height:120px;background:transparent;text-align:center;margin:0px auto;width:60vw;max-width:240px;">&nbsp;</div>
 			<div style="width:60%;margin:0px auto 0px auto;font-size:16px;color:#222;">&nbsp;</div>
 		        <div style="position:absolute;width:60%;margin:0px auto;font-size:14px;text-align:center;bottom:30px;left:20%;color:#9cf;">
-                        	Copyright 2022
+                        	Copyright 2021
         		</div>
                 <br>
 
 		</div>
 	</div><!-- postroom -->
                         <div id="cr" style="position:absolute;width:60%;margin:0px auto;font-size:12px;text-align:center;bottom:3vh;left:20%;color:#9cf;z-index:-1000;">
-                                2022 (C) Powered by <a href="https://room-house.com/space/" target=new>xTER</a><!-- with <a href="https://www.kurento.org" target=new>Kurento</a> -->
+                                2023 (C) Powered by <a href="https://room-house.com/space/" target=new>xTER</a><!-- with <a href="https://www.kurento.org" target=new>Kurento</a> -->
                         </div>
 </div><!-- preco -->
 <script>checkWebRTC()</script>
