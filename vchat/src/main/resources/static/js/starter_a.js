@@ -335,7 +335,7 @@ e.stopPropagation();
   document.id('room-header').addEventListener('click', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(1);});
   document.id('room-header').addEventListener('dblclick', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(2);});
 
-  if (role != -1) {
+  if (role != -1  && sp_shown) {
   	acc_id.then(data => {
 //console.log('1: acc_id is', data);
 		setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}}, 10000);

@@ -1319,17 +1319,6 @@ const setCinema = (request) => {
 	}).catch(err => console.log(err));	
 }
 
-function newChatMessage_old() {
-	let cnt = 0; let sem  = window.innerWidth > 1024 ? '7' : '';
-	let old_color = document.id('logger').style.background == 'url(/icons/chat' + sem + '2.png) center center no-repeat' ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #f78f3f' : 'url(/icons/chat' + sem + '2.png) center center no-repeat;';
-	new_message = 1;
-	let intervalID = setInterval(function() { if (new_message) {document.id('logger').style.background = cnt % 2 == 0 ? 'url(/icons/chat' + sem + '2.png) center center no-repeat #90ee90' : 'url(/icons/chat' + sem + '2.png) center center no-repeat'; cnt++;} else {document.id('logger').style.background = old_color; clearInterval(intervalID)}}, 1000);
-	
-	fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
-
-		soundEffect.src = "/sounds/buzz.mp3";
-}
-
 function newChatMessage() {
 
 	new_message = 1;
