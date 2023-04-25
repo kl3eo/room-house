@@ -545,7 +545,8 @@ const register_body = (ro) => {
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; document.id('phones').onclick=location.reload(); (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
-		(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; document.id('phones').innerHTML = warning; document.id('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
+		//this stuff will make mobiles re-connect every 10 sec (?!)
+		//(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; document.id('phones').innerHTML = warning; document.id('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 
