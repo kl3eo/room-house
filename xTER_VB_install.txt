@@ -185,14 +185,14 @@ Check your Room-House node is usable
 Before anything, do port forwarding (PORT FORWARDING) to your host machine from your Internet router:
 
 
-1. First, forward the port 443. It's the workhorse port of the Room-House chat.
+1. First, ЫФ the port 8443. It's the workhorse port of the Room-House chat.
 
-You have to forward this port 443 from the router to the port 8443 on your host machine, R-443 => H-8443
+You have to forward this port 8443 from the router to the port 8443 on your host machine, R-8443 => H-8443
 
 [ We assume the host computer has an IP like 192.168.0.11 - or you know better.]
 
 
-2. Second, forward the Manager port 8443 from your router to the port 8843 on your host,  R-8443 => H-8843
+2. Second, forward the Manager port 8843 from your router to the port 8843 on your host,  R-8843 => H-8843
 
 Warning: Make sure that you've changed the default admin password in "Settings" menu of the Manager - as we hope you already did!!! Only you must know this password now.
 
@@ -226,7 +226,7 @@ Wait a few seconds, then you'll see your R-H node is running.
 If your R-H node is NOT running, whatever you did, and an alert keeps telling you that there has been "a problem with your static IP", 
 - then your external IP is dynamic, or maybe it's static but is not visible from outside. 
 
-Or, you've failed to forward the two ports (443 and 8443) on your router correctly - see again pp.1 and 2 in this Chapter. 
+Or, you've failed to forward the two ports (8443 and 8843) on your router correctly - see again pp.1 and 2 in this Chapter. 
 
 Then make sure that your external IP is static and not dynamic - or contact your Internet provider and request a static IP.
 
