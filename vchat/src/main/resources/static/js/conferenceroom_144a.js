@@ -1483,10 +1483,6 @@ function clearTimeoutAndLeave() {
 
 const onParticipantLeft = (request) => {
 
-	//let myname = document.id('name').value;
-	//let myvideo = 'video-' + myname;	
-	//if (now_playing) document.id(myvideo).pause();
-	
 	var participant = participants[request.name];
 	if (participant) {
 		participant.dispose();
@@ -1495,6 +1491,17 @@ const onParticipantLeft = (request) => {
 		just_left = request.name;
         	if (!small_device) resizer(pcounter);			
 
+	} else {
+		let temp = request.name.split('_');
+		let du = 'DUMMY_'+temp[temp.length-1];
+		participant = participants[du];
+		if (participant) {
+			participant.dispose();
+			if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
+				delete participants[request.name];
+				just_left = request.name;
+        			if (!small_device) resizer(pcounter);			
+		} 
 	}
 }
 

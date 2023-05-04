@@ -231,7 +231,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	   })
 	}
 ///	
-	//onemode.onclick = setCinema;
+	onemode.onclick = setCinema;
 	dropper.onclick = rmPtcp;
 
 	speaker.className = 'speak';
@@ -431,14 +431,30 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			if (data.length) {
 				doSwitchOneMode(el);
 			} else {
-				if (!afterBinding && false) {acc_id.then(data => {
-		setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}}, 10000);
-		
-		(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
-		}}).delay(1000);
-		document.id('sp_container').style.display = 'block'; sp_shown = 1; 
-		ch_int = setInterval(function() { if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + data;} }, 300000);	  
-	});} document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; document.id('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); (function(){document.id('phones').fade(0);}).delay(1000);
+				if (!afterBinding) {
+				   acc_id.then(data => {
+					setTimeout(function() {
+						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
+						(function() {document.id('removerA').fade(0)}).delay(1000);}
+					}, 10000);					
+					(function() {
+						if (document.id('sp_balance')){
+								document.id('sp_balance').style.display='block';
+								document.id('sp_balance').src=sp_container_url+'/?acc='+data;
+						}
+					}).delay(1000);
+					document.id('sp_container').style.display = 'block'; sp_shown = 1; 
+					ch_int = setInterval(function() { 
+						if (document.id('sp_balance')) {
+							document.id('sp_balance').style.display='block';
+							document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
+						}
+					}, 300000);	  
+				   });
+				} 
+				document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; 
+				document.id('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); 
+				(function(){document.id('phones').fade(0);}).delay(1000);
 			}
 		});
 
