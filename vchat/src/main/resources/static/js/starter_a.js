@@ -35,7 +35,7 @@ var oldColor = null;
 
 var selectedFile = null;
 
-var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = ''; var now = ''; var today = ''; var roo = ''; var buy = ''; var helpcapo = '';
+var loado = ''; var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = ''; var now = ''; var today = ''; var roo = ''; var buy = ''; var helpcapo = '';
 
 var chat_shown = 1;
 
@@ -84,6 +84,7 @@ function change_lang(l) {
 	warning = warner.get(l);
 	waiter = waiter_.get(l);
 	sorry = sorry_.get(l);
+	loado = loado_.get(l);
 
 	caller = caller_.get(l);
 	requ = requ_.get(l);

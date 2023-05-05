@@ -1153,7 +1153,7 @@ select:focus, input:focus, button:focus{
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
-<div id="phones" class=phones><span id="loading_span">..загрузка..</span></div>
+<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span></div>
 <script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
 <div id="poll_container" class=poll_container>

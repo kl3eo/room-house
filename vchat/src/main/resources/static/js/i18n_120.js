@@ -13,6 +13,15 @@
 #   GNU General Public License for more details.
 */
 
+var loado_ = new Map([
+   ['en', '..loading..'],
+   ['ru', '..загрузка..'],
+   ['es', '..cargando..'],
+   ['fr', '..loading..'],
+   ['cn', '..loading..'],
+   ['pt', '..loading..'],
+]);
+  
 var heads1 = new Map([
    ['en', 'Enter Rumhaus'],
    ['ru', 'Войти в румхаус'],

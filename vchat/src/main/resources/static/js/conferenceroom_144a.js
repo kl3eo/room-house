@@ -82,8 +82,10 @@ const wi = 640;
 const fps_hq = 24;
 const wi_hq = 1920;
 
-const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8449" : "https://aspen.room-house.com:8447";
-const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
+//const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8449" : "https://aspen.room-house.com:8447";
+//const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
+const sp_setter_url = "https://coins2.room-house.com";
+const sp_container_url = "https://coins1.room-house.com";
 const sm_url = "https://slotmachine.room-house.com";
 //const poker_url = "https://room-house.com/poker/";
 const poker_url = "https://poker.room-house.com";
@@ -137,7 +139,8 @@ window.onload = function(){
    }, 1000);
       
 	let lang = getCookie('lang');
-	lang = (lang === null || lang === 'null' || lang === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 1 : lang;
+	lang = (lang === null || lang === 'null') ? 1 : lang;
+	lang = lang === '' ? 0 : lang;
 	ctr = lang;
 
 	change_lang(altlang[ctr]);
