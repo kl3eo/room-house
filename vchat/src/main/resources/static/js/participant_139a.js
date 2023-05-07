@@ -270,13 +270,15 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 		let l = creatu_long_.get(altlang[ctr]);
 		var dummee = document.createElement('div');	
-		dummee.style.fontSize = "18px";
-		dummee.style.color = "#c50";
-		dummee.style.width = "50%";
-		dummee.style.textAlign = "center";
+		dummee.style.fontSize = '18px';
+		dummee.style.color = '#c50';
+		dummee.style.width = '50%';
+		dummee.style.textAlign = 'center';
 		dummee.appendChild(document.createTextNode(l));
-		dummee.style.float="none";
-		dummee.style.margin = "0 auto";
+		dummee.style.float='none';
+		dummee.style.margin = '0 auto';
+		dummee.style.cursor = 'pointer';
+		dummee.addEventListener('click',function(e){switchOneMode(e.target)});
 		container.appendChild(dummee);
 		
 	}

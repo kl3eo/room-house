@@ -667,7 +667,28 @@ const onNewParticipant = (request) => {
 			let na = request.name.split('_');
 			let ac = request.acc_id;
 			document.id('acco_'+ request.name).fade(1);
-			document.id('acco_' + request.name).onclick = function(e) {e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);}
+			document.id('acco_' + request.name).onclick = function(e) {
+				e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);
+				acc_id.then(data => {
+					setTimeout(function() {
+						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
+						(function() {document.id('removerA').fade(0)}).delay(1000);}
+					}, 10000);					
+					(function() {
+						if (document.id('sp_balance')){
+								document.id('sp_balance').style.display='block';
+								document.id('sp_balance').src=sp_container_url+'/?acc='+data;
+						}
+					}).delay(1000);
+					document.id('sp_container').style.display = 'block'; sp_shown = 1; 
+					ch_int = setInterval(function() { 
+						if (document.id('sp_balance')) {
+							document.id('sp_balance').style.display='block';
+							document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
+						}
+					}, 300000);	  
+				});				
+			}
 			if (document.id('sp_container' && sp_shown) && document.id('sp_container').style.display != 'block') document.id('acco_'+request.name).style.visibility='hidden';			
 		}
 
@@ -1131,7 +1152,28 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('acco_' + f).style.display='block';
 			
 			document.id('acco_' + f).fade(1);
-			document.id('acco_' + f).onclick = function() {copy(ac); flashText('copied '+ na[0]);}
+			document.id('acco_' + f).onclick = function() {
+				copy(ac); flashText('copied '+ na[0]);
+				acc_id.then(data => {
+					setTimeout(function() {
+						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
+						(function() {document.id('removerA').fade(0)}).delay(1000);}
+					}, 10000);					
+					(function() {
+						if (document.id('sp_balance')){
+								document.id('sp_balance').style.display='block';
+								document.id('sp_balance').src=sp_container_url+'/?acc='+data;
+						}
+					}).delay(1000);
+					document.id('sp_container').style.display = 'block'; sp_shown = 1; 
+					ch_int = setInterval(function() { 
+						if (document.id('sp_balance')) {
+							document.id('sp_balance').style.display='block';
+							document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
+						}
+					}, 300000);	  
+				});				
+			}
 			if (document.id('sp_container' && sp_shown) && document.id('sp_container').style.display != 'block') document.id('acco_' + f).style.visibility='hidden';			
 		}	
 		
