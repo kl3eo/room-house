@@ -17,9 +17,9 @@ var loado_ = new Map([
    ['en', '..loading..'],
    ['ru', '..загрузка..'],
    ['es', '..cargando..'],
-   ['fr', '..loading..'],
+   ['fr', '..chargement..'],
    ['cn', '..loading..'],
-   ['pt', '..loading..'],
+   ['pt', '..carregando..'],
 ]);
   
 var heads1 = new Map([
@@ -177,12 +177,12 @@ var waiter_ = new Map([
 ]);
 
 var caller_ = new Map ([
-   ['en', 'CALL GURU - hit '],
+   ['en', 'CALL GURU '],
    ['ru','НАЖМИТЕ '],
-   ['es', 'CALL GURU - hit '],
-   ['fr', 'CALL GURU - hit '],
-   ['cn', 'CALL GURU - hit '],
-   ['pt', 'CALL GURU - hit '],
+   ['es', 'CALL GURU '],
+   ['fr', 'CALL GURU '],
+   ['cn', 'CALL GURU '],
+   ['pt', 'CALL GURU '],
 ]);
 
 var requ_ = new Map ([
@@ -195,21 +195,21 @@ var requ_ = new Map ([
 ]);
 
 var creatu_ = new Map ([
-   ['en', 'BUY A TICKET!'],
+   ['en', 'NEED A TICKET!'],
    ['ru', 'НУЖЕН TICKET!'],
-   ['es', 'BIND an account!'],
-   ['fr', 'BIND an account!'],
-   ['cn', 'BIND an account!'],
-   ['pt', 'BIND an account!'],
+   ['es', 'NEED A TICKET!'],
+   ['fr', 'NEED A TICKET!'],
+   ['cn', 'NEED A TICKET!'],
+   ['pt', 'NEED A TICKET!'],
 ]);
 
 var creatu_long_ = new Map ([
-   ['en', 'BUY a TICKET TO WATCH CINEMA!'],
+   ['en', 'NEED a TICKET TO CINEMA!'],
    ['ru', 'ДЛЯ ПРОСМОТРА НУЖЕН БИЛЕТ!'],
-   ['es', 'BIND an account TO WATCH CINEMA!'],
-   ['fr', 'BIND an account TO WATCH CINEMA!'],
-   ['cn', 'BIND an account TO WATCH CINEMA!'],
-   ['pt', 'BIND an account TO WATCH CINEMA!'],
+   ['es', 'NEED a TICKET TO CINEMA!'],
+   ['fr', 'NEED a TICKET TO CINEMA!'],
+   ['cn', 'NEED a TICKET TO CINEMA!'],
+   ['pt', 'NEED a TICKET TO CINEMA!'],
 ]);
 
 var hea_ = new Map ([

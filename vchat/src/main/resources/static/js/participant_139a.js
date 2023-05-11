@@ -379,7 +379,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	function showRoomHeader() {
 
-			document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);
+			if(!small_device) {document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);}
 	}
 	
 	function setAnno() {

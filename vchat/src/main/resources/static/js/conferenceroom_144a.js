@@ -567,7 +567,8 @@ const register_body = (ro) => {
 
 function checkLang() {
 	let l = getCookie('lang');
-	l = (l === null || l === 'null' || l === '') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l;
+	l = (l === null || l === 'null') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l === '' ? 0 : l;
+	
 	return l;
 }
 const onNewViewer = (request) => {
