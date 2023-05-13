@@ -498,15 +498,9 @@ const register_body = (ro) => {
 		//if (document.id('newsub') && ro == 1) 
 			document.id('newsub').style.display = 'block';
 		
-		//if (!small_device && !w[0].match(new RegExp('rgsu','g')) && window == window.top && !notebook) document.id('slide_container').style.display = 'block';
-		//if (window == window.top && room === 'club') document.id('req_container').style.display = 'block';
 
-		//if (document.id('rh_container') && !small_device) {document.id('rh_container').style.marginTop = '14vh'; /*document.id('rh_container').style.zIndex = '19';*/}
-		//if (document.id('rh_container') && small_device) document.id('rh_container').style.display = 'none';
 		document.id('rh_container').style.display = 'none';
 		
-		//if (window == window.top && room === 'club' && !small_device && !notebook) document.id('desktop_container').style.display = 'block';
-
 		// brute force
 		all_muted = getCookie('all_muted');
 		if (all_muted === true || all_muted === 'true') i_am_muted = true;
@@ -548,9 +542,6 @@ const register_body = (ro) => {
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; document.id('phones').onclick=location.reload(); (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
-		//this stuff will make mobiles re-connect every 10 sec (?!)
-		//(function() { if (pcounter == 0 && vcounter == 0 ) {problems = 1; document.id('phones').innerHTML = warning; document.id('phones').fade(1); (function() {rejoin();}).delay(1000); }}).delay(2000);
-
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 
 		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
@@ -562,6 +553,8 @@ const register_body = (ro) => {
 		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
 				
 		(function() {dummies = true;}).delay(3000);
+		
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 
 }
 

@@ -34,8 +34,8 @@ const doSwitchOneMode = (el) => {if (false) console.log(el);
 	   if (!data.length) {
 		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let sess = respo;
-			let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:420px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; 
-			let h = small_device ? '60vh' : 420;
+			let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; 
+			let h = small_device ? '64vh' : 420;
 			let fs = small_device ? 24 : 18;
 		//no jquery	 
 			mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();			
@@ -452,10 +452,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 							document.id('sp_balance').style.display='block';
 							document.id('sp_balance').src = sp_container_url + '/?acc=' + data;
 						}
-					}, 300000);	  
+					}, 300000);
+					document.body.scrollTop = document.documentElement.scrollTop = 0;  
 				   });
-				} 
-				document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu; 
+				}
+				document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu;
 				document.id('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); 
 				(function(){document.id('phones').fade(0);}).delay(1000);
 			}
