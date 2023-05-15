@@ -49,7 +49,7 @@ var he_votado = false;
 
 var playSomeMusic = false;
 var playSomeMusic_muted = true;
-var audioContext;
+var audioContext = null;
 var mediaSource;
 var analyser;
 
@@ -978,6 +978,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// initialize the audioContext
 		if (playSomeMusic_muted === false) {
 			audioContext = new AudioContext();
+			//console.log('audioContext init1');
 			mediaSource = audioContext.createMediaElementSource(video);
 			analyser = audioContext.createAnalyser();
 			mediaSource.connect(analyser);
