@@ -359,13 +359,15 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
 	if (video.muted !== true){
-		speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));
+		speaker.appendChild(document.createTextNode('\uD83D\uDD0A')); //speaker icon
 		
 	} else {
-		if (name != myname && mode != 'm') speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
+		if (name != myname && mode != 'm') speaker.appendChild(document.createTextNode('\uD83D\uDD07')); //muted icon
 		if (name != myname && mode == 'm') speaker.appendChild(document.createTextNode('X'));
-		if (name == myname && (i_am_muted === true || i_am_muted === 'true')) speaker.appendChild(document.createTextNode('X'));
-		if (name == myname && (i_am_muted === false || i_am_muted === 'false') && myrole != 0) speaker.appendChild(document.createTextNode('\uD83C\uDFA4'));
+		if (name == myname && (i_am_muted === true || i_am_muted === 'true') && !playSomeMusic) speaker.appendChild(document.createTextNode('X'));
+		if (name == myname && playSomeMusic_muted === true && playSomeMusic) speaker.appendChild(document.createTextNode('\uD83D\uDD07')); //muted icon
+		if (name == myname && playSomeMusic_muted === false && playSomeMusic) speaker.appendChild(document.createTextNode('\uD83D\uDD0A')); //speaker icon
+		if (name == myname && (i_am_muted === false || i_am_muted === 'false') && !playSomeMusic) speaker.appendChild(document.createTextNode('\uD83C\uDFA4')); //microphone icon
 	}
 	
 	speaker.style.fontSize = "42px";
@@ -556,29 +558,32 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function toggleMute() {
-		if ( document.id('video-' + name) ) {
-		
+		if ( document.id('video-' + name) ) {	
 		   var video = document.id('video-' + name);
-
-		if ( !from_changing_slider || (from_changing_slider && ((video.volume === 0 && !video.muted) || (video.volume > 0))) ) {
+		   if ( !from_changing_slider || (from_changing_slider && ((video.volume === 0 && !video.muted) || (video.volume > 0))) ) {
 	
 			if (name != myname) 
 			{
 				video.muted = video.volume === 0 ? true : !video.muted;
 				slider.value =  video.volume;
 
-
 				from_changing_slider = false;
 				
 				saveData(name+'_muted', video.muted, 1440);
 				saveData(name+'_volume', video.volume, 1440);
 			}
-			
+
+			if (name == myname && playSomeMusic)
+			{
+				playSomeMusic_muted = playSomeMusic_muted === true ? false : true;
+			}
+						
 			speaker.removeChild(speaker.childNodes[0]);
 			
-			if (video.muted){
-				if (name != myname)  {
-					speaker.appendChild(document.createTextNode('\uD83D\uDD07'));
+			if (video.muted || playSomeMusic_muted === true){
+				if (name != myname || (name == myname && playSomeMusic))  {
+					speaker.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
+					flashText('restart video to mute!');
 				}
 				if (name == myname && !playSomeMusic) {
 					if (i_am_muted === true || i_am_muted === 'true') {
@@ -591,10 +596,12 @@ function Participant(name, myname, mode, myrole, new_flag) {
 						flashText_and_rejoin('microphone OFF!');
 					}
 				}
+				
 			} else {
-				speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));
+				speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+				if (name == myname && playSomeMusic) flashText('restart video to listen!');
 			}
-	   	   }
+		   }
 		}
 		//big speaker on attention
 		//if ((check_iOS() || isAndroid)&& this_is_guru) {speaker.style.fontSize='42px'; let d = container.getBoundingClientRect(); speaker.style.top = d.height-30; speaker.style.left=d.width-36;}

@@ -48,6 +48,11 @@ var firstTime = true;
 var he_votado = false;
 
 var playSomeMusic = false;
+var playSomeMusic_muted = true;
+var audioContext;
+var mediaSource;
+var analyser;
+
 var shareSomeScreen = false;
 
 var already_being_played = false;
@@ -968,6 +973,16 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
    
 	//} else if (playSomeMusic && (role == 1|| role == 2)) {
 	} else if (playSomeMusic) {
+
+		// with sound both in the stream and in the local video. 
+		// initialize the audioContext
+		if (playSomeMusic_muted === false) {
+			audioContext = new AudioContext();
+			mediaSource = audioContext.createMediaElementSource(video);
+			analyser = audioContext.createAnalyser();
+			mediaSource.connect(analyser);
+			analyser.connect(audioContext.destination);
+		}
   
 		video.autoplay = true;
 		video.playsInline = true;
@@ -1025,34 +1040,41 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			}
 		
 			participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
-                  	if(error) {
-			var ff = new RegExp('closed','ig');
-			if (error.toString().match(ff)) {
-			} else {
-                          participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_alt,
-                          	function (error) {
-                                        if(error) {
-                                                return console.error(error);
-                                        }
+                  	 if(error) {
+			  	var ff = new RegExp('closed','ig');
+			  	if (error.toString().match(ff)) {
+			  	} else {
+                            		participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(option_alt,
+                          		   function (error) {
+                                        	if(error) {
+                                                	return console.error(error);
+                                        	}
+						
+                                        	startVideo(video);
+                                        	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+						if (small_device)  document.id(myname).style.float = 'none'; 					
+						document.id('room-header-file').style.display='none';
+                          		   }
+			    		);
+			  	}
+			  	return false;
+                  	 } else {
+                  	  	//startVideo(video);
+                  	  	video.play();
 
-                                        startVideo(video);
-                                        this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-					if (small_device)  document.id(myname).style.float = 'none'; 					
-					document.id('room-header-file').style.display='none';
-
-                          	}
-			);
-			}
-			return false;
-                  	} else {
-				startVideo(video);			  	
+				if (playSomeMusic_muted === false) {
+				    function getSoundData() {
+				       var sample = new Float32Array(analyser.frequencyBinCount);
+				       return analyser.getFloatFrequencyData(sample);  
+				    }
+				}
+			  	
 				this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			
 				if (small_device)  document.id(myname).style.float = 'none';
 					document.id('room-header-file').style.display='none';
-                  	}
-
-		  	(function(){document.id('phones').fade(0);}).delay(1000);
+                  	 }
+		  	 (function(){document.id('phones').fade(0);}).delay(1000);
 			}); //rtcPeer
 		    }).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
 	  	  } //already_being_played
