@@ -580,11 +580,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 						
 			speaker.removeChild(speaker.childNodes[0]);
 			
-			if (video.muted || playSomeMusic_muted === true){
+			if (video.muted || (name == myname && playSomeMusic && playSomeMusic_muted === true )){
 				if (name != myname || (name == myname && playSomeMusic))  {
 					speaker.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
 					//flashText('restart video to mute!');
-					analyser.disconnect();
+					if (name == myname && playSomeMusic) analyser.disconnect();
 				}
 				if (name == myname && !playSomeMusic) {
 					if (i_am_muted === true || i_am_muted === 'true') {
@@ -600,6 +600,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				
 			} else {
 				speaker.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+				
 				if (name == myname && playSomeMusic) 
 				{
 					//flashText('restart video to listen!');
