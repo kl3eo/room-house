@@ -277,7 +277,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		dummee.style.textAlign = 'center';
 		dummee.appendChild(document.createTextNode(l));
 		dummee.style.float='none';
-		dummee.style.margin = '0 auto';
+		dummee.style.margin = '-21px auto 0 auto';
 		dummee.style.cursor = 'pointer';
 		dummee.addEventListener('click',function(e){switchOneMode(e.target)});
 		container.appendChild(dummee);
