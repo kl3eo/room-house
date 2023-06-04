@@ -1145,6 +1145,10 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			
 			document.id('slider_' + f).value = coo_volume;
 			document.id('video-' + f).volume = coo_volume;
+			
+			//let d = document.id( f).getBoundingClientRect(); let video_height = d.height-30; console.log('video_height', video_height, 'extra', document.id(f).offsetHeight, 'extra2', document.id(f).clientHeight, 'extra3',  document.id(f).style.height);
+			//if (video_height >  max_video_height) max_video_height = video_height;
+			
 			(function() {document.id(f).style.display='block'; document.id(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
 
 		} else {

@@ -242,6 +242,15 @@ function toggleAllMuted() {
 	}
 }
 
+/*
+async function setCoo() {
+      let urlee = 'https://' + window.location.hostname + ':' + port + '/cgi/genc/action_cine';
+      fetch(urlee).then((response) => response.json()).then((result) => {
+        console.log('set session', result);
+      }).catch(function (err) { console.log('Error', err) })
+}
+*/
+    
 window.addEventListener("message", function(event) {
 
 //console.log('eo:', event.origin, 'hn:', window.location.hostname);
@@ -266,10 +275,22 @@ const ed = () => { //code to run on receive message from join_ frame
  
  //document.id('phones').fade(0);
  if (!normal_mode) {
- 	document.id('controls').style.display = 'none';
+
+	//set session for guest
+	//setCoo().then(() => {console.log('set cookie');});
+	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
+
+ 	if (!small_device) document.id('controls').style.display = 'none';
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 document.id('house').style.display = 'block';
-	 document.id('house').style.top = '-28vh';
+	 //let hv = max_video_height > 300 ? 27 : 28;
+	 let hv = 27;//need to calculate somehow
+	 if (!small_device)  {
+	 	document.id('house').style.top = '-'+hv+'vh';
+	 	document.id('sp_container').style.top = hv+'vh'; //get back
+	 } else {
+	 	//document.id('controls').innerHTML=document.id('controls').innerHTML+'<div style="position:absolute;top:0;left:0;width:350px;height:118px;background:transparent url(/img/now_showing2.jpg) center center no-repeat;"></div>';
+	 }  
 	 document.id('house').style.textAlign = 'center';
 	 document.id('participants').style.marginLeft = '-1vw';
  }
@@ -395,7 +416,7 @@ let na = getCookie('name');if (na != null && na != 'null') {
 	 if (document.id('loading_span')) document.id('loading_span').fade(0);
 	//(function() {document.id('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-'+mgn+'px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">ROOM <span style="color:#369;">'+w[0]+'</span></div><div id="bstats" style="width:160px;margin:0 auto;opacity:0;"><div style="float:left; font-size:24px; color:#fed;"><span>&#128100;</span>&nbsp;:&nbsp;<span id="bnump">'+nump+'</span></div><div style="float:right;font-size:24px;color:#fed;"><span id="bnumv" style="color:#369;">'+numv+'</span>&nbsp;:&nbsp;<span>&#128101;</span></div><div style="clear:both;"></div></div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/button_ru.html style="color:#369;">' + morer +'</a></div><div id="socs" style="opacity:0;margin-top:60px;font-size:20px;margin-right:-2px;"><!-- a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;margin:0 5px;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;margin:0 5px;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;margin:0 5px;"><i class="bx bxl-telegram"></i></a>< &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;margin:0 5px;"><i class="bx bx-book-open"></i></a --></div></div>'; document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '39vh'; document.id('phones').fade(1); document.id('badge').fade(1); (function(){document.id('cont').fade(1);}).delay(500); (function(){document.id('learn_more').fade(1);document.id('socs').fade(1);document.id('hea').fade(1); }).delay(700); document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none';}).delay(1000) //let change_lang fill the i18n strings
 
-(function() {document.id('phones').innerHTML = '<div style="width:100%;height:100%;text-align:center;background:transparent url(/img/theater1.jpg) center center no-repeat;font-size:48px;">&nbsp;</div>';document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').fade(1);document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none';}).delay(1000);
+(function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1); document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (document.id('ph_b')) document.id('ph_b').style.visibility='visible';}).delay(500);
 }
 } else if (event.origin == sm_url) {
 	var obj = JSON.parse(event.data);

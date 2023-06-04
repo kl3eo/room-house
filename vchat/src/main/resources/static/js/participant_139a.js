@@ -29,18 +29,33 @@
 
 var fullscreen = false; var cinemaEnabled = false;
 
+let already_been_there = false;
+
 const doSwitchOneMode = (el) => {if (false) console.log(el);
 	acc_id.then(data => { 
 	   if (!data.length) {
 		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-			let sess = respo;
-			let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; 
-			let h = small_device ? '64vh' : 420;
-			let fs = small_device ? 24 : 18;
+			let sess = respo; console.log('respo here is', sess);
+			if (sess.length) {
+			  let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; 
+			  let h = small_device ? '64vh' : 420;
+			  let fs = small_device ? 24 : 18;
 		//no jquery	 
-			mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();			
+			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
+			  
+			  let topo = (window.innerHeight-540)/2 - 30; topo = topo + 'px'; if (!small_device) document.id('m6').style.top=topo;	//trim it, sir
+			  	
 		//if we want to use both mBox and jQuery
-			//mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click(); let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '12vh';document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function(){document.id('m6').style.display='none';};
+			  //mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click(); let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '12vh';document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function(){document.id('m6').style.display='none';};
+			} else {
+				if (already_been_there) return;
+				//doesn't work here - fetch wouldn't bring a cookie; do it in join_v.html
+				/*let urlee = 'https://' + window.location.hostname + ':' + port + '/cgi/genc/action_cine';
+				fetch(urlee).then((response) => response.json()).then((result) => {
+				console.log('set session', result); already_been_there = true; doSwitchOneMode(el);
+				}).catch(function (err) { console.log('Error', err) })
+				*/
+			}
 		}).catch(err => console.log(err));
 	   } else {
 		if(!playSomeMusic&&!shareSomeScreen){fullscreen=true; chat_shown=1;document.id("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=document.id("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){document.id("room-header").style.display="none";document.id("room-backer").style.display="block";if (!small_device) {document.id("room").style.minWidth = "480px";document.id("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}let c=document.id("one-"+a);if (c) c.fade(0);}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}
@@ -352,6 +367,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	document.id(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
 	document.id(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '310px': document.id(video.id).style.maxHeight;
+	
 	
 	//if (pcounter > 1)  // bigger screen bad for notebooks
 		document.id(video.id).style.maxHeight = '310px';
