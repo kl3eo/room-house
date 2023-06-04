@@ -296,7 +296,6 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		dummee.style.cursor = 'pointer';
 		dummee.addEventListener('click',function(e){switchOneMode(e.target)});
 		container.appendChild(dummee);
-		
 	}
 
 	slider.type = 'range';
@@ -360,7 +359,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	adder.style.display = myrole == 0 && myname == name ? 'none': 'block';
 	//don't add to gurus except myself
-	adder.style.display = this_is_guru && name != myname ? 'none' : adder.style.display;
+	adder.style.display = (this_is_guru && name != myname) || ar[0] === "DUMMY" ? 'none' : adder.style.display;
 	adder.style.right = name == myname ? '0px' : '24px';
 	
 	container.appendChild(adder);
