@@ -1161,7 +1161,7 @@ select:focus, input:focus, button:focus{
 	<div id="newacc" style="display:none;"></div>
   </div>	
 </div>
-<script>document.write('<div id="house" style="min-height:510px; height:84vh; position:relative; width:96vw; max-width:460px; margin:0 auto; border:0px dotted #9cf; background:#369 url(/img/people4_' + window.location.hostname + '.png) top center no-repeat; text-align:center;">');</script>
+<script>document.write('<div id="house" style="min-height:510px; height:84vh; position:relative; width:96vw; max-width:460px; margin:0 auto; border:0px dotted #9cf; background:#369 url(/img/people4_' + window.location.hostname + '.png) top center no-repeat; text-align:center;display:none;">');</script>
 
 <div id="spinner" style="position:absolute;left:20%;top:25%;width:60%;height:50%;background:url('/img/spinner.gif') center center no-repeat;display:none;z-index:2310;"></div>
 
@@ -1526,7 +1526,7 @@ if (!curIP.length && false) {
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<script>let pause = getCookie('new_cache') ? 1000 : 2000;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
+<script>/*keep phones longer!IMPORTANT*/let pause = getCookie('new_cache') ? 1000 : 3000;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
 
 <script>
 

@@ -351,10 +351,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(adder);
 		
 	document.id(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
-	document.id(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '190px': document.id(video.id).style.maxHeight;
+	document.id(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '310px': document.id(video.id).style.maxHeight;
 	
 	//if (pcounter > 1)  // bigger screen bad for notebooks
-		document.id(video.id).style.maxHeight = '190px';
+		document.id(video.id).style.maxHeight = '310px';
 	
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	
@@ -622,7 +622,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	
 	function rmPtcp() {
-	  if (name != myname) {
+	  if (!normal_mode) {location.reload()} else {
+	    if (name != myname) {
 	  	var yon = window.confirm('Drop '+rname+'?!');
 		if (yon) {
 
@@ -654,6 +655,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			
 
 		}	  
+	    }
 	  }
 	}
 
