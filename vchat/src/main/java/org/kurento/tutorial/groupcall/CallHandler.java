@@ -167,7 +167,7 @@ public class CallHandler extends TextWebSocketHandler {
                 	Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("select md5(concat(proj_code, pass)) from members where proj_code != 'admin' and room = '" + joinerRoom + "'")) {
             			while(rs.next()) {if (rs.getString(1).equals(joinerToken)) {role = "2"; break;}}
-          		} catch (SQLException ex) {log.debug("PG join err1 from {}: ", joinerName);}
+          		} catch (SQLException ex) {log.debug("PG join err from {}: ", joinerName);}
 		}
 // now check if room is closed
 		String sta = "0";
@@ -175,7 +175,7 @@ public class CallHandler extends TextWebSocketHandler {
                 Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("select status from rooms where name='" + joinerRoom + "' and (current_timestamp < valid_till or valid_till is null)")) {
             		if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";}} else {noSuchRoom = "1";}
-         	} catch (SQLException ex) {log.debug("PG join err2 from {}: ", joinerName);}
+         	} catch (SQLException ex) {log.debug("PG join err from {}: ", joinerName);}
 	  
         	log.info("JOINER {}: SESSION {}, ROLE TOKEN {}, ROLE RECEIVED {}, ROOM STATUS {}, ROOM LIMIT {}", joinerName, session, role, joinerRole, sta, room_limit);
 // now make temp permissson if required
@@ -206,7 +206,9 @@ public class CallHandler extends TextWebSocketHandler {
         	final UserSession sender = registry.getByName(senderName);
         	final String sdpOffer = jsonMessage.get("sdpOffer").getAsString();
 		log.info("SENDER {}: RECEIVED by USER {}", senderName, user.getName());
-        	if (sender != null) user.receiveVideoFrom(sender, sdpOffer);
+		boolean cinema_ticket = true;
+		if (sender != null && user.getAccId().length() == 0 && sender.getMode().equals("c")) cinema_ticket = false;
+        	if (sender != null && cinema_ticket) user.receiveVideoFrom(sender, sdpOffer);
 	}
         break;
       case "leaveRoom":
@@ -431,13 +433,12 @@ public class CallHandler extends TextWebSocketHandler {
 		country = country.replaceAll("[;'\"]*", "");
 		acc_id = acc_id.replaceAll("[;'\"]*", "");
 
-//create table sessions (session text, date_and_time timestamp, ip text, acc_id text, bnum numeric, last_acc_id text);
 //create table joins (id serial, ipaddr text, country text, city text, name text, room text, mode text, role text, dtm timestamp, accid text);
 //insert		
 		try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, ROOM, MODE, ROLE, DTM, ACCID) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp, '" + acc_id + "')")) {
-         	} catch (SQLException ex) {log.info("PG join err3 from {}: ", name);}
+         	} catch (SQLException ex) {log.info("PG join err from {}: ", name);}
 
 //get daily stats
 
