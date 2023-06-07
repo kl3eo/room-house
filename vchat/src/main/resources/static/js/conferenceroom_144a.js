@@ -257,7 +257,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; setCookie('av', null, 0); setCookie('fmode',null,0); aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash*/ console.log('hey!'); (function() {cli2();}).delay(100);}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; setCookie('av', null, 0); setCookie('fmode',null,0); aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash*/ console.log('hey!'); (function() {cli2();}).delay(100);} if (pcounter == 0 && role == 0) rejoin();}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
