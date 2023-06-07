@@ -57,6 +57,8 @@ var heard_info = getCookie('heard_info') || false;
 
 var who_to = '';
 
+var already_clicked = false;
+
 var afterBinding = false;
 
 var ch_int;

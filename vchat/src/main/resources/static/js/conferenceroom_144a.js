@@ -544,7 +544,7 @@ const register_body = (ro) => {
 		});
 
  		if (problems) {
-			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; document.id('phones').onclick=location.reload(); (function() { document.id('phones').fade(1)}).delay(1000);
+			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; /*document.id('phones').onclick=location.reload();*/ (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
@@ -560,6 +560,8 @@ const register_body = (ro) => {
 		(function() {dummies = true;}).delay(3000);
 		
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
+		
+		if (role == 1 && !already_clicked) {already_clicked = true; cli2();}
 
 }
 
