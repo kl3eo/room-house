@@ -257,7 +257,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; setCookie('av', null, 0); setCookie('fmode',null,0); aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash*/ console.log('hey!'); (function() {cli2();}).delay(100);} if (pcounter == 0 && role == 0) rejoin();}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; setCookie('av', null, 0); if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash -- unreacheable code*/ /*let ca = getCookie('fmode'); (function() { if (ca == 1) {console.log('ha!'); cli2();} if (ca == 2) {console.log('ha2!');cli3();} if (ca == 22) {console.log('ha22!'); cli6();}}).delay(100);*/} if (pcounter == 0 && role == 0) rejoin();}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -562,7 +562,7 @@ const register_body = (ro) => {
 		
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
 		
-		if (role == 1 && !already_clicked) {already_clicked = true; cli2();}
+		if (role == 1 && !already_clicked) {already_clicked = true; let ca = getCookie('fmode'); (function() { if (ca == 0) cli2(); if (ca == 1) cli3(); if (ca == 22) { playSomeMusic=true; getFile(); cli6(); }}).delay(100);}
 
 }
 
@@ -996,6 +996,9 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		video.loop = true;
 		video.src = selectedFile ? selectedFile : "/a.mp4";
 		video.muted = false;
+		let cT = getCookie('cT') || 0; 
+		//console.log('video name', video, 'cT', cT);
+		video.currentTime = cT > 0 ? cT : 0;
 	
 		video.addEventListener('canplay', (event) => {
 		
