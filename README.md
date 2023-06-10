@@ -13,6 +13,10 @@ Restart the VM to fetch the latest Room-House release, or hit the reset button i
 
 # xTER releases with Room-House timeline
 
+09.06.23 -- v1.35; re-design for cinemas; fixes to re-connect both server/client side; preparing cinemas for NFT
+
+15.05.23 -- v1.34; sound on/off listening while streaming from ff; changed daemon from 'nobody' to 'apache'; permissions for 'nobody' restricted; added nodejs 16.14 in vlibs
+
 15.04.23 -- v1.33 released; IP-based Room-House available on change EXT in settings; new certs upload allowed to everyone; domain change working now.
 
 13.09.22 -- v1.32 released; rewritten CSS users_controls; chairs added; fix addUser.pl condition; R-H finalized to a12.js
