@@ -55,6 +55,12 @@ import com.google.gson.JsonPrimitive;
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime; 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
  * @since 4.3.1
@@ -73,9 +79,17 @@ public class Room implements Closeable {
   }
 
   public Room(String roomName, MediaPipeline pipeline) {
+    final String pgurl = "jdbc:postgresql://localhost:5432/cp";
+    final String pguser = "postgres";
+    final String pgpass = "x";
+    
     this.name = roomName;
     this.pipeline = pipeline;
     log.info("ROOM {} has been created", roomName);
+    try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("UPDATE rooms SET movie_name='', movie_player='', dtm=current_timestamp WHERE name='" + roomName + "'")) {
+    } catch (SQLException ex) {log.debug("PG update err for room {}", roomName);}
   }
 
   @PreDestroy

@@ -241,7 +241,32 @@ public class CallHandler extends TextWebSocketHandler {
         	if (user != null) writeToLog(user, jsonMessage);
         break;
       case "setAnno":
-        	if (user != null) setAnno(user, jsonMessage);
+        if (user != null) {
+        	final Room room = roomManager.getRoom(user.getRoomName());
+		final String roomName = room.getName();
+		String jTokenSetAnno = jsonMessage.get("token").getAsString();
+		String annoSetAnno = jsonMessage.get("anno").getAsString();
+		annoSetAnno = annoSetAnno.replaceAll("[;'\"]*", "");
+		String roleSetAnno = "0";
+// check if guru
+		String cmdSetAnno = "/home/nobody/a.sh";
+		Runtime runSetAnno = Runtime.getRuntime();
+		Process prSetAnno = runSetAnno.exec(cmdSetAnno);
+		prSetAnno.waitFor();
+		BufferedReader bufSetAnno = new BufferedReader(new InputStreamReader(prSetAnno.getInputStream()));
+		String lineSetAnno = "";
+		while ((lineSetAnno=bufSetAnno.readLine())!=null) {
+			if (lineSetAnno.equals(jTokenSetAnno) && jTokenSetAnno.length() == 32) {roleSetAnno = "1";}
+		}      
+		if (roleSetAnno.equals("1")) {
+			try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("UPDATE rooms SET movie_name='" + annoSetAnno + "', movie_player='" + user.getName() + "', dtm=current_timestamp WHERE name='" + roomName + "'")) {
+			} catch (SQLException ex) {log.debug("PG update err for room {}", roomName);}
+		}
+ 
+		setAnno(user, jsonMessage);
+	}	
         break;
       case "setGuru":
 		String jTokenSetGuru = jsonMessage.get("token").getAsString();
@@ -369,7 +394,7 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-	
+
     //need this hack to avoid DB errors
     curip = curip.replaceAll("[;'\"]*", "");
     //if (curip.equals("127.0.0.1") || curip.equals("") || curip.equals("192.168.88.99")) {curip = "164.68.105.131";}
@@ -496,6 +521,7 @@ public class CallHandler extends TextWebSocketHandler {
     final String s = params.get("anno").getAsString();
     final String a = params.get("addr").getAsString();
     log.info("USER {}: trying to set anno for {} to {}!", user.getName(), a, s);
+   
     room.set_anno_to_text(user, s, a);
   }
   

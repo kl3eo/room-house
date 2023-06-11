@@ -49,6 +49,13 @@ import org.springframework.web.socket.WebSocketSession;
 
 import com.google.gson.JsonObject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author Ivan Gracia (izanmail@gmail.com)
@@ -246,6 +253,10 @@ public class UserSession implements Closeable {
 
   @Override
   public void close() throws IOException {
+    final String pgurl = "jdbc:postgresql://localhost:5432/cp";
+    final String pguser = "postgres";
+    final String pgpass = "x";
+    
     log.info("PARTICIPANT {}: Releasing resources", this.name);
     for (final String remoteParticipantName : incomingMedia.keySet()) {
 
@@ -281,6 +292,10 @@ public class UserSession implements Closeable {
         log.warn("USER {}: Could not release outgoing EP", UserSession.this.name);
       }
     });
+    try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("UPDATE rooms SET movie_name='', movie_player='', dtm=current_timestamp WHERE movie_player='" + this.name + "'")) {
+    } catch (SQLException ex) {log.debug("PG update err for room {}", roomName);}
   }
 
   public void sendMessage(JsonObject message) throws IOException {
