@@ -557,6 +557,8 @@ const city_or_main = 1;
 	opacity: 0;
 	font-size: 16px;
 	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .lols {
@@ -1152,10 +1154,53 @@ select:focus, input:focus, button:focus{
     transform: perspective(1000px) rotateX(0deg) rotate(5deg);
   }
 }
+
+#blue_banner {
+	position:absolute;
+	margin: 0 auto;
+	text-align:left;
+	padding-left:10px;
+	font-size:60px;
+	line-height:120px;
+	font-weight: bold;
+	font-family: Verdana;
+	color:#369;
+	top:20%;
+	left:20%;
+	width:626px;
+	height:139px;
+	background: url(/img/sho1.jpg) center center no-repeat;
+	opacity:0;
+	display:none;
+}
+
+#red_banner {
+	position:absolute;
+	margin: 0 auto;
+	text-align:left;
+	padding-left:10px;
+	font-size:60px;
+	line-height:120px;
+	font-weight: bold;
+	font-family: Verdana;
+	bottom:20%;
+	width:626px;
+	left:20%;
+	height:139px;
+	background: url(/img/sho1.jpg) center center no-repeat;
+	opacity:0;
+	display:none;
+}
+
+.now_sho {
+	font-size:24px;
+	color:#222;
+	font-family:Courier;
+}
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
-<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let pos = small_device ? 'top' : 'center'; document.write('<div id=ph_b style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater1.jpg) ' + pos + ' center no-repeat;font-size:48px;">&nbsp;</div>');</script></div>
+<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = small_device ? 'top' : 'center'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + pic_ind + '.jpg) ' + pos + ' center no-repeat;text-align:center;"><div id="blue_banner" onclick="window.location.href = \'#BLUEHALL\';location.reload();"></div><div id="red_banner" onclick="window.location.href =  \'#REDHALL\'; location.reload();"></div></div>');</script></div>
 <script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
 <div id="poll_container" class=poll_container>

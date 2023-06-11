@@ -252,6 +252,7 @@ async function setCoo() {
       }).catch(function (err) { console.log('Error', err) })
 }
 */
+
     
 window.addEventListener("message", function(event) {
 
@@ -264,6 +265,15 @@ window.addEventListener("message", function(event) {
     
  //doesn't help here?
 	soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
+
+const sho = () => {
+
+document.id('phones').onclick=null;
+
+//console.log('doing sho! homee is', homee);
+	(function() {if (document.id('blue_banner')) {document.id('blue_banner').innerHTML='<a href="#BLUEHALL">#BLUEHALL</a>: <span id="blue_hall_span" class="now_sho">now showing..</span>';document.id('blue_banner').style.display='block';document.id('blue_banner').fade(1);}}).delay(100);
+	(function() {if (document.id('red_banner')) {document.id('red_banner').innerHTML='<a href="#REDHALL" style="color:#963;">#REDHALL</a>: <span id="red_hall_span" class="now_sho">now showing..</span>';document.id('red_banner').style.display='block';document.id('red_banner').fade(1);}}).delay(100);
+}
 
 const ed = () => { //code to run on receive message from join_ frame
  
@@ -283,6 +293,8 @@ const ed = () => { //code to run on receive message from join_ frame
 	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
 
  	if (!small_device) document.id('controls').style.display = 'none';
+	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : 'empty';
+	document.id('city').style.backgroundImage = bgr != 'empty' ?  'url(/img/' + bgr + '_screen.jpg)' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 document.id('house').style.display = 'block';
 	 //let hv = max_video_height > 300 ? 27 : 28;
@@ -371,6 +383,7 @@ e.stopPropagation();
   document.id('room-header').addEventListener('click', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(1);});
   document.id('room-header').addEventListener('dblclick', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(2);});
 
+   
   if (role != -1  && sp_shown) {
   	acc_id.then(data => {
 //console.log('1: acc_id is', data);
@@ -419,7 +432,7 @@ let na = getCookie('name');if (na != null && na != 'null') {
 	//(function() {document.id('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-'+mgn+'px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">ROOM <span style="color:#369;">'+w[0]+'</span></div><div id="bstats" style="width:160px;margin:0 auto;opacity:0;"><div style="float:left; font-size:24px; color:#fed;"><span>&#128100;</span>&nbsp;:&nbsp;<span id="bnump">'+nump+'</span></div><div style="float:right;font-size:24px;color:#fed;"><span id="bnumv" style="color:#369;">'+numv+'</span>&nbsp;:&nbsp;<span>&#128101;</span></div><div style="clear:both;"></div></div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/button_ru.html style="color:#369;">' + morer +'</a></div><div id="socs" style="opacity:0;margin-top:60px;font-size:20px;margin-right:-2px;"><!-- a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;margin:0 5px;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;margin:0 5px;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;margin:0 5px;"><i class="bx bxl-telegram"></i></a>< &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;margin:0 5px;"><i class="bx bx-book-open"></i></a --></div></div>'; document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '39vh'; document.id('phones').fade(1); document.id('badge').fade(1); (function(){document.id('cont').fade(1);}).delay(500); (function(){document.id('learn_more').fade(1);document.id('socs').fade(1);document.id('hea').fade(1); }).delay(700); document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none';}).delay(1000) //let change_lang fill the i18n strings
 
 document.id('house').style.visibility='hidden'; document.id('join').style.visibility='hidden'; document.id('langs').style.visibility='hidden';
-(function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1); document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (document.id('ph_b')) document.id('ph_b').style.visibility='visible'; }).delay(500);
+(function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1); if (homee != w[0]) {document.id('phones').onclick = ed;} else {document.id('phones').onclick = sho;} if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (document.id('ph_b')) document.id('ph_b').style.visibility='visible'; }).delay(500);
 }
 } else if (event.origin == sm_url) {
 	var obj = JSON.parse(event.data);

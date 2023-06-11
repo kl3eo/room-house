@@ -326,7 +326,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	var anno = document.createElement('div');
 	anno.className = 'annos';
 	anno.id = 'anno_' + name;
-	anno.style.fontSize = '14px';
+	anno.style.fontSize = '16px';
+	anno.style.paddingLeft = '10px';
+	anno.style.paddingRight = '10px';
 	container.appendChild(anno);
 
 	var lol = document.createElement('div');
@@ -638,7 +640,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	
 	function rmPtcp() {
-	  if (!normal_mode) {location.reload()} else {
+	  if (!normal_mode) {let foo = document.location.href.split('#'); document.location.href = foo[0];} else {
 	    if (name != myname) {
 	  	var yon = window.confirm('Drop '+rname+'?!');
 		if (yon) {
