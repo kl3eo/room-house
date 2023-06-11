@@ -47,7 +47,7 @@
 <script src="./js/mBox.Core.js"></script>
 <script src="./js/mBox.Modal.js"></script>
 
-<script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var normal_mode = true; var i_am_muted = false; var role = 0;
+<script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var roomee = ''; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
 
 //var max_video_height = 0;
@@ -1171,7 +1171,6 @@ select:focus, input:focus, button:focus{
 	height:139px;
 	background: url(/img/sho1.jpg) center center no-repeat;
 	opacity:0;
-	display:none;
 }
 
 #red_banner {
@@ -1189,7 +1188,6 @@ select:focus, input:focus, button:focus{
 	height:139px;
 	background: url(/img/sho1.jpg) center center no-repeat;
 	opacity:0;
-	display:none;
 }
 
 .now_sho {
@@ -1200,7 +1198,7 @@ select:focus, input:focus, button:focus{
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
-<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = small_device ? 'top' : 'center'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + pic_ind + '.jpg) ' + pos + ' center no-repeat;text-align:center;"><div id="blue_banner" onclick="window.location.href = \'#BLUEHALL\';location.reload();"></div><div id="red_banner" onclick="window.location.href =  \'#REDHALL\'; location.reload();"></div></div>');</script></div>
+<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = small_device ? 'top' : 'center'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + pic_ind + '.jpg) ' + pos + ' center no-repeat;text-align:center;"><div id="blue_banner" style="display:none;" onclick="window.location.href = \'#BLUEHALL\'; homee = \'BLUEHALL\'; roomee = homee; "></div><div id="red_banner" style="display:none;"  onclick="window.location.href = \'#REDHALL\'; homee = \'REDHALL\'; roomee = homee;"></div></div>');</script></div>
 <script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
 <div id="poll_container" class=poll_container>
@@ -1573,7 +1571,7 @@ if (!curIP.length && false) {
 </div><!-- city -->
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<script>/*keep phones longer! detectc slow systems? IMPORTANT*/let pause = getCookie('new_cache') ? 4000 : 5000;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
+<script>/*keep phones longer! detect slow systems? IMPORTANT - here "normal mode" is not set yet! that's why timeout is required to wait*/let pause = getCookie('new_cache') ? 4000 : 5000;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
 
 <script>
 
@@ -1597,6 +1595,8 @@ document.id('langs').style.marginTop = small_device ? '9vw' : '5vw';
 
 window.setTimeout( function() {if (document.id('room').style.display == 'none' && document.id('join').style.display !== 'none') window.location.reload();}, 300000);
 
+//console.log('here homee', homee, 'normal', normal_mode);
+//if ((na == null || na == 'null') && homee != w[0]) {console.log('skipping to'); document.id('phones').click();}// hacks to skip into halls? don't work
 </script>
 
 <!-- slot machine -->
