@@ -61,7 +61,7 @@ var already_clicked = false;
 
 var afterBinding = false;
 
-var ch_int;
+var ch_int; var chr_int;
 
 
 function getIP(json) {
@@ -74,7 +74,7 @@ function ajax_chat() {
 }
 
 function ajax_room(name) {
-	let banner = name == 'REDHALL' ? 'red_hall_span' : name == 'BLUEHALL' ? 'blue_hall_span' : ''; if (banner.length == 0) return;
+	let banner = name == 'REDHALL' ? 'red_hall_span' : name == 'BLUEHALL' ? 'blue_hall_span' : name == 'GREENHALL' ? 'green_hall_span' :''; if (banner.length == 0) return;
 	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_room_data.pl?room='+name).then(response => response.text()).then((response) => {if (response.length) {document.id(banner).innerHTML = '"'+response+'"';} else {document.id(banner).innerHTML = '-'} }).catch(err => console.log(err));
 }
 
@@ -273,10 +273,11 @@ window.addEventListener("message", function(event) {
 
 const sho = () => {
 
-	(function() {if (document.id('blue_banner')) {if (document.id('blue_banner').style.display == 'none') {document.id('blue_banner').style.display='block'; document.id('blue_banner').fade(1);} else { document.id('blue_banner').fade(0); (function() { document.id('blue_banner').style.display = 'none';}).delay(500);}}}).delay(100); 
 	(function() {if (document.id('red_banner')) {if (document.id('red_banner').style.display == 'none') {document.id('red_banner').style.display='block'; document.id('red_banner').fade(1);} else { document.id('red_banner').fade(0); (function() { document.id('red_banner').style.display = 'none';}).delay(500);}}}).delay(100);
+	(function() {if (document.id('green_banner')) {if (document.id('green_banner').style.display == 'none') {document.id('green_banner').style.display='block'; document.id('green_banner').fade(1);} else { document.id('green_banner').fade(0); (function() { document.id('green_banner').style.display = 'none';}).delay(500);}}}).delay(100);
+	(function() {if (document.id('blue_banner')) {if (document.id('blue_banner').style.display == 'none') {document.id('blue_banner').style.display='block'; document.id('blue_banner').fade(1);} else { document.id('blue_banner').fade(0); (function() { document.id('blue_banner').style.display = 'none';}).delay(500);}}}).delay(100); 
 	
-	(function() {ajax_room('BLUEHALL');ajax_room('REDHALL');}).delay(1000);
+	chr_int = setInterval(function() {ajax_room('BLUEHALL');ajax_room('GREENHALL');ajax_room('REDHALL');}, 1000);
 }
 
 const ed = () => { //code to run on receive message from join_ frame
@@ -297,12 +298,12 @@ const ed = () => { //code to run on receive message from join_ frame
 	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
 
  	if (!small_device) document.id('controls').style.display = 'none';
-	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : 'empty';
+	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
 	document.id('city').style.backgroundImage = bgr != 'empty' ?  'url(/img/' + bgr + '_screen.jpg)' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 document.id('house').style.display = 'block';
 	 //let hv = max_video_height > 300 ? 27 : 28;
-	 let hv = 27;//need to calculate somehow
+	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39 : 27;//need to calculate somehow
 	 if (!small_device)  {
 	 	document.id('house').style.top = '-'+hv+'vh';
 	 	document.id('sp_container').style.top = hv+'vh'; //get back
