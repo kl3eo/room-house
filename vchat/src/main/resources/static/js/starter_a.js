@@ -298,13 +298,12 @@ const ed = () => { //code to run on receive message from join_ frame
 	//setCoo().then(() => {console.log('set cookie');});
 	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
 
- 	//if (!small_device) 
-		document.id('controls').style.display = 'none';
-	//(function() {document.id('house').style.display = 'block';document.id('house').style.visibility='visible';}).delay(1000);
-	document.id('house').style.display = 'block';
+ 	if (!small_device) document.id('controls').style.display = 'none';
+
+	document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 	
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
-	document.id('city').style.backgroundImage = bgr != 'empty' ?  'url(/img/' + bgr + '_screen.jpg)' : null;
+	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 
 	 //let hv = max_video_height > 300 ? 27 : 28;
