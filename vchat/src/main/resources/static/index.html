@@ -520,9 +520,9 @@ const city_or_main = 1;
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	width: 18px;
-	height: 18px;
-	border-radius: 10px;
+	width: 24px;
+	height: 24px;
+	border-radius: 12px;
 	color :#fed;
 	cursor: pointer;
 	z-index: 1001;
@@ -789,6 +789,7 @@ const city_or_main = 1;
 	cursor: pointer;
 	font-size:24px;
 	margin-top:-5px;
+	color:#369;
     }
 
     #stats_ng {
@@ -799,6 +800,7 @@ const city_or_main = 1;
 	cursor: pointer;
 	font-size:24px;
 	margin-top:-5px;
+	color:#369;
     }
     #want {
 	display:none;
@@ -1181,15 +1183,18 @@ select:focus, input:focus, button:focus{
   #blue_banner {
 
 	top:5vh;
+	z-index:1001;
 
   }
  #red_banner {
 
-	bottom:5vh;
+	top:55vh;
+	z-index:1003;
   }
 
   #green_banner {
-	bottom: 30vh;
+	top: 30vh;
+	z-index:1002;
   }
 }
 
@@ -1204,11 +1209,11 @@ select:focus, input:focus, button:focus{
   }
  #red_banner {
 
-	bottom:20%;
+	top:60%;
   }
 
   #green_banner {
-	bottom: 41%;
+	top: 40%;
   }
 }
 .now_sho {
@@ -1222,7 +1227,7 @@ select:focus, input:focus, button:focus{
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
-<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'GREENHALL' ? 3 : homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = small_device ? 'top' : 'center'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + pic_ind + '.jpg) ' + pos + ' center no-repeat;text-align:center;"><div id="red_banner" style="display:none;"  onclick="window.location.href = \'#REDHALL\'; homee = \'REDHALL\'; roomee = homee;"><a href="#REDHALL" style="color:#963;">#REDHALL</a><div id="red_hall_span" class="now_sho">now showing..</div></div><div id="green_banner" style="display:none;"  onclick="window.location.href = \'#GREENHALL\'; homee = \'GREENHALL\'; roomee = homee;"><a href="#GREENHALL" style="color:#396;">#GREENHALL</a><div id="green_hall_span" class="now_sho">now showing..</div></div><div id="blue_banner" style="display:none;" onclick="window.location.href = \'#BLUEHALL\'; homee = \'BLUEHALL\'; roomee = homee; "><a href="#BLUEHALL">#BLUEHALL</a><div id="blue_hall_span" class="now_sho">now showing..</div></div></div>');</script></div>
+<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'GREENHALL' ? 3 : homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = screen.height < 800 ? 'top' : 'center'; let hpos = small_device && pic_ind == 0 ? 'left' : 'center'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + pic_ind + '.jpg) ' + pos + ' ' + hpos + '  no-repeat;text-align:center;"><div id="red_banner" style="display:none;"  onclick="window.location.href = \'#REDHALL\'; homee = \'REDHALL\'; roomee = homee;"><a href="#REDHALL" style="color:#963;">#REDHALL</a><div id="red_hall_span" class="now_sho">now showing..</div></div><div id="green_banner" style="display:none;"  onclick="window.location.href = \'#GREENHALL\'; homee = \'GREENHALL\'; roomee = homee;"><a href="#GREENHALL" style="color:#396;">#GREENHALL</a><div id="green_hall_span" class="now_sho">now showing..</div></div><div id="blue_banner" style="display:none;" onclick="window.location.href = \'#BLUEHALL\'; homee = \'BLUEHALL\'; roomee = homee; "><a href="#BLUEHALL">#BLUEHALL</a><div id="blue_hall_span" class="now_sho">now showing..</div></div></div>');</script></div>
 <script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
 <div id="poll_container" class=poll_container>

@@ -277,7 +277,8 @@ const sho = () => {
 	(function() {if (document.id('green_banner')) {if (document.id('green_banner').style.display == 'none') {document.id('green_banner').style.display='block'; document.id('green_banner').fade(1);} else { document.id('green_banner').fade(0); (function() { document.id('green_banner').style.display = 'none';}).delay(500);}}}).delay(100);
 	(function() {if (document.id('blue_banner')) {if (document.id('blue_banner').style.display == 'none') {document.id('blue_banner').style.display='block'; document.id('blue_banner').fade(1);} else { document.id('blue_banner').fade(0); (function() { document.id('blue_banner').style.display = 'none';}).delay(500);}}}).delay(100); 
 	
-	chr_int = setInterval(function() {ajax_room('BLUEHALL');ajax_room('GREENHALL');ajax_room('REDHALL');}, 1000);
+	setTimeout(function() {ajax_room('BLUEHALL');ajax_room('GREENHALL');ajax_room('REDHALL');}, 1000);
+	chr_int = setInterval(function() { if (document.id('ph_b') && document.id('ph_b').style.visibility == 'visible' && homee == w[0]) {ajax_room('BLUEHALL');ajax_room('GREENHALL');ajax_room('REDHALL');}}, 30000);
 }
 
 const ed = () => { //code to run on receive message from join_ frame
@@ -297,11 +298,15 @@ const ed = () => { //code to run on receive message from join_ frame
 	//setCoo().then(() => {console.log('set cookie');});
 	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
 
- 	if (!small_device) document.id('controls').style.display = 'none';
+ 	//if (!small_device) 
+		document.id('controls').style.display = 'none';
+	//(function() {document.id('house').style.display = 'block';document.id('house').style.visibility='visible';}).delay(1000);
+	document.id('house').style.display = 'block';
+	
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
 	document.id('city').style.backgroundImage = bgr != 'empty' ?  'url(/img/' + bgr + '_screen.jpg)' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
-	 document.id('house').style.display = 'block';
+	 
 	 //let hv = max_video_height > 300 ? 27 : 28;
 	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39 : 27;//need to calculate somehow
 	 if (!small_device)  {
@@ -438,7 +443,7 @@ let na = getCookie('name');if (na != null && na != 'null') {
 	 if (document.id('loading_span')) document.id('loading_span').fade(0);
 	//(function() {document.id('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-'+mgn+'px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">ROOM <span style="color:#369;">'+w[0]+'</span></div><div id="bstats" style="width:160px;margin:0 auto;opacity:0;"><div style="float:left; font-size:24px; color:#fed;"><span>&#128100;</span>&nbsp;:&nbsp;<span id="bnump">'+nump+'</span></div><div style="float:right;font-size:24px;color:#fed;"><span id="bnumv" style="color:#369;">'+numv+'</span>&nbsp;:&nbsp;<span>&#128101;</span></div><div style="clear:both;"></div></div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/button_ru.html style="color:#369;">' + morer +'</a></div><div id="socs" style="opacity:0;margin-top:60px;font-size:20px;margin-right:-2px;"><!-- a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;margin:0 5px;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;margin:0 5px;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;margin:0 5px;"><i class="bx bxl-telegram"></i></a>< &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;margin:0 5px;"><i class="bx bx-book-open"></i></a --></div></div>'; document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '39vh'; document.id('phones').fade(1); document.id('badge').fade(1); (function(){document.id('cont').fade(1);}).delay(500); (function(){document.id('learn_more').fade(1);document.id('socs').fade(1);document.id('hea').fade(1); }).delay(700); document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none';}).delay(1000) //let change_lang fill the i18n strings
 
-if (!small_device) document.id('house').style.visibility='hidden'; document.id('join').style.visibility='hidden'; document.id('langs').style.visibility='hidden';
+document.id('house').style.visibility='hidden'; document.id('join').style.visibility='hidden'; document.id('langs').style.visibility='hidden';
 (function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1);  document.id('phones').onclick = function() { if (w[0] == homee) {/*console.log('equal, sho!');*/ sho();} else {/*console.log('not equal, ed!');*/ ed();}}; if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (document.id('ph_b')) document.id('ph_b').style.visibility='visible'; }).delay(500);
 }
 } else if (event.origin == sm_url) {

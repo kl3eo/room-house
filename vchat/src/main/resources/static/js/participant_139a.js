@@ -449,7 +449,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 		
 	const switchOneMode = (el) => {
-		document.id('house').style.visibility='visible';
+		document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 		acc_id.then(data => {
 			if (data.length) {
 				doSwitchOneMode(el);
