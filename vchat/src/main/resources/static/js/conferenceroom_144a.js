@@ -343,6 +343,9 @@ function rightHandler(e) {
 
 const register = () => {
 
+	document.id('house').style.visibility='hidden';
+	document.id('room_name_id').style.display='none';
+	document.id('preroom').style.visibility='hidden';
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
 	
@@ -468,8 +471,14 @@ const register_body = (ro) => {
 		document.id('room').style.display = 'block';
 		document.id('preroom').innerHTML='&nbsp;';
 		document.id('postroom').style.display = 'none';
-		document.id('house').style.minHeight = '0px';
-		document.id('house').style.background = 'transparent';
+		
+		(function() {
+			document.id('house').style.minHeight = '0px';
+			document.id('house').style.background = 'transparent';
+			document.id('house').style.display = 'block';
+			document.id('house').style.visibility = 'visible';
+		
+		}).delay(1000);
 		
 		document.id('phones').style.display = 'block';
 		document.id('phones').style.visibility = 'visible';
