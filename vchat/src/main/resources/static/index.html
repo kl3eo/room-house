@@ -1656,6 +1656,22 @@ document.write('<iframe id="swap_niche" name=swap_niche src="" scrolling="yes" c
 <script src="slot/jquery.backgroundPosition.js"></script>
 <script src="slot/jquery.spritely.js"></script>
 <script src="slot/slot.js"></script -->
+<script>
+function hideAddressBar()
+{
+  if(!window.location.hash)
+  {
+      if(document.height < window.outerHeight)
+      {
+          document.body.style.height = (window.outerHeight + 50) + 'px';
+      }
 
+      setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
+  }
+}
+
+window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+window.addEventListener("orientationchange", hideAddressBar );
+</script>
 </body>
 </html>

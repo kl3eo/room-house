@@ -27,7 +27,7 @@
 #   GNU General Public License for more details.
 */
 
-var fullscreen = false; var cinemaEnabled = false;
+var fullscreen = false; var ios_fullscreen = false; var cinemaEnabled = false;
 
 let already_been_there = false;
 
@@ -540,8 +540,26 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	function toggleBigScreen(el) {
 
-			if (!isAndroid) switchContainerClass();
-			if (isAndroid) {
+			//if (!isAndroid) switchContainerClass();
+			if(!isAndroid && !ios_fullscreen) {
+				document.id('house').style.visibility='hidden';
+				document.id('controls').style.display='none';
+				container.style.position='fixed';
+				container.style.top='0px';
+				container.style.left='0px';
+				container.style.width='95vw';
+				//screen.orientation.lock('landscape');
+				ios_fullscreen = true;
+			}
+			else if(!isAndroid && ios_fullscreen) {
+				container.style.position='relative';
+				container.style.width='360px';
+				document.id('house').style.visibility='visible';
+				document.id('controls').style.display='block';
+				//screen.orientation.unlock();
+				ios_fullscreen = false;
+			}
+			else if (isAndroid) {
 				if (container.className == PARTICIPANT_MAIN_CLASS) toggleFullScreen(el);
 				if (container.className == PARTICIPANT_CLASS) switchContainerClass();
 			}

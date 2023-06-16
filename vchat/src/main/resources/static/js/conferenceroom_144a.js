@@ -343,9 +343,9 @@ function rightHandler(e) {
 
 const register = () => {
 
-	document.id('house').style.visibility='hidden';
-	document.id('room_name_id').style.display='none';
-	document.id('preroom').style.visibility='hidden';
+	if (document.id('house')) document.id('house').style.visibility='hidden';
+	if (document.id('room_name_id')) document.id('room_name_id').style.display='none';
+	if (document.id('preroom')) document.id('preroom').style.visibility='hidden';
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
 	
