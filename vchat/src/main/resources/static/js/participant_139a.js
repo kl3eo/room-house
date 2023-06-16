@@ -553,7 +553,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			}
 			else if(!isAndroid && ios_fullscreen) {
 				container.style.position='relative';
-				container.style.width='360px';
+				container.style.width='96%';
 				document.id('house').style.visibility='visible';
 				document.id('controls').style.display='block';
 				//screen.orientation.unlock();
