@@ -357,34 +357,46 @@ public class Room implements Closeable {
 	
 	String str = String.join("_", copy);
 	
-	String loco = user.getCurip();	
+	String loco = user.getCurip();
+	
+	// 5CkLgg19XECX98Lxam7kd4yZWyMqs6dG5Z686e2EkwtHqU86
+	
+	if (mes.matches("^5[a-zA-Z0-9]{47}$")) {
+	  String[] cmdline3 = { "sh", "-c", "/home/nobody/check_eligible_drop.pl "+user.getName()+" "+mes};
+	
+	  Process pr3 = Runtime.getRuntime().exec(cmdline3);		
 
-	String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" wrote: <<<span class=mes>"+mes+"<\\/span>>> at "+dtf.format(now)+"<br><br>\\n/' /var/www/html/cp/public_html/log.html"};
-	
-	Process pr4 = Runtime.getRuntime().exec(cmdline4);		
+	  log.info("ROOM check_eligible_for_drop {}: running shell command {}", name, cmdline3);
 
-	log.info("ROOM write_message_to_log {}: running shell command {}", name, cmdline4);
+	} else {
+
+	  String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" wrote: <<<span class=mes>"+mes+"<\\/span>>> at "+dtf.format(now)+"<br><br>\\n/' /var/www/html/cp/public_html/log.html"};
 	
-	final JsonObject newChatMessage = new JsonObject();	
-    	newChatMessage.addProperty("id", "newChatMessage");
+	  Process pr4 = Runtime.getRuntime().exec(cmdline4);		
+
+	  log.info("ROOM write_message_to_log {}: running shell command {}", name, cmdline4);
 	
-    	for (final UserSession participant : participants.values()) {
+	  final JsonObject newChatMessage = new JsonObject();	
+    	  newChatMessage.addProperty("id", "newChatMessage");
+	
+    	  for (final UserSession participant : participants.values()) {
     	    	try {
             	    	if (user.getName() != participant.getName()) participant.sendMessage(newChatMessage);
           	} catch (final IOException e) {
             		log.debug("ROOM {}: participant {} could not be notified", name, participant.getName());
           	}
-    	}
+    	  }
 
 // do the same for viewers, separately
 
-    	for (final UserSession viewer : viewers.values()) {
+    	  for (final UserSession viewer : viewers.values()) {
     	    	try {
     	    	    	if (user.getName() != viewer.getName()) viewer.sendMessage(newChatMessage);
     	    	    } catch (final IOException e) {
     	    	    	log.debug("ROOM {}: viewer {} could not be notified", name, viewer.getName());
     	    	}
-    	}
+    	  }
+	}
     }
   }  
 

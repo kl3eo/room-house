@@ -503,6 +503,7 @@ const register_body = (ro) => {
 			addEventListener("keydown", (event) => {
   				//event.keyCode === 65 ? leftHandler(event) : event.keyCode === 76 ? rightHandler(event) : noHandler(event);
 				let n = event.keyCode ? event.keyCode : 65;
+				if (n === 66) { if (document.id('controls').style.display === 'none' && !small_device) document.id('message_wrap').style.marginTop = '48vh'; cli5(); }
 				eventHandler(n);
 			});
                 	firstTime = false;
@@ -559,7 +560,7 @@ const register_body = (ro) => {
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 
-		if (document.id('want')) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
+		// if (document.id('want') && window == window.top) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
 		
 		if (!small_device && document.id('helpdoc')) (function() {let l = checkLang(); /*if (!small_device) document.id('helpdoc').style.marginRight = "4.8vw";*/
 
@@ -1220,7 +1221,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('anno_' + f).fade(1);
 		}
 
-		if (document.id('lol_' + f) && a.length && s === 'p') {
+		if (document.id('lol_' + f) && a.length && s === 'p' && window.top == window) {
 		
 			document.id('lol_' + f).innerHTML = 'STOP/PLAY';
 			document.id('lol_' + f).style.display='block';			
@@ -1330,9 +1331,15 @@ const setGuru = (request) => {
 
 		if (request.mode == '1' && role != 1) {
 		
-			temporary = 1; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
-			document.id('av_toggler').style.display='block';
-			document.id('bell').style.display='none';	
+			if (isCinema) {
+			   document.body.style.background = '#445';
+			   soundEffect.src = "/sounds/buzz.mp3";
+			   
+			} else {
+			   temporary = 1; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
+			   document.id('av_toggler').style.display='block';
+			   document.id('bell').style.display='none';
+			}	
 		}
 		if (request.mode == '0' && temporary) {
 

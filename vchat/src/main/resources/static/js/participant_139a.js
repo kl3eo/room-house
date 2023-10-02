@@ -388,6 +388,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	speaker.style.fontSize = "42px";
+	speaker.style.right = small_device && window.top != window ? "10px" : speaker.style.right;
 
 	this.getVideoElement = function() {
 		return video;

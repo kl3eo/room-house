@@ -300,6 +300,20 @@ const ed = () => { //code to run on receive message from join_ frame
 	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
 
  	if (!small_device) document.id('controls').style.display = 'none';
+	
+	if (small_device && window != window.top) {
+		document.id('stats').style.visibility = 'hidden';
+		document.id('stats_p').style.visibility = 'hidden';
+		document.id('stats_v').style.visibility = 'hidden';
+		document.id('stats_ng').style.visibility = 'hidden';
+		document.id('air').style.visibility = 'hidden';
+		document.id('helpdoc').style.visibility = 'hidden';
+		document.id('tex').style.visibility = 'hidden';
+		document.id('chess').style.visibility = 'hidden';
+		document.id('want').style.visibility = 'hidden';
+		document.id('logger').style.display = 'none';		
+	}
+	
 
 	document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 	
@@ -318,9 +332,10 @@ const ed = () => { //code to run on receive message from join_ frame
 	 document.id('house').style.textAlign = 'center';
 	 document.id('participants').style.marginLeft = '-1vw';
  }
- else {(function(){document.id('phones').fade(0);}).delay(500);
- 	//document.id('house').style.top = '-20vh';
- 	//document.id('controls').style.top = '20vh';
+ else {
+ 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
+	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;
+	(function(){document.id('phones').fade(0);}).delay(500);
  }
  
  var obj = JSON.parse(event.data);
@@ -614,7 +629,7 @@ window.addEvent('domready', function() {
 	(function(){document.id('wrapper').fade(1);}).delay(200);
 	(function(){document.id('preroom').fade(1);}).delay(100);
 	
-	oldColor = document.id('room-header').style.color;
+	oldColor = document.id('room-header') ? document.id('room-header').style.color : '';
 	
 	setInterval(function() { if (document.id('message_box') && document.id('message_wrap') && document.id('message_wrap').style.display == 'block' && chat_shown ) {ajax_chat()} }, 3000);
 

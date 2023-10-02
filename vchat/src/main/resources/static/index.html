@@ -50,6 +50,8 @@
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var roomee = ''; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
 
+var isCinema = homee == 'REDHALL' || homee == 'BLUEHALL' || homee == 'GREENHALL' ? true : false;
+
 //var max_video_height = 0;
 
 //const only_nums = /^\d+$/.test(w[0]);

@@ -394,7 +394,7 @@ public class CallHandler extends TextWebSocketHandler {
     String country = "country";
     String city = "city";
     int num_guests = 0;
-
+    
     //need this hack to avoid DB errors
     curip = curip.replaceAll("[;'\"]*", "");
     //if (curip.equals("127.0.0.1") || curip.equals("") || curip.equals("192.168.88.99")) {curip = "164.68.105.131";}
@@ -529,8 +529,16 @@ public class CallHandler extends TextWebSocketHandler {
     final Room room = roomManager.getRoom(user.getRoomName());
     final String n = params.get("name").getAsString();
     final String m = params.get("mode").getAsString();
+    final String pgurl1 = "jdbc:postgresql://localhost:5432/cp";
+    final String pguser1 = "postgres";
+    final String pgpass1 = "x";
+    
     log.info("GURU {}: trying to set {} in guru mode {} !", user.getName(), n, m);
     room.set_guru_in_mode(user, n, m);
+    try (Connection con = DriverManager.getConnection(pgurl1, pguser1, pgpass1);
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("UPDATE joins SET eligible=1, dtm=current_timestamp WHERE name='" + n + "'")) {
+    } catch (SQLException ex) {log.debug("PG update err for joins {}", user.getName());}    
   }
 
   private void dropGuest(UserSession user, JsonObject params) throws IOException {
