@@ -63,7 +63,6 @@ var afterBinding = false;
 
 var ch_int; var chr_int;
 
-
 function getIP(json) {
     curIP = json.ip;
 	document.id('curip').value = curIP;

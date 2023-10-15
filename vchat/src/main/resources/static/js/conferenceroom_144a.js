@@ -53,6 +53,8 @@ var audioContext = null;
 var mediaSource;
 var analyser;
 
+var only_once = 1;
+
 var shareSomeScreen = false;
 
 var already_being_played = false;
@@ -207,6 +209,9 @@ ws.onmessage = function(message) {
 		break;
 	case 'clearCoo':
 		clearTimeoutAndLeave();
+		break;
+	case 'newDrop':
+		newDrop(parsedMessage);
 		break;
 	case 'setGuru':
 		setGuru(parsedMessage);
@@ -388,6 +393,9 @@ const register = () => {
 				case 'clearCoo':
 					clearTimeoutAndLeave();
 					break;
+				case 'newDrop':
+					newDrop(parsedMessage);
+					break;
 				case 'setGuru':
 					setGuru(parsedMessage);
 					break;					
@@ -526,9 +534,16 @@ const register_body = (ro) => {
 		
 		let tok = getCookie('authtoken') || '';
 		
-		if (ro == 0 && hack) role = 1;	
+		if (ro == 0 && hack) role = 1;
+		
+// console.log('1: role is', role, 'mode is', mode);
 
-//console.log('registering, mode is' ,mode, 'role is', role);
+		if (role === 3 && mode === 'a' && only_once && cinema_three) { // hack ash
+			(function() {if (document.id('speaker-' + name)) document.id('speaker-' + name).click(); only_once = 0;}).delay(3000);
+			
+		}
+
+// console.log('registering, mode is' ,mode, 'role is', role, 'name is', name);
 		let formData = new FormData();
 		formData.append('addr', curip);
 		
@@ -599,8 +614,11 @@ const onNewViewer = (request) => {
 		let t = request.curip;
 	
 		if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
+		
+		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + f + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,f);this.style.background=\'#9cf\';}} else {set_guru(2,\'' + f + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + f + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
+
 		let audi = document.id('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : document.id('audience_boxx').innerHTML;	
-		audi = '<div id=_au_'+suf +'><span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;"  onclick="drop_guest(\'' + f + '\')" >X</span></div>' + audi;
+		audi = '<div id=_au_'+suf +'>' + medal + '<span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;"  onclick="drop_guest(\'' + f + '\')" >X</span></div>' + audi;
 		document.id('audience_boxx').innerHTML = audi;
 		
 		let ar_split = audi.split('_au_');
@@ -663,7 +681,8 @@ const onNewParticipant = (request) => {
 
 		if (!small_device) resizer(pctr);
 
-		   	
+console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
+	   	
 		receiveVideo(request.name, request.mode, myrole, true);
 		
 		(function() {if (document.id(request.name)) {document.id(request.name).style.display='block'; document.id(request.name).fade(1);}}).delay(500); //need this animation because the new video appears under the row, so we hide it
@@ -779,8 +798,12 @@ const onExistingViewers = (msg) => {
 				change_lang(altlang[ctr]);
 			}
 		}
+	
+		if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
+	
+		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + f + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,f);this.style.background=\'#9cf\';}} else {set_guru(2,\'' + f + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + f + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
 
-		audience = audience + '<div id=_au_'+suf +'><span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;" onclick="drop_guest(\'' + f + '\')" >X</span></div>'		
+		audience = audience + '<div id=_au_'+suf +'>' + medal + '<span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;" onclick="drop_guest(\'' + f + '\')" >X</span></div>'		
 		
 		
 	   }
@@ -845,7 +868,7 @@ function drop_guest(who) {
 		
 	}).catch(err => console.log(err));
 }
-
+/*
 function isMicrophoneAllowed(){
     navigator.permissions.query({
         name: 'microphone'
@@ -853,7 +876,7 @@ function isMicrophoneAllowed(){
         return permissionStatus.state !== 'denied';
     });
 }
-	
+*/	
 const onExistingParticipants = (msg) => {
 //sets up every video in the room I just joined
 
@@ -911,7 +934,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
 	if (aonly) constraints = constraints_aonly;
 
-	var constraints_alt = (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_aonly;
+	var constraints_alt = (i_am_muted === true || i_am_muted === 'true' || role === 3) ? constraints_vonly : constraints_aonly; // hack ash
 
 	var options = {
               	localVideo: video,
@@ -1220,7 +1243,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
 		}
-
+		/*
 		if (document.id('lol_' + f) && a.length && s === 'p' && window.top == window) {
 		
 			document.id('lol_' + f).innerHTML = 'STOP/PLAY';
@@ -1230,6 +1253,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('rew_' + f).style.display='block';			
 			document.id('rew_' + f).fade(1);
 		}
+		*/
+		// disabled user controls for now --ash oct'23
 	   } //for
    } // msg.data
    	   
@@ -1279,6 +1304,7 @@ const leaveRoom = () => {
 const receiveVideo = (sender, mode, role, n) => {
 
 	let new_flag = (n === true) ? true : false;
+// console.log('in receiveVideo1, mode', mode,'role', role, 'name', sender);
 	
 	var participant = new Participant(sender, document.id('name').value, mode, role, new_flag );
 	participants[sender] = participant;
@@ -1306,6 +1332,7 @@ const receiveVideo = (sender, mode, role, n) => {
 	}
 	
 	options = mode === 'a' ? options_aonly : options;
+// console.log('in receiveVideo2, options', options);
 	
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
 	function (error) {
@@ -1324,22 +1351,38 @@ const receiveVideo = (sender, mode, role, n) => {
 	
 }
 
+const newDrop = (request) => {
+	let na = request.user.split('_');
+	let short_name = na[0];
+	let suf = na[na.length-1];
+	
+	if (document.id('_o_'+suf)) {document.id('_o_'+suf).style.background = 'transparent'; soundEffect.src = '/sounds/ron.mp3';}
+}
 const setGuru = (request) => {
 //	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 //		let role = respo || 0;
 		let sem  = window.innerWidth > 1024 ? '7' : '';
+// console.log('here mode', request.mode, 'role:', role, 'cinema_3', cinema_three);
+		if (request.mode == '2' && role != 1 && cinema_three) {
 
-		if (request.mode == '1' && role != 1) {
+			document.body.style.background = '#FFD580';
+			soundEffect.src = "/sounds/buzz.mp3";
+			   	
+		}
+		if (request.mode == '3' && role != 1 && cinema_three) {
 		
-			if (isCinema) {
-			   document.body.style.background = '#445';
-			   soundEffect.src = "/sounds/buzz.mp3";
-			   
-			} else {
-			   temporary = 1; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
-			   document.id('av_toggler').style.display='block';
-			   document.id('bell').style.display='none';
-			}	
+			document.body.style.background = '#112';
+			soundEffect.src = "/sounds/track01.mp3";
+			   	
+		}
+		if (request.mode == '1' && role != 1) {
+
+			setCookie('av', true, 144000); aonly = 0; // IMPORTANT: comment this out if need "audio-only" default for "made" guests
+			
+			temporary = 1; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
+			document.id('av_toggler').style.display='block';
+			document.id('bell').style.display='none';
+	
 		}
 		if (request.mode == '0' && temporary) {
 
@@ -1361,10 +1404,13 @@ function askGuru(request) {
 	let na = request.name.split('_');
 	let short_name = na[0];
 	let suf = na[na.length-1];
-	
+		
 	if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
+	
+		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + request.name + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,\'' + request.name+ '\');this.style.background=\'#9cf\';}} else {set_guru(2,\'' + request.name + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + request.name + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
+	
 	let audi = document.id('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : document.id('audience_boxx').innerHTML;	
-	audi = '<div id=_au_'+suf+'><span id=au_' + suf + ' style="color:#9cf;cursor:pointer;font-size:16px;font-weight:bold;" onclick="set_guru(1,\'' + request.name + '\');">'+short_name + '</span> ' + requ +  ' <span style="cursor:pointer;" onclick="drop_guest(\'' +request.name + '\')" >X</span></div>' + audi;
+	audi = '<div id=_au_'+suf+'>' + medal + '<span id=au_' + suf + ' style="color:#9cf;cursor:pointer;font-size:16px;font-weight:bold;" onclick="set_guru(1,\'' + request.name + '\');">'+short_name + '</span> ' + requ +  ' <span style="cursor:pointer;" onclick="drop_guest(\'' +request.name + '\')" >X</span></div>' + audi;
 	
 	let ar_split = audi.split('_au_');
 	let cur = ar_split.length - 1;

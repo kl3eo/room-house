@@ -50,13 +50,15 @@
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var roomee = ''; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
 
-var isCinema = homee == 'REDHALL' || homee == 'BLUEHALL' || homee == 'GREENHALL' ? true : false;
-
 //var max_video_height = 0;
 
 //const only_nums = /^\d+$/.test(w[0]);
 //const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : only_nums ? '8443' : '8453';
 const port = w[1] === 'room-house' ? '8453' : '8443';
+
+
+var cinema_three = 0; let wilh = window.location.hostname.split('.'); let holh = document.location.href.split('#'); let homlh = holh[1] && holh[1].length ? holh[1] : wilh[0];
+if (homlh === 'REDHALL' || homlh === 'BLUEHALL' || homlh === 'GREENHALL') cinema_three = 1;
 
 const request = async (url) => {
 		const response = await fetch(url,{credentials: 'include'});

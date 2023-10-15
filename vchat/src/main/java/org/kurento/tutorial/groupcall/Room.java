@@ -368,6 +368,18 @@ public class Room implements Closeable {
 
 	  log.info("ROOM check_eligible_for_drop {}: running shell command {}", name, cmdline3);
 
+	  final JsonObject newDrop = new JsonObject();	
+    	  newDrop.addProperty("id", "newDrop");
+	  newDrop.addProperty("user", user.getName());
+	
+    	  for (final UserSession participant : participants.values()) {
+    	    	try {
+            	    	if (user.getName() != participant.getName()) participant.sendMessage(newDrop);
+          	} catch (final IOException e) {
+            		log.debug("ROOM {}: participant {} could not be notified", name, participant.getName());
+          	}
+    	  }
+	  
 	} else {
 
 	  String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" wrote: <<<span class=mes>"+mes+"<\\/span>>> at "+dtf.format(now)+"<br><br>\\n/' /var/www/html/cp/public_html/log.html"};
@@ -459,6 +471,14 @@ public class Room implements Closeable {
     		for (final UserSession viewer : viewers.values()) {
 	  		try {
 				if (userName.equals(viewer.getName())) {viewer.sendMessage(setGuru); viewer.setRole("3");}
+	  		} catch (final IOException e) {
+				log.debug("ROOM {}: could not set as GURU viewer {}", name, viewer.getName());
+			}				
+	  	}	
+	} else if (userMode.equals("2") || userMode.equals("3")) {
+    		for (final UserSession viewer : viewers.values()) {
+	  		try {
+				if (userName.equals(viewer.getName())) {viewer.sendMessage(setGuru);}
 	  		} catch (final IOException e) {
 				log.debug("ROOM {}: could not set as GURU viewer {}", name, viewer.getName());
 			}				

@@ -251,6 +251,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	dropper.onclick = rmPtcp;
 
 	speaker.className = 'speak';
+	speaker.id = 'speaker-' + name;
 	
 	let onemode_color = mode == 'c' ? '#ff0' : '#369';
 	onemode.style.fontWeight = mode == 'c' ? 'bold' : 'normal';

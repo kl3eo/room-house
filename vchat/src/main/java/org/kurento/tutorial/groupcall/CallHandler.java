@@ -219,7 +219,7 @@ public class CallHandler extends TextWebSocketHandler {
       case "plus":
         	if (user != null) plusVote(user, jsonMessage);
       case "keyDown":
-        	if (user != null) keyDown(user, jsonMessage);
+        	// if (user != null) keyDown(user, jsonMessage); // disabled user controls for now --ash oct'23
         break;
       case "makeLeave":
 		String jTokenMakeLeave = jsonMessage.get("token").getAsString();
@@ -535,10 +535,18 @@ public class CallHandler extends TextWebSocketHandler {
     
     log.info("GURU {}: trying to set {} in guru mode {} !", user.getName(), n, m);
     room.set_guru_in_mode(user, n, m);
-    try (Connection con = DriverManager.getConnection(pgurl1, pguser1, pgpass1);
-    Statement st = con.createStatement();
-    ResultSet rs = st.executeQuery("UPDATE joins SET eligible=1, dtm=current_timestamp WHERE name='" + n + "'")) {
-    } catch (SQLException ex) {log.debug("PG update err for joins {}", user.getName());}    
+    if (m.equals("2")) {
+     try (Connection con = DriverManager.getConnection(pgurl1, pguser1, pgpass1);
+    	Statement st = con.createStatement();
+    	ResultSet rs = st.executeQuery("UPDATE joins SET eligible=1, dtm=current_timestamp WHERE name='" + n + "'")) {
+     } catch (SQLException ex) {log.debug("PG update err for joins {}", user.getName());}
+    }    
+    if (m.equals("3")) {
+     try (Connection con = DriverManager.getConnection(pgurl1, pguser1, pgpass1);
+    	Statement st = con.createStatement();
+    	ResultSet rs = st.executeQuery("UPDATE joins SET eligible=0, dtm=current_timestamp WHERE name='" + n + "'")) {
+     } catch (SQLException ex) {log.debug("PG update err for joins {}", user.getName());}
+    }
   }
 
   private void dropGuest(UserSession user, JsonObject params) throws IOException {
