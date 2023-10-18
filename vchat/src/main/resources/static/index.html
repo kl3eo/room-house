@@ -56,10 +56,6 @@ var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? 
 //const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : only_nums ? '8443' : '8453';
 const port = w[1] === 'room-house' ? '8453' : '8443';
 
-
-var cinema_three = 0; let wilh = window.location.hostname.split('.'); let holh = document.location.href.split('#'); let homlh = holh[1] && holh[1].length ? holh[1] : wilh[0];
-if (homlh === 'REDHALL' || homlh === 'BLUEHALL' || homlh === 'GREENHALL') cinema_three = 1;
-
 const request = async (url) => {
 		const response = await fetch(url,{credentials: 'include'});
 		const txt = await response.text();

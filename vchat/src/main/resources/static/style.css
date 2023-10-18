@@ -304,12 +304,20 @@ input[type=button]:active, input[type=submit]:active {
 	margin: 0 auto;
 }
 
+@media screen and (min-width: 1024px) {
+.participant.solo {
+	min-width: 1024px;
+	!width: 50%;
+	margin: 0 auto;
+}
+}
+@media screen and (max-width: 1024px) {
 .participant.solo {
 	min-width: 480px;
 	width: 50%;
 	margin: 0 auto;
 }
-
+}
 .participant.duo {
 	min-width: 432px;
 	width: 45%;

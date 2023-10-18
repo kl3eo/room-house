@@ -351,6 +351,8 @@ const register = () => {
 	if (document.id('house')) document.id('house').style.visibility='hidden';
 	if (document.id('room_name_id')) document.id('room_name_id').style.display='none';
 	if (document.id('preroom')) document.id('preroom').style.visibility='hidden';
+	if (document.id('house') && !small_device && !notebook) document.id('house').style.minWidth='1000px';
+	
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
 	
@@ -538,7 +540,7 @@ const register_body = (ro) => {
 		
 // console.log('1: role is', role, 'mode is', mode);
 
-		if (role === 3 && mode === 'a' && only_once && cinema_three) { // hack ash
+		if (role === 3 && mode === 'a' && only_once) { // hack ash
 			(function() {if (document.id('speaker-' + name)) document.id('speaker-' + name).click(); only_once = 0;}).delay(3000);
 			
 		}
@@ -615,7 +617,7 @@ const onNewViewer = (request) => {
 	
 		if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
 		
-		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + f + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,f);this.style.background=\'#9cf\';}} else {set_guru(2,\'' + f + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + f + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
+		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;border-radius:20px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + f + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,f);this.style.background=\'#9cf\';}} else {set_guru(2,\'' + f + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + f + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
 
 		let audi = document.id('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : document.id('audience_boxx').innerHTML;	
 		audi = '<div id=_au_'+suf +'>' + medal + '<span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;"  onclick="drop_guest(\'' + f + '\')" >X</span></div>' + audi;
@@ -801,7 +803,7 @@ const onExistingViewers = (msg) => {
 	
 		if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
 	
-		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + f + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,f);this.style.background=\'#9cf\';}} else {set_guru(2,\'' + f + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + f + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
+		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;border-radius:20px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + f + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,f);this.style.background=\'#9cf\';}} else {set_guru(2,\'' + f + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + f + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
 
 		audience = audience + '<div id=_au_'+suf +'>' + medal + '<span id=au_' + suf + ' style="color:#9cf;cursor:pointer;" onclick="set_guru(1,\'' + f + '\');">'+short_name + '</span>, ' + t + ' <span style="cursor:pointer;" onclick="drop_guest(\'' + f + '\')" >X</span></div>'		
 		
@@ -1317,7 +1319,12 @@ const receiveVideo = (sender, mode, role, n) => {
 
 	var constraints_av = {
                 audio : true,
-                video: true
+		video:{
+			maxWidth : wi_hq,
+			maxFrameRate : fps_hq,
+			minFrameRate : fps_hq
+		}
+		
 	};
 	
 	var options = {
@@ -1356,20 +1363,21 @@ const newDrop = (request) => {
 	let short_name = na[0];
 	let suf = na[na.length-1];
 	
-	if (document.id('_o_'+suf)) {document.id('_o_'+suf).style.background = 'transparent'; soundEffect.src = '/sounds/ron.mp3';}
+	if (document.id('_o_'+suf)) {document.id('_o_'+suf).style.background = 'transparent'; /*soundEffect.src = '/sounds/ron.mp3';*/}
 }
 const setGuru = (request) => {
 //	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 //		let role = respo || 0;
 		let sem  = window.innerWidth > 1024 ? '7' : '';
-// console.log('here mode', request.mode, 'role:', role, 'cinema_3', cinema_three);
-		if (request.mode == '2' && role != 1 && cinema_three) {
+// console.log('here mode', request.mode, 'role:', role);
+		if (request.mode == '2' && role != 1) {
 
 			document.body.style.background = '#FFD580';
 			soundEffect.src = "/sounds/buzz.mp3";
+			soundEffect.src = "/sounds/please_receive_airdrop.mp3";
 			   	
 		}
-		if (request.mode == '3' && role != 1 && cinema_three) {
+		if (request.mode == '3' && role != 1) {
 		
 			document.body.style.background = '#112';
 			soundEffect.src = "/sounds/track01.mp3";
@@ -1378,7 +1386,7 @@ const setGuru = (request) => {
 		if (request.mode == '1' && role != 1) {
 
 			setCookie('av', true, 144000); aonly = 0; // IMPORTANT: comment this out if need "audio-only" default for "made" guests
-			
+			soundEffect.src = "/sounds/please_allow_camera.mp3";
 			temporary = 1; chat_shown = 1; document.id('logger').click(); document.id('audience').click(); rejoin();
 			document.id('av_toggler').style.display='block';
 			document.id('bell').style.display='none';
@@ -1392,6 +1400,7 @@ const setGuru = (request) => {
 			setCookie('av', false, 144000); aonly = 1; 
 			document.id('av_toggler').style.display='none';
 			document.id('bell').style.display='block';
+			document.id('room').style.marginTop = '40px';
 			hack = false; //?!
 			i_am_viewer = true;
 			flashText_and_rejoin('AUDIO-ONLY');
@@ -1407,7 +1416,7 @@ function askGuru(request) {
 		
 	if (document.id('_au_'+suf)) document.id('_au_'+suf).dispose();
 	
-		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + request.name + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,\'' + request.name+ '\');this.style.background=\'#9cf\';}} else {set_guru(2,\'' + request.name + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + request.name + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
+		let medal = !temporary ? '<span id=_o_'+suf+' style="cursor:pointer;font-size:36px;border-radius:20px;" onclick="if (this.style.background === \'#9cf\') {set_guru(3,\'' + request.name + '\');this.style.background=\'transparent\';this.onclick=function(){set_guru(2,\'' + request.name+ '\');this.style.background=\'#9cf\';}} else {set_guru(2,\'' + request.name + '\');this.style.background=\'#9cf\';this.onclick=function(){set_guru(3,\'' + request.name + '\');this.style.background=\'transparent\';}}">O</span> ' : '';
 	
 	let audi = document.id('audience_boxx').innerHTML == 'Audience is empty :(' ? '' : document.id('audience_boxx').innerHTML;	
 	audi = '<div id=_au_'+suf+'>' + medal + '<span id=au_' + suf + ' style="color:#9cf;cursor:pointer;font-size:16px;font-weight:bold;" onclick="set_guru(1,\'' + request.name + '\');">'+short_name + '</span> ' + requ +  ' <span style="cursor:pointer;" onclick="drop_guest(\'' +request.name + '\')" >X</span></div>' + audi;

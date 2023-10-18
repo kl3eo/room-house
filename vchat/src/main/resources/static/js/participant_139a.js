@@ -368,11 +368,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(adder);
 		
 	document.id(video.id).style.opacity = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname? 0 : 1;
-	document.id(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? '310px': document.id(video.id).style.maxHeight;
+	document.id(video.id).style.maxHeight = (i_am_muted === true || i_am_muted === 'true') && aonly && name == myname ? notebook ? '310px' : '360px': document.id(video.id).style.maxHeight;
 	
 	
 	//if (pcounter > 1)  // bigger screen bad for notebooks
-		document.id(video.id).style.maxHeight = '310px';
+	document.id(video.id).style.maxHeight = notebook ? '310px' : '360px';
 	
 	if ((all_muted === true || all_muted === 'true') || (coo_muted === true || coo_muted === 'true') || name == myname) video.muted = true;
 	

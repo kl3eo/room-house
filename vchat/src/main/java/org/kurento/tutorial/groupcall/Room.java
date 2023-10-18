@@ -360,6 +360,30 @@ public class Room implements Closeable {
 	String loco = user.getCurip();
 	
 	// 5CkLgg19XECX98Lxam7kd4yZWyMqs6dG5Z686e2EkwtHqU86
+/*
+	  try {
+	  pr3.waitFor();		
+	  BufferedReader buf = new BufferedReader(new InputStreamReader(pr3.getInputStream()));
+	  String line = "";
+	  while ((line=buf.readLine())!=null) {
+	  	if (line.equals("Success")) {
+			final JsonObject newDrop = new JsonObject();	
+			newDrop.addProperty("id", "newDrop");
+			newDrop.addProperty("user", user.getName());
+	
+			for (final UserSession participant : participants.values()) {
+				try {
+					if (user.getName() != participant.getName()) participant.sendMessage(newDrop);
+				} catch (final IOException e) {
+					log.debug("ROOM {}: participant {} could not be notified", name, participant.getName());
+				}
+			}
+		}
+	  }
+	  } catch (InterruptedException e){log.debug("Could not receive output from script /home/nobody/check_eligible_drop.pl");}
+
+*/
+// couldn't make it work due to interrupted exception errors
 	
 	if (mes.matches("^5[a-zA-Z0-9]{47}$")) {
 	  String[] cmdline3 = { "sh", "-c", "/home/nobody/check_eligible_drop.pl "+user.getName()+" "+mes};

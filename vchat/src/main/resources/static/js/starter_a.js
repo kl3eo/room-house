@@ -193,23 +193,24 @@ function resizer(pctr) {
 
 	if (pctr == 4) {
 		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginLeft = '-200px';
+		document.id('room').style.marginLeft = notebook ? '-200px' :  '48px';
 	} else if (pctr == 3) {
 		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginLeft = '-200px';
+		document.id('room').style.marginLeft = notebook ? '-200px' :  '48px';
 	} else if (pctr == 2) {
 		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginLeft = '-200px';
+		document.id('room').style.marginLeft = notebook ? '-200px' :  '48px';
 	} else if (pctr == 1) {
-		document.id('room').style.minWidth = '720px';
+		document.id('room').style.minWidth = '1024px';
 		document.id('room').style.marginLeft = '0px';
 	} else if (pctr == 5) {
 		document.id('room').style.minWidth = '1260px';
-		document.id('room').style.marginLeft = '-320px';
+		document.id('room').style.marginLeft = notebook ? '-320px' : '-60px';
 	} else if (pctr > 5) {
 		document.id('room').style.minWidth = '1560px';
-		document.id('room').style.marginLeft = '-440px';
+		document.id('room').style.marginLeft = notebook ? '-440px' : '-190px';
 	}
+
 }
 
 function toggleAllMuted() {
@@ -320,21 +321,19 @@ const ed = () => { //code to run on receive message from join_ frame
 	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 
-	 //let hv = max_video_height > 300 ? 27 : 28;
-	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39 : 27;//need to calculate somehow
+	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39.6 : 27;//need to calculate somehow
 	 if (!small_device)  {
 	 	document.id('house').style.top = '-'+hv+'vh';
+		// document.id('house').style.top = '-300px';
 	 	document.id('sp_container').style.top = hv+'vh'; //get back
-	 } else {
-	 	//document.id('controls').innerHTML=document.id('controls').innerHTML+'<div style="position:absolute;top:0;left:0;width:350px;height:118px;background:transparent url(/img/now_showing2.jpg) center center no-repeat;"></div>';
-	 }  
+	 }
+	 
 	 document.id('house').style.textAlign = 'center';
 	 document.id('participants').style.marginLeft = '-1vw';
- }
- else {
- 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
-	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;
-	(function(){document.id('phones').fade(0);}).delay(500);
+ } else {
+ 	document.id('container').style.marginTop = '-60px';
+	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
+	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;	(function(){document.id('phones').fade(0);}).delay(500);
  }
  
  var obj = JSON.parse(event.data);
