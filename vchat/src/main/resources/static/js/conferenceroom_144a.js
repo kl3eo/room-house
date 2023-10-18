@@ -683,7 +683,7 @@ const onNewParticipant = (request) => {
 
 		if (!small_device) resizer(pctr);
 
-console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
+// console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
 	   	
 		receiveVideo(request.name, request.mode, myrole, true);
 		
@@ -694,7 +694,11 @@ console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
 			document.id('loco_'+request.name).style.display='block';
 			document.id('loco_'+request.name).fade(1);			
 		}
-
+// console.log('cine:', cine, 'role', role);
+		if (cine && role != 1) {
+			(function() {document.id('loco_' + request.name).fade(0);document.id('span_' + request.name).fade(0);}).delay(2000);
+		}
+		
 		if (document.id('acco_'+request.name) && ValidateAccountId(request.acc_id) ) {
 			document.id('acco_'+request.name).style.display='block';
 			let na = request.name.split('_');
@@ -1209,7 +1213,11 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('loco_' + f).style.display='block';
 			document.id('loco_' + f).fade(1);			
 		}		
-		
+//console.log('cine is', cine);
+		if (cine) {
+			(function() {document.id('loco_' + f).fade(0);document.id('span_' + f).fade(0);}).delay(2000);
+		}
+				
 		if (document.id('acco_' + f) && ValidateAccountId(ac)) {
 			document.id('acco_' + f).style.display='block';
 			
@@ -1400,7 +1408,7 @@ const setGuru = (request) => {
 			setCookie('av', false, 144000); aonly = 1; 
 			document.id('av_toggler').style.display='none';
 			document.id('bell').style.display='block';
-			document.id('room').style.marginTop = '40px';
+			document.id('room').style.marginTop = '37px';
 			hack = false; //?!
 			i_am_viewer = true;
 			flashText_and_rejoin('AUDIO-ONLY');

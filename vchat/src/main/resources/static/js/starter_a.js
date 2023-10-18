@@ -321,7 +321,7 @@ const ed = () => { //code to run on receive message from join_ frame
 	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 
-	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39.6 : 27;//need to calculate somehow
+	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39.9 : 27;//need to calculate somehow
 	 if (!small_device)  {
 	 	document.id('house').style.top = '-'+hv+'vh';
 		// document.id('house').style.top = '-300px';
