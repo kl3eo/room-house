@@ -295,13 +295,11 @@ const ed = () => { //code to run on receive message from join_ frame
  //document.id('phones').fade(0);
  if (!normal_mode) {
 
-	//set session for guest
-	//setCoo().then(() => {console.log('set cookie');});
-	//if (document.forms['myGuestForm']) {document.forms['myGuestForm'].submit(); console.log('submitted!')}
-
- 	if (!small_device) document.id('controls').style.display = 'none';
+ 	// if (!small_device) document.id('controls').style.display = 'none';
 	
-	if (small_device && window != window.top) {
+
+	//if (small_device && window != window.top) {
+	if (small_device) {
 		document.id('stats').style.visibility = 'hidden';
 		document.id('stats_p').style.visibility = 'hidden';
 		document.id('stats_v').style.visibility = 'hidden';
@@ -313,27 +311,33 @@ const ed = () => { //code to run on receive message from join_ frame
 		document.id('want').style.visibility = 'hidden';
 		document.id('logger').style.display = 'none';		
 	}
-	
 
+
+	
+	if (!small_device) document.id('controls').style.display = 'none';
+	if (small_device) {document.id('controls').style.visibility = 'hidden';}
+	
 	document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 	
+	if (small_device && document.id('second_logger')) (function() {document.id('second_logger').style.display = 'block';}).delay(2000);
+	
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
-	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;
+	document.id('city').style.background = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
 	 
-	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? 39.9 : 27;//need to calculate somehow
-	 if (!small_device)  {
+	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? !small_device ? 39.9 : 27 : 27;//need to calculate somehow
+	 // if (!small_device)  {
 	 	document.id('house').style.top = '-'+hv+'vh';
-		// document.id('house').style.top = '-300px';
 	 	document.id('sp_container').style.top = hv+'vh'; //get back
-	 }
+		//if (small_device) document.id('message_wrap').style.top = hv+'vh';
+	 //}
 	 
 	 document.id('house').style.textAlign = 'center';
 	 document.id('participants').style.marginLeft = '-1vw';
  } else {
  	document.id('container').style.marginTop = '-60px';
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
-	document.id('city').style.backgroundImage = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg)' : null;	(function(){document.id('phones').fade(0);}).delay(500);
+	document.id('city').style.background = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;	(function(){document.id('phones').fade(0);}).delay(500);
  }
  
  var obj = JSON.parse(event.data);

@@ -351,8 +351,6 @@ const register = () => {
 	if (document.id('house')) document.id('house').style.visibility='hidden';
 	if (document.id('room_name_id')) document.id('room_name_id').style.display='none';
 	if (document.id('preroom')) document.id('preroom').style.visibility='hidden';
-	if (document.id('house') && !small_device && !notebook) document.id('house').style.minWidth='1000px';
-	
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
 	
@@ -524,7 +522,7 @@ const register_body = (ro) => {
 			document.id('newsub').style.display = 'block';
 		
 
-		document.id('rh_container').style.display = 'none';
+		if(document.id('rh_container')) document.id('rh_container').style.display = 'none';
 		
 		// brute force
 		all_muted = getCookie('all_muted');
@@ -537,6 +535,10 @@ const register_body = (ro) => {
 		let tok = getCookie('authtoken') || '';
 		
 		if (ro == 0 && hack) role = 1;
+	// if (document.id('house') && !small_device && role == 1) {document.id('house').style.minWidth='53vw'; document.id('house').style.maxWidth='1000px';}
+	// if (document.id('house') && !small_device && role != 1) {document.id('house').style.minWidth='1000px';}
+	if (document.id('house') && !small_device) {document.id('house').style.minWidth='1000px';}
+	
 		
 // console.log('1: role is', role, 'mode is', mode);
 
