@@ -550,8 +550,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				container.style.position='fixed';
 				container.style.top='0px';
 				container.style.left='0px';
-				container.style.width='95vw';
+				container.style.width= window.innerHeight > window.innerWidth ? '97vw' : '98vw';
+				document.id('second_logger').style.visibility='hidden';
 				//screen.orientation.lock('landscape');
+				if (window.innerHeight > window.innerWidth) flashText('rotate to fullscreen');
 				ios_fullscreen = true;
 			}
 			else if(!isAndroid && ios_fullscreen) {
@@ -559,6 +561,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				container.style.width='96%';
 				document.id('house').style.visibility='visible';
 				document.id('controls').style.display='block';
+				document.id('second_logger').style.visibility='visible';
 				//screen.orientation.unlock();
 				ios_fullscreen = false;
 			}
