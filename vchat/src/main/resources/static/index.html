@@ -1291,7 +1291,7 @@ select:focus, input:focus, button:focus{
 <br>
 </div>
 <!-- div id="langs" style="text-align:center;width:264px;margin:120px auto 0 auto;z-index:1000;padding-left:8px;visibility:hidden;" --><!-- no flags -->
-<div id="langs" style="text-align:center;width:264px;margin:7.5vw auto 0 auto;z-index:1000;padding-left:8px;">
+<div id="langs" style="text-align:center;width:264px;margin:10vh auto 0 auto;z-index:1000;padding-left:8px;">
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:10px;" onclick="change_lang('en');ctr=0;setCookie('lang',ctr,144000);"><img src=/flags/gb.png width=24></div>
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:5px;" onclick="change_lang('ru');ctr=1;setCookie('lang',ctr,144000);"><img src=/flags/ru.png width=24></div>
         <div style="width:36px;height:24px;float:left;cursor:pointer;margin-left:5px;" onclick="change_lang('es');ctr=2;setCookie('lang',ctr,144000);"><img src=/flags/es.png width=24></div>
@@ -1309,7 +1309,7 @@ select:focus, input:focus, button:focus{
 <div id="dummy_p" class="participant" style="position:absolute; left:0; top:70%; color:#369;font-size:16px;display:none;">CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png"></div>
 <div id="dummy2_p" class="participant" style="position:absolute; right:0; top:70%; color:#369;font-size:16px;display:none;">..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div></div>
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
-	<div id="container" style="margin-top:-5px;border:0px solid #ccc;">
+	<div id="container" style="margin-top:-15px;border:0px solid #ccc;">
 	
 		<div id="wrapper">
 			<div id="join" class="animate join" style="background:#9cf;max-width:80vw;max-height:210px;text-align:center;">	
@@ -1323,7 +1323,7 @@ select:focus, input:focus, button:focus{
                                 <div style="display:none;">
 RANDOM=7777
                                 </div>
-<script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:80vw;max-width:240px;"></iframe>');</script>
+<script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:80vw;max-width:240px;"></iframe>'); (function() {if (document.id('join_')) console.log ('here', document.id('join_').src);}).delay(5000); </script>
 
 				</div>
 			   </div>
@@ -1419,7 +1419,7 @@ if (!curIP.length && false) {
 
 <div id="av_toggler" class="bigO" style="float:left;" onclick="cli6()" title="Video ON/OFF"></div>
 
-<div id="exiter" class="bigO exiter" style="float:left;" onclick="document.id('spinner').style.display='block';(function(){location.reload();}).delay(1000);" title="Go away"></div>
+<div id="exiter" class="bigO exiter" style="float:left;" onclick="document.id('spinner').style.display='block';(function(){location.reload();}).delay(100);" title="Go away"></div>
 <div style="clear:left;"></div>
 
 </div><!-- av_selector -->

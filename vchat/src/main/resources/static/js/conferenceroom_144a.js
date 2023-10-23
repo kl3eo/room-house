@@ -262,7 +262,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; setCookie('av', null, 0); if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash -- unreacheable code*/ /*let ca = getCookie('fmode'); (function() { if (ca == 1) {console.log('ha!'); cli2();} if (ca == 2) {console.log('ha2!');cli3();} if (ca == 22) {console.log('ha22!'); cli6();}}).delay(100);*/} if (pcounter == 0 && role == 0) rejoin();}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; setCookie('av', null, 0); if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash -- unreacheable code*/ /*let ca = getCookie('fmode'); (function() { if (ca == 1) {console.log('ha!'); cli2();} if (ca == 2) {console.log('ha2!');cli3();} if (ca == 22) {console.log('ha22!'); cli6();}}).delay(100);*/} /*if (pcounter == 0 && role == 0) rejoin();*/}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -353,6 +353,7 @@ const register = () => {
 	if (document.id('preroom')) document.id('preroom').style.visibility='hidden';
 	var av = getCookie('av');
 	if (av && guru_is_here) aonly = 0;
+// console.log('av', av, 'guru', guru_is_here, 'aonly', aonly);
 	
 	let sem  = window.innerWidth > 1024 ? '7' : '';
 	
@@ -537,15 +538,15 @@ const register_body = (ro) => {
 		if (ro == 0 && hack) role = 1;
 	// if (document.id('house') && !small_device && role == 1) {document.id('house').style.minWidth='53vw'; document.id('house').style.maxWidth='1000px';}
 	// if (document.id('house') && !small_device && role != 1) {document.id('house').style.minWidth='1000px';}
+	
 	if (document.id('house') && !small_device) {document.id('house').style.minWidth='1000px';}
 	
 		
 // console.log('1: role is', role, 'mode is', mode);
 
-		if (role === 3 && mode === 'a' && only_once) { // hack ash
-			(function() {if (document.id('speaker-' + name)) document.id('speaker-' + name).click(); only_once = 0;}).delay(3000);
-			
-		}
+		// if (role === 3 && mode === 'a' && only_once) { // hack ash
+		//	(function() {if (document.id('speaker-' + name)) document.id('speaker-' + name).click(); only_once = 0;}).delay(3000);	
+		// }
 
 // console.log('registering, mode is' ,mode, 'role is', role, 'name is', name);
 		let formData = new FormData();
@@ -591,7 +592,7 @@ const register_body = (ro) => {
 		
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
 		
-		if (role == 1 && !already_clicked) {already_clicked = true; let ca = getCookie('fmode'); (function() { if (ca == 0) cli2(); if (ca == 1) cli3(); if (ca == 22) { playSomeMusic=true; getFile(); cli6(); }}).delay(100);}
+		if (role == 1 && !already_clicked) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) cli2(); if (ca == 1 && av) cli3(); if (ca == 22) { playSomeMusic=true; getFile(); cli6(); }}).delay(100);}
 
 }
 
@@ -696,7 +697,7 @@ const onNewParticipant = (request) => {
 			document.id('loco_'+request.name).style.display='block';
 			document.id('loco_'+request.name).fade(1);			
 		}
-// console.log('cine:', cine, 'role', role);
+console.log('cine:', cine, 'role', role);
 		if (cine && role != 1) {
 			(function() {document.id('loco_' + request.name).fade(0);document.id('span_' + request.name).fade(0);}).delay(2000);
 		}

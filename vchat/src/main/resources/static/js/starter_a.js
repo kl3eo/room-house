@@ -447,10 +447,21 @@ e.stopPropagation();
  document.id('phones').onclick = '';document.id('phones').style.cursor = 'none';
 }; //ed()
 
-let na = getCookie('name');if (na != null && na != 'null') {
- 	if ( document.id('dummy_p')) document.id('dummy_p').style.display = 'block'; if ( document.id('dummy2_p') && !small_device) document.id('dummy2_p').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').fade(0);
+let na = getCookie('name'); if (na != null && na != 'null') {
+ 	
+	// avoid viewers except in demo mode? entering empty room as dummy viewer is ugly, ugly, ugly
+	//if ( document.id('dummy_p')) document.id('dummy_p').style.display = 'block'; 
+	//if ( document.id('dummy2_p') && !small_device) document.id('dummy2_p').style.display = 'block';
+//console.log('pcounter is', pcounter, 'role is', role, 'limit is', room_limit);	
+	// if (role == 0) {temporary = 1; cli2();} // hack to avoid dummies, but only if room_limit > 0
+	
+	//(function() {if (role == 0) flashText('CLICK MENU TO ACTIVATE CAMERA');}).delay(500);
+	
+	if (document.id('loading_span')) document.id('loading_span').fade(0);
 	ed();
-
+//console.log('pcounter is', pcounter, 'role is', role, 'limit is', room_limit);
+	if (role == 0) flashText('CLICK MENU TO ACTIVATE CAMERA');
+	
 } else { //demo mode		
 	normal_mode = false; let mgn = small_device ? 135 : 90; sp_shown = 0;
 	setCookie('new_cache', true, 14400);
