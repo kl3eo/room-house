@@ -31,19 +31,23 @@ var fullscreen = false; var ios_fullscreen = false; var cinemaEnabled = false;
 
 let already_been_there = false;
 
-const doSwitchOneMode = (el) => {if (false) console.log(el);
+const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
+	let sp_setter_url_cur = sp_setter_url+'/#/binder/to/:'+acc_host+'/amount/:'+sum_host;
 	acc_id.then(data => { 
 	   if (!data.length) {
 		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-			let sess = respo; console.log('respo here is', sess);
+			let sess = respo; 
+			// console.log('respo here is', sess);
 			if (sess.length) {
-			  let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>'; 
+			  let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>';
+			  
 			  let h = small_device ? '64vh' : 420;
 			  let fs = small_device ? 24 : 18;
 		//no jquery	 
-			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
+			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, zIndex: 1003, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
 			  
 			  let topo = (window.innerHeight-540)/2 - 30; topo = topo + 'px'; if (!small_device) document.id('m6').style.top=topo;	//trim it, sir
+			  document.id('m6').onclick=function() {document.id('m6').style.display='none';document.id('m6').dispose();};
 			  	
 		//if we want to use both mBox and jQuery
 			  //mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click(); let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '12vh';document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function(){document.id('m6').style.display='none';};
@@ -455,7 +459,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 		acc_id.then(data => {
 			if (data.length) {
-				doSwitchOneMode(el);
+				doSwitchOneMode(el,'5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx',5); //sorba
 			} else {
 				if (!afterBinding) {
 				   acc_id.then(data => {

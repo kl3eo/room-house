@@ -36,7 +36,6 @@ var oldColor = null;
 var selectedFile = null;
 
 var loado = ''; var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = ''; var now = ''; var today = ''; var roo = ''; var buy = ''; var helpcapo = '';
-
 var chat_shown = 1;
 
 var temporary = 0;
@@ -86,6 +85,7 @@ function change_lang(l) {
 	if (document.id('rightlab')) document.id('rightlab').innerHTML=right_label.get(l);
 	if (document.id('dummy_p')) document.id('dummy_p').innerHTML=du_.get(l);
 	if (document.id('dummy2_p')) document.id('dummy2_p').innerHTML=du2_.get(l);
+	//if (document.id('locked_w')) document.id('locked_w').innerHTML=lo_.get(l);
 		
 	warning = warner.get(l);
 	waiter = waiter_.get(l);
@@ -179,8 +179,9 @@ function clearAllCookies() {
     if (typeof(Storage) != 'undefined') localStorage.clear();
 }
 
-function flashText(t) {
-	document.id('phones').innerHTML = t; document.id('phones').fade(1); (function(){document.id('phones').fade(0);}).delay(1000);
+function flashText(t, tt) {
+	let ti = tt ? tt : 1000;
+	document.id('phones').innerHTML = t; document.id('phones').fade(1); (function(){document.id('phones').fade(0);}).delay(ti);
 }
 
 function flashText_and_rejoin(t) {
@@ -328,7 +329,7 @@ const ed = () => { //code to run on receive message from join_ frame
 	 let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? !small_device ? 39.9 : 27 : 27;//need to calculate somehow
 	 // if (!small_device)  {
 	 	document.id('house').style.top = '-'+hv+'vh';
-	 	document.id('sp_container').style.top = hv+'vh'; //get back
+	 	document.id('sp_container').style.top = hv - 3 +'vh'; //get back
 		//if (small_device) document.id('message_wrap').style.top = hv+'vh';
 	 //}
 	 
@@ -341,12 +342,13 @@ const ed = () => { //code to run on receive message from join_ frame
  }
  
  var obj = JSON.parse(event.data);
- 
+ // from_join_v
  if (obj.name && obj.name.length) {
   document.id('name').value = obj.name;
   saveData('name', obj.name, 1440);
    
   document.id('roomName').value = roomee.length ? roomee : obj.room;
+  document.id('houseName').value = w[0];
   //let mes={id : 'checkRoom', room : obj.room}; sendMessage(mes);   
   //let role = obj.role;
   role = obj.role;
@@ -452,15 +454,15 @@ let na = getCookie('name'); if (na != null && na != 'null') {
 	// avoid viewers except in demo mode? entering empty room as dummy viewer is ugly, ugly, ugly
 	//if ( document.id('dummy_p')) document.id('dummy_p').style.display = 'block'; 
 	//if ( document.id('dummy2_p') && !small_device) document.id('dummy2_p').style.display = 'block';
-//console.log('pcounter is', pcounter, 'role is', role, 'limit is', room_limit);	
-	// if (role == 0) {temporary = 1; cli2();} // hack to avoid dummies, but only if room_limit > 0
-	
-	//(function() {if (role == 0) flashText('CLICK MENU TO ACTIVATE CAMERA');}).delay(500);
 	
 	if (document.id('loading_span')) document.id('loading_span').fade(0);
 	ed();
 //console.log('pcounter is', pcounter, 'role is', role, 'limit is', room_limit);
-	if (role == 0) flashText('CLICK MENU TO ACTIVATE CAMERA');
+	if (role == 0) {
+		let l = checkLang(); 
+		let click_menu = du_.get(altlang[l]);
+		flashText(click_menu, 3000);
+	}
 	
 } else { //demo mode		
 	normal_mode = false; let mgn = small_device ? 135 : 90; sp_shown = 0;
@@ -472,7 +474,7 @@ let na = getCookie('name'); if (na != null && na != 'null') {
 	//(function() {document.id('phones').innerHTML = '<div style="width:100%;text-align:center;"><div id=hea style="width:240px;margin:-'+mgn+'px auto 20px auto;color:#fed;line-height:28px;font-size:24px;">ROOM <span style="color:#369;">'+w[0]+'</span></div><div id="bstats" style="width:160px;margin:0 auto;opacity:0;"><div style="float:left; font-size:24px; color:#fed;"><span>&#128100;</span>&nbsp;:&nbsp;<span id="bnump">'+nump+'</span></div><div style="float:right;font-size:24px;color:#fed;"><span id="bnumv" style="color:#369;">'+numv+'</span>&nbsp;:&nbsp;<span>&#128101;</span></div><div style="clear:both;"></div></div><div id=badge style="opacity:0;width:190px;margin:0px auto 0px auto;"><img src=/img/logo_rh_white_190_badge.png border=0></div><div id=cont style="opacity:0;font-size:18px;padding:7px;text-align:center;width:210px;margin:0 auto;">' + badger + ' <span style="color:#fed">GUEST</span></div><div id=learn_more style="opacity:0;font-size:16px;color:#fed;margin-top:5px;">' + learner + ' <a href=https://room-house.com/button_ru.html style="color:#369;">' + morer +'</a></div><div id="socs" style="opacity:0;margin-top:60px;font-size:20px;margin-right:-2px;"><!-- a href="https://twitter.com/RoomHouseOffic1" class="twitter" style="color:#9cf;margin:0 5px;"><i class="bx bxl-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/kl3eo/room-house" class="github" style="color:#9cf;margin:0 5px;"><i class="bx bxl-github"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://t.me/skypirl" class="telegram" style="color:#9cf;margin:0 5px;"><i class="bx bxl-telegram"></i></a>< &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.room-house.com/room-house.com" style="color:#9cf;margin:0 5px;"><i class="bx bx-book-open"></i></a --></div></div>'; document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '39vh'; document.id('phones').fade(1); document.id('badge').fade(1); (function(){document.id('cont').fade(1);}).delay(500); (function(){document.id('learn_more').fade(1);document.id('socs').fade(1);document.id('hea').fade(1); }).delay(700); document.id('phones').onclick = ed; if (document.id('loading_span')) document.id('loading_span').style.display='none';}).delay(1000) //let change_lang fill the i18n strings
 
 document.id('join').style.visibility='hidden'; document.id('langs').style.visibility='hidden'; document.id('house').style.visibility='hidden';
-(function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1);  document.id('phones').onclick = function() { if (w[0] == homee) {/*console.log('equal, sho!');*/ sho();} else {/*console.log('not equal, ed!');*/ ed();}}; if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (document.id('ph_b')) document.id('ph_b').style.visibility='visible'; }).delay(500);
+(function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1);  document.id('phones').onclick = function() { if (w[0] == homee) {/*console.log('equal, sho!');*/ sho();} else {/*console.log('not equal, ed!');*/ ed();}}; if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (!cine) {let l = checkLang();document.id('ph_b').style.background = '#112'; document.id('ph_b').innerHTML = '<div id="locked_w" style="margin-top:20%;">'+lo_.get(altlang[l])+'</div>';(function(){document.id('locked_w').fade(0); (function(){location.reload();}).delay(500)}).delay(2000);} if (document.id('ph_b')) document.id('ph_b').style.visibility='visible'; console.log('here we are! role is', role);}).delay(500);
 }
 } else if (event.origin == sm_url) {
 	var obj = JSON.parse(event.data);
@@ -550,7 +552,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 
   if (obj.action == 'saveCookie') {
 	
-	doSwitchOneMode(document.id('newacc'));
+	doSwitchOneMode(document.id('newacc'),'5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx',5); //sorba
 
   } else if (obj.action == 'openWallet') {
   

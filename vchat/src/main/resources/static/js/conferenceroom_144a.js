@@ -146,7 +146,7 @@ window.onload = function(){
    }, 1000);
       
 	let lang = getCookie('lang');
-	lang = (lang === null || lang === 'null') ? 1 : lang;
+	lang = (lang === null || lang === 'null') ? 0 : lang;
 	lang = lang === '' ? 0 : lang;
 	ctr = lang;
 
@@ -461,6 +461,7 @@ const register_body = (ro) => {
 		
 		let w = window.location.hostname.split('.'); 
 		let room = document.id('roomName').value == '' ? w[0] : document.id('roomName').value;
+		let house = w[0];
 	
 		let curip = document.id('curip').value;
 		registered = 1;
@@ -563,6 +564,7 @@ const register_body = (ro) => {
 			name : name,
 			mode : mode,
 			room : room,
+			house : house,
 			curip: curip,
 			acc_id: data,
 			token: tok,
@@ -598,7 +600,7 @@ const register_body = (ro) => {
 
 function checkLang() {
 	let l = getCookie('lang');
-	l = (l === null || l === 'null') ? w[0] === "club" || w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l === '' ? 0 : l;
+	l = (l === null || l === 'null') ? w[0].match(new RegExp('rgsu','g')) ? 1 : 0 : l === '' ? 0 : l;
 	
 	return l;
 }
@@ -1216,7 +1218,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('loco_' + f).style.display='block';
 			document.id('loco_' + f).fade(1);			
 		}		
-//console.log('cine is', cine);
+
 		if (cine) {
 			(function() {document.id('loco_' + f).fade(0);document.id('span_' + f).fade(0);}).delay(2000);
 		}

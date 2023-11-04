@@ -275,13 +275,22 @@ var he_ = new Map ([
    ['pt', 'AJUDA'],
 ]);
 
+var lo_ = new Map ([
+   ['en', 'This room is locked now.<br>Please use password to enter.'],
+   ['ru', 'Эта комната сейчас закрыта.<br>Пожалуйста, используйте ПАРОЛЬ для входа.'],
+   ['es', 'La habitacion esta cerrada ahora.<br>Usa su contrasena por favor.'],
+   ['fr', 'La chambre est fermee maintenent.<br>Utilise votre mot de passe.'],
+   ['cn', 'This room is locked now.<br>Please use password to enter.'],
+   ['pt', 'This room is locked now.<br>Please use password to enter.'],
+]);
+
 var du_ = new Map ([
-   ['en', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
-   ['ru', 'КЛИКНИТЕ МЕНЮ ДЛЯ АКТИВАЦИИ ВЕБКАМЕРЫ!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
-   ['es', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
-   ['fr', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
-   ['cn', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
-   ['pt', 'CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png">'],
+   ['en', 'CLICK MENU TO ACTIVATE CAMERA!'],
+   ['ru', 'КЛИКНИТЕ МЕНЮ ДЛЯ ВКЛЮЧЕНИЯ КАМЕРЫ!'],
+   ['es', 'CLICK MENU TO ACTIVATE CAMERA!'],
+   ['fr', 'CLICK MENU TO ACTIVATE CAMERA!'],
+   ['cn', 'CLICK MENU TO ACTIVATE CAMERA!'],
+   ['pt', 'CLICK MENU TO ACTIVATE CAMERA!'],
 ]);
 
 var du2_ = new Map ([

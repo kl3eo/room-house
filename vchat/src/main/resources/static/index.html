@@ -49,7 +49,7 @@
 
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var roomee = ''; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
-const cine = homee === 'GREENHALL' || homee === 'REDHALL' || homee === 'BLUEHALL' ? true : false;
+const cine = homee === 'GREENHALL' || homee === 'REDHALL' || homee === 'BLUEHALL' || w[0] == 'cine' ||  w[0] == 'cinema' ? true : false;
 
 //var max_video_height = 0;
 
@@ -1249,7 +1249,7 @@ select:focus, input:focus, button:focus{
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
 
-<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1 || l === 'null' || l === null) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'GREENHALL' ? 3 : homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = screen.height < 800 ? 'top' : 'center'; let hpos = small_device && pic_ind == 0 ? 'left' : 'center'; let dt = small_device ? '' : '_dt'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + dt + pic_ind + '.jpg) ' + pos + ' ' + hpos + '  no-repeat;text-align:center;"><div id="red_banner" style="display:none;"  onclick="window.location.href = \'#REDHALL\'; homee = \'REDHALL\'; roomee = homee;"><a href="#REDHALL" style="color:#963;">#REDHALL</a><div id="red_hall_span" class="now_sho">now showing..</div></div><div id="green_banner" style="display:none;"  onclick="window.location.href = \'#GREENHALL\'; homee = \'GREENHALL\'; roomee = homee;"><a href="#GREENHALL" style="color:#396;">#GREENHALL</a><div id="green_hall_span" class="now_sho">now showing..</div></div><div id="blue_banner" style="display:none;" onclick="window.location.href = \'#BLUEHALL\'; homee = \'BLUEHALL\'; roomee = homee; "><a href="#BLUEHALL">#BLUEHALL</a><div id="blue_hall_span" class="now_sho">now showing..</div></div></div>');</script></div><!--phones-->
+<div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'GREENHALL' ? 3 : homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = screen.height < 800 ? 'top' : 'center'; let hpos = small_device && pic_ind == 0 ? 'left' : 'center'; let dt = small_device ? '' : '_dt'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + dt + pic_ind + '.jpg) ' + pos + ' ' + hpos + '  no-repeat;text-align:center;"><div id="red_banner" style="display:none;"  onclick="window.location.href = \'#REDHALL\'; homee = \'REDHALL\'; roomee = homee;"><a href="#REDHALL" style="color:#963;">#REDHALL</a><div id="red_hall_span" class="now_sho">now showing..</div></div><div id="green_banner" style="display:none;"  onclick="window.location.href = \'#GREENHALL\'; homee = \'GREENHALL\'; roomee = homee;"><a href="#GREENHALL" style="color:#396;">#GREENHALL</a><div id="green_hall_span" class="now_sho">now showing..</div></div><div id="blue_banner" style="display:none;" onclick="window.location.href = \'#BLUEHALL\'; homee = \'BLUEHALL\'; roomee = homee; "><a href="#BLUEHALL">#BLUEHALL</a><div id="blue_hall_span" class="now_sho">now showing..</div></div></div>');</script></div><!--phones-->
 <script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
 <div id="poll_container" class=poll_container>
@@ -1280,7 +1280,6 @@ select:focus, input:focus, button:focus{
 
 <div id="preroom" style="position:relative;z-index:20;width:100%;text-align:center;margin-top:4vh;opacity:0;"><!-- div style="color:#fff;padding-top:10px;">&#9733;&#9733;&#9733;</div -->
 <div style="width:100%;text-align:center;white-space:nowrap;margin:0 auto;font-size:30px;padding:5px;margin-bottom:17px;font-weight:bold;cursor:pointer;color:#fff;" onclick="location.href='https://room-house.com';" onmouseover="this.style.color='#9cf';" onmouseout="this.style.color='#fff';"> &nbsp; </div>
-<!-- div style="width:60%;margin:0 auto;font-size:20px;color:#fff;white-space:nowrap;cursor:pointer;" onclick="location.href='https://skypirl.net';">SkyPirl Blockchain -->
 <div id="room_name_id" style="width:60%;margin:0 auto;font-size:48px;font-weight:bold;color:#fff;white-space:nowrap;opacity:0;"></div>
 <div style="width:60%; margin:0 auto; font-size:20px; color:#fff; white-space:nowrap;"> &nbsp;
 <br>
@@ -1318,12 +1317,13 @@ select:focus, input:focus, button:focus{
 				<div style="min-height:128px;">
 				<input type=hidden name=name id="name" value=''>
 				<input type=hidden name=room id="roomName" value=''>
+				<input type=hidden name=house id="houseName" value=''>
 				<input type=hidden name=curip id="curip" value=''>
 				<input type=hidden name=role id="role" value=0>
                                 <div style="display:none;">
 RANDOM=7777
                                 </div>
-<script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:80vw;max-width:240px;"></iframe>'); (function() {if (document.id('join_')) console.log ('here', document.id('join_').src);}).delay(5000); </script>
+<script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; /*let sourcee = foo[1] && foo[1].length ? 'join_'+foo[1]+'_'+w[0]+'.html' : 'join_'+foo[1]+'_'+w[0]+'.html';*/ document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:80vw;max-width:240px;"></iframe>'); (function() {if (document.id('join_')) console.log ('here', document.id('join_').src);}).delay(5000); </script>
 
 				</div>
 			   </div>
@@ -1380,17 +1380,17 @@ if (!curIP.length && false) {
 <!-- dont remove!-->
 <div id="bundled" style="position:relative;width:50%;min-width:350px;margin:0 auto;text-align:center;">
 
-<div id="subbundled">
+<div id="subbundled" style="position:relative; text-align:center; width:100%;">
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyRHC network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
 
-<div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;">
+<div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;margin:0 auto;">
 	<div id="slidein" style="display:none;"></div><!-- dummy -->
 	<div id="anno_adder" style="display:none;"></div><!-- dummy -->
 	<div id="leftpluss" style="display:none;"></div><!-- dummy -->
 	<div id="rightpluss" style="display:none;"></div><!-- dummy -->
 	<div id="removerB" style="color:#777;font-size:16px;line-height:24px;cursor:pointer;z-index:1001;position:absolute;right:3px;"></div>
-	<script>document.write('<iframe id="sp_balance" name=sp_balance scrolling="no" style="display:none;border:0;background:transparent;text-align:right;height:84px;width:354px;margin-left:-8px;"></iframe>');</script>
-</div><!-- sp_cont -->
+	<script>document.write('<iframe id="sp_balance" name=sp_balance scrolling="no" style="display:none;position:relative;background:transparent;text-align:right;height:84px;width:354px;margin-left:-8px;border:0;"></iframe>');</script>
+</div><!-- sp_container -->
 </div><!-- subbundled -->
 
 <div id="controls" class=controls><!-- set top to -12px with sp container-->
@@ -1638,7 +1638,7 @@ if (!curIP.length && false) {
 
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <script src="./js/finisher_a.js"></script>
-<script>/*keep phones longer! detect slow systems? IMPORTANT - here "normal mode" is not set yet! that's why timeout is required to wait*/let pause = getCookie('new_cache') ? 4000 : 5000;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
+<script>/*keep phones longer! detect slow systems? IMPORTANT - here "normal mode" is not set yet! that's why timeout is required to wait*/let pause = cine ? 4000 : 500;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
 
 <!-- script>
 
