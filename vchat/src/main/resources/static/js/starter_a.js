@@ -336,7 +336,7 @@ const ed = () => { //code to run on receive message from join_ frame
 	 document.id('house').style.textAlign = 'center';
 	 document.id('participants').style.marginLeft = '-1vw';
  } else {
- 	document.id('container').style.marginTop = '-60px';
+ 	document.id('main_container').style.marginTop = '-60px';
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
 	document.id('city').style.background = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;	(function(){document.id('phones').fade(0);}).delay(500);
  }
@@ -447,6 +447,8 @@ e.stopPropagation();
  } //obj.name
 
  document.id('phones').onclick = '';document.id('phones').style.cursor = 'none';
+ 
+ if (cine && role == 1) {} else { document.id('container').fade(1);} // ok with 3D
 }; //ed()
 
 let na = getCookie('name'); if (na != null && na != 'null') {

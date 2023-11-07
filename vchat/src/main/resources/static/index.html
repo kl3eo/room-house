@@ -716,6 +716,15 @@ const city_or_main = 1;
 	margin-right:6px;
 	margin-top:-6px;
     }
+    #bg_switch {
+	background:transparent;
+	width:90px;
+	margin-right:1.5vw;
+	float:right;
+	font-size:42px;
+	margin-top:-6px;
+	cursor:pointer;
+    }
     #helpdoc {
 	display:none;
 	opacity:0;
@@ -733,8 +742,8 @@ const city_or_main = 1;
 	height:80px;
 	cursor:pointer;
 	float:right;
-	!margin-right:2px;
-	margin-right:14px;
+	margin-right:2px;
+	!margin-right:14px;
 	margin-top:-22px;
     }
     #chess {
@@ -853,6 +862,13 @@ const city_or_main = 1;
 	border:0px solid #900;
 
     }
+    #bg_switch {
+	background:transparent;
+	width:90px;
+	margin-right:1.5vw;
+	float:right;
+	font-size:24px;
+    }
     #helpdoc {
 	display:none;
 	opacity:0;
@@ -870,8 +886,8 @@ const city_or_main = 1;
 	height:36px;
 	cursor:pointer;
 	float:right;
-	!margin-right:8px;
-	margin-right:20px;
+	margin-right:8px;
+	!margin-right:20px;
 	margin-top:-10px;
 	border:0px solid #090;
     }
@@ -1308,7 +1324,7 @@ select:focus, input:focus, button:focus{
 <div id="dummy_p" class="participant" style="position:absolute; left:0; top:70%; color:#369;font-size:16px;display:none;">CLICK MENU TO ACTIVATE YOUR CAMERA!<br><img style="opacity:0.7" src="/icons/webcam2.png"></div>
 <div id="dummy2_p" class="participant" style="position:absolute; right:0; top:70%; color:#369;font-size:16px;display:none;">..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div></div>
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
-	<div id="container" style="margin-top:-15px;border:0px solid #ccc;">
+	<div id="main_container" style="margin-top:-15px;border:0px solid #ccc;">
 	
 		<div id="wrapper">
 			<div id="join" class="animate join" style="background:#9cf;max-width:80vw;max-height:210px;text-align:center;">	
@@ -1429,9 +1445,12 @@ if (!curIP.length && false) {
 	<div id="stats_p" title="now presenters">&#128100;:&nbsp;<span id=pcounter>0</span></div>
 	<div id="stats_v" title="now viewers" onclick="chat_shown = 0; document.id('logger').click(); document.id('message_box').style.display='none'; document.id('audience_box').style.display='table';">&#128101;:&nbsp;<span id=vcounter>0</span></div>
 	<div id="stats_ng" title="today viewers" onclick="document.id('message_box').style.display='block'; document.id('audience_box').style.display='none'; cli8();">&#128099;:&nbsp;<span id=num_guests>0</span></div>
+	
 	<div id="helpdoc"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal; color:#fed; font-size:22px;">HELP</span></a></div>
-
 	<div id="air" onclick="if (document.id('swap_niche')) {document.id('swap_niche').src=swap_url; document.id('swap_niche').style.display='block'; document.id('swap_niche').style.zIndex='10100'; document.id('swap_niche').fade(1);}"><div id="air_circle" style="font-size:12px;color:#9cf;font-weight:bold;margin-left:10px;border:1px solid #777;">CLO</div></div>
+
+	<div id="bg_switch" onclick="if (document.id('container').style.opacity == 0) {document.id('container').fade(1)} else {document.id('container').fade(0)}">bg</div>
+		
 	<div id="tex" onclick="if (document.id('poker_niche')) {document.id('poker_niche').src=poker_url; document.id('poker_niche').style.display='block'; document.id('poker_niche').style.zIndex='10100'; document.id('poker_niche').fade(1);}"></div>
 	<div id="chess" onclick="if (document.id('chess_niche')) {document.id('chess_niche').src=chess_url; document.id('chess_niche').style.display='block'; document.id('chess_niche').style.zIndex='10100'; document.id('chess_niche').fade(1);}"></div>
 	<!-- div id="air" onclick="fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
@@ -1637,6 +1656,7 @@ if (!curIP.length && false) {
 
 
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
+<div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>
 <script src="./js/finisher_a.js"></script>
 <script>/*keep phones longer! detect slow systems? IMPORTANT - here "normal mode" is not set yet! that's why timeout is required to wait*/let pause = cine ? 4000 : 500;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
 
@@ -1712,5 +1732,191 @@ window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddress
 window.addEventListener("orientationchange", hideAddressBar );
 </script>
 
+		<script async src="./es-module-shims/es-module-shims.js"></script>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			let camera, scene, renderer;
+
+			let isUserInteracting = false,
+				onPointerDownMouseX = 0, onPointerDownMouseY = 0,
+				lon = 0, onPointerDownLon = 0,
+				lat = 0, onPointerDownLat = 0,
+				phi = 0, theta = 0;
+
+			init();
+			animate();
+
+			function init() {
+
+				const container = document.getElementById( 'container' );
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
+
+				scene = new THREE.Scene();
+
+				const geometry = new THREE.SphereGeometry( 500, 60, 40 );
+				// invert the geometry on the x-axis so that all of the faces point inward
+				geometry.scale( - 1, 1, 1 );
+
+				// const texture = new THREE.TextureLoader().load( 'textures/2294472375_24a3b8ef46_o.jpg' );
+				const texture = new THREE.TextureLoader().load( 'textures/hallB.jpg' );
+				texture.colorSpace = THREE.SRGBColorSpace;
+				const material = new THREE.MeshBasicMaterial( { map: texture } );
+
+				const mesh = new THREE.Mesh( geometry, material );
+
+				scene.add( mesh );
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				container.style.touchAction = 'none';
+				container.addEventListener( 'pointerdown', onPointerDown );
+
+				document.addEventListener( 'wheel', onDocumentMouseWheel );
+
+				//
+
+				document.addEventListener( 'dragover', function ( event ) {
+
+					event.preventDefault();
+					event.dataTransfer.dropEffect = 'copy';
+
+				} );
+
+				document.addEventListener( 'dragenter', function () {
+
+					document.body.style.opacity = 0.5;
+
+				} );
+
+				document.addEventListener( 'dragleave', function () {
+
+					document.body.style.opacity = 1;
+
+				} );
+
+				document.addEventListener( 'drop', function ( event ) {
+
+					event.preventDefault();
+
+					const reader = new FileReader();
+					reader.addEventListener( 'load', function ( event ) {
+
+						material.map.image.src = event.target.result;
+						material.map.needsUpdate = true;
+
+					} );
+					reader.readAsDataURL( event.dataTransfer.files[ 0 ] );
+
+					document.body.style.opacity = 1;
+
+				} );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onPointerDown( event ) {
+
+				if ( event.isPrimary === false ) return;
+
+				isUserInteracting = isUserInteracting ? false : true;
+
+				onPointerDownMouseX = event.clientX;
+				onPointerDownMouseY = event.clientY;
+
+				onPointerDownLon = lon;
+				onPointerDownLat = lat;
+
+				document.addEventListener( 'pointermove', onPointerMove );
+				document.addEventListener( 'pointerup', onPointerUp );
+
+			}
+
+			function onPointerMove( event ) {
+
+				if ( event.isPrimary === false ) return;
+
+				lon = ( onPointerDownMouseX - event.clientX ) * 0.1 + onPointerDownLon;
+				lat = ( event.clientY - onPointerDownMouseY ) * 0.1 + onPointerDownLat;
+
+			}
+
+			function onPointerUp() {
+
+				if ( event.isPrimary === false ) return;
+
+				// isUserInteracting = false;
+
+				document.removeEventListener( 'pointermove', onPointerMove );
+				document.removeEventListener( 'pointerup', onPointerUp );
+
+			}
+
+			function onDocumentMouseWheel( event ) {
+
+				const fov = camera.fov + event.deltaY * 0.05;
+
+				camera.fov = THREE.MathUtils.clamp( fov, 10, 75 );
+
+				camera.updateProjectionMatrix();
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+				update();
+
+			}
+
+			function update() {
+
+				if ( isUserInteracting === false) {
+
+					lon += 0.1;
+
+				}
+
+				lat = Math.max( - 85, Math.min( 85, lat ) );
+				phi = THREE.MathUtils.degToRad( 90 - lat );
+				theta = THREE.MathUtils.degToRad( lon );
+
+				const x = 500 * Math.sin( phi ) * Math.cos( theta );
+				const y = 500 * Math.cos( phi );
+				const z = 500 * Math.sin( phi ) * Math.sin( theta );
+
+				camera.lookAt( x, y, z );
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
 </body>
 </html>
