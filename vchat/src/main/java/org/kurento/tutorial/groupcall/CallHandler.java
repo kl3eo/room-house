@@ -97,6 +97,7 @@ public class CallHandler extends TextWebSocketHandler {
     final String pgpass = "x";
     
     int room_limit = 0;
+    int num_rooms = 0;
 
     if (user != null) {
       log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
@@ -127,9 +128,11 @@ public class CallHandler extends TextWebSocketHandler {
 		String joinerRoom = jsonMessage.get("room").getAsString();
 		String joinerHouse = jsonMessage.get("house").getAsString();
 		String joinerRole = jsonMessage.get("role").getAsString();
+		String joinerCurrRoom = jsonMessage.get("currRoom").getAsString();
 		
 		joinerRoom = joinerRoom.replaceAll("[;'\"]*", ""); //protect against sql injection
 		joinerRole = joinerRole.replaceAll("[;'\"]*", "");
+		joinerCurrRoom = joinerCurrRoom.replaceAll("[;'\"]*", "");
 
 		BufferedReader br = new BufferedReader(new FileReader("/home/nobody/"+joinerRoom+"_room_limit"));
 		try {
@@ -174,8 +177,8 @@ public class CallHandler extends TextWebSocketHandler {
 		String sta = "0";
 	  	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select status from rooms where name='" + joinerRoom + "' and (current_timestamp < valid_till or valid_till is null)")) {
-            		if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";}} else {noSuchRoom = "1";}
+		ResultSet rs = st.executeQuery("select status, num_rooms from rooms where name='" + joinerRoom + "' and (current_timestamp < valid_till or valid_till is null)")) {
+            		if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";}; num_rooms = Integer.parseInt(rs.getString(2));} else {noSuchRoom = "1";}
          	} catch (SQLException ex) {log.debug("PG join err2 from {}: ", joinerName);}
 	  
         	
@@ -208,7 +211,7 @@ public class CallHandler extends TextWebSocketHandler {
 		if ( (sta.equals("1") && role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
 		} else {
-        		joinRoom(jsonMessage, session, room_limit);
+        		joinRoom(jsonMessage, session, room_limit, num_rooms);
 		}
         break;
       case "receiveVideoFrom":
@@ -387,13 +390,14 @@ public class CallHandler extends TextWebSocketHandler {
     if (user != null) roomManager.getRoom(user.getRoomName()).leave(user);
   }
 
-  private void joinRoom(JsonObject params, WebSocketSession session, int room_limit) throws IOException, GeoIp2Exception {
+  private void joinRoom(JsonObject params, WebSocketSession session, int room_limit, int num_rooms) throws IOException, GeoIp2Exception {
     String roomName = params.get("room").getAsString();
     String houseName = params.get("house").getAsString();
     String name = params.get("name").getAsString();
     String mode = params.get("mode").getAsString();
     String acc_id = params.get("acc_id").getAsString();    
     String role = params.get("role").getAsString();
+    String currRoom = params.get("currRoom").getAsString();
     
     final String pgurl = "jdbc:postgresql://localhost:5432/cp";
     final String pguser = "postgres";
@@ -470,12 +474,14 @@ public class CallHandler extends TextWebSocketHandler {
 		city = city.replaceAll("[;'\"]*", "");
 		country = country.replaceAll("[;'\"]*", "");
 		acc_id = acc_id.replaceAll("[;'\"]*", "");
+		currRoom = currRoom.replaceAll("[;'\"]*", "");
 
 //create table joins (id serial, ipaddr text, country text, city text, name text, house text, room text, mode text, role text, dtm timestamp, accid text);
-//insert		
+//insert
+// alter table joins add column currRoom char default null;		
 		try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, HOUSE, ROOM, MODE, ROLE, DTM, ACCID) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + houseName + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp, '" + acc_id + "')")) {
+		ResultSet rs = st.executeQuery("INSERT INTO JOINS (IPADDR, COUNTRY, CITY, NAME, HOUSE, ROOM, MODE, ROLE, DTM, ACCID, CURRROOM) VALUES ('" + ipAddress.getHostAddress() + "','" + country + "','" + city + "','" + name + "','" + houseName + "','" + roomName + "','" + mode + "','" + role + "', current_timestamp, '" + acc_id + "','" + currRoom + "')")) {
          	} catch (SQLException ex) {log.info("PG join err4 from {}: ", name);}
 
 //get daily stats
@@ -486,7 +492,7 @@ public class CallHandler extends TextWebSocketHandler {
             		if (rs.next()) {num_guests  = rs.getInt(1);}
          	} catch (SQLException ex) {log.debug("PG sel stats1 err for room {}: ", roomName);}
 			
-    	final UserSession user = room.join(name, mode, curip, acc_id, session, role, num_guests, room_limit);
+    	final UserSession user = room.join(name, mode, curip, acc_id, session, role, num_guests, room_limit, num_rooms, currRoom);
 
     	registry.register(user);
     }

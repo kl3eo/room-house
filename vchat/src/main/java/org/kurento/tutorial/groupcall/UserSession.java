@@ -71,6 +71,7 @@ public class UserSession implements Closeable {
   private final String acc_id;
   private String role_id;
   private String anno;
+  private String currRoom;
   private final WebSocketSession session;
 
   private final MediaPipeline pipeline;
@@ -79,7 +80,7 @@ public class UserSession implements Closeable {
   private final WebRtcEndpoint outgoingMedia;
   private final ConcurrentMap<String, WebRtcEndpoint> incomingMedia = new ConcurrentHashMap<>();
 
-  public UserSession(final String name, String mode, String curip, String acc_id, String roleId, String anno, String roomName, final WebSocketSession session, MediaPipeline pipeline) {
+  public UserSession(final String name, String mode, String curip, String acc_id, String roleId, String anno, String curr_room, String roomName, final WebSocketSession session, MediaPipeline pipeline) {
 
     this.pipeline = pipeline;
     this.name = name;
@@ -90,6 +91,8 @@ public class UserSession implements Closeable {
     this.anno = anno;
     this.session = session;
     this.roomName = roomName;
+    this.currRoom = curr_room;
+    
     this.outgoingMedia = new WebRtcEndpoint.Builder(pipeline).build();
 
     this.outgoingMedia.addIceCandidateFoundListener(new EventListener<IceCandidateFoundEvent>() {
@@ -139,6 +142,10 @@ public class UserSession implements Closeable {
     return role_id;
   }
 
+  public String getCurrRoom() {
+    return currRoom;
+  }
+  
   public void setRole(String r) {
     role_id = r;
   }
@@ -150,7 +157,11 @@ public class UserSession implements Closeable {
   public void setAnno(String r) {
     anno = r;
   }
-         
+
+  public void setCurrRoom(String r) {
+    currRoom = r;
+  }
+           
   public WebSocketSession getSession() {
     return session;
   }

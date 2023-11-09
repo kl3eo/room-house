@@ -569,7 +569,8 @@ const register_body = (ro) => {
 			curip: curip,
 			acc_id: data,
 			token: tok,
-			role: role
+			role: role,
+			currRoom: currRoom
 		   }
 	
 		   sendMessage(message);		
@@ -609,6 +610,8 @@ function checkLang() {
 }
 const onNewViewer = (request) => {
 
+	if (request.currRoom && currRoom != request.currRoom) return false; // do not connect those coming to a room other than mine current
+	
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;	
 	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(3000);
@@ -645,6 +648,8 @@ const onNewViewer = (request) => {
 
 const onNewParticipant = (request) => {
 
+  if (request.currRoom && currRoom != request.currRoom) return false; // do not connect those coming to a room other than mine current
+  
   if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	
 	let myrole = role;
@@ -901,7 +906,15 @@ const onExistingParticipants = (msg) => {
    //let role = respo || 0;
    
    if (role == 0 && hack) role = 1;
-   if (msg.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = msg.ng;}
+   //if (msg.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = msg.ng;}
+   if (msg.num_rooms) num_rooms = msg.num_rooms;
+   console.log('num_rooms', num_rooms);
+   let room_sel = ''; var sym = 'A'; 
+   for (i = 1; i <= num_rooms; i++) {
+   	sym = i == 2 ? 'B' : i == 3 ? 'C' : sym;
+	room_sel = room_sel + '&nbsp;&nbsp;<span style="color:#9cf;cursor:pointer;" onclick="currRoom = \'' + sym + '\'; console.log(\'sym\',currRoom); flashText_and_rejoin(\'SKIP TO ROOM \' + currRoom);">ROOM' + i + '</span>&nbsp;&nbsp;';
+   }
+   document.id('room_selector').innerHTML = room_sel;
 
    if (temporary && role == 0) role = 3;
 	

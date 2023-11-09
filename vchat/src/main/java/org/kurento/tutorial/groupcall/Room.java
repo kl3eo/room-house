@@ -97,14 +97,14 @@ public class Room implements Closeable {
     this.close();
   }
 
-  public UserSession join(String userName, String userMode, String userCurip, String userAccId, WebSocketSession session, String roleId, int num_guests, int room_limit) throws IOException {
+  public UserSession join(String userName, String userMode, String userCurip, String userAccId, WebSocketSession session, String roleId, int num_guests, int room_limit, int num_rooms, String currRoom) throws IOException {
 
     final String empty_anno = "";
-    final UserSession participant = new UserSession(userName, userMode, userCurip, userAccId, roleId, empty_anno, this.name, session, this.pipeline);
+    final UserSession participant = new UserSession(userName, userMode, userCurip, userAccId, roleId, empty_anno, currRoom, this.name, session, this.pipeline);
     
     if (roleId.equals("1") || roleId.equals("2") || roleId.equals("3")) {
     	log.info("ROOM {}: adding participant {}", this.name, userName);
-    	joinRoom(participant, num_guests, room_limit);
+    	joinRoom(participant, num_guests, room_limit, currRoom);
     	participants.put(participant.getName(), participant);
     } else {
     	
@@ -113,14 +113,14 @@ public class Room implements Closeable {
 	if(viewers.size() < 100) {
 		log.info("ROOM {}: adding viewer {}", this.name, userName);
 		viewers.put(participant.getName(), participant);
-		viewRoom(participant, num_guests, room_limit);
+		viewRoom(participant, num_guests, room_limit, currRoom);
 	} else {
 		log.info("ROOM {}: reached limit of viewers {}", this.name, viewers.size());
 	}
     }
     
-    sendParticipantNamesModesCuripsAccIdsAnnos(participant);
-    sendViewerNamesCurips(participant, num_guests, room_limit);
+    sendParticipantNamesModesCuripsAccIdsAnnos(participant, num_rooms, currRoom);
+    sendViewerNamesCurips(participant, num_guests, room_limit, currRoom);
     return participant;
   }
   
@@ -547,7 +547,7 @@ public class Room implements Closeable {
     }
   }
   
-  private Collection<String> joinRoom(UserSession newParticipant, int ng, int rl) throws IOException {
+  private Collection<String> joinRoom(UserSession newParticipant, int ng, int rl, String currRoom) throws IOException {
     final JsonObject newParticipantMsg = new JsonObject();
     newParticipantMsg.addProperty("id", "newParticipantArrived");
     newParticipantMsg.addProperty("name", newParticipant.getName());
@@ -556,6 +556,7 @@ public class Room implements Closeable {
     newParticipantMsg.addProperty("acc_id", newParticipant.getAccId());
     newParticipantMsg.addProperty("ng", ng);
     newParticipantMsg.addProperty("rl", rl);
+    newParticipantMsg.addProperty("currRoom", currRoom);
 //    newParticipantMsg.addProperty("role", newParticipant.getRole());
     final List<String> participantsList = new ArrayList<>(participants.values().size());
     log.debug("ROOM {}: notifying other participants of new participant {}", name,
@@ -584,13 +585,14 @@ public class Room implements Closeable {
     return participantsList;
   }
 
-  private void viewRoom(UserSession newViewer, int ng, int rl) throws IOException {
+  private void viewRoom(UserSession newViewer, int ng, int rl, String currRoom) throws IOException {
     final JsonObject newViewerMsg = new JsonObject();
     newViewerMsg.addProperty("id", "newViewerArrived");
     newViewerMsg.addProperty("name", newViewer.getName());
     newViewerMsg.addProperty("curip", newViewer.getCurip());
     newViewerMsg.addProperty("ng", ng);
-    newViewerMsg.addProperty("rl", rl); 
+    newViewerMsg.addProperty("rl", rl);
+    newViewerMsg.addProperty("currRoom", currRoom);
 
     for (final UserSession participant : participants.values()) {
       try {
@@ -704,11 +706,12 @@ public class Room implements Closeable {
         return remoteAddr;
   }
 
-  public void sendParticipantNamesModesCuripsAccIdsAnnos(UserSession user) throws IOException {
+  public void sendParticipantNamesModesCuripsAccIdsAnnos(UserSession user, int num_rooms, String currRoom) throws IOException {
 
     final JsonArray participantsArray = new JsonArray();
     
     for (final UserSession participant : this.getParticipants()) {
+    	if (!participant.getCurrRoom().equals(currRoom)) continue;
 
         final JsonElement participantNameModeCuripAccIdAnno = new JsonPrimitive(participant.getName() + "_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
 	
@@ -731,17 +734,20 @@ public class Room implements Closeable {
     final JsonObject existingParticipantsMsg = new JsonObject();
     existingParticipantsMsg.addProperty("id", "existingParticipants");
     existingParticipantsMsg.add("data", participantsArray);
+    existingParticipantsMsg.addProperty("num_rooms", num_rooms);
     
     log.debug("SOMEONE {}: sending him a list of {} participants", user.getName(),
         participantsArray.size());
     user.sendMessage(existingParticipantsMsg);
   }
 
-  public void sendViewerNamesCurips(UserSession user, int ng, int rl) throws IOException {
+  public void sendViewerNamesCurips(UserSession user, int ng, int rl, String currRoom) throws IOException {
 
     final JsonArray viewersArray = new JsonArray();
+    
     for (final UserSession viewer : this.getViewers()) {
-
+	if (!viewer.getCurrRoom().equals(currRoom)) continue;
+	
         final JsonElement viewerNameCurip = new JsonPrimitive(viewer.getName() + "_|_" + viewer.getCurip());
         viewersArray.add(viewerNameCurip);
 
