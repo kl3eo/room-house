@@ -1661,7 +1661,7 @@ if (!curIP.length && false) {
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>
 <div id="room_selector_box" style="position:absolute;top:20px;left:0;width:100%;height:120px;text-align:center;">
-<div id="room_selector" style="position:relative;margin:0 auto;width:360px;border:1px solid #9cf;color:#fed;font-size:24px;opacity:0;">ROOM SELECTOR</div>
+<div id="room_selector" style="position:relative;margin:0 auto;width:360px; color:#fed;font-size:24px;opacity:0;">ROOM SELECTOR</div>
 </div>
 <script src="./js/finisher_a.js"></script>
 <script>/*keep phones longer! detect slow systems? IMPORTANT - here "normal mode" is not set yet! that's why timeout is required to wait*/let pause = cine ? 4000 : 500;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
@@ -1754,7 +1754,7 @@ window.addEventListener("orientationchange", hideAddressBar );
 
 			let camera, scene, renderer;
 
-			let isUserInteracting = true,
+			let isUserInteracting = false,
 				onPointerDownMouseX = 0, onPointerDownMouseY = 0,
 				lon = 0, onPointerDownLon = 0,
 				lat = 0, onPointerDownLat = 0,
