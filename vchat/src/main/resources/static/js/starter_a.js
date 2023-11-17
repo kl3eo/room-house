@@ -268,8 +268,18 @@ window.addEventListener("message", function(event) {
     return;
   }
   if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
-
- 
+var obj = JSON.parse(event.data);
+//console.log('HERE replacer', obj.replacer)
+if (obj.replacer && obj.replacer.length) {
+	var roo = window.location.hostname.split('.');
+	var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? foo[1] : roo[0];
+	console.log('replaced', zoo, 'with', obj.replacer, 'in', document.location.href); 
+	//document.location.href=document.location.href.replace(zoo,obj.replacer);
+	history.pushState({}, null, document.location.href.replace(zoo,obj.replacer));
+	document.id('phones').style.display='none';
+	document.id('container').style.display='none';
+	window.location.reload();
+}
  //doesn't help here?
 	soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
 
@@ -341,7 +351,7 @@ const ed = () => { //code to run on receive message from join_ frame
 	document.id('city').style.background = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;	(function(){document.id('phones').fade(0);}).delay(500);
  }
  
- var obj = JSON.parse(event.data);
+ //var obj = JSON.parse(event.data);
  // from_join_v
  if (obj.name && obj.name.length) {
   document.id('name').value = obj.name;
@@ -554,7 +564,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 
   if (obj.action == 'saveCookie') {
 	
-	doSwitchOneMode(document.id('newacc'),'5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx',5); //sorba
+	doSwitchOneMode(document.id('newacc'),'5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx',0.5); //sorba
 
   } else if (obj.action == 'openWallet') {
   
