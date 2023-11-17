@@ -267,18 +267,25 @@ window.addEventListener("message", function(event) {
   if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url) {
     return;
   }
+  
   if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
+
 var obj = JSON.parse(event.data);
-//console.log('HERE replacer', obj.replacer)
+//replace URL on change of room name in iframe 
 if (obj.replacer && obj.replacer.length) {
 	var roo = window.location.hostname.split('.');
 	var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? foo[1] : roo[0];
 	console.log('replaced', zoo, 'with', obj.replacer, 'in', document.location.href); 
-	//document.location.href=document.location.href.replace(zoo,obj.replacer);
-	history.pushState({}, null, document.location.href.replace(zoo,obj.replacer));
+
 	document.id('phones').style.display='none';
 	document.id('container').style.display='none';
-	window.location.reload();
+	//works different for tower name and apart name
+	if (zoo == roo[0]) {
+		document.location.href=document.location.href.replace(zoo,obj.replacer);
+	} else {
+		history.pushState({}, null, document.location.href.replace(zoo,obj.replacer));
+		window.location.reload();
+	}
 }
  //doesn't help here?
 	soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
