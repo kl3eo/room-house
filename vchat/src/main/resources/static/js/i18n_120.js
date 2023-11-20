@@ -276,12 +276,12 @@ var he_ = new Map ([
 ]);
 
 var lo_ = new Map ([
-   ['en', 'This room is locked now.<br>Please use password to enter.'],
-   ['ru', 'Эта комната сейчас закрыта.<br>Пожалуйста, используйте ПАРОЛЬ для входа.'],
-   ['es', 'La habitacion esta cerrada ahora.<br>Usa su contrasena por favor.'],
-   ['fr', 'La chambre est fermee maintenent.<br>Utilise votre mot de passe.'],
-   ['cn', 'This room is locked now.<br>Please use password to enter.'],
-   ['pt', 'This room is locked now.<br>Please use password to enter.'],
+   ['en', 'This door is locked now.<br>Please use password to enter.'],
+   ['ru', 'Эта дверь сейчас закрыта.<br>Пожалуйста, используйте ПАРОЛЬ для входа.'],
+   ['es', 'La puerta esta cerrada ahora.<br>Usa su contrasena por favor.'],
+   ['fr', 'La porte est fermee maintenent.<br>Utilise votre mot de passe.'],
+   ['cn', 'This door is locked now.<br>Please use password to enter.'],
+   ['pt', 'This door is locked now.<br>Please use password to enter.'],
 ]);
 
 var du_ = new Map ([

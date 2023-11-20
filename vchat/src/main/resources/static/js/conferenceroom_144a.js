@@ -58,6 +58,8 @@ var only_once = 1;
 var shareSomeScreen = false;
 
 var already_being_played = false;
+var savedSrc = null;
+var recordedVideo = null;
 
 var now_playing = false;
 var __playing = true;
@@ -937,7 +939,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	var participant = new Participant(name, myname, mode, role, false);
 	participants[name] = participant;
 	
-	var video = participant.getVideoElement();
+	var video = recordedVideo ?  recordedVideo : participant.getVideoElement();
 	
 	var canvas = check_iOS() ? participant.getCanvasElement() : '';
 
@@ -978,9 +980,59 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		mediaConstraints: constraints_alt,
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
-		
+			
 	//if (shareSomeScreen && (role == 1 || role == 2)) {
-	if (shareSomeScreen) {
+	if(recordedVideo && savedSrc) {
+		var cstrx = {
+			audio: true,
+			video:{
+				maxWidth : wi_hq,
+				maxFrameRate : fps_hq,
+				minFrameRate : fps_hq
+			}
+		};
+
+		options = {
+			videoStream: savedSrc,
+			onicecandidate: participant.onIceCandidate.bind(participant),
+			mediaConstraints : cstrx
+		}
+		option_alt = {
+			videoStream: savedSrc,
+			onicecandidate: participant.onIceCandidate.bind(participant),
+			mediaConstraints :{audio: true, video: false}
+		}
+		
+		participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
+                  	 if(error) {
+		  	var ff = new RegExp('closed','ig');
+		  	if (error.toString().match(ff)) {
+		  	} else {
+                            		participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(option_alt,
+                          		   function (error) {
+                                        	if(error) {
+                                                	return console.error(error);
+                                        	}
+				
+                                        	startVideo(video);
+                                        	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+				if (small_device)  document.id(myname).style.float = 'none'; 				
+				document.id('room-header-file').style.display='none';
+                          		   }
+		    		);
+		  	}
+		  	return false;
+                  	 } else {
+                  	  	startVideo(video);
+		  	
+				this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+		
+				if (small_device)  document.id(myname).style.float = 'none';
+				document.id('room-header-file').style.display='none';
+                  	 }
+		  	 (function(){document.id('phones').fade(0);}).delay(1000);
+		}); //rtcPeer	
+	} else if (shareSomeScreen) {
       
 		shareSomeScreen = true;
 		document.id('room-header').style.color = oldColor;
@@ -1058,11 +1110,12 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		video.crossOrigin = 'anonymous';
 		video.volume = 1;
 		video.loop = true;
-		video.src = selectedFile ? selectedFile : "/a.mp4";
+		video.src = savedSrc ? null : selectedFile ? selectedFile : "/a.mp4";
+		video.srcObj = savedSrc ? savedSrc : null;
 		video.muted = false;
 		let cT = getCookie('cT') || 0; 
 		//console.log('video name', video, 'cT', cT);
-		video.currentTime = cT > 0 ? cT : 0;
+		if (!savedSrc) video.currentTime = cT > 0 ? cT : 0;
 	
 		video.addEventListener('canplay', (event) => {
 		
