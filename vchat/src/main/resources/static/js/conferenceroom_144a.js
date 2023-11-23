@@ -1360,6 +1360,13 @@ function copy(that){
 	inp.remove();
 }
 
+
+const grun = () => {
+	recordedVideo = document.querySelector('video');
+	savedSrc = recordedVideo.mozCaptureStream(24);
+	rejoin();
+}
+
 const leaveRoom = () => {
 	
 	let myname = document.id('name').value;

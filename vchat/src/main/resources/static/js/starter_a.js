@@ -669,6 +669,17 @@ window.addEvent('domready', function() {
 
 });
 
+const gifr = () => {
+	let ifr = document.createElement('iframe');
+	ifr.id = 'ifr';
+	ifr.style.position = 'absolute';
+	ifr.style.left = 0;
+	ifr.style.top = 0;
+	ifr.style.width='320px';
+	ifr.style.height='240px';
+	ifr.src='/testl.html';
+	document.body.appendChild(ifr);
+}
 
 const cli1 = () => {
 if ( document.id('dummy_p') && dummies) document.id('dummy_p').style.display='none';
