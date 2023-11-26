@@ -17,7 +17,7 @@ var curIP = '';
 
 var aonly = 1;
 
-var mod1; var mod2; var mod5;
+var mod1; var mod2; var mod5; var mod8;
 
 var altlang = ['en','ru','es','fr','cn','pt'];
 
@@ -427,7 +427,7 @@ e.stopPropagation();
 	}
   }
   
-  document.id('room-header').addEventListener('click', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(1);});
+  document.id('room-header').addEventListener('click', function(e) {e.preventDefault();e.stopPropagation(); if(shareSomeStream) {document.id('room-header').style.display='none'; grun()} else {toggleHeader(1)}});
   document.id('room-header').addEventListener('dblclick', function(e) {e.preventDefault();e.stopPropagation(); toggleHeader(2);});
 
    
@@ -659,7 +659,15 @@ window.addEvent('domready', function() {
 		title: 'Set Annotation',
 		attach: 'anno_adder'
 	});
-						
+
+	mod8 = new mBox.Modal({
+		content: stream_adder_content.get(altlang[ctr]),
+		setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222'}},
+		width:210,
+		title: 'Stream M3U8',
+		attach: 'stream_adder'
+	});
+							
 	(function(){document.id('wrapper').fade(1);}).delay(200);
 	(function(){document.id('preroom').fade(1);}).delay(100);
 	
@@ -669,16 +677,22 @@ window.addEvent('domready', function() {
 
 });
 
-const gifr = () => {
-	let ifr = document.createElement('iframe');
-	ifr.id = 'ifr';
-	ifr.style.position = 'absolute';
-	ifr.style.left = 0;
-	ifr.style.top = 0;
-	ifr.style.width='320px';
-	ifr.style.height='240px';
-	ifr.src='/testl.html';
-	document.body.appendChild(ifr);
+const gifr = (ifrid) => {
+	if (document.getElementsByTagName('iframe')[7] && document.getElementsByTagName('iframe')[7].name == 'ifrr') {
+	 ifr.id = ifrid ? ifrid : 'ifr';
+	 ifr.src='/testl.html';
+	} else {
+	 let ifr = document.createElement('iframe');
+	 ifr.id = ifrid ? ifrid : 'ifr';
+	 ifr.name = 'ifrr';
+	 ifr.style.position = 'absolute';
+	 ifr.style.left = 0;
+	 ifr.style.top = 0;
+	 ifr.style.width='320px';
+	 ifr.style.height='240px';
+	 ifr.src='/testl.html';
+	 document.body.appendChild(ifr);
+	}
 }
 
 const cli1 = () => {

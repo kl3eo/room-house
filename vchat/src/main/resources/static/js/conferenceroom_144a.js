@@ -89,7 +89,7 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const fps = 15;
 const wi = 640;
 const fps_hq = 24;
-const wi_hq = 1920;
+const wi_hq = 1280;
 
 //const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8449" : "https://aspen.room-house.com:8447";
 //const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
@@ -983,6 +983,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			
 	//if (shareSomeScreen && (role == 1 || role == 2)) {
 	if(recordedVideo && savedSrc) {
+		
+		shareSomeStream = true;
 		var cstrx = {
 			audio: true,
 			video:{
@@ -1003,6 +1005,17 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			mediaConstraints :{audio: true, video: false}
 		}
 		
+		
+		/*
+		const ctx = new AudioContext(); const dest = ctx.createMediaStreamSource(savedSrc); dest.connect(ctx.destination);
+		recordedVideo.autoplay = true;
+		recordedVideo.playsInline = true;
+		recordedVideo.controls = true;
+		recordedVideo.crossOrigin = 'anonymous';
+		recordedVideo.volume = 1;
+		recordedVideo.muted = false;
+		*/
+				
 		participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
                   	 if(error) {
 		  	var ff = new RegExp('closed','ig');
@@ -1031,7 +1044,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				document.id('room-header-file').style.display='none';
                   	 }
 		  	 (function(){document.id('phones').fade(0);}).delay(1000);
-		}); //rtcPeer	
+		}); //rtcPeer
+
 	} else if (shareSomeScreen) {
       
 		shareSomeScreen = true;
@@ -1110,12 +1124,11 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		video.crossOrigin = 'anonymous';
 		video.volume = 1;
 		video.loop = true;
-		video.src = savedSrc ? null : selectedFile ? selectedFile : "/a.mp4";
-		video.srcObj = savedSrc ? savedSrc : null;
+		video.src = selectedFile ? selectedFile : null;
 		video.muted = false;
 		let cT = getCookie('cT') || 0; 
 		//console.log('video name', video, 'cT', cT);
-		if (!savedSrc) video.currentTime = cT > 0 ? cT : 0;
+		video.currentTime = cT > 0 ? cT : 0;
 	
 		video.addEventListener('canplay', (event) => {
 		
@@ -1363,7 +1376,14 @@ function copy(that){
 
 const grun = () => {
 	recordedVideo = document.querySelector('video');
-	savedSrc = recordedVideo.mozCaptureStream(24);
+	if (recordedVideo.mozCaptureStream) {
+		savedSrc = recordedVideo.mozCaptureStream(fps_hq);
+	} else if (recordedVideo.captureStream) {
+		savedSrc = recordedVideo.captureStream(fps_hq);
+	} else {
+		savedSrc = null;
+	}
+	recordedVideo.muted = false;
 	rejoin();
 }
 

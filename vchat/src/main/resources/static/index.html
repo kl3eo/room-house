@@ -58,6 +58,10 @@ var num_rooms = 1;
 
 //const only_nums = /^\d+$/.test(w[0]);
 //const port = w[0] === '185' ? '18443' : w[0] === '95' && w[1] === '84' ? '8468' : w[0] === '81' && w[1] === '25'  ? '8453' : only_nums ? '8443' : '8453';
+
+var shareSomeStream = false;
+var gifrid = '';
+
 const port = w[1] === 'room-house' ? '8453' : '8443';
 
 const request = async (url) => {
@@ -741,8 +745,8 @@ const city_or_main = 1;
 	display:block;
 	opacity:0.8;
 	background:url(/img/poker48.png) top center no-repeat;
-	width:90px;
-	height:80px;
+	width:60px;
+	height:60px;
 	cursor:pointer;
 	float:right;
 	margin-right:2px;
@@ -753,11 +757,22 @@ const city_or_main = 1;
 	display:block;
 	opacity:0.8;
 	background:url(/img/chess48_c.png) top center no-repeat;
-	width:90px;
-	height:80px;
+	width:60px;
+	height:60px;
 	cursor:pointer;
 	float:right;
-	margin-right:-9px;
+	!margin-right:-9px;
+	margin-top:-23px;
+    }
+    #streamer {
+	display:block;
+	opacity:0.8;
+	background:url(/img/stream48.png) top center no-repeat;
+	width:60px;
+	height:60px;
+	cursor:pointer;
+	float:right;
+	!margin-right:-9px;
 	margin-top:-23px;
     }
     #air {
@@ -905,6 +920,9 @@ const city_or_main = 1;
 	margin-right:15px;
 	margin-top:-12px;
 	border:0px solid #090;
+    }
+    #streamer {
+    	display: none;
     }
     #air {
 	display:none;
@@ -1357,7 +1375,7 @@ RANDOM=7777
 				
 				<div style="float:left;margin-bottom:20px;"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
 				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
-				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;" onchange="getFile();"></div>
+				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();"></div>
 				<div style="clear:left;"></div>
 				<div id="participants">
 				<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
@@ -1405,6 +1423,7 @@ if (!curIP.length && false) {
 <div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;margin:0 auto;">
 	<div id="slidein" style="display:none;"></div><!-- dummy -->
 	<div id="anno_adder" style="display:none;"></div><!-- dummy -->
+	<div id="stream_adder" style="display:none;" onclick="if (shareSomeStream == false) {playSomeMusic=true;shareSomeStream=true;cli6();} else {document.getElementsByTagName('iframe')[7].src = document.getElementsByTagName('iframe')[7].src}"></div><!-- dummy -->
 	<div id="leftpluss" style="display:none;"></div><!-- dummy -->
 	<div id="rightpluss" style="display:none;"></div><!-- dummy -->
 	<div id="removerB" style="color:#777;font-size:16px;line-height:24px;cursor:pointer;z-index:1001;position:absolute;right:3px;"></div>
@@ -1456,6 +1475,7 @@ if (!curIP.length && false) {
 		
 	<div id="tex" onclick="if (document.id('poker_niche')) {document.id('poker_niche').src=poker_url; document.id('poker_niche').style.display='block'; document.id('poker_niche').style.zIndex='10100'; document.id('poker_niche').fade(1);}"></div>
 	<div id="chess" onclick="if (document.id('chess_niche')) {document.id('chess_niche').src=chess_url; document.id('chess_niche').style.display='block'; document.id('chess_niche').style.zIndex='10100'; document.id('chess_niche').fade(1);}"></div>
+	<div id="streamer" onclick="if (document.id('stream_adder')) document.id('stream_adder').click()"></div>
 	<!-- div id="air" onclick="fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			var sess = respo; /*console.log('sess is ', sess);*/ if (document.id('air_niche')) {document.id('air_niche').src=air_url+'/cgi/action_vg_print?session='+sess; document.id('air_niche').style.display='block'; document.id('air_niche').style.zIndex='10100'; document.id('air_niche').fade(1);}});"><div>&#128176;</div>
 			<span style="font-size:12px;color:#fff;font-weight:bold;">airdrop</span></div -->

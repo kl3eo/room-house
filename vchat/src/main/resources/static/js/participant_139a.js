@@ -216,7 +216,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(speaker);
 	
 	//container.onclick = switchContainerClass;
-	if (name == myname) container.onclick = showRoomHeader;
+	if (name == myname) container.onclick = shareSomeStream ? do_grun : showRoomHeader;
 	container.ondblclick = rmPtcp;
 
 	var ar = name.split("_");
@@ -238,8 +238,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	slider.addEventListener('change', function(e) {e.preventDefault(); e.stopPropagation(); changeVolume();});
 	
-	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (small_device) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});	
-
+	if (name != myname) video.addEventListener('click', function(e) {e.preventDefault(); e.stopPropagation(); let p = participants[name]; let g = p.getMode(); if (g != 'c') {if (small_device) {toggleBigScreen(e.target)} else { toggleFullScreen(e.target)}} else {switchOneMode(e.target)}});
+	
 /// iOS
 	if (check_iOS()) {
 
@@ -260,12 +260,12 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	let onemode_color = mode == 'c' ? '#ff0' : '#369';
 	onemode.style.fontWeight = mode == 'c' ? 'bold' : 'normal';
-	let onemode_label = mode == 'c' ? 'CINEMA!' : 'CINEMA?';
+	let onemode_label = shareSomeStream ? 'STREAM' : mode == 'c' ? 'CINEMA!' : 'CINEMA?';
 	
 	onemode.className = 'onemode';
 	onemode.id = 'one-' + name;
 	onemode.style.fontSize = small_device ? '18px' : '14px';
-	onemode.style.color = onemode_color;
+	onemode.style.color = shareSomeStream ? '#ff0' : onemode_color;
 	onemode.style.width = small_device ? '72px' : onemode.style.width;
 	onemode.appendChild(document.createTextNode(onemode_label));
 
@@ -408,7 +408,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 			if(!small_device) {document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);}
 	}
-	
+	function do_grun() {
+		shareSomeStream = false;
+		grun();
+	}
 	function setAnno() {
 				who_to = name;
 				anno_adder.click();		
