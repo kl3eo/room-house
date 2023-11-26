@@ -616,7 +616,7 @@ const onNewViewer = (request) => {
 	
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {document.id(myvideo).play();__playing = true;}).delay(3000);
+	if (now_playing) (function() {if (document.id(myvideo)) document.id(myvideo).play();__playing = true;}).delay(3000);
 
 	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;

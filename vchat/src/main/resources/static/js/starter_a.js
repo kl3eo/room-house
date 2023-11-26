@@ -679,6 +679,7 @@ window.addEvent('domready', function() {
 
 const gifr = (ifrid) => {
 	if (document.getElementsByTagName('iframe')[7] && document.getElementsByTagName('iframe')[7].name == 'ifrr') {
+	 let ifr = document.getElementsByTagName('iframe')[7];
 	 ifr.id = ifrid ? ifrid : 'ifr';
 	 ifr.src='/testl.html';
 	} else {
