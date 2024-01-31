@@ -1488,6 +1488,7 @@ const setGuru = (request) => {
 			document.body.style.background = '#FFD580';
 			soundEffect.src = "/sounds/buzz.mp3";
 			soundEffect.src = "/sounds/please_receive_airdrop.mp3";
+			flashText('push \"b\", then \"+\" and paste your Substrate address to \"WRITE TO CHAT\"', 5000);
 			   	
 		}
 		if (request.mode == '3' && role != 1) {
