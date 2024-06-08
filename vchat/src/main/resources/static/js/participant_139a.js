@@ -216,7 +216,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(speaker);
 	
 	//container.onclick = switchContainerClass;
-	if (name == myname) container.onclick = shareSomeStream ? do_grun : showRoomHeader;
+	if (name == myname) container.onclick = shareSomeStream ? do_grun : toggleRoomHeader;
 	container.ondblclick = rmPtcp;
 
 	var ar = name.split("_");
@@ -252,7 +252,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	   })
 	}
 ///	
-	onemode.onclick = setCinema;
+	onemode.onclick = function(e) {	e.preventDefault(); e.stopPropagation(); setCinema() }
 	dropper.onclick = rmPtcp;
 
 	speaker.className = 'speak';
@@ -264,6 +264,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	onemode.className = 'onemode';
 	onemode.id = 'one-' + name;
+	onemode.style.zIndex=10002;
 	onemode.style.fontSize = small_device ? '18px' : '14px';
 	onemode.style.color = shareSomeStream ? '#ff0' : onemode_color;
 	onemode.style.width = small_device ? '72px' : onemode.style.width;
@@ -404,9 +405,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		return canvas;
 	}
 		
-	function showRoomHeader() {
+	function toggleRoomHeader() {
 
-			if(!small_device) {document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);}
+			if(!small_device) {document.id('room-header').style.display = document.id('room-header').style.display === 'none' ? 'block' : 'none'; let a = document.id('room-header').style.display === 'none' ? 0 : 1; document.id('room-header').fade(a); document.id('room-header-file').style.display = document.id('room-header').style.display === 'none' ? 'none' : document.id('room-header-file').style.display;}
 	}
 	function do_grun() {
 		shareSomeStream = false;

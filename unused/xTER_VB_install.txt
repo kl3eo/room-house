@@ -26,7 +26,7 @@ Installation
 ============
 
 
-1. Download the latest VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
+1. Download the latest (6.1.*) VirtualBox for your OS from https://www.virtualbox.org/wiki/Downloads
 
 2. Run the installation of VirtualBox to its default Windows location:"C:\Program Files\Oracle\VirtualBox"
 

@@ -190,7 +190,7 @@ function flashText_and_rejoin(t) {
 	(function(){document.id('phones').fade(0);}).delay(1000);
 }
 
-function resizer(pctr) {
+function resizer_left(pctr) {
 
 	if (pctr == 4) {
 		document.id('room').style.minWidth = '960px';
@@ -210,6 +210,30 @@ function resizer(pctr) {
 	} else if (pctr > 5) {
 		document.id('room').style.minWidth = '1560px';
 		document.id('room').style.marginLeft = notebook ? '-440px' : '-190px';
+	}
+
+}
+
+function resizer(pctr) {
+
+	if (pctr == 4) {
+		document.id('room').style.minWidth = '960px';
+		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
+	} else if (pctr == 3) {
+		document.id('room').style.minWidth = '960px';
+		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
+	} else if (pctr == 2) {
+		document.id('room').style.minWidth = '960px';
+		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
+	} else if (pctr == 1) {
+		document.id('room').style.minWidth = '1024px';
+		document.id('room').style.marginRight = '30px';
+	} else if (pctr == 5) {
+		document.id('room').style.minWidth = '1260px';
+		document.id('room').style.marginRight = notebook ? '-320px' : '-60px';
+	} else if (pctr > 5) {
+		document.id('room').style.minWidth = '1560px';
+		document.id('room').style.marginRight = notebook ? '-440px' : '-190px';
 	}
 
 }
@@ -333,7 +357,7 @@ const ed = () => { //code to run on receive message from join_ frame
 
 	
 	if (!small_device) document.id('controls').style.display = 'none';
-	if (small_device) {document.id('controls').style.visibility = 'hidden';}
+	if (small_device) document.id('controls').style.visibility = 'hidden';
 	
 	document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 	
@@ -485,6 +509,7 @@ let na = getCookie('name'); if (na != null && na != 'null') {
 	
 } else { //demo mode		
 	normal_mode = false; let mgn = small_device ? 135 : 90; sp_shown = 0;
+	document.id('main_container').style.marginTop = small_device ? document.id('main_container').style.marginTop : '16vh';
 	setCookie('new_cache', true, 14400);
 	
 	let mes={id : 'checkRoom', room : homee, tok : ''}; sendMessage(mes);
@@ -495,6 +520,16 @@ let na = getCookie('name'); if (na != null && na != 'null') {
 document.id('join').style.visibility='hidden'; document.id('langs').style.visibility='hidden'; document.id('house').style.visibility='hidden';
 (function() {document.id('phones').style.cursor = 'pointer';document.id('phones').style.paddingTop = '0vh'; document.id('phones').style.display='block'; document.id('phones').fade(1);  document.id('phones').onclick = function() { if (w[0] == homee) {/*console.log('equal, sho!');*/ sho();} else {/*console.log('not equal, ed!');*/ ed();}}; if (document.id('loading_span')) document.id('loading_span').style.display='none'; if (!cine) {let l = checkLang();document.id('ph_b').style.background = '#112'; document.id('ph_b').innerHTML = '<div id="locked_w" style="margin-top:20%;">'+lo_.get(altlang[l])+'</div>';(function(){document.id('locked_w').fade(0); (function(){location.reload();}).delay(500)}).delay(2000);} if (document.id('ph_b')) document.id('ph_b').style.visibility='visible'; console.log('here we are! role is', role);}).delay(500);
 }
+
+// fix area above video for three.js canvas clicks
+//if (!small_device) {
+	document.id('preco').style.height = '0px';
+	document.id('main_container').style.height = '0px';
+	document.id('room').style.height = '0px';
+	document.id('room-header_box').style.height = '0px';
+	document.id('room').style.marginTop = '-57vh';
+//}
+	
 } else if (event.origin == sm_url) {
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('sm_niche')) {

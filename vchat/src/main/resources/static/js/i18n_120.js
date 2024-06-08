@@ -140,12 +140,12 @@ var anno_adder_content = new Map([
 ]);
 
 var stream_adder_content = new Map([
-   ['en', 'ADD STREAM: <input type=text id=lsender value="'+gifrid+'" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
-   ['ru', 'ADD STREAM: <input type=text id=lsender value="'+gifrid+'" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
-   ['es', 'ADD STREAM: <input type=text id=lsender value="'+gifrid+'" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
-   ['fr', 'ADD STREAM: <input type=text id=lsender value="'+gifrid+'" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
-   ['cn', 'ADD STREAM: <input type=text id=lsender value="'+gifrid+'" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
-   ['pt', 'ADD STREAM: <input type=text id=lsender value="'+gifrid+'" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
+   ['en', 'ADD STREAM: <input type=text id=lsender value="https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
+   ['ru', 'ADD STREAM: <input type=text id=lsender value="https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
+   ['es', 'ADD STREAM: <input type=text id=lsender value="https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
+   ['fr', 'ADD STREAM: <input type=text id=lsender value="https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
+   ['cn', 'ADD STREAM: <input type=text id=lsender value="https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
+   ['pt', 'ADD STREAM: <input type=text id=lsender value="https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8" onkeydown="var Ucode=event.keyCode? event.keyCode : event.charCode; if (Ucode == 13) {if (this.value.length) {mod8.close();gifrid=this.value;gifr(this.value)} else {this.placeholder = \'???\';}}">'],
 ]);
 
 var left_label = new Map([

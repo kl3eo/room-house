@@ -186,7 +186,7 @@ public class CallHandler extends TextWebSocketHandler {
 
 	  	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
                 Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select status from rooms where name='" + joinerRoom + "' and (house='" + joinerHouse + "' or house is null")) {
+		ResultSet rs = st.executeQuery("select status from rooms where name='" + joinerRoom + "' and (house='" + joinerHouse + "' or house is null)")) {
             		if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";}} else {noSuchRoom = "1";}
          	} catch (SQLException ex) {log.debug("PG join err3 from {}: ", joinerName);}
 		

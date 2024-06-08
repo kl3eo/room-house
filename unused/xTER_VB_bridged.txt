@@ -1,0 +1,9 @@
+1. vboxmanage createvm --name RH --ostype RedHat_64 --register --basefolder "C:\Users\Pedro\VMs"
+2. cd "C:\Users\Pedro\VMs\RH"
+3. vboxmanage modifyvm RH --memory 5120 --cpus 2 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 "Realtek PCIe GBE Family Controller"
+4. vboxmanage createmedium --filename 2G.vdi --size 2048
+5. vboxmanage storagectl RH --name SATA --add sata
+6. vboxmanage internalcommands sethduuid loop_rh.vdi
+7. vboxmanage storageattach RH --storagectl SATA --medium loop_rh.vdi --port 0 --type hdd
+8. vboxmanage storageattach RH --storagectl SATA --medium 2G.vdi --port 1 --type hdd
+9. vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none

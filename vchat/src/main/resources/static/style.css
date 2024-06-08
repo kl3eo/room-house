@@ -247,7 +247,7 @@ input[type=button]:active, input[type=submit]:active {
 	width: 210;
 	text-align: center;
 	overflow: hide;
-	float: left;
+	float: right;
 	padding: 5px;
 	border-radius: 10px;
 	-webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px
@@ -334,6 +334,7 @@ input[type=button]:active, input[type=submit]:active {
 	width: 96%;
 	min-width: 320px;
 	margin: 3vh auto 7vh auto;
+	!float: bottom;
 }
 
 .participant.main video {

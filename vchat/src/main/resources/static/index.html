@@ -62,7 +62,9 @@ var num_rooms = 1;
 var shareSomeStream = false;
 var gifrid = '';
 
-const port = w[1] === 'room-house' ? '8453' : '8443';
+//const port = w[1] === 'room-house' ? '8453' : '8443';
+
+const port = '8453';
 
 const request = async (url) => {
 		const response = await fetch(url,{credentials: 'include'});
@@ -1346,7 +1348,6 @@ select:focus, input:focus, button:focus{
 <div id="dummy2_p" class="participant" style="position:absolute; right:0; top:70%; color:#369;font-size:16px;display:none;">..THEN CLICK <br>TO ADD COMMENT!<div class="adders" style="opacity:0.7;font-size:18px;">A</div></div>
 <div id="preco" style="z-index:10;position:absolute;bottom:0px;max-height:57vh;border:0px solid #fff;text-align:center;width:100%;margin:0 auto;">
 	<div id="main_container" style="margin-top:-15px;border:0px solid #ccc;">
-	
 		<div id="wrapper">
 			<div id="join" class="animate join" style="background:#9cf;max-width:80vw;max-height:210px;text-align:center;">	
 			   <div id="bigboat1" style="display:block;">
@@ -1373,7 +1374,7 @@ RANDOM=7777
 
 			<div id="room" style="display:none; position:relative; width:100%; min-width:40vw; margin:0 auto; border: 0px solid #9cf;">
 				
-				<div style="float:left;margin-bottom:20px;"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
+				<div style="float:left;margin-bottom:20px;" id="room-header_box"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
 				<div style="float:left;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
 				<div style="float:left;margin-left:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();"></div>
 				<div style="clear:left;"></div>
@@ -1383,21 +1384,21 @@ RANDOM=7777
 				<!-- input style="margin:0 auto 0 -48px;width:90px;display:none;" type="button" id="button-leave" onmouseup="leaveRoom();location.reload();" value="Leave room" -->
 			</div><!-- room -->
 		</div><!-- wrapper -->
-	</div><!-- container -->
+	</div><!-- main_container -->
 	
 	<div id="postroom" style="width:100%;text-align:center;margin-top:-48px;display:block;visibility:hidden;">
 		<div style="width:70%;margin:-0 auto;font-size:20px;line-height:32px;text-align:center;color:#fff;">
 			<div style="border:0;height:12vh;min-height:120px;background:transparent;text-align:center;margin:0px auto;width:60vw;max-width:240px;">&nbsp;</div>
 			<div style="width:60%;margin:0px auto 0px auto;font-size:16px;color:#222;">&nbsp;</div>
 		        <div style="position:absolute;width:60%;margin:0px auto;font-size:14px;text-align:center;bottom:30px;left:20%;color:#9cf;">
-                        	Copyright 2021
+                        	Copyright 2021-24
         		</div>
                 <br>
 
 		</div>
 	</div><!-- postroom -->
                         <div id="cr" style="position:absolute;width:60%;margin:0px auto;font-size:12px;text-align:center;bottom:1vh;left:20%;color:#9cf;z-index:-1000;">
-                                2023 (C) Powered by <a href="https://room-house.com/space/" target=new>xTER</a><!-- with <a href="https://www.kurento.org" target=new>Kurento</a> -->
+                                2024 (C) Powered by <a href="https://room-house.com/space/" target=new>xTER</a><!-- with <a href="https://www.kurento.org" target=new>Kurento</a> -->
                         </div>
 
 </div><!-- preco -->
@@ -1486,90 +1487,7 @@ if (!curIP.length && false) {
 
 </div><!-- controls -->
 
-    <!-- div id="rh_container" class=rh_container ONCLICK="location.href='https://room-house.com/contact_ru.html';">
-      <div class=box>
-        <span style="--i: 1">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 2">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 3">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 4">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 5">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 6">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 7">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 8">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 9">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 10">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 11">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 12">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 13">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 14">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 15">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-        <span style="--i: 16">
-          <i>ROOM</i>
-          -
-          <i>HOUSE</i>
-        </span>
-      </div>
-    </div --><!-- container -->
+
 <div id=newsub class="newsub">
 		<div id="leftplus" class=plusA style="float:left;">
 			<!-- img id="ball1" src="/img/gold_ball.png" width=60 border=0 style="position:relative;z-index:1002;" -->
@@ -1615,60 +1533,6 @@ if (!curIP.length && false) {
 <div style="clear:left;"></div>
 </div><!-- subcontrols -->
 
-<!-- div id="req_container" style="display:none;">открывай &#128682;<a href="https://room-house.com/contact_ru.html" target=new style="color:#f00;"><i>двери</i></a> румхауса
-<span style="width:30px;height:30px;color:#9cf;border:1px solid #9cf;border-radius:15px;font-size:12px;margin-top:-20px;cursor:pointer;line-height:24px;" onclick="document.id('req_container').style.display='none'">&nbsp;x&nbsp;</span>
-</div -->
-
-<!-- div id="desktop_container" style="display:none;width:100%;min-width:624px;font-size:16px;margin-top:30px;position:absolute;text-align:center;left:-120px;">
-<div style="float:left;">живи в <a href="https://room-house.com/contact_ru.html" target=new style="color:#0f0;"><i>румхаусе</i></a></div>
-<div style="float:right;">запомни <a href="https://room-house.com/contact_ru.html" target=new style="color:#f0f;"><i>румхаус</i></a>!</div>
-<span style="width:30px;height:30px;color:#ffa;border:1px solid #9cf;border-radius:15px;font-size:20px;margin-top:-30px;cursor:pointer;line-height:30px;" onclick="location.href='https://room-house.com/contact_ru.html'">GO!</span></div -->
-
-<!-- div id="slide_container">
-<section id="main-slider" class="splide" aria-label="Lolo">
-  <div class="splide__track">
-		<ul class="splide__list">
-			<li id="milan" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://milan.room-house.com';"><img src="/img/bg_slider.png?sig=1">
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Milan</span></div>
-				<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="habana" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://habana.room-house.com';"><img src="/img/bg_slider.png?sig=3"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Habana</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="wien" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://wien.room-house.com';"><img src="/img/bg_slider.png?sig=4"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Wien</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="riga" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https:/riga.room-house.com';"><img src="/img/bg_slider.png?sig=5">
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Riga</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="split" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://split.room-house.com';"><img src="/img/bg_slider.png?sig=7"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Split</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="firenze" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://firenze.room-house.com';"><img src="/img/bg_slider.png?sig=8"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Firenze</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="olomouc" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https:/olomouc.room-house.com';"><img src="/img/bg_slider.png?sig=9">
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Olomouc</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="munchen" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://munchen.room-house.com';"><img src="/img/bg_slider.png?sig=11"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Munchen</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-			<li id="lisboa" class="splide__slide" onclick="document.id('slide_container').style.display='none'; window.location.href='https://lisboa.room-house.com';"><img src="/img/bg_slider.png?sig=13"/>
-				<div class="roomer"><span class="nextroom gowee"></span><span class="nextroom_name">Lisboa</span></div>
-			<div class="pricer"><span class="nextroom pricee"></span></div>
-			</li>
-		</ul>
-  </div>
-</section>
-</div --><!-- slide_container -->
-
 
 </div><!-- bundled -->
 
@@ -1677,52 +1541,13 @@ if (!curIP.length && false) {
 
 </div><!-- city -->
 
-
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>
-<div id="room_selector_box" style="position:absolute;top:20px;left:0;width:100%;height:120px;text-align:center;">
-<div id="room_selector" style="position:relative;margin:0 auto;width:360px; color:#fed;font-size:24px;opacity:0;">ROOM SELECTOR</div>
+<div id="room_selector_box" style="position:absolute;top:10px;left:-60px;width:100%;height:100px;text-align:center;z-index:-10000;">
+<div id="room_selector" style="position:relative; margin:0 auto;width:360px; color:#fed;font-size:20px;opacity:0;">ROOM SELECTOR</div>
 </div>
 <script src="./js/finisher_a.js"></script>
 <script>/*keep phones longer! detect slow systems? IMPORTANT - here "normal mode" is not set yet! that's why timeout is required to wait*/let pause = cine ? 4000 : 500;  let na = getCookie('name'); if (na != null && na != 'null') {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block';} else {setTimeout(function() { if (normal_mode) {document.id('phones').style.visibility='hidden'; document.id('house').style.display = 'block'; if (document.id('loading_span')) document.id('loading_span').style.display='none';}}, pause);}</script>
-
-<!-- script>
-
-var splide = new Splide( "#main-slider", {
-  type    : 'loop',
-  drag   : 'free',
-  snap   : true,
-  perPage: 1,
-  perMove: 1,
-  autoWidth: true,
-} );
-
-splide.mount();
-
-if (!w[0].match(new RegExp('rgsu','g'))) {
-	document.id('room_name_id').innerHTML = w[0];
-	document.id('room_name_id').fade(1);
-}
-
-document.id('langs').style.marginTop = small_device ? '9vw' : '5vw';
-
-window.setTimeout( function() {if (document.id('room').style.display == 'none' && document.id('join').style.display !== 'none') window.location.reload();}, 300000);
-
-//console.log('here homee', homee, 'normal', normal_mode);
-//if ((na == null || na == 'null') && homee != w[0]) {console.log('skipping to'); document.id('phones').click();}// hacks to skip into halls? don't work
-</script -->
-
-<!-- slot machine -->
-
-<!-- script>
-    var formee = document.createElement("form");
-    formee.setAttribute("id", "myGuestForm");
-    formee.setAttribute("method", "get");
-    formee.setAttribute("action", "https://" + window.location.hostname + ":" + port + "/cgi/genc/action_cine");
-    formee.set("send", {onComplete: function(response) { console.log('sent form!') }});
-    document.body.appendChild(formee);
- 
-</script -->
 
 <script>
 document.write('<iframe id="sm_niche" name=sm_niche src="" scrolling="no" class="niches" style="background:#3d1257;"></iframe>');

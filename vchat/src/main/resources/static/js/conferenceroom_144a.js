@@ -105,6 +105,7 @@ const swap_url = "https://coins.room-house.com";
 //const role  = 0;
 
 const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
+const tablet = small_device && screen.width >= 960 ? true : false;
 const notebook = screen.height <= 800 ? true : false;
 
 const controller = new AbortController();
@@ -697,6 +698,10 @@ const onNewParticipant = (request) => {
 		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
 		if (!small_device) resizer(pctr);
+		if (small_device && pcounter === 1) document.id('participants').style.height = '100vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '150vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '200vh';
+		if (small_device && pcounter > 3) document.id('participants').style.height = '250vh';
 
 // console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
 	   	
@@ -913,13 +918,16 @@ const onExistingParticipants = (msg) => {
    // console.log('num_rooms', num_rooms);
    let room_sel = ''; var sym = 'A'; 
    for (i = 1; i <= num_rooms; i++) {
-   	sym = i == 2 ? 'B' : i == 3 ? 'C' : sym;
-	let addon = sym == currRoom ? '&nbsp;&nbsp;<span style="color:#fed;cursor:pointer;border:1px solid #fed; padding:3px" onclick="currRoom = \'' + sym + '\'; /*console.log(\'sym\',currRoom);*/ flashText_and_rejoin(\'SKIP TO ROOM \' + currRoom);">ROOM' + i + '</span>&nbsp;&nbsp;' : '&nbsp;&nbsp;<span style="color:#9cf;cursor:pointer; padding:3px" onclick="currRoom = \'' + sym + '\'; /*console.log(\'sym\',currRoom);*/ flashText_and_rejoin(\'SKIP TO ROOM \' + currRoom);">ROOM' + i + '</span>&nbsp;&nbsp;';
+   	sym = i == 2 ? 'B' : i == 3 ? 'C' : i == 4 ? 'D' : i == 5 ? 'E' : i == 6 ? 'F' : sym;
+	let addon = sym == currRoom ? '&nbsp;&nbsp;<span style="color:#fed;border:1px solid #fed; padding:3px">ROOM' + i + '</span>&nbsp;&nbsp;' : '&nbsp;&nbsp;<span style="color:#9cf;cursor:pointer; padding:3px" onclick="currRoom = \'' + sym + '\';/*console.log(\'sym\',currRoom);*/(function(){document.id(\'bg_switch\').click()}).delay(500);flashText_and_rejoin(\'SKIP TO ROOM \' + currRoom);">ROOM' + i + '</span>&nbsp;&nbsp;';
  
 	room_sel = room_sel + addon;
    }
    if (num_rooms == 1) room_sel = '';
-   
+   if (num_rooms < 4) document.id('room_selector_box').style.left=0;
+   if (num_rooms === 4) document.id('room_selector_box').style.left='-25px';
+   if (num_rooms === 5) document.id('room_selector_box').style.left='-80px';
+   if (num_rooms > 5) document.id('room_selector_box').style.left='-135px';
    document.id('room_selector').innerHTML = room_sel;
 
    if (temporary && role == 0) role = 3;
@@ -1240,7 +1248,25 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                   } else {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-			if (small_device)  document.id(myname).style.float = 'none';
+			// if (small_device && pcounter === 1)  document.id(myname).style.float = 'none';
+			if (small_device)  {
+				document.id('participants').style.position = 'relative';
+				if (pcounter === 1) document.id('participants').style.height = '60vh';
+				if (pcounter === 2) document.id('participants').style.height = '100vh';
+				if (pcounter === 3) document.id('participants').style.height = '150vh';
+				if (pcounter === 4) document.id('participants').style.height = '200vh';
+				if (pcounter > 4) document.id('participants').style.height = '250vh';
+				document.id(myname).style.position = 'absolute';
+				document.id(myname).style.bottom = '0vh';
+			}
+			if (tablet)  {
+				//document.id('room').style.marginTop = '-240px';
+				if (pcounter === 1) document.id('participants').style.maxHeight = '450px';
+				if (pcounter === 2) document.id('participants').style.maxHeight = '640px';
+				if (pcounter === 3) document.id('participants').style.maxHeight = '960px';
+				if (pcounter === 4) document.id('participants').style.maxHeight = '1280px';
+			}
+			if (!small_device) resizer(1);
 		  }
 
 		  (function(){document.id('phones').fade(0);}).delay(1000);
@@ -1274,8 +1300,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			if (pctr > room_limit - 1 && role == 0) {document.id('bell').style.display = 'block'; document.id('av_toggler').style.display='none';}
 
 			if (!small_device) resizer(pctr);
-	    
-			
+		
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
 			
@@ -1343,6 +1368,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			document.id('anno_' + f).innerHTML = a;
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
+			document.id('room-header').fade(0);
 		}
 		/*
 		if (document.id('lol_' + f) && a.length && s === 'p' && window.top == window) {
@@ -1358,9 +1384,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// disabled user controls for now --ash oct'23
 	   } //for
    } // msg.data
-   	   
-   //if (role == 1 || role == 2 || role == 3) (function() {document.id('room-header').style.display = 'block'; document.id('room-header').fade(1);}).delay(1500);
-   
+   	     
 //  }).catch(err => console.log(err)); //fetch
 }
 
@@ -1593,6 +1617,7 @@ function setAnno(request) {
 		document.id('anno_' + request.participant).innerHTML = request.anno;
 		document.id('anno_' + request.participant).style.display='block';			
 		document.id('anno_' + request.participant).fade(1);
+		document.id('room-header').fade(0);
 	}
 	
 }
@@ -1747,7 +1772,11 @@ const onParticipantLeft = (request) => {
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device) resizer(pcounter);			
-
+	    	if (small_device && pcounter === 1) document.id('participants').style.height = '60vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '100vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '150vh';
+		if (small_device && pcounter === 4) document.id('participants').style.height = '200vh';
+		if (small_device && pcounter > 4) document.id('participants').style.height = '250vh';
 	} else {
 		let temp = request.name.split('_');
 		let du = 'DUMMY_'+temp[temp.length-1];
