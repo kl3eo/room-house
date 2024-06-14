@@ -124,7 +124,6 @@ window.onbeforeunload = function() {
 
 window.onload = function(){
 
-
    setInterval(function(){
        if ((registered && !now_playing)|| problems) {if (problems) rejoin();}
 
@@ -260,8 +259,13 @@ function rejoin(){
 	leaveRoom(); register();
 }
 
+function check_locked() {
+	if ((vcounter == 0 || vcounter == '0') && (pcounter == 0 || pcounter == '0') && !cine) { console.log('locked!'); (function() {clearAllCookies(); location.reload();}).delay(1000) } 
+}
+
 function check_connection() {
 
+	check_locked();
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
@@ -581,7 +585,7 @@ const register_body = (ro) => {
 		});
 
  		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
-			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning; 
+			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
 			/*document.id('phones').onclick=location.reload();*/ (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
@@ -615,9 +619,8 @@ const onNewViewer = (request) => {
 
 	if (request.currRoom && currRoom != request.currRoom) return false; // do not connect those coming to a room other than mine current
 	
-	let myname = document.id('name').value;
-	let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {if (document.id(myvideo)) document.id(myvideo).play();__playing = true;}).delay(3000);
+	let myname = document.id('name').value; let myvideo = 'video-' + myname;	
+	if (now_playing) (function() {if (document.id(myvideo)) document.id(myvideo).play();__playing = true;}).delay(1000);
 
 	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
@@ -1799,6 +1802,9 @@ const onViewerLeft = (n) => {
 		document.id('_au_'+suf).dispose();
 		let cur = document.id('audience_numbers').innerHTML == '...'  ?  0 : parseInt(document.id('audience_numbers').innerHTML)-1;
 		vcounter = cur > 0 ? cur : 0;
+		
+		let myname = document.id('name').value; let myvideo = 'video-' + myname;	
+		if (now_playing && vcounter === 0) (function() {if (document.id(myvideo)) document.id(myvideo).pause();__playing = false;}).delay(100);
 
 		if (document.id('vcounter')) { if (!vcounter) {(function(){document.id('vcounter').innerHTML = vcounter;}).delay(1000);} else {document.id('vcounter').innerHTML = vcounter;} }
 		cur = cur > 0 ? cur : '...';
