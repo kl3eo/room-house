@@ -1154,7 +1154,6 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			navigator.mediaDevices.getUserMedia({audio: true})
 			.then(function(mediaStream) {
 			var audioTrack = mediaStream.getAudioTracks()[0] ? mediaStream.getAudioTracks()[0] : null;
-			
 			if (canvas.captureStream) {
 			   	captureStream = canvas.captureStream(fps_hq);
 				if (audioTrack && i_am_muted !== true && i_am_muted !== 'true') captureStream.addTrack(audioTrack);
@@ -1166,7 +1165,22 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			} else {
 				console.error('Stream capture is not supported');
 			}
+			//NB: mix audio from mic to that of the video
 
+			const ctx = new AudioContext();
+			const dest = ctx.createMediaStreamDestination();
+			const audioIn_01 = ctx.createMediaStreamSource(mediaStream);
+			const audioIn_02 = ctx.createMediaStreamSource(captureStream);
+ 
+			if (i_am_muted !== true && i_am_muted !== 'true') audioIn_01.connect(dest);
+			audioIn_02.connect(dest);
+			
+			const audioStreamTrack = dest.stream.getAudioTracks()[0];
+			const captureStreamVideoTrack = captureStream.getVideoTracks()[0];
+			const mixStream = new MediaStream();
+			mixStream.addTrack(captureStreamVideoTrack);
+			mixStream.addTrack(audioStreamTrack);
+			
 			var cstrx = {
 				audio: true,
 				video:{
@@ -1177,12 +1191,12 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			};
 
 			options = {
-				videoStream: captureStream,
+				videoStream: mixStream,
 				onicecandidate: participant.onIceCandidate.bind(participant),
 				mediaConstraints : cstrx
 			}
 			option_alt = {
-				videoStream: captureStream,
+				videoStream: mixStream,
 				onicecandidate: participant.onIceCandidate.bind(participant),
 				mediaConstraints :{audio: true, video: false}
 			}

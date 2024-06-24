@@ -747,7 +747,8 @@ fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {cred
 }
 
 const cli4 = () => {
-if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMusic) flashText('PLAYING VIDEO! STOP?'); if (shareSomeScreen) flashText('SHARING SCREEN! STOP?');}
+//if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMusic) flashText('PLAYING VIDEO! STOP?'); if (shareSomeScreen) flashText('SHARING SCREEN! STOP?');}
+if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else { i_am_muted = !i__am_muted}
 }
 
 const cli5 = () => {let sem  = window.innerWidth > 1024 ? '7' : ''; document.id('message_box').style.display = 'block'; document.id('audience_box').style.display = 'none';
