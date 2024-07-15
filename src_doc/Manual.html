@@ -5,10 +5,12 @@
 	<title>Room-House Tower Owner's Manual</title>
 	<meta name="generator" content="LibreOffice 5.3.6.1 (Linux)"/>
 	<meta name="created" content="00:00:00"/>
-	<meta name="changed" content="2024-07-15T16:26:33.107809758"/>
+	<meta name="changed" content="2024-07-15T16:32:30.770462145"/>
 	<meta name="description" content="This is the Room-House Tower Owner's Manual. It is intended as a guide on how to operate the basics, as well as an introduction to some advanced features."/>
 	<meta name="" content=""/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2024-07-15T16:26:33.107809758">
 	<!-- a name="top" class="return-link" href="https://room-house.com/">&lt;- Return to Room-House.com</a -->
 	<style type="text/css">
 		p { text-align: justify }
@@ -27,8 +29,8 @@
 </head>
 <body lang="en-US" link="#007aa3" vlink="#007aa3" dir="ltr">
 <h1>Room-House Tower Owner's Manual</h1>
-<p>version 1.39 <font size="6" style="font-size: 24pt">see in</font><font size="6" style="font-size: 24pt">
-</font><a href="https://room-house.com/Manual.html"><font size="6" style="font-size: 24pt">HTML</font></a></p>
+<p><font size="6" style="font-size: 24pt">v1.39
+<a href="https://room-house.com/Manual.html">https://room-house.com/Manual.html</a></font></p>
 <div id="toc" dir="ltr">
 	<p><a href="#0"><span style="text-transform: uppercase"><b>0 -
 	Introduction</b></span></a> 
@@ -197,8 +199,7 @@
 <code class="western">vboxmanage storagectl RH --name SATA --add sata</code>
 <code class="western">vboxmanage storageattach RH --storagectl SATA --medium loop_rh.vdi --port 0 --type hdd</code>
 <code class="western">vboxmanage storageattach RH --storagectl SATA --medium 3G.vdi --port 1 --type hdd</code>
-<code class="western">vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none</code>
-</pre><h4>
+<code class="western">vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none</code></pre><h4>
 	<a name="creatingonwindows"></a>Windows</h4>
 	<p>If you prefer to run on Windows, here is our script for it -
 	replace &quot;Bob&quot; with your Windows user's name, then please
@@ -215,23 +216,19 @@
 	<p><img src="https://room-house.com/img/man1.png" name="Image1" align="bottom" width="75" height="38" border="0"/>
 
 		</p>
-	<pre class="western">
-<code class="western">1. vboxmanage createvm --name RH --ostype RedHat_64 --register --basefolder &quot;C:\Users\Bob\VMs&quot;</code>
+	<pre class="western"><code class="western">1. vboxmanage createvm --name RH --ostype RedHat_64 --register --basefolder &quot;C:\Users\Bob\VMs&quot;</code>
 <code class="western">2. cd &quot;C:\Users\Bob\VMs\RH&quot;</code>
 <code class="western">3. vboxmanage modifyvm RH --memory 4096 --cpus 2 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 &quot;Intel(R) Ethernet Connection I219-LM&quot;</code>
 <code class="western">4. vboxmanage createmedium --filename 3G.vdi --size 3072</code>
-<code class="western">5. vboxmanage storagectl RH --name SATA --add sata</code>
-</pre><p>
+<code class="western">5. vboxmanage storagectl RH --name SATA --add sata</code></pre><p>
 	Now download &quot;loop_rh.vdi&quot; from github link above and
 	place it to the same folder where you're running commands (it's
 	&quot;C:\Users\Bob\VMs\RH&quot;), and proceed with command #6. 
 	</p>
-	<pre class="western">
-<code class="western">6. vboxmanage internalcommands sethduuid loop_rh.vdi</code>
+	<pre class="western"><code class="western">6. vboxmanage internalcommands sethduuid loop_rh.vdi</code>
 <code class="western">7. vboxmanage storageattach RH --storagectl SATA --medium loop_rh.vdi --port 0 --type hdd</code>
 <code class="western">8. vboxmanage storageattach RH --storagectl SATA --medium 3G.vdi --port 1 --type hdd</code>
-<code class="western">9. vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none</code>
-</pre><p>
+<code class="western">9. vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none</code></pre><p>
 	This process requires use of the command line. If you are not
 	familiar with it, it is recommended that you get used to it first. 
 	</p>
