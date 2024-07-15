@@ -14,6 +14,8 @@ Restart the VM to fetch the latest Room-House release, or hit the reset button i
 
 # xTER releases with Room-House timeline
 
+15.07.24 -- v1.39; 3D interiers
+
 09.06.23 -- v1.35; re-design for cinemas; fixes to re-connect both server/client side; preparing cinemas for NFT
 
 15.05.23 -- v1.34; sound on/off listening while streaming from ff; changed daemon from 'nobody' to 'apache'; permissions for 'nobody' restricted; added nodejs 16.14 in vlibs
