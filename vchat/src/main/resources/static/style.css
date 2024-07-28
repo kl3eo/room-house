@@ -309,6 +309,7 @@ input[type=button]:active, input[type=submit]:active {
 	min-width: 1024px;
 	!width: 50%;
 	margin: 0 auto;
+	float:none;
 }
 }
 @media screen and (max-width: 1024px) {
@@ -316,6 +317,7 @@ input[type=button]:active, input[type=submit]:active {
 	min-width: 480px;
 	width: 50%;
 	margin: 0 auto;
+	float: none;
 }
 }
 .participant.duo {

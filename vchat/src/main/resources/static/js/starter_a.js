@@ -215,7 +215,7 @@ function resizer_left(pctr) {
 }
 
 function resizer(pctr) {
-
+/*
 	if (pctr == 4) {
 		document.id('room').style.minWidth = '960px';
 		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
@@ -235,7 +235,7 @@ function resizer(pctr) {
 		document.id('room').style.minWidth = '1560px';
 		document.id('room').style.marginRight = notebook ? '-440px' : '-190px';
 	}
-
+*/
 }
 
 function toggleAllMuted() {

@@ -144,8 +144,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//need this trick because new participant breaks the row and appears underneath it -- make it appear after 0.5 sec delay in onNewParticipant and at once in onExistingParticipants
 	container.style.display='none';
 	container.style.opacity=0;
-	container.style.marginLeft='1px';
-	container.style.marginRight='1px';
+	//container.style.marginLeft='1px';
+	//container.style.marginRight='1px';
 	
 	i_am_guest = isPresentMainParticipant() & pcounter === 1 ? 1 : i_am_guest;
 

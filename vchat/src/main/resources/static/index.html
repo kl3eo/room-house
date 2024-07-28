@@ -48,7 +48,7 @@
 <script src="./js/mBox.Modal.js"></script>
 
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var roomee = ''; var normal_mode = true; var i_am_muted = false; var role = 0;
-var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1] : w[0];
+var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1].toUpperCase() : w[0]; if (ho[1] && ho[1].length && ho[1] !== homee) document.location.href = ho[0] + '#' + homee;
 const cine = homee === 'GREENHALL' || homee === 'REDHALL' || homee === 'BLUEHALL' || w[0] == 'cine' ||  w[0] == 'cinema' ? true : false;
 
 var currRoom = 'A';
