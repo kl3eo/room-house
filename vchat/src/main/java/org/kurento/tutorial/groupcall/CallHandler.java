@@ -422,13 +422,13 @@ public class CallHandler extends TextWebSocketHandler {
     
     //check if the room has already listed this user, then return
     for (final UserSession participant : room.getParticipants()) {
-      if (participant.getName().equals(name)) {
+      if (participant.getName().equals(name) || participant.getSession().equals(session)) {
         already = "true";
       }
     }
 
     for (final UserSession viewer : room.getViewers()) {
-      if (viewer.getName().equals(name)) {
+      if (viewer.getName().equals(name) || viewer.getSession().equals(session)) {
         already = "true";
       }
     }
