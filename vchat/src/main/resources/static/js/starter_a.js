@@ -215,27 +215,27 @@ function resizer_left(pctr) {
 }
 
 function resizer(pctr) {
-/*
+
 	if (pctr == 4) {
 		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
+		document.id('room').style.marginLeft = notebook ? '-280px' :  '-50px';
 	} else if (pctr == 3) {
 		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
+		document.id('room').style.marginLeft = '';
 	} else if (pctr == 2) {
 		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginRight = notebook ? '-200px' :  '48px';
+		document.id('room').style.marginLeft = '';
 	} else if (pctr == 1) {
 		document.id('room').style.minWidth = '1024px';
-		document.id('room').style.marginRight = '30px';
+		document.id('room').style.marginLeft = '';		
 	} else if (pctr == 5) {
 		document.id('room').style.minWidth = '1260px';
-		document.id('room').style.marginRight = notebook ? '-320px' : '-60px';
+		document.id('room').style.marginLeft = notebook ? '-400px' : '-180px';
 	} else if (pctr > 5) {
 		document.id('room').style.minWidth = '1560px';
-		document.id('room').style.marginRight = notebook ? '-440px' : '-190px';
+		document.id('room').style.marginLeft = notebook ? '-520px' : '-310px';
 	}
-*/
+
 }
 
 function toggleAllMuted() {

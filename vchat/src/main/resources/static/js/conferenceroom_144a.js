@@ -1042,6 +1042,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                                         	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 				if (small_device)  document.id(myname).style.float = 'none'; 				
 				document.id('room-header-file').style.display='none';
+				//if (!small_device) {document.id(myname).style.marginLeft = '2px'; document.id(myname).style.marginRight = '2px';}
                           		   }
 		    		);
 		  	}
@@ -1052,6 +1053,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 		
 				if (small_device)  document.id(myname).style.float = 'none';
+				//if (!small_device) {document.id(myname).style.marginLeft = '2px'; document.id(myname).style.marginRight = '2px';}
 				document.id('room-header-file').style.display='none';
                   	 }
 		  	 (function(){document.id('phones').fade(0);}).delay(1000);
@@ -1432,19 +1434,13 @@ const leaveRoom = () => {
 	
 	let myname = document.id('name').value;
 	
-	//if (Object.keys(participants).length && !problems) { //?!
 	if (Object.keys(participants).length) {
-	
 		for ( var key in participants) {
-			//if (!problems || (problems && key != myname)) {
 				participants[key].dispose();
 				delete participants[key];
-			//}
 		}
-
 	}
 
-	//pcounter = problems ? 1 : 0;
 	pcounter = 0;
 	vcounter = 0;
 	i_am_guest = 0;

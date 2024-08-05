@@ -756,7 +756,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (this.rtcPeer && typeof(this.rtcPeer != 'undefined') ) this.rtcPeer.dispose();
 		if (container && container.parentNode) container.parentNode.removeChild(container);
 		pcounter--; 
-		if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) {hack = true;}
+		//if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) {hack = true;}
+		if (pcounter <= room_limit && !i_am_viewer) {hack = true;}
 
 		if (pcounter < 4) {
                         var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));

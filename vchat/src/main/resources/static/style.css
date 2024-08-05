@@ -324,12 +324,17 @@ input[type=button]:active, input[type=submit]:active {
 	min-width: 432px;
 	width: 45%;
 	margin: 0 auto;
+	margin-left:1px;
+	margin-right:1px;
+	
 }
 
 .participant.trio {
 	min-width: 288px;
 	width: 30%;
 	margin: 0 auto;
+	margin-left:1px;
+	margin-right:1px;
 }
 
 .participant.main_i {
