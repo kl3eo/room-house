@@ -180,10 +180,17 @@ const city_or_main = 1;
         position:relative;
         z-index:99;
         margin:0 auto;
-        width:350px;
+        width:100%;
+	min-width:360px;
         top:-12px;
+	!border:1px solid #090;
  }
-
+ #cr {
+ 	!visibility: hidden;
+ }
+ #join {
+ 	!margin-top: 36px;
+ }
  .bigO {
 	float:left;
         width:40px;
@@ -1433,7 +1440,7 @@ if (!curIP.length && false) {
 </div><!-- subbundled -->
 
 <div id="controls" class=controls><!-- set top to -12px with sp container-->
-<div id="fmode_selector" style="display:none;float:left;margin-left:0px;">
+<div id="fmode_selector" style="display:none;float:left;margin-left:0px;border:0px solid #009;">
 
 <div id="fcam" class="bigO" onclick="cli2()" title="Front camera"></div>
 
@@ -1450,7 +1457,7 @@ if (!curIP.length && false) {
 <div style="clear:left;"></div>
 </div><!-- fmode_selector &#9775; -->
 
-<div id="av_selector" style="display:none;float:left;margin-right:0px;">
+<div id="av_selector" style="display:none;float:left;margin-right:0px;border:0px solid #900;">
 
 <div id="logger" class="bigO" style="float:left;" onclick="cli5()" title="Chat"></div>
 

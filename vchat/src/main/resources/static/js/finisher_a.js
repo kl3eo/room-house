@@ -69,4 +69,5 @@ buB.addEventListener('click', function handleClick(event) {
 if (document.id(w[0])) document.id(w[0]).dispose(); // drop current room from available rooms list
 
 if (small_device) document.body.style.overflowY = 'auto';
+if (window != window.top && small_device) {document.id('cr').style.visibility='hidden'; document.id('join').style.marginTop='20px'; document.body.style.overflowY = 'hidden';}
 //document.body.style.overflowX = 'hidden';

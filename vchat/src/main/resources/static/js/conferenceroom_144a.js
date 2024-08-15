@@ -104,7 +104,7 @@ const swap_url = "https://coins.room-house.com";
 
 //const role  = 0;
 
-const small_device = (check_iOS() || isAndroid) && screen.width <= 1024 ? true : false;
+const small_device = ((check_iOS() || isAndroid) && screen.width <= 1024) || window != window.top ? true : false;
 const tablet = small_device && screen.width >= 960 ? true : false;
 const notebook = screen.height <= 800 ? true : false;
 
@@ -598,6 +598,10 @@ const register_body = (ro) => {
 		if (small_device) {document.id('helpdoc').style.paddingTop = "0.4vh"; document.id('helpdoc').style.paddingRight = "2vw";}
 		
 		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
+		
+		document.body.style.overflowY = 'auto';
+		if (small_device && window != window.top && !tablet) document.body.style.zoom = '90%';
+		// if (small_device && window != window.top) document.body.style.minHeight = '200vh';
 				
 		(function() {dummies = true;}).delay(3000);
 		
@@ -700,12 +704,21 @@ const onNewParticipant = (request) => {
 		let pctr = pcounter + 1;
 		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
-		if (!small_device) resizer(pctr);
-		if (small_device && pcounter === 1) document.id('participants').style.height = '100vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '150vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '200vh';
-		if (small_device && pcounter > 3) document.id('participants').style.height = '250vh';
+		if (!small_device && window == window.top) resizer(pctr);
+		if (small_device && pcounter === 0) document.id('participants').style.height = '60vh';
+		if (small_device && pcounter === 1) document.id('participants').style.height = '110vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '200vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '270vh';
+		if (small_device && pcounter > 3) document.id('participants').style.height = '360vh';
+		
+		if (tablet)  {
 
+			if (pcounter === 0) document.id('participants').style.maxHeight = '480px';
+			if (pcounter === 1) document.id('participants').style.maxHeight = '960px';
+			if (pcounter === 2) document.id('participants').style.maxHeight = '1440px';
+			if (pcounter > 2) document.id('participants').style.maxHeight = '1920px';
+		}
+		
 // console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
 	   	
 		receiveVideo(request.name, request.mode, myrole, true);
@@ -1271,21 +1284,21 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			if (small_device)  {
 				document.id('participants').style.position = 'relative';
 				if (pcounter === 1) document.id('participants').style.height = '60vh';
-				if (pcounter === 2) document.id('participants').style.height = '100vh';
-				if (pcounter === 3) document.id('participants').style.height = '150vh';
-				if (pcounter === 4) document.id('participants').style.height = '200vh';
-				if (pcounter > 4) document.id('participants').style.height = '250vh';
+				if (pcounter === 2) document.id('participants').style.height = '110vh';
+				if (pcounter === 3) document.id('participants').style.height = '160vh';
+				if (pcounter === 4) document.id('participants').style.height = '240vh';
+				if (pcounter > 4) document.id('participants').style.height = '300vh';
 				document.id(myname).style.position = 'absolute';
 				document.id(myname).style.bottom = '0vh';
 			}
 			if (tablet)  {
 				//document.id('room').style.marginTop = '-240px';
-				if (pcounter === 1) document.id('participants').style.maxHeight = '450px';
-				if (pcounter === 2) document.id('participants').style.maxHeight = '640px';
-				if (pcounter === 3) document.id('participants').style.maxHeight = '960px';
-				if (pcounter === 4) document.id('participants').style.maxHeight = '1280px';
+				if (pcounter === 1) document.id('participants').style.maxHeight = '480px';
+				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
+				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
+				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
 			}
-			if (!small_device) resizer(1);
+			if (!small_device && window == window.top) resizer(1);
 		  }
 
 		  (function(){document.id('phones').fade(0);}).delay(1000);
@@ -1784,12 +1797,19 @@ const onParticipantLeft = (request) => {
 		if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
 		delete participants[request.name];
 		just_left = request.name;
-        	if (!small_device) resizer(pcounter);			
+        	if (!small_device && window == window.top) resizer(pcounter);			
 	    	if (small_device && pcounter === 1) document.id('participants').style.height = '60vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '100vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '150vh';
-		if (small_device && pcounter === 4) document.id('participants').style.height = '200vh';
-		if (small_device && pcounter > 4) document.id('participants').style.height = '250vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '110vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '160vh';
+		if (small_device && pcounter === 4) document.id('participants').style.height = '240vh';
+		if (small_device && pcounter > 4) document.id('participants').style.height = '300vh';
+		if (tablet)  {
+
+			if (pcounter === 1) document.id('participants').style.maxHeight = '480px';
+			if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
+			if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
+			if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
+		}
 	} else {
 		let temp = request.name.split('_');
 		let du = 'DUMMY_'+temp[temp.length-1];
