@@ -600,7 +600,7 @@ const register_body = (ro) => {
 		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
 		
 		document.body.style.overflowY = 'auto';
-		if (small_device && window != window.top && !tablet) document.body.style.zoom = '90%';
+		// if (small_device && window != window.top && !tablet) document.body.style.zoom = '90%';
 		// if (small_device && window != window.top) document.body.style.minHeight = '200vh';
 				
 		(function() {dummies = true;}).delay(3000);
@@ -705,10 +705,10 @@ const onNewParticipant = (request) => {
 		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
 		if (!small_device && window == window.top) resizer(pctr);
-		if (small_device && pcounter === 0) document.id('participants').style.height = '60vh';
-		if (small_device && pcounter === 1) document.id('participants').style.height = '110vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '200vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '270vh';
+		if (small_device && pcounter === 0) document.id('participants').style.height = '70vh';
+		if (small_device && pcounter === 1) document.id('participants').style.height = '140vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '210vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '280vh';
 		if (small_device && pcounter > 3) document.id('participants').style.height = '360vh';
 		
 		if (tablet)  {
