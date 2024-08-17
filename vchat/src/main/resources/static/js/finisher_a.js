@@ -80,8 +80,8 @@ if (window != window.top && small_device && !tablet) {
   document.id('exiter').style.padding='5px 2px';
 }
 if (window != window.top && small_device) {
-  document.id('join').style.marginTop='20px';
+  document.id('join').style.marginTop='0px';
   document.id('cr').style.visibility='hidden';
-  document.body.style.overflowY = 'hidden';
+  document.body.style.overflow = 'hidden';
 }
 //document.body.style.overflowX = 'hidden';

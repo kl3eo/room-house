@@ -705,7 +705,7 @@ const onNewParticipant = (request) => {
 		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
 		if (!small_device && window == window.top) resizer(pctr);
-		if (small_device && pcounter === 0) document.id('participants').style.height = '70vh';
+		if (small_device && pcounter === 0) document.id('participants').style.height = '65vh';
 		if (small_device && pcounter === 1) document.id('participants').style.height = '140vh';
 		if (small_device && pcounter === 2) document.id('participants').style.height = '210vh';
 		if (small_device && pcounter === 3) document.id('participants').style.height = '280vh';
@@ -713,7 +713,7 @@ const onNewParticipant = (request) => {
 		
 		if (tablet)  {
 
-			if (pcounter === 0) document.id('participants').style.maxHeight = '480px';
+			if (pcounter === 0) document.id('participants').style.maxHeight = '460px';
 			if (pcounter === 1) document.id('participants').style.maxHeight = '960px';
 			if (pcounter === 2) document.id('participants').style.maxHeight = '1440px';
 			if (pcounter > 2) document.id('participants').style.maxHeight = '1920px';
@@ -1283,17 +1283,19 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			// if (small_device && pcounter === 1)  document.id(myname).style.float = 'none';
 			if (small_device)  {
 				document.id('participants').style.position = 'relative';
-				if (pcounter === 1) document.id('participants').style.height = '60vh';
-				if (pcounter === 2) document.id('participants').style.height = '110vh';
-				if (pcounter === 3) document.id('participants').style.height = '160vh';
-				if (pcounter === 4) document.id('participants').style.height = '240vh';
-				if (pcounter > 4) document.id('participants').style.height = '300vh';
+				if (pcounter === 1) document.id('participants').style.height = '65vh';
+				if (pcounter === 2) document.id('participants').style.height = '140vh';
+				if (pcounter === 3) document.id('participants').style.height = '210vh';
+				if (pcounter === 4) document.id('participants').style.height = '280vh';
+				if (pcounter > 4) document.id('participants').style.height = '360vh';
+				
+				// this will make own video go down the participants div
 				document.id(myname).style.position = 'absolute';
 				document.id(myname).style.bottom = '0vh';
 			}
 			if (tablet)  {
 				//document.id('room').style.marginTop = '-240px';
-				if (pcounter === 1) document.id('participants').style.maxHeight = '480px';
+				if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
 				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
 				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
 				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
@@ -1798,14 +1800,14 @@ const onParticipantLeft = (request) => {
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device && window == window.top) resizer(pcounter);			
-	    	if (small_device && pcounter === 1) document.id('participants').style.height = '60vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '110vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '160vh';
-		if (small_device && pcounter === 4) document.id('participants').style.height = '240vh';
-		if (small_device && pcounter > 4) document.id('participants').style.height = '300vh';
+	    	if (small_device && pcounter === 1) document.id('participants').style.height = '65vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '140vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '210vh';
+		if (small_device && pcounter === 4) document.id('participants').style.height = '280vh';
+		if (small_device && pcounter > 4) document.id('participants').style.height = '360vh';
 		if (tablet)  {
 
-			if (pcounter === 1) document.id('participants').style.maxHeight = '480px';
+			if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
 			if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
 			if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
 			if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
