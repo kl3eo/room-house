@@ -709,18 +709,38 @@ const onNewParticipant = (request) => {
 		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
 		if (!small_device && window == window.top) resizer(pctr);
-		if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '65vh' : '65vh';
-		if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '120vh' : '140vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '170vh' : '180vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '220vh' : '240vh';
-		if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '300vh' : '360vh';
+		if (small_device || tablet) {
+		 if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '50vh' : '65vh';
+		 if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '110vh' : '140vh';
+		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
+		 if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+		 if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 		
-		if (tablet)  {
+		 if (tablet)  {
 
 			if (pcounter === 0) document.id('participants').style.maxHeight = '460px';
 			if (pcounter === 1) document.id('participants').style.maxHeight = '960px';
 			if (pcounter === 2) document.id('participants').style.maxHeight = '1440px';
 			if (pcounter > 2) document.id('participants').style.maxHeight = '1920px';
+		 }
+		
+		 // calculate the height of participants
+		 /*setTimeout(function() {
+			let p_height = 0;
+			if (Object.keys(participants).length) {	
+				for (var key in participants) {
+
+					let co = document.id(participants[key].name).getBoundingClientRect(); console.log ('co1 is', co);
+			 		p_height += parseInt(co.height)
+				}
+			}
+			console.log ('pheight1 is', p_height);
+			let tot_height = parseInt((p_height / screen.height) *200); // padding
+			let max_height = tot_height + 5;
+			console.log ('tot_height1 is', tot_height);
+			document.id('participants').style.height = tot_height + 'vh';
+			// document.id('participants').style.maxHeight = max_height + 'vh';
+		 }, 1000);*/
 		}
 		
 // console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
@@ -1285,25 +1305,51 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			// if (small_device && pcounter === 1)  document.id(myname).style.float = 'none';
-			if (small_device)  {
+			
+			if (small_device || tablet) {
+			 if (small_device)  {
 				document.id('participants').style.position = 'relative';
-				if (pcounter === 1) document.id('participants').style.height = '65vh';
-				if (pcounter === 2) document.id('participants').style.height = '120vh';
-				if (pcounter === 3) document.id('participants').style.height = '170vh';
-				if (pcounter === 4) document.id('participants').style.height = '220vh';
-				if (pcounter > 4) document.id('participants').style.height = '300vh';
+				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '65vh';
+				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : '140vh';
+				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
+				if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+				if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 				
 				// this will make own video go down the participants div
 				document.id(myname).style.position = 'absolute';
 				document.id(myname).style.bottom = '0vh';
-			}
-			if (tablet)  {
+			 }
+			 if (tablet)  {
 				//document.id('room').style.marginTop = '-240px';
 				if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
 				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
 				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
 				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
+			 }
+			
+			 // calculate the height of participants
+			 /*setTimeout(function() {
+				let p_height = 0;
+				if (Object.keys(participants).length) {
+					for (var key in participants) {
+
+						let co = document.id(participants[key].name).getBoundingClientRect(); console.log ('co2 is', co);
+			 			p_height += parseInt(co.height)
+					}
+				}
+				console.log ('pheight2 is', p_height);
+				let tot_height = parseInt((p_height / screen.height) *200); // padding
+				let max_height = tot_height + 5;
+				console.log ('tot_height2 is', tot_height);
+				document.id('participants').style.height = tot_height + 'vh';
+				// document.id('participants').style.maxHeight = max_height + 'vh';
+				
+				// this will make own video go down the participants div
+				document.id(myname).style.position = 'absolute';
+				document.id(myname).style.bottom = '0vh';
+			 }, 1000);*/
 			}
+			
 			if (!small_device && window == window.top) resizer(1);
 		  }
 
@@ -1805,18 +1851,40 @@ const onParticipantLeft = (request) => {
 		delete participants[request.name];
 		just_left = request.name;
         	if (!small_device && window == window.top) resizer(pcounter);			
-	    	if (small_device && pcounter === 1) document.id('participants').style.height = '65vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '120vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '170vh';
-		if (small_device && pcounter === 4) document.id('participants').style.height = '220vh';
-		if (small_device && pcounter > 4) document.id('participants').style.height = '300vh';
-		if (tablet)  {
+	    	
+		if (small_device || tablet) {
+			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '65vh';
+			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : '140vh';
+			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
+			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
+		 
+		 if (tablet)  {
 
 			if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
 			if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
 			if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
 			if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
-		}
+		 }
+		
+		 // calculate the height of participants
+		 /*setTimeout(function() {
+			let p_height = 0;
+			if (Object.keys(participants).length) {	
+				for (var key in participants) {
+
+					let co = document.id(participants[key].name).getBoundingClientRect(); console.log ('co3 is', co);
+			 		p_height += parseInt(co.height)
+				}
+			}
+			console.log ('pheight3 is', p_height);
+			let tot_height = parseInt((p_height / screen.height) *200); // padding
+			let max_height = tot_height + 5;
+			console.log ('tot_height3 is', tot_height);
+			document.id('participants').style.height = tot_height + 'vh';
+			// document.id('participants').style.maxHeight = max_height + 'vh';
+		 }, 1000);*/
+		}		
 	} else {
 		let temp = request.name.split('_');
 		let du = 'DUMMY_'+temp[temp.length-1];
