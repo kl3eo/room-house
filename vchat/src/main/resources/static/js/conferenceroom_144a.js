@@ -506,10 +506,11 @@ const register_body = (ro) => {
 		if (voting_shown) {document.id('leftnum').style.display = 'block'; document.id('rightnum').style.display = 'block';}
 	
 		let curr_all_muted = getCookie('all_muted') || false;
+		let my_mic_muted = loadData(document.id('name').value+'_muted');
 
-		document.id('all_muter').className = curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
+		document.id('all_muter').className = check_iOS() && my_mic_muted !== true && my_mic_muted !== 'true' ? "bigO my_mic_on_all_off" : (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted ? "bigO my_mic_off" : curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
 		
-		document.id('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
+		document.id('all_muter').title = (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted ? 'Turn on microphone' : curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
 	
 		document.id('leftplus').style.display = 'block';
 		document.id('rightplus').style.display = 'block';
@@ -696,7 +697,10 @@ const onNewParticipant = (request) => {
 
     	}
 
-	if (really_new) soundEffect.src = "/sounds/coin.mp3";	
+	if (really_new) soundEffect.src = "/sounds/coin.mp3";
+	
+	let my_mic_muted = loadData(document.id('name').value+'_muted');
+	document.id('all_muter').className = check_iOS() && my_mic_muted !== true && my_mic_muted !== 'true' ? "bigO my_mic_on_all_off"	: document.id('all_muter').className;
 
 	if (!video_hidden) {
 
@@ -705,11 +709,11 @@ const onNewParticipant = (request) => {
 		if (pctr > room_limit - 1 && i_am_viewer) {if (document.id('bell')) document.id('bell').style.display = 'block'; if (document.id('av_toggler')) document.id('av_toggler').style.display='none';}
 
 		if (!small_device && window == window.top) resizer(pctr);
-		if (small_device && pcounter === 0) document.id('participants').style.height = '65vh';
-		if (small_device && pcounter === 1) document.id('participants').style.height = '140vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '210vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '280vh';
-		if (small_device && pcounter > 3) document.id('participants').style.height = '360vh';
+		if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '65vh' : '65vh';
+		if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '120vh' : '140vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '170vh' : '180vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '220vh' : '240vh';
+		if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '300vh' : '360vh';
 		
 		if (tablet)  {
 
@@ -1284,10 +1288,10 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			if (small_device)  {
 				document.id('participants').style.position = 'relative';
 				if (pcounter === 1) document.id('participants').style.height = '65vh';
-				if (pcounter === 2) document.id('participants').style.height = '140vh';
-				if (pcounter === 3) document.id('participants').style.height = '210vh';
-				if (pcounter === 4) document.id('participants').style.height = '280vh';
-				if (pcounter > 4) document.id('participants').style.height = '360vh';
+				if (pcounter === 2) document.id('participants').style.height = '120vh';
+				if (pcounter === 3) document.id('participants').style.height = '170vh';
+				if (pcounter === 4) document.id('participants').style.height = '220vh';
+				if (pcounter > 4) document.id('participants').style.height = '300vh';
 				
 				// this will make own video go down the participants div
 				document.id(myname).style.position = 'absolute';
@@ -1340,6 +1344,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			
 			document.id('slider_' + f).value = coo_volume;
 			document.id('video-' + f).volume = coo_volume;
+			// if (check_iOS()) document.id('speaker-' + f).click(); //?! doesn't help; iphone needs manual unblock
 			
 			//let d = document.id( f).getBoundingClientRect(); let video_height = d.height-30; console.log('video_height', video_height, 'extra', document.id(f).offsetHeight, 'extra2', document.id(f).clientHeight, 'extra3',  document.id(f).style.height);
 			//if (video_height >  max_video_height) max_video_height = video_height;
@@ -1801,10 +1806,10 @@ const onParticipantLeft = (request) => {
 		just_left = request.name;
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	if (small_device && pcounter === 1) document.id('participants').style.height = '65vh';
-		if (small_device && pcounter === 2) document.id('participants').style.height = '140vh';
-		if (small_device && pcounter === 3) document.id('participants').style.height = '210vh';
-		if (small_device && pcounter === 4) document.id('participants').style.height = '280vh';
-		if (small_device && pcounter > 4) document.id('participants').style.height = '360vh';
+		if (small_device && pcounter === 2) document.id('participants').style.height = '120vh';
+		if (small_device && pcounter === 3) document.id('participants').style.height = '170vh';
+		if (small_device && pcounter === 4) document.id('participants').style.height = '220vh';
+		if (small_device && pcounter > 4) document.id('participants').style.height = '300vh';
 		if (tablet)  {
 
 			if (pcounter === 1) document.id('participants').style.maxHeight = '460px';

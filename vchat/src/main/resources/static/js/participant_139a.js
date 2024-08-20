@@ -114,13 +114,13 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//or only guru can hear others
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
-	if (mode == 'm' || check_iOS()) coo_muted = true;
+	if (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
 				
 	var coo_volume = loadData(name+'_volume');
 
 	if (coo_volume === null || coo_volume === 'null') coo_volume = this_is_unmuted ? 0.1 : this_is_guru ? 0.7 : 0.5;
 
-	if (name != myname) {
+	if (name != myname && mode != 'm') {
 		saveData(name+'_muted', coo_muted, 1440);
 		saveData(name+'_volume', coo_volume, 1440);
 	}
@@ -549,7 +549,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	}
 
-	function toggleBigScreen(el) {
+	function toggleBigScreen_old(el) {
 
 			//if (!isAndroid) switchContainerClass();
 			if(!isAndroid && !ios_fullscreen) {
@@ -561,7 +561,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				container.style.width= window.innerHeight > window.innerWidth ? '97vw' : '98vw';
 				document.id('second_logger').style.visibility='hidden';
 				//screen.orientation.lock('landscape');
-				if (window.innerHeight > window.innerWidth) flashText('rotate to fullscreen');
+				// if (window.innerHeight > window.innerWidth) flashText('swipe screen');
 				ios_fullscreen = true;
 			}
 			else if(!isAndroid && ios_fullscreen) {
@@ -578,7 +578,32 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				if (container.className == PARTICIPANT_CLASS) switchContainerClass();
 			}
 	}
-		
+	
+	function toggleBigScreen(el) {
+
+			if(!ios_fullscreen) {
+				document.id('house').style.visibility='hidden';
+				document.id('controls').style.display='none';
+				container.style.position='fixed';
+				container.style.top='0px';
+				container.style.left='0px';
+				container.style.width= window.innerHeight > window.innerWidth ? '97vw' : '98vw';
+				document.id('second_logger').style.visibility='hidden';
+				//screen.orientation.lock('landscape');
+				// if (window.innerHeight > window.innerWidth) flashText('swipe screen');
+				ios_fullscreen = true;
+			}
+			else if(ios_fullscreen) {
+				container.style.position='relative';
+				container.style.width='96%';
+				document.id('house').style.visibility='visible';
+				document.id('controls').style.display='block';
+				document.id('second_logger').style.visibility='visible';
+				//screen.orientation.unlock();
+				ios_fullscreen = false;
+			}
+	}
+			
 	function toggleSlider() {
 		if (check_iOS()) from_changing_slider = false;
 		else slider.style.display = slider.style.display == 'block' ? 'none' : 'block';

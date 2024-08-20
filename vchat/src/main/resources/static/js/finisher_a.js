@@ -69,6 +69,7 @@ buB.addEventListener('click', function handleClick(event) {
 if (document.id(w[0])) document.id(w[0]).dispose(); // drop current room from available rooms list
 
 if (small_device) document.body.style.overflowY = 'auto';
+
 if (window != window.top && small_device && !tablet) {
   document.id('bg_switch').style.marginRight='10vw';
   document.id('fcam').style.padding='5px 2px';
@@ -78,10 +79,17 @@ if (window != window.top && small_device && !tablet) {
   document.id('bell').style.padding='5px 2px';
   document.id('av_toggler').style.padding='5px 2px';
   document.id('exiter').style.padding='5px 2px';
+  document.id('participants').style.marginLeft='-10px';
 }
 if (window != window.top && small_device) {
   document.id('join').style.marginTop='0px';
-  document.id('cr').style.visibility='hidden';
+  // document.id('cr').style.visibility='hidden';
+  document.id('cr').style.bottom='10vh';
   document.body.style.overflow = 'hidden';
 }
+
+if (window == window.top && small_device && isIOSFirefox()) {
+  document.id('join').style.marginTop='30px';
+}
+
 //document.body.style.overflowX = 'hidden';

@@ -240,15 +240,50 @@ function resizer(pctr) {
 
 function toggleAllMuted() {
 
-	if (check_iOS()) {
-		setCookie('all_muted', true, 1440);
-		flashText_and_rejoin('UNMUTE ONE BY ONE');
-
+	let curr_all_muted = getCookie('all_muted') || false;
+	let my_mic_muted = loadData(document.id('name').value+'_muted');
+	
+	if (check_iOS() && !i_am_muted && document.id('all_muter').className == "bigO my_mic_on_all_off") {
+		// not so ugly hack to unmute iphone webrtc streams
+		document.id('all_muter').className = "bigO allmuter_on";
+		setCookie('all_muted', false, 1440);
+		if (Object.keys(participants).length) {	
+			for (var key in participants) {
+			  let video = document.id('video-' + participants[key].name);
+			  let spea = document.id('speaker-' + participants[key].name);
+			 
+		   	  if (participants[key].name != document.id('name').value) {
+								
+				video.muted = false;
+				video.volume = 1;
+				spea.removeChild(spea.childNodes[0]);
+				spea.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+		   	  }
+			}
+		}
+	} else if (check_iOS() && !i_am_muted && document.id('all_muter').className == "bigO allmuter_on") {
+		// not so ugly hack to unmute iphone webrtc streams
+		document.id('all_muter').className = "bigO my_mic_on_all_off";
+		// setCookie('all_muted', true, 1440);
+		if (Object.keys(participants).length) {	
+			for (var key in participants) {
+			  let video = document.id('video-' + participants[key].name);
+			  let spea = document.id('speaker-' + participants[key].name);
+			 
+		   	  if (participants[key].name != document.id('name').value) {
+								
+				video.muted = true;
+				video.volume = 0;
+				spea.removeChild(spea.childNodes[0]);
+				spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
+		   	  }
+			}
+		}
 	} else {
-		let curr_all_muted = getCookie('all_muted') || false;
+		
 		let n = curr_all_muted ? false : true;
 		let t = curr_all_muted ? 'UNMUTED' : 'MUTED ALL';
-		setCookie('all_muted', n, 1440);
+		if ((my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted) {saveData(document.id('name').value+'_muted', false, 1440); i_am_muted = false; t = 'MICROPHONE ON';} else {setCookie('all_muted', n, 1440);}
 		
 		if (n === false) {saveData(document.id('name').value+'_muted', false, 1440); i_am_muted = false;} //?! need this for brute force, unmute mic by toggle_mute 
 
@@ -266,6 +301,8 @@ function toggleAllMuted() {
 				} else {
 					document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;SameSite=None;Secure;";
 				}
+				
+				var video = document.id('video-' + participants[key].name);
 		   	 }
 			}
 		}
@@ -747,7 +784,7 @@ fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {cred
 }
 
 const cli4 = () => {
-//if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else {if (playSomeMusic) flashText('PLAYING VIDEO! STOP?'); if (shareSomeScreen) flashText('SHARING SCREEN! STOP?');}
+
 if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else { i_am_muted = !i__am_muted}
 }
 
