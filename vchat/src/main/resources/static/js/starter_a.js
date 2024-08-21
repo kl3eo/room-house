@@ -243,9 +243,10 @@ function toggleAllMuted() {
 	let curr_all_muted = getCookie('all_muted') || false;
 	let my_mic_muted = loadData(document.id('name').value+'_muted');
 	
-	if (check_iOS() && !i_am_muted && document.id('all_muter').className == "bigO my_mic_on_all_off") {
+	if (!i_am_muted && document.id('all_muter').className == "bigO my_mic_on_all_off") {
 		// not so ugly hack to unmute iphone webrtc streams
 		document.id('all_muter').className = "bigO allmuter_on";
+		document.id('all_muter').title = 'Turn off sound';
 		setCookie('all_muted', false, 1440);
 		if (Object.keys(participants).length) {	
 			for (var key in participants) {
@@ -257,13 +258,15 @@ function toggleAllMuted() {
 				video.muted = false;
 				video.volume = 1;
 				spea.removeChild(spea.childNodes[0]);
-				spea.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+				participants[key].mode !== 'm' && spea.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+				participants[key].mode === 'm' && spea.appendChild(document.createTextNode('X'));//x icon
 		   	  }
 			}
 		}
-	} else if (check_iOS() && !i_am_muted && document.id('all_muter').className == "bigO allmuter_on") {
+	} else if (!i_am_muted && document.id('all_muter').className == "bigO allmuter_on") {
 		// not so ugly hack to unmute iphone webrtc streams
 		document.id('all_muter').className = "bigO my_mic_on_all_off";
+		document.id('all_muter').title = 'Turn on sound';
 		// setCookie('all_muted', true, 1440);
 		if (Object.keys(participants).length) {	
 			for (var key in participants) {
@@ -275,7 +278,8 @@ function toggleAllMuted() {
 				video.muted = true;
 				video.volume = 0;
 				spea.removeChild(spea.childNodes[0]);
-				spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
+				participants[key].mode !== 'm' && spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
+				participants[key].mode === 'm' && spea.appendChild(document.createTextNode('X'));//x icon
 		   	  }
 			}
 		}
@@ -287,7 +291,7 @@ function toggleAllMuted() {
 		
 		if (n === false) {saveData(document.id('name').value+'_muted', false, 1440); i_am_muted = false;} //?! need this for brute force, unmute mic by toggle_mute 
 
-		this.title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
+		document.id('all_muter').title = curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
 		
 		//remove all to reset them in Participant
 		if (Object.keys(participants).length) {	

@@ -508,9 +508,10 @@ const register_body = (ro) => {
 		let curr_all_muted = getCookie('all_muted') || false;
 		let my_mic_muted = loadData(document.id('name').value+'_muted');
 
-		document.id('all_muter').className = check_iOS() && my_mic_muted !== true && my_mic_muted !== 'true' ? "bigO my_mic_on_all_off" : (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted ? "bigO my_mic_off" : curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
+		document.id('all_muter').className = check_iOS() && my_mic_muted !== true && my_mic_muted !== 'true' ? "bigO my_mic_on_all_off" : (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted && role ? "bigO my_mic_off" : curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
 		
-		document.id('all_muter').title = (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted ? 'Turn on microphone' : curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
+		// document.id('all_muter').title = (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted ? 'Turn on microphone' : curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
+		document.id('all_muter').title = document.id('all_muter').className === "bigO my_mic_on_all_off" ? 'Turn on sound' : document.id('all_muter').className === "bigO allmuter_off" ? 'Turn on sound' : document.id('all_muter').className === "bigO my_mic_off" ? 'Turn on microphone' : 'Turn off sound'
 	
 		document.id('leftplus').style.display = 'block';
 		document.id('rightplus').style.display = 'block';
@@ -748,7 +749,17 @@ const onNewParticipant = (request) => {
 		receiveVideo(request.name, request.mode, myrole, true);
 		
 		(function() {if (document.id(request.name)) {document.id(request.name).style.display='block'; document.id(request.name).fade(1);}}).delay(500); //need this animation because the new video appears under the row, so we hide it
-
+		
+		//set new participant sound according to all_muter
+		let noSound = document.id('all_muter').className === "bigO my_mic_on_all_off" || document.id('all_muter').className === "bigO allmuter_off"
+		let vid = document.id('video-' + request.name);
+		vid.muted = noSound;
+		let spea = document.id('speaker-' + request.name);
+		spea.removeChild(spea.childNodes[0]);
+		request.mode !== 'm' && noSound && spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
+		request.mode !== 'm' && !noSound && spea.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+		request.mode === 'm' && spea.appendChild(document.createTextNode('X'));//x icon
+				
 		if (request.curip.length && document.id('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
 			document.id('loco_'+request.name).innerHTML = request.curip;
 			document.id('loco_'+request.name).style.display='block';
