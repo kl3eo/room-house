@@ -1492,7 +1492,7 @@ if (!curIP.length && false) {
 	<div id="helpdoc"><a id=helplink href="#" style="text-decoration:none;font-size:22px;" target=new>&#128214;&nbsp;<span id="helpcapo" style="font-weight:normal; color:#fed; font-size:22px;">HELP</span></a></div>
 	<div id="air" onclick="if (document.id('swap_niche')) {document.id('swap_niche').src=swap_url; document.id('swap_niche').style.display='block'; document.id('swap_niche').style.zIndex='10100'; document.id('swap_niche').fade(1);}"><div id="air_circle" style="font-size:12px;color:#9cf;font-weight:bold;margin-left:10px;border:1px solid #777;">CLO</div></div>
 
-	<div id="bg_switch" onclick="if (document.id('container').style.opacity == 0) {document.id('container').fade(1); document.id('room_selector').fade(0);} else {document.id('container').fade(0); document.id('room_selector').fade(1);}">bg</div>
+	<div id="bg_switch" onclick="if (document.id('container').style.opacity == 0) {document.id('container').fade(1); document.id('room_selector').fade(0);document.id('room_selector_box').style.zIndex = -10000;} else {document.id('container').fade(0); document.id('room_selector').fade(1);document.id('room_selector_box').style.zIndex = 10101;}">bg</div>
 		
 	<div id="tex" onclick="if (document.id('poker_niche')) {document.id('poker_niche').src=poker_url; document.id('poker_niche').style.display='block'; document.id('poker_niche').style.zIndex='10100'; document.id('poker_niche').fade(1);}"></div>
 	<div id="chess" onclick="if (document.id('chess_niche')) {document.id('chess_niche').src=chess_url; document.id('chess_niche').style.display='block'; document.id('chess_niche').style.zIndex='10100'; document.id('chess_niche').fade(1);}"></div>
@@ -1563,7 +1563,7 @@ if (!curIP.length && false) {
 
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>
-<div id="room_selector_box" style="position:absolute;top:10px;left:-60px;width:100%;height:100px;text-align:center;z-index:-10000;">
+<div id="room_selector_box" style="position:absolute;top:10px;left:-60px;width:100%;height:30px;text-align:center;z-index:-10000;">
 <div id="room_selector" style="position:relative; margin:0 auto;width:360px; color:#fed;font-size:20px;opacity:0;">ROOM SELECTOR</div>
 </div>
 <script src="./js/finisher_a.js"></script>
