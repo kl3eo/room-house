@@ -759,7 +759,9 @@ const onNewParticipant = (request) => {
 		//set new participant sound according to all_muter
 		let noSound = document.id('all_muter').className === "bigO my_mic_on_all_off" || document.id('all_muter').className === "bigO allmuter_off"
 		let vid = document.id('video-' + request.name);
+
 		vid.muted = noSound;
+		
 		// should check muted mic here, too
 		if (request.mode === 'm') vid.muted = true;
 		
@@ -1386,9 +1388,6 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
-			let coo_muted = loadData(f+'_muted');
-			
-			coo_volume = coo_muted === true || coo_muted === 'true' || s === 'm' ? 0 : coo_volume;
 			
 			document.id('slider_' + f).value = coo_volume;
 			document.id('video-' + f).volume = coo_volume;
