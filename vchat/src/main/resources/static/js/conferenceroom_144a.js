@@ -74,9 +74,6 @@ var connection_is_good = 1;
 var new_message = 0;
 
 var i_am_viewer = true;
-
-//var acc_id = getCookie('acc') || '';
-//let acc_id = '';
  
 var i_am_dummy_guest = false; //check demo dummy from join_
 
@@ -91,8 +88,6 @@ const wi = 640;
 const fps_hq = 24;
 const wi_hq = 1280;
 
-//const sp_setter_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8449" : "https://aspen.room-house.com:8447";
-//const sp_container_url = w[0].match(new RegExp('rgsu','g')) ? "https://cube.room-house.com:8444" : "https://aspen.room-house.com:8446";
 const sp_setter_url = "https://coins2.room-house.com";
 const sp_container_url = "https://coins1.room-house.com";
 const sm_url = "https://slotmachine.room-house.com";
@@ -102,7 +97,7 @@ const chess_url = "https://chess.room-house.com";
 const air_url = "https://bot.skypirl.net";
 const swap_url = "https://coins.room-house.com";
 
-//const role  = 0;
+//const role  = 0; // debug
 
 const small_device = ((check_iOS() || isAndroid) && screen.width <= 1024) || window != window.top ? true : false;
 const tablet = small_device && screen.width >= 960 ? true : false;
@@ -228,7 +223,7 @@ ws.onmessage = function(message) {
 		connection_is_good = 1;
 		break;
 	case 'roomConnection':
-		//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
+//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
 		nump = parsedMessage.nump; numv = parsedMessage.numv;  (function(){if (document.id('bstats')) document.id('bstats').fade(1);}).delay(1000);
 		//if (document.id('bnump')) document.id('bnump').innerHTML = nump; if (document.id('bnumv')) document.id('bnumv').innerHTML = numv;
 		break;
@@ -269,7 +264,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; /*if (small_device) {(function() {clearAllCookies(); location.reload();}).delay(2000)} else { document.id('phones').onclick=location.reload();}*/ document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; if (small_device) document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -417,7 +412,7 @@ const register = () => {
 					connection_is_good = 1;
 					break;
 				case 'roomConnection':
-					//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
+//console.log('nump is', parsedMessage.nump, 'numv is', parsedMessage.numv);
 					nump = parsedMessage.nump; numv = parsedMessage.numv; (function(){if (document.id('bstats')) document.id('bstats').fade(1);}).delay(2000);
 					//if (document.id('bnump')) document.id('bnump').innerHTML = nump; if (document.id('bnumv')) document.id('bnumv').innerHTML = numv;
 					break;
@@ -549,8 +544,6 @@ const register_body = (ro) => {
 		let tok = getCookie('authtoken') || '';
 		
 		if (ro == 0 && hack) role = 1;
-	// if (document.id('house') && !small_device && role == 1) {document.id('house').style.minWidth='53vw'; document.id('house').style.maxWidth='1000px';}
-	// if (document.id('house') && !small_device && role != 1) {document.id('house').style.minWidth='1000px';}
 	
 	if (document.id('house') && !small_device) {document.id('house').style.minWidth='1000px';}
 
@@ -583,12 +576,10 @@ const register_body = (ro) => {
 
  		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
-			/*if (small_device) {(function() {clearAllCookies(); location.reload();}).delay(2000)} else { document.id('phones').onclick=location.reload();}*/ document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);
+			if (small_device) document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
-
-		// if (document.id('want') && window == window.top) (function() {document.id('want').style.display = "block"; document.id('want').fade(1);}).delay(500);
 		
 		if (!small_device && document.id('helpdoc')) (function() {let l = checkLang(); /*if (!small_device) document.id('helpdoc').style.marginRight = "4.8vw";*/
 
@@ -597,8 +588,6 @@ const register_body = (ro) => {
 		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
 		
 		document.body.style.overflowY = 'auto';
-		// if (small_device && window != window.top && !tablet) document.body.style.zoom = '90%';
-		// if (small_device && window != window.top) document.body.style.minHeight = '200vh';
 				
 		(function() {dummies = true;}).delay(3000);
 		
@@ -712,14 +701,7 @@ const onNewParticipant = (request) => {
 		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
 		 if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
 		 if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
-		
-		 /*if (tablet)  {
 
-			if (pcounter === 0) document.id('participants').style.maxHeight = '460px';
-			if (pcounter === 1) document.id('participants').style.maxHeight = '960px';
-			if (pcounter === 2) document.id('participants').style.maxHeight = '1440px';
-			if (pcounter > 2) document.id('participants').style.maxHeight = '1920px';
-		 }*/
 		 // take care when only 1 participant in audio mode, small device
 		 if (small_device && pcounter === 0) {
 			if (Object.keys(participants) && Object.keys(participants).length === 1) {	
@@ -731,23 +713,6 @@ const onNewParticipant = (request) => {
 				}
 			}		 	
 		 }
-		 // calculate the height of participants
-		 /*setTimeout(function() {
-			let p_height = 0;
-			if (Object.keys(participants).length) {	
-				for (var key in participants) {
-
-					let co = document.id(participants[key].name).getBoundingClientRect(); console.log ('co1 is', co);
-			 		p_height += parseInt(co.height)
-				}
-			}
-			console.log ('pheight1 is', p_height);
-			let tot_height = parseInt((p_height / screen.height) *200); // padding
-			let max_height = tot_height + 5;
-			console.log ('tot_height1 is', tot_height);
-			document.id('participants').style.height = tot_height + 'vh';
-			// document.id('participants').style.maxHeight = max_height + 'vh';
-		 }, 1000);*/
 		}
 		
 // console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
@@ -969,13 +934,9 @@ const onExistingParticipants = (msg) => {
 //sets up every video in the room I just joined
 
   let myname = document.id('name').value; 
-  
-  //fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-
-   //let role = respo || 0;
    
    if (role == 0 && hack) role = 1;
-   //if (msg.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = msg.ng;}
+
    if (msg.num_rooms) num_rooms = msg.num_rooms;
    // console.log('num_rooms', num_rooms);
    let room_sel = ''; var sym = 'A'; 
@@ -1045,7 +1006,6 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	var constraints_alt = (i_am_muted === true || i_am_muted === 'true' || role === 3) ? constraints_vonly : constraints_aonly; // hack ash
 	
 	constraints = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints;
-	// constraints_alt = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : constraints_alt;
 
 	var options = {
               	localVideo: video,
@@ -1194,7 +1154,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		video.src = selectedFile ? selectedFile : null;
 		video.muted = false;
 		let cT = getCookie('cT') || 0; 
-		//console.log('video name', video, 'cT', cT);
+//console.log('video name', video, 'cT', cT);
 		video.currentTime = cT > 0 ? cT : 0;
 	
 		video.addEventListener('canplay', (event) => {
@@ -1466,21 +1426,14 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// disabled user controls for now --ash oct'23
 	   } //for
 	   if (small_device || tablet) {
-				pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';
+			pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';
 				
-				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
-				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
-				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
-				if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
-				if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
+			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
+			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
+			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 
-
-			 /*if (tablet)  {
-				if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
-				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
-				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
-				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
-			 }*/
 
 			// take care when only 1 participant in audio mode, small device
 			if (small_device && pcounter === 1) {
@@ -1488,11 +1441,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
 							document.id('participants').style.height = '35vh';
-							document.id('participants').style.marginTop = '12vh';
-							
-							//document.id('participants').style.float = 'bottom';
-							//document.id('participants').style.position='absolute';
-							//document.id('participants').style.bottom='-50vh';						
+							document.id('participants').style.marginTop = '12vh';						
 						}
 					}
 				}		 	
