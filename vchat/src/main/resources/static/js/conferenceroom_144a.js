@@ -269,7 +269,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; /*setCookie('av', null, 0);*/ if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {/*console.log('conn ok'); problems = 0; rejoin();*/} else {/*console.log('ok ,reg is', registered, 'al_cli', already_clicked, 'pctr', pcounter);*/ if (pcounter == 0 && role != 0) {/*hack ash -- unreacheable code*/ /*let ca = getCookie('fmode'); (function() { if (ca == 1) {console.log('ha!'); cli2();} if (ca == 2) {console.log('ha2!');cli3();} if (ca == 22) {console.log('ha22!'); cli6();}}).delay(100);*/} /*if (pcounter == 0 && role == 0) rejoin();*/}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; /*if (small_device) {(function() {clearAllCookies(); location.reload();}).delay(2000)} else { document.id('phones').onclick=location.reload();}*/ document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -510,7 +510,7 @@ const register_body = (ro) => {
 
 		document.id('all_muter').className = check_iOS() && my_mic_muted !== true && my_mic_muted !== 'true' ? "bigO my_mic_on_all_off" : (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted && role ? "bigO my_mic_off" : curr_all_muted ? "bigO allmuter_off" : "bigO allmuter_on";
 		
-		// document.id('all_muter').title = (my_mic_muted === true || my_mic_muted === 'true') && !curr_all_muted ? 'Turn on microphone' : curr_all_muted ? 'Turn on sound' : 'Turn off all sound';
+		
 		document.id('all_muter').title = document.id('all_muter').className === "bigO my_mic_on_all_off" ? 'Turn on sound' : document.id('all_muter').className === "bigO allmuter_off" ? 'Turn on sound' : document.id('all_muter').className === "bigO my_mic_off" ? 'Turn on microphone' : 'Turn off sound'
 	
 		document.id('leftplus').style.display = 'block';
@@ -538,7 +538,9 @@ const register_body = (ro) => {
 		
 		// brute force
 		all_muted = getCookie('all_muted');
-		if (all_muted === true || all_muted === 'true') i_am_muted = true;
+		
+		if (all_muted === true || all_muted === 'true' || my_mic_muted === true || my_mic_muted === 'true') i_am_muted = true;
+		
 
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
 		
@@ -551,13 +553,6 @@ const register_body = (ro) => {
 	// if (document.id('house') && !small_device && role != 1) {document.id('house').style.minWidth='1000px';}
 	
 	if (document.id('house') && !small_device) {document.id('house').style.minWidth='1000px';}
-	
-		
-// console.log('1: role is', role, 'mode is', mode);
-
-		// if (role === 3 && mode === 'a' && only_once) { // hack ash
-		//	(function() {if (document.id('speaker-' + name)) document.id('speaker-' + name).click(); only_once = 0;}).delay(3000);	
-		// }
 
 // console.log('registering, mode is' ,mode, 'role is', role, 'name is', name);
 		let formData = new FormData();
@@ -588,7 +583,7 @@ const register_body = (ro) => {
 
  		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
-			/*document.id('phones').onclick=location.reload();*/ (function() { document.id('phones').fade(1)}).delay(1000);
+			/*if (small_device) {(function() {clearAllCookies(); location.reload();}).delay(2000)} else { document.id('phones').onclick=location.reload();}*/ document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);
 		}
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
@@ -731,10 +726,7 @@ const onNewParticipant = (request) => {
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
 						document.id('participants').style.height = '35vh';
-						document.id('participants').style.marginTop = '12vh';
-						//document.id('participants').style.float = 'bottom';
-						//document.id('participants').style.position='absolute';
-						//document.id('participants').style.bottom='-50vh';						
+						document.id('participants').style.marginTop = '12vh';					
 					}
 				}
 			}		 	
@@ -768,6 +760,9 @@ const onNewParticipant = (request) => {
 		let noSound = document.id('all_muter').className === "bigO my_mic_on_all_off" || document.id('all_muter').className === "bigO allmuter_off"
 		let vid = document.id('video-' + request.name);
 		vid.muted = noSound;
+		// should check muted mic here, too
+		if (request.mode === 'm') vid.muted = true;
+		
 		let spea = document.id('speaker-' + request.name);
 		spea.removeChild(spea.childNodes[0]);
 		request.mode !== 'm' && noSound && spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
@@ -1038,9 +1033,17 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                	video: false
 	};
 
+	var constraints_dumb = {
+                audio: false,
+               	video: false
+	};
+	
 	if (aonly) constraints = constraints_aonly;
 
 	var constraints_alt = (i_am_muted === true || i_am_muted === 'true' || role === 3) ? constraints_vonly : constraints_aonly; // hack ash
+	
+	constraints = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints;
+	// constraints_alt = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : constraints_alt;
 
 	var options = {
               	localVideo: video,
@@ -1077,36 +1080,23 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			onicecandidate: participant.onIceCandidate.bind(participant),
 			mediaConstraints :{audio: true, video: false}
 		}
-		
-		
-		/*
-		const ctx = new AudioContext(); const dest = ctx.createMediaStreamSource(savedSrc); dest.connect(ctx.destination);
-		recordedVideo.autoplay = true;
-		recordedVideo.playsInline = true;
-		recordedVideo.controls = true;
-		recordedVideo.crossOrigin = 'anonymous';
-		recordedVideo.volume = 1;
-		recordedVideo.muted = false;
-		*/
 				
 		participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
                   	 if(error) {
 		  	var ff = new RegExp('closed','ig');
 		  	if (error.toString().match(ff)) {
 		  	} else {
-                            		participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(option_alt,
-                          		   function (error) {
+				participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(option_alt,
+					function (error) {
                                         	if(error) {
                                                 	return console.error(error);
                                         	}
 				
                                         	startVideo(video);
                                         	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-				if (small_device)  document.id(myname).style.float = 'none'; 				
-				document.id('room-header-file').style.display='none';
-				//if (!small_device) {document.id(myname).style.marginLeft = '2px'; document.id(myname).style.marginRight = '2px';}
-                          		   }
-		    		);
+						if (small_device)  document.id(myname).style.float = 'none'; 				
+						document.id('room-header-file').style.display='none';
+					});
 		  	}
 		  	return false;
                   	 } else {
@@ -1308,6 +1298,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
 	} else {
 
+// console.log('setting myself in existingPart as aonly', aonly,'i_am_muted', i_am_muted, 'options', options, 'options_alt', options_alt);
+
          	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
                   if(error) {
 			var ff = new RegExp('closed','ig');
@@ -1329,8 +1321,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                   } else {
                   	startVideo(video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-			// if (small_device && pcounter === 1)  document.id(myname).style.float = 'none';
-			
+
 			if (small_device || tablet) {
 				pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '0vh';
 				
@@ -1345,50 +1336,17 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				document.id(myname).style.position = 'absolute';
 				document.id(myname).style.bottom = '0vh';
 
-			 /*if (tablet)  {
-				//document.id('room').style.marginTop = '-240px';
-				if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
-				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
-				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
-				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
-			 }*/
-
-			// take care when only 1 participant in audio mode, small device
-			if (small_device && pcounter === 1) {
-				if (Object.keys(participants) && Object.keys(participants).length === 1) {	
+			       // take care when only 1 participant in audio mode, small device
+			        if (small_device && pcounter === 1) {
+				  if (Object.keys(participants) && Object.keys(participants).length === 1) {
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
 							document.id('participants').style.height = '35vh';
-							document.id('participants').style.marginTop = '12vh';
-							
-							//document.id('participants').style.float = 'bottom';
-							//document.id('participants').style.position='absolute';
-							//document.id('participants').style.bottom='-50vh';						
+							document.id('participants').style.marginTop = '12vh';						
 						}
 					}
-				}		 	
-		 	}			
-			 // calculate the height of participants
-			 /*setTimeout(function() {
-				let p_height = 0;
-				if (Object.keys(participants).length) {
-					for (var key in participants) {
-
-						let co = document.id(participants[key].name).getBoundingClientRect(); console.log ('co2 is', co);
-			 			p_height += parseInt(co.height)
-					}
-				}
-				console.log ('pheight2 is', p_height);
-				let tot_height = parseInt((p_height / screen.height) *200); // padding
-				let max_height = tot_height + 5;
-				console.log ('tot_height2 is', tot_height);
-				document.id('participants').style.height = tot_height + 'vh';
-				// document.id('participants').style.maxHeight = max_height + 'vh';
-				
-				// this will make own video go down the participants div
-				document.id(myname).style.position = 'absolute';
-				document.id(myname).style.bottom = '0vh';
-			 }, 1000);*/
+				  }
+		 	        }
 			}
 			
 			if (!small_device && window == window.top) resizer(1);
@@ -1414,7 +1372,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		let ac = chu[3];
 		let a = chu[4];
 
-//console.log('here f is', f, 's is', s);		
+// console.log('here f is', f, 's is', s);		
 		let na = chu[0].split('_');
 		
 		if (s === 'c') {cinemaEnabled = true; num_cinemas += 1;}
@@ -1428,13 +1386,12 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
+			let coo_muted = loadData(f+'_muted');
+			
+			coo_volume = coo_muted === true || coo_muted === 'true' || s === 'm' ? 0 : coo_volume;
 			
 			document.id('slider_' + f).value = coo_volume;
 			document.id('video-' + f).volume = coo_volume;
-			// if (check_iOS()) document.id('speaker-' + f).click(); //?! doesn't help; iphone needs manual unblock
-			
-			//let d = document.id( f).getBoundingClientRect(); let video_height = d.height-30; console.log('video_height', video_height, 'extra', document.id(f).offsetHeight, 'extra2', document.id(f).clientHeight, 'extra3',  document.id(f).style.height);
-			//if (video_height >  max_video_height) max_video_height = video_height;
 			
 			(function() {document.id(f).style.display='block'; document.id(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
 
@@ -1948,10 +1905,7 @@ const onParticipantLeft = (request) => {
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
 						document.id('participants').style.height = '35vh';
-						document.id('participants').style.marginTop = '12vh';
-						//document.id('participants').style.float = 'bottom';
-						//document.id('participants').style.position='absolute';
-						//document.id('participants').style.bottom='-50vh';						
+						document.id('participants').style.marginTop = '12vh';					
 					}
 				}
 			}		 	
