@@ -711,28 +711,27 @@ const onNewParticipant = (request) => {
 
 		if (!small_device && window == window.top) resizer(pctr);
 		if (small_device || tablet) {
-		 document.id('participants').style.marginTop = '0vh';
-		 if (isIOSFirefox() && pcounter === 0 && window == window.top )document.id('participants').style.marginTop = '10vh';		 
-		 if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '50vh' : '65vh';
-		 if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '110vh' : '140vh';
+		 pcounter === 0 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';		 
+		 if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+		 if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
 		 if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
 		 if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 		
-		 if (tablet)  {
+		 /*if (tablet)  {
 
 			if (pcounter === 0) document.id('participants').style.maxHeight = '460px';
 			if (pcounter === 1) document.id('participants').style.maxHeight = '960px';
 			if (pcounter === 2) document.id('participants').style.maxHeight = '1440px';
 			if (pcounter > 2) document.id('participants').style.maxHeight = '1920px';
-		 }
+		 }*/
 		 // take care when only 1 participant in audio mode, small device
 		 if (small_device && pcounter === 0) {
 			if (Object.keys(participants) && Object.keys(participants).length === 1) {	
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
 						document.id('participants').style.height = '35vh';
-						document.id('participants').style.marginTop = '10vh';
+						document.id('participants').style.marginTop = '12vh';
 						//document.id('participants').style.float = 'bottom';
 						//document.id('participants').style.position='absolute';
 						//document.id('participants').style.bottom='-50vh';						
@@ -1333,27 +1332,26 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			// if (small_device && pcounter === 1)  document.id(myname).style.float = 'none';
 			
 			if (small_device || tablet) {
-			 if (small_device)  {
-			 	document.id('participants').style.marginTop = '0vh';
-				if (isIOSFirefox() && pcounter === 1 && window == window.top )document.id('participants').style.marginTop = '10vh';
-				document.id('participants').style.position = 'relative';
-				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '65vh';
-				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : '140vh';
+				pcounter === 1 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';
+				
+				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
 				if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
 				if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 				
 				// this will make own video go down the participants div
+				document.id('participants').style.position = 'relative';
 				document.id(myname).style.position = 'absolute';
 				document.id(myname).style.bottom = '0vh';
-			 }
-			 if (tablet)  {
+
+			 /*if (tablet)  {
 				//document.id('room').style.marginTop = '-240px';
 				if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
 				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
 				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
 				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
-			 }
+			 }*/
 
 			// take care when only 1 participant in audio mode, small device
 			if (small_device && pcounter === 1) {
@@ -1361,7 +1359,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
 							document.id('participants').style.height = '35vh';
-							document.id('participants').style.marginTop = '10vh';
+							document.id('participants').style.marginTop = '12vh';
 							
 							//document.id('participants').style.float = 'bottom';
 							//document.id('participants').style.position='absolute';
@@ -1511,6 +1509,40 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		*/
 		// disabled user controls for now --ash oct'23
 	   } //for
+	   if (small_device || tablet) {
+				pcounter === 1 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';
+				
+				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
+				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
+				if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+				if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
+
+
+			 /*if (tablet)  {
+				if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
+				if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
+				if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
+				if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
+			 }*/
+
+			// take care when only 1 participant in audio mode, small device
+			if (small_device && pcounter === 1) {
+				if (Object.keys(participants) && Object.keys(participants).length === 1) {	
+					for (var key in participants) {
+						if (participants[key].mode === 'a') {
+							document.id('participants').style.height = '35vh';
+							document.id('participants').style.marginTop = '12vh';
+							
+							//document.id('participants').style.float = 'bottom';
+							//document.id('participants').style.position='absolute';
+							//document.id('participants').style.bottom='-50vh';						
+						}
+					}
+				}		 	
+		 	}			
+
+	   }
    } // msg.data
    	     
 //  }).catch(err => console.log(err)); //fetch
@@ -1896,28 +1928,27 @@ const onParticipantLeft = (request) => {
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	
 		if (small_device || tablet) {
-			document.id('participants').style.marginTop = '0vh';
-			if (isIOSFirefox() && pcounter === 1 && window == window.top )document.id('participants').style.marginTop = '10vh';
-			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '65vh';
-			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : '140vh';
+			pcounter === 1 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';
+			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
 			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
 			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 		 
-		 if (tablet)  {
+		 /*if (tablet)  {
 
 			if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
 			if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
 			if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
 			if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
-		 }
+		 }*/
 		// take care when only 1 participant in audio mode, small device
 		if (small_device && pcounter === 1) {
 			if (Object.keys(participants) && Object.keys(participants).length === 1) {	
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
 						document.id('participants').style.height = '35vh';
-						document.id('participants').style.marginTop = '10vh';
+						document.id('participants').style.marginTop = '12vh';
 						//document.id('participants').style.float = 'bottom';
 						//document.id('participants').style.position='absolute';
 						//document.id('participants').style.bottom='-50vh';						
