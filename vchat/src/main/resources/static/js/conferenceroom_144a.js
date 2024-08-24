@@ -711,7 +711,7 @@ const onNewParticipant = (request) => {
 
 		if (!small_device && window == window.top) resizer(pctr);
 		if (small_device || tablet) {
-		 pcounter === 0 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';		 
+		 pcounter === 0 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';		 
 		 if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 		 if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
@@ -1332,7 +1332,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			// if (small_device && pcounter === 1)  document.id(myname).style.float = 'none';
 			
 			if (small_device || tablet) {
-				pcounter === 1 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';
+				pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '-8vh';
 				
 				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
@@ -1510,7 +1510,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// disabled user controls for now --ash oct'23
 	   } //for
 	   if (small_device || tablet) {
-				pcounter === 1 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';
+				pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';
 				
 				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
@@ -1928,7 +1928,7 @@ const onParticipantLeft = (request) => {
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	
 		if (small_device || tablet) {
-			pcounter === 1 && window == window.top ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '-8vh';
+			pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '-8vh';
 			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
