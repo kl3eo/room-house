@@ -113,12 +113,22 @@ const fetchTimeout = (url, ms, { signal, ...options } = {}) => {
     return promise.finally(() => clearTimeout(timeout));
 };
 
+function visChanger(e) {
+	if (document.visibilityState === "visible") window.location.reload();
+}
+
+function goRoomHouse(e) {
+	window.location.href = 'https://room-house.com';
+}
+
 window.onbeforeunload = function() {
 	ws.close();
 };
 
 window.onload = function(){
 
+   window.addEventListener("visibilitychange", visChanger);
+		
    setInterval(function(){
        if ((registered && !now_playing)|| problems) {if (problems) rejoin();}
 
@@ -266,7 +276,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; if (small_device) document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; if (small_device) document.id('phones').addEventListener('click', goRoomHouse); (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}} if (small_device) document.id('phones').removeEventListener('click', goRoomHouse)}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -469,7 +479,8 @@ const register_body = (ro) => {
 	
 		let curip = document.id('curip').value;
 		registered = 1;
-	
+		window.removeEventListener("visibilitychange", visChanger);
+			
 		let sem  = window.innerWidth > 1024 ? '7' : '';
 		if (temporary && ro == 0) role = 3;
 
@@ -577,9 +588,10 @@ const register_body = (ro) => {
 		});
 
  		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
+			check_locked();
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
-			if (small_device) document.id('phones').onclick = function() {location.href += ':8453'}; (function() { document.id('phones').fade(1)}).delay(1000);
-		}
+			if (small_device) document.id('phones').addEventListener('click', goRoomHouse); (function() { document.id('phones').fade(1)}).delay(1000);
+		} else {if (small_device) document.id('phones').removeEventListener('click', goRoomHouse)}
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 		
@@ -598,7 +610,7 @@ const register_body = (ro) => {
 		// IMPORTANT: get SDP_ALREADY_NEGOTIATED for camera auto re-activation, so leave it only for players?!
 
 		if (role == 1 && !already_clicked && problems) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) {console.log('clicking 2!');cli2();} if (ca == 1 && av) {console.log('clicking 3!');cli3();} if (ca == 22) { playSomeMusic=true; getFile(); cli6(); } console.log('auto re-connect, ca is', ca, 'av is', av);}).delay(200);}
-		setTimeout(function() {check_locked()}, 2000);
+		if (small_device && window == window.top) setTimeout(function() {check_locked()}, 2000);
 }
 
 function checkLang() {
@@ -1008,6 +1020,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	var constraints_alt = (i_am_muted === true || i_am_muted === 'true' || role === 3) ? constraints_vonly : constraints_aonly; // hack ash
 	
 	constraints = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints;
+	constraints_alt = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_alt;
 
 	var options = {
               	localVideo: video,
