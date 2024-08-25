@@ -117,8 +117,8 @@ function visChanger(e) {
 	if (document.visibilityState === "visible") window.location.reload();
 }
 
-function goRoomHouse(e) {
-	window.location.href = 'https://room-house.com';
+function visRejoiner(e) {
+	if (document.visibilityState === "visible") rejoin();
 }
 
 window.onbeforeunload = function() {
@@ -276,7 +276,7 @@ function check_connection() {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; if (small_device) document.id('phones').addEventListener('click', goRoomHouse); (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}} if (small_device) document.id('phones').removeEventListener('click', goRoomHouse)}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -480,6 +480,7 @@ const register_body = (ro) => {
 		let curip = document.id('curip').value;
 		registered = 1;
 		window.removeEventListener("visibilitychange", visChanger);
+		if (small_device && window == window.top)  window.addEventListener("visibilitychange", visRejoiner);
 			
 		let sem  = window.innerWidth > 1024 ? '7' : '';
 		if (temporary && ro == 0) role = 3;
@@ -590,8 +591,8 @@ const register_body = (ro) => {
  		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
 			check_locked();
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
-			if (small_device) document.id('phones').addEventListener('click', goRoomHouse); (function() { document.id('phones').fade(1)}).delay(1000);
-		} else {if (small_device) document.id('phones').removeEventListener('click', goRoomHouse)}
+			(function() { document.id('phones').fade(1)}).delay(1000);
+		}
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
 		
@@ -712,8 +713,8 @@ const onNewParticipant = (request) => {
 		 pcounter === 0 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';		 
 		 if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 		 if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
-		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
-		 if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
+		 if (small_device && pcounter === 3) document.id('participants').style.height = window == window.top ? '220vh' : '250vh';
 		 if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 
 		 // take care when only 1 participant in audio mode, small device
@@ -1304,8 +1305,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				
 				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
-				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
-				if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
+				if (pcounter === 4) document.id('participants').style.height = window == window.top ? '220vh' : '250vh';
 				if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 				
 				// this will make own video go down the participants div
@@ -1445,8 +1446,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				
 			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
-			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
-			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
+			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '220vh' : '250vh';
 			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 
 
@@ -1851,8 +1852,8 @@ const onParticipantLeft = (request) => {
 			pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '0vh';
 			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
-			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '175vh' : '190vh';
-			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '235vh' : '250vh';
+			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
+			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '220vh' : '250vh';
 			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 		 
 		 /*if (tablet)  {
