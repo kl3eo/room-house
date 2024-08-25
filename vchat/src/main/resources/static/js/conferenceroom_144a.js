@@ -141,6 +141,8 @@ window.onload = function(){
        if (registered) check_fullscreen();
 
    }, 1000);
+   
+   
       
 	let lang = getCookie('lang');
 	lang = (lang === null || lang === 'null') ? 0 : lang;
@@ -596,7 +598,7 @@ const register_body = (ro) => {
 		// IMPORTANT: get SDP_ALREADY_NEGOTIATED for camera auto re-activation, so leave it only for players?!
 
 		if (role == 1 && !already_clicked && problems) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) {console.log('clicking 2!');cli2();} if (ca == 1 && av) {console.log('clicking 3!');cli3();} if (ca == 22) { playSomeMusic=true; getFile(); cli6(); } console.log('auto re-connect, ca is', ca, 'av is', av);}).delay(200);}
-
+		setTimeout(function() {check_locked()}, 2000);
 }
 
 function checkLang() {
