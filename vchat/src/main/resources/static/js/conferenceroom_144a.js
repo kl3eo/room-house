@@ -266,13 +266,13 @@ function rejoin(){
 	leaveRoom(); register();
 }
 
-function check_locked() {
-	if ((vcounter == 0 || vcounter == '0') && (pcounter == 0 || pcounter == '0') && !cine) { console.log('locked!'); (function() {clearAllCookies(); location.reload();}).delay(1000) } 
+function check_locked(par) {
+	if ((vcounter == 0 || vcounter == '0') && (pcounter == 0 || pcounter == '0') && !cine) { console.log('locked!'); (function() {if (par) clearAllCookies(); location.reload();}).delay(1000) } 
 }
 
 function check_connection() {
 
-	check_locked();
+	check_locked(1);
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
@@ -589,9 +589,9 @@ const register_body = (ro) => {
 		});
 
  		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
-			check_locked();
+			// check_locked(1);
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
-			(function() { document.id('phones').fade(1)}).delay(1000);
+			(function() { document.id('phones').fade(1)}).delay(500);
 		}
 
   		if(stats_shown) { (function(){document.id('stats').style.display='block'; document.id('stats').fade(1);}).delay(1000);}		
@@ -611,7 +611,7 @@ const register_body = (ro) => {
 		// IMPORTANT: get SDP_ALREADY_NEGOTIATED for camera auto re-activation, so leave it only for players?!
 
 		if (role == 1 && !already_clicked && problems) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) {console.log('clicking 2!');cli2();} if (ca == 1 && av) {console.log('clicking 3!');cli3();} if (ca == 22) { playSomeMusic=true; getFile(); cli6(); } console.log('auto re-connect, ca is', ca, 'av is', av);}).delay(200);}
-		if (small_device && window == window.top) setTimeout(function() {check_locked()}, 2000);
+		setTimeout(function() {check_locked(0)}, 1000);
 }
 
 function checkLang() {
@@ -1283,7 +1283,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			var ff = new RegExp('closed','ig');
 			if (error.toString().match(ff)) {
 			} else {
-                          participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_alt,
+                          // participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options_alt,
+			  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
                           function (error) {
                                         if(error) {
                                                 return console.error(error);
