@@ -357,7 +357,7 @@ button {
 <body>
 	<!-- a name="top" class="return-link" href="https://room-house.com/">&lt;- Return to Room-House.com</a -->
 	<h1>Room-House Tower Owner's Manual</h1>
-	<p>version 1.39</p>
+	<p>version 1.41</p>
 	<div id="toc">
 <a href="#0" class="section-header">0 - Introduction</a>
 <ul>
@@ -377,7 +377,7 @@ button {
 <li><a href="#2.2">2.2 - Login & Password</a></li>
 <li><a href="#2.3">2.3 - Settings</a></li>
 <li><a href="#2.4">2.4 - Port Forwarding</a></li>
-<li><a href="#2.5">2.5 - Users & Rooms</a></li>
+<li><a href="#2.5">2.5 - Users & Aparts</a></li>
 </ul>
 </div>
 <div id="manual-content">
@@ -642,48 +642,53 @@ It will eventually be, if not already, - first you'd have to do the correct "Por
 	Besides these two TCP ports, also you have to forward the range 1025-65535 of the UDP ports from the router to "192.168.0.100". 
 	NB: if working without domain names, e.g. no DNS available, forward TCP post 18443 and then accept browser's warning to open https://your_external_ip:18443
 </p>
+<p>
+	NB: Sometimes the Towers may need a help from Room-House admins, in this case, they should be able to forward TCP port 22 to the virtual machine of the Tower.
+</p>
 <aside class="warnbox">
 	If you've found port forwarding difficult, as you probably must have, discuss these matters with your system administrator.
 </aside>
 </section>
 
 <section>
-<h3 id="2.5">5 - Users & Rooms</h3>
+<h3 id="2.5">5 - Users & Aparts</h3>
 <p>
-	By default, the Room-House Tower has no users or rooms. To have them added, the WebAdmin allows to be configured properly.
+	By default, the Room-House Tower has no Users or Aparts. To add those, the WebAdmin allows to be configured properly.
 	A typical Users configuration looks like this (Table 1):
 </p>
 <img src="https://room-house.com/img/man8.png">
 
 <p>
-	In the example above, "Ronnie" can login to the WebAdmin by typing <code>58</code> as his login and the password <code>493266</code>. In the same time,
-	"Ronnie" can enter the locked main Room of the Tower "club" (https://club.room-house.com) by typing <code>58493266</code> right after the captcha.
+	In the example above, "fuji" can login to the WebAdmin by typing <code>9</code> as username and the password <code>510516</code>. Also,
+	"fuji" can enter the locked Lobby of the Tower "roma" (https://roma.room-house.com) by typing <code>9510516</code> right after the captcha.
 </p>
 
 <p>
-	The Tower owner creates/edits/removes users with access to the main Room (https://tower_name.room-house.com). That is, when the main Room of the Tower is locked, 
-	"normal" users must have an ID and a password to access it; however, the Tower can assign an Apart/Office to a User, by selecting "Owner" from the
-	right table column. This User becomes the "owner" (or the "master") of selected Apart/Office, and he can create other users with access to it. So there are two types of users
-	that the Tower owner creates: 1. normal users who have access to the main Room when it's locked 2. those assigned to be masters of Aparts or Offices who can create
-	other users with access to their property. This is simple to understand, for example, the Tower gives the key to the Office Manager and the Manager makes keys for every staff member.
+	The Tower owner creates/edits/removes Users with access to the Lobby (https://tower_name.room-house.com). That is, when the Lobby of the Tower is locked, 
+	"normal" users must have an ID and a password to access it; however, the Tower can assign an Apart ownership to a User, by selecting "Owner" from the
+	right table column. This User becomes the nominal "owner" (or the "master") of selected Apart and can create other users with access to it. There are two types of Users
+	that the Tower creates: 1. normal users who have access to the Lobby when it's locked 2. those assigned to be masters of Aparts who can create
+	other Users with access to this property. This is simple to understand, for example, the Tower gives the key to the Office Manager and the Manager makes keys for every staff member.
 </p>
 
 <p>
-	When users are assigned to own an Apart or Office, they aren't shown in the Table 1 any more; so that it's not possible to see or change their password 
-	or assignment, or even remove them altogether. This is a security measure to protect the Apart or Office owner/master and their office staff (or their family)
-	from any trouble that may occur, like being accidentally deleted from the Table 1 or having a password stolen by an intruder. This is why assigning
-	a user to be the owner/master of an Apart/Office, the Tower owner is asked HARD way to write down the ID and password of the user being assigned, for reason that it's
-	not possible to see them again after the assignment has been done.
+	When Users are assigned as new owners to an Apart, it's not possible to see or change their password, or even remove them altogether. 
+	This is a security measure to protect the Apart owner/master and their office staff (or their family)
+	from any trouble that may occur, being accidentally deleted from the Table 1 or having a password stolen by an intruder. This is why assigning
+	a User to be the owner/master of an Apart, the Tower owner is asked the HARD way to write down the ID and password of the User, for reason that it's
+	not possible to see them again after the assignment. 
 </p>
-<img src="https://room-house.com/img/man9.png">
 <p>
-	The Tower owner creates 1-room Aparts or Offices in the "Rooms" section (see Table 2). Assigning this Apart or Office to a User in Table 1 makes it "immutable" - 
+	After receiving "keys" from the Tower, the Apart owner can change the "door lock", i.e. change their password so that the Tower owner cannot enter their Apart as this is a sold property.
+	This way R-H protects Apart owners right for the property they buy from Tower owners.
+</p>
+<p>
+
+	The Tower owner creates Aparts or Offices in the "Aparts" section (see Table 1). Assigning this Apart to a User in Table 1 makes it "immutable" - 
 	it cannot be renamed or deleted. Again, this is a protective measure because normally assigning ownership is a result of a purchase, 
-	so Apart/Office ownership rights must be guaranteed by the Tower and protected against unauthorized or accidental changes.
+	so Apart ownership rights must be guaranteed by the Tower and protected against unauthorized or accidental changes.
 </p>
-<p>	
-	It is of course possible to have more rooms than only one in any Apart or Office, but currently the Tower's owner has to ask Room-House to have it done.
-</p>
+
 </section>
 
 </section>
