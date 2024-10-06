@@ -190,33 +190,18 @@ function flashText_and_rejoin(t) {
 	(function(){document.id('phones').fade(0);}).delay(1000);
 }
 
-function resizer_left(pctr) {
-
-	if (pctr == 4) {
-		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginLeft = notebook ? '-200px' :  '48px';
-	} else if (pctr == 3) {
-		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginLeft = notebook ? '-200px' :  '48px';
-	} else if (pctr == 2) {
-		document.id('room').style.minWidth = '960px';
-		document.id('room').style.marginLeft = notebook ? '-200px' :  '48px';
-	} else if (pctr == 1) {
-		document.id('room').style.minWidth = '1024px';
-		document.id('room').style.marginLeft = '0px';
-	} else if (pctr == 5) {
-		document.id('room').style.minWidth = '1260px';
-		document.id('room').style.marginLeft = notebook ? '-320px' : '-60px';
-	} else if (pctr > 5) {
-		document.id('room').style.minWidth = '1560px';
-		document.id('room').style.marginLeft = notebook ? '-440px' : '-190px';
-	}
-
-}
-
 function resizer(pctr) {
 
-	if (pctr == 4) {
+	// this is fine except when desktop minimizes windows
+	/*if (window.innerWidth > 1280) {
+	  if (pctr == 1) {
+		document.id('participants').style.marginRight = '0px';		
+	  } else {
+		document.id('participants').style.marginRight = '120px';
+	  }
+	}*/
+	
+	/*if (pctr == 4) {
 		document.id('room').style.minWidth = '960px';
 		document.id('room').style.marginLeft = notebook ? '-280px' :  '-50px';
 	} else if (pctr == 3) {
@@ -234,7 +219,7 @@ function resizer(pctr) {
 	} else if (pctr > 5) {
 		document.id('room').style.minWidth = '1560px';
 		document.id('room').style.marginLeft = notebook ? '-520px' : '-310px';
-	}
+	}*/
 
 }
 
@@ -418,6 +403,7 @@ const ed = () => { //code to run on receive message from join_ frame
  	document.id('main_container').style.marginTop = '-60px';
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
 	document.id('city').style.background = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;	(function(){document.id('phones').fade(0);}).delay(500);
+	if (document.id('dbao')) document.id('dbao').style.display = 'none';
  }
  
  //var obj = JSON.parse(event.data);

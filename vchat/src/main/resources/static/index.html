@@ -133,6 +133,21 @@ const city_or_main = 1;
 	background:#112;
 }
 
+.dbao {
+	width:100%;
+	height:10vh;
+	text-align:center;
+	margin:5 auto;
+	color:#fff;
+	font-size:24px;
+	font-weight:bold;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:2200;
+	background:transparent;
+}
+
 .message_wrap {
 	display:none;
 	border: 1px solid #777;
@@ -150,7 +165,9 @@ const city_or_main = 1;
 }
 
 @media screen and (max-width: 1024px) {
-
+ #participants {
+ 	margin:-59vh auto 0 auto;
+ }
  .mww {
         position:absolute;
 	width:96%;
@@ -180,7 +197,7 @@ const city_or_main = 1;
         position:relative;
         z-index:99;
         margin:0 auto;
-        width:100%;
+        width:72%;
 	min-width:360px;
         top:-12px;
 	!border:1px solid #090;
@@ -308,6 +325,9 @@ const city_or_main = 1;
 }
 
 @media screen and (min-width: 1024px)  {
+ #participants {
+ 	margin:-50vh auto 0 auto;
+ }
  .mww {
         position:absolute;
 	width:96%;
@@ -367,7 +387,7 @@ const city_or_main = 1;
         margin:0 auto 0 -24px;
         width:700px;
 	!left:-135px;
-	left:-60px;
+	left:-90px;
  }
  
  .bigO {
@@ -1308,7 +1328,7 @@ select:focus, input:focus, button:focus{
 </style>
 </head>
 <body style="background:#112;font-family:Sans;overflow-y:hidden;" onclick="cli1()">
-
+<div id="dbao" class=dbao><span></span></div>
 <div id="phones" class=phones><span id="loading_span"><script>let l = getCookie('lang'); loado = (l == 1) ? loado_.get('ru') : l == 2 ? loado_.get('es') : loado_.get('en'); document.write(loado);</script></span><script>let loc = window.location.hostname; let pic_ind = homee == 'GREENHALL' ? 3 : homee == 'REDHALL' ? 2 : homee == 'BLUEHALL' ?  1 : 0; let pos = screen.height < 800 ? 'top' : 'center'; let hpos = small_device && pic_ind == 0 ? 'left' : 'center'; let dt = small_device ? '' : '_dt'; document.write('<div id="ph_b" style="visibility:hidden;width:100%;height:100%;text-align:center;background:transparent url(/img/theater' + dt + pic_ind + '.jpg) ' + pos + ' ' + hpos + '  no-repeat;text-align:center;"><div id="red_banner" style="display:none;"  onclick="window.location.href = \'#REDHALL\'; homee = \'REDHALL\'; roomee = homee;"><a href="#REDHALL" style="color:#963;">#REDHALL</a><div id="red_hall_span" class="now_sho">now showing..</div></div><div id="green_banner" style="display:none;"  onclick="window.location.href = \'#GREENHALL\'; homee = \'GREENHALL\'; roomee = homee;"><a href="#GREENHALL" style="color:#396;">#GREENHALL</a><div id="green_hall_span" class="now_sho">now showing..</div></div><div id="blue_banner" style="display:none;" onclick="window.location.href = \'#BLUEHALL\'; homee = \'BLUEHALL\'; roomee = homee; "><a href="#BLUEHALL">#BLUEHALL</a><div id="blue_hall_span" class="now_sho">now showing..</div></div></div>');</script></div><!--phones-->
 <script>let wlh = small_device ? '' : window.location.hostname; document.id('phones').style.visibility = 'visible'; let disp = city_or_main ? 'block' : 'none'; document.write('<div id="city" style="position:relative;height:90vh;width:100%;text-align:center;border:0px solid #222;background:transparent url(/img/city2_' + wlh +'.png) bottom center no-repeat;display:'+disp+'">');</script>
 
@@ -1317,6 +1337,7 @@ select:focus, input:focus, button:focus{
 	<div id="newacc" style="display:none;"></div>
   </div>	
 </div>
+				
 <script>document.write('<div id="house" style="min-height:510px; height:84vh; position:relative; width:96vw; max-width:460px; margin:0 auto; border:0px dotted #9cf; background:#369 url(/img/people4_' + window.location.hostname + '.png) top center no-repeat; text-align:center; display:none;">');</script>
 
 <div id="mww" class="mww">
@@ -1399,9 +1420,7 @@ RANDOM=7777
 				<div style="float:right;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
 				<div style="float:right;margin-right:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();"></div>
 				<div style="clear:right;"></div>
-				<div id="participants">
-				<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
-				</div>
+
 				<!-- input style="margin:0 auto 0 -48px;width:90px;display:none;" type="button" id="button-leave" onmouseup="leaveRoom();location.reload();" value="Leave room" -->
 			</div><!-- room -->
 		</div><!-- wrapper -->
@@ -1437,7 +1456,7 @@ if (!curIP.length && false) {
 </script>
 
 <!-- dont remove!-->
-<div id="bundled" style="position:relative;width:50%;min-width:350px;margin:0 auto;text-align:center;">
+<div id="bundled" style="position:relative;min-width:350px;margin:0 auto;text-align:center;">
 
 <div id="subbundled" style="position:relative; text-align:center; width:100%;">
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyRHC network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
@@ -1561,7 +1580,9 @@ if (!curIP.length && false) {
 </div><!-- house -->
 
 </div><!-- city -->
-
+<div id="participants" style="position:relative;min-width:350px;text-align:center;z-index:1010">
+				<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
+</div>
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>
 <div id="room_selector_box" style="position:absolute;top:10px;left:-60px;width:100%;height:30px;text-align:center;z-index:-10000;">

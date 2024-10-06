@@ -494,6 +494,7 @@ const register_body = (ro) => {
 		document.id('room-header').innerText = 'ROOM ' + room;
 
 		document.id('join').style.display = 'none';
+
 		document.id('room').style.display = 'block';
 		
 		document.id('preroom').innerHTML='&nbsp;';
@@ -559,7 +560,8 @@ const register_body = (ro) => {
 		
 		if (ro == 0 && hack) role = 1;
 	
-	if (document.id('house') && !small_device) {document.id('house').style.minWidth='1000px';}
+	// NB: this is a very bad approach
+	// if (document.id('house') && !small_device) {document.id('house').style.minWidth='1000px';}
 
 // console.log('registering, mode is' ,mode, 'role is', role, 'name is', name);
 		let formData = new FormData();
@@ -611,7 +613,7 @@ const register_body = (ro) => {
 		// IMPORTANT: get SDP_ALREADY_NEGOTIATED for camera auto re-activation, so leave it only for players?!
 
 		if (role == 1 && !already_clicked && problems) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) {console.log('clicking 2!');cli2();} if (ca == 1 && av) {console.log('clicking 3!');cli3();} if (ca == 22) { playSomeMusic=true; getFile(); cli6(); } console.log('auto re-connect, ca is', ca, 'av is', av);}).delay(200);}
-		setTimeout(function() {check_locked(0)}, 1000);
+		setTimeout(function() {check_locked(0)}, 2000); // give more time here to avoid early exits
 }
 
 function checkLang() {
@@ -710,7 +712,9 @@ const onNewParticipant = (request) => {
 
 		if (!small_device && window == window.top) resizer(pctr);
 		if (small_device || tablet) {
-		 pcounter === 0 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';		 
+		 //pcounter === 0 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-18vh';	
+		 //document.id('participants').style.marginTop = window == window.top ? document.id('participants').style.marginTop : document.id('participants').style.marginTop = '0vh'; 
+		 document.id('participants').style.marginTop = '-59vh';
 		 if (small_device && pcounter === 0) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 		 if (small_device && pcounter === 1) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 		 if (small_device && pcounter === 2) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
@@ -723,7 +727,7 @@ const onNewParticipant = (request) => {
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
 						document.id('participants').style.height = '35vh';
-						document.id('participants').style.marginTop = '12vh';					
+						document.id('participants').style.marginTop = '-45vh';					
 					}
 				}
 			}		 	
@@ -957,12 +961,12 @@ const onExistingParticipants = (msg) => {
    let room_sel = ''; var sym = 'A'; 
    for (i = 1; i <= num_rooms; i++) {
    	sym = i == 2 ? 'B' : i == 3 ? 'C' : i == 4 ? 'D' : i == 5 ? 'E' : i == 6 ? 'F' : sym;
-	let addon = sym == currRoom ? '&nbsp;&nbsp;<span style="color:#fed;border:1px solid #fed; padding:3px">ROOM' + i + '</span>&nbsp;&nbsp;' : '&nbsp;&nbsp;<span style="color:#9cf;cursor:pointer; padding:3px" onclick="currRoom = \'' + sym + '\';/*console.log(\'sym\',currRoom);*/(function(){document.id(\'bg_switch\').click()}).delay(500);flashText_and_rejoin(\'SKIP TO ROOM \' + currRoom);">ROOM' + i + '</span>&nbsp;&nbsp;';
+	let addon = sym == currRoom ? '&nbsp;&nbsp;<span style="color:#fed;border:0px solid #fed; padding:3px">ROOM' + i + '</span>&nbsp;&nbsp;' : '&nbsp;&nbsp;<span style="color:#9cf;cursor:pointer; padding:3px" onclick="currRoom = \'' + sym + '\';/*console.log(\'sym\',currRoom);*/(function(){document.id(\'bg_switch\').click()}).delay(500);flashText_and_rejoin(\'SKIP TO ROOM \' + currRoom);">ROOM' + i + '</span>&nbsp;&nbsp;';
  
 	room_sel = room_sel + addon;
    }
    if (num_rooms == 1) room_sel = '';
-   if (num_rooms < 4) document.id('room_selector_box').style.left=0;
+   if (num_rooms < 4) document.id('room_selector_box').style.left='-10px';
    if (num_rooms === 4) document.id('room_selector_box').style.left='-25px';
    if (num_rooms === 5) document.id('room_selector_box').style.left='-80px';
    if (num_rooms > 5) document.id('room_selector_box').style.left='-135px';
@@ -1302,8 +1306,9 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 
 			if (small_device || tablet) {
-				pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '0vh';
-				
+				//pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '-10vh';
+				//document.id('participants').style.marginTop = window == window.top ? document.id('participants').style.marginTop : document.id('participants').style.marginTop = '0vh'
+				document.id('participants').style.marginTop = '-59vh';
 				if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 				if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 				if (pcounter === 3) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
@@ -1321,7 +1326,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
 							document.id('participants').style.height = '35vh';
-							document.id('participants').style.marginTop = '12vh';						
+							document.id('participants').style.marginTop = '-45vh';						
 						}
 					}
 				  }
@@ -1443,9 +1448,9 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// disabled user controls for now --ash oct'23
 	   } //for
 	   if (small_device || tablet) {
-			pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-8vh';
-				
-			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+			//pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '5vh' : document.id('participants').style.marginTop = '-5vh' : document.id('participants').style.marginTop = '-18vh';
+			//document.id('participants').style.marginTop = window == window.top ? document.id('participants').style.marginTop : document.id('participants').style.marginTop = '0vh'			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
+			document.id('participants').style.marginTop = '-59vh';
 			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
 			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '220vh' : '250vh';
@@ -1458,7 +1463,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
 							document.id('participants').style.height = '35vh';
-							document.id('participants').style.marginTop = '12vh';						
+							document.id('participants').style.marginTop = '-45vh';						
 						}
 					}
 				}		 	
@@ -1850,32 +1855,27 @@ const onParticipantLeft = (request) => {
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	
 		if (small_device || tablet) {
-			pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '0vh';
+			//pcounter === 1 && window == window.top ? isIOSFirefox() ? document.id('participants').style.marginTop = '10vh' : document.id('participants').style.marginTop = '0vh' : document.id('participants').style.marginTop = '-10vh';
+			//document.id('participants').style.marginTop = window == window.top ? document.id('participants').style.marginTop : document.id('participants').style.marginTop = '0vh'
+			document.id('participants').style.marginTop = '-59vh';
 			if (pcounter === 1) document.id('participants').style.height = window == window.top ? '50vh' : '63vh';
 			if (pcounter === 2) document.id('participants').style.height = window == window.top ? '110vh' : tablet ? '140vh' : '128vh';
 			if (pcounter === 3) document.id('participants').style.height = window == window.top ? '160vh' : '190vh';
 			if (pcounter === 4) document.id('participants').style.height = window == window.top ? '220vh' : '250vh';
 			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
-		 
-		 /*if (tablet)  {
 
-			if (pcounter === 1) document.id('participants').style.maxHeight = '460px';
-			if (pcounter === 2) document.id('participants').style.maxHeight = '960px';
-			if (pcounter === 3) document.id('participants').style.maxHeight = '1440px';
-			if (pcounter > 3) document.id('participants').style.maxHeight = '1920px';
-		 }*/
-		// take care when only 1 participant in audio mode, small device
-		if (small_device && pcounter === 1) {
-			if (Object.keys(participants) && Object.keys(participants).length === 1) {	
+			// take care when only 1 participant in audio mode, small device
+			if (small_device && pcounter === 1) {
+			  if (Object.keys(participants) && Object.keys(participants).length === 1) {	
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
 						document.id('participants').style.height = '35vh';
-						document.id('participants').style.marginTop = '12vh';					
+						document.id('participants').style.marginTop = '-45vh';					
 					}
 				}
-			}		 	
-		 }		
-		 // calculate the height of participants
+			  }		 	
+		 	}		
+		 // calculate the height of participants ?!
 		 /*setTimeout(function() {
 			let p_height = 0;
 			if (Object.keys(participants).length) {	

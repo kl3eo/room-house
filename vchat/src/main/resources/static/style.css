@@ -322,7 +322,7 @@ input[type=button]:active, input[type=submit]:active {
 }
 .participant.duo {
 	min-width: 432px;
-	width: 45%;
+	width: 49%;
 	margin: 0 auto;
 	margin-left:1px;
 	margin-right:1px;
@@ -331,7 +331,7 @@ input[type=button]:active, input[type=submit]:active {
 
 .participant.trio {
 	min-width: 288px;
-	width: 30%;
+	width: 32.6%;
 	margin: 0 auto;
 	margin-left:1px;
 	margin-right:1px;
