@@ -68,12 +68,14 @@ function getIP(json) {
 }
 
 function ajax_chat() {
-	fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
+	//fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
+	fetch('https://'+window.location.hostname+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
 }
 
 function ajax_room(name) {
 	let banner = name == 'REDHALL' ? 'red_hall_span' : name == 'BLUEHALL' ? 'blue_hall_span' : name == 'GREENHALL' ? 'green_hall_span' :''; if (banner.length == 0) return;
-	fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_room_data.pl?room='+name).then(response => response.text()).then((response) => {if (response.length) {document.id(banner).innerHTML = '"'+response+'"';} else {document.id(banner).innerHTML = '-'} }).catch(err => console.log(err));
+	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_room_data.pl?room='+name).then(response => response.text()).then((response) => {if (response.length) {document.id(banner).innerHTML = '"'+response+'"';} else {document.id(banner).innerHTML = '-'} }).catch(err => console.log(err));
+	fetch('https://'+window.location.hostname+'/cgi/genc/get_room_data.pl?room='+name).then(response => response.text()).then((response) => {if (response.length) {document.id(banner).innerHTML = '"'+response+'"';} else {document.id(banner).innerHTML = '-'} }).catch(err => console.log(err));
 }
 
 function change_lang(l) {
@@ -138,8 +140,7 @@ function checkWebRTC() {
 }
 
 function toggleHeader(i) {
-	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		//let role = respo; if (role == 2) role = 1;
+
 		let role = 1; //hack ash
 		if (i == 1 && role == 1 && aonly)  {
 			document.id('room-header').style.color = document.id('room-header').style.color == 'rgb(153, 204, 255)' ? oldColor : '#9cf';
@@ -152,8 +153,7 @@ function toggleHeader(i) {
 			document.id('room-header').style.color = document.id('room-header').style.color == 'rgb(153, 255, 204)' ? oldColor : '#9fc';
 			shareSomeScreen = shareSomeScreen == true ? false : true;
 			setCookie('player', '');
-		}
-	//}).catch(err => console.log(err));				
+		}			
 }
 
 function getFile() {
@@ -300,27 +300,21 @@ function toggleAllMuted() {
 	}
 }
 
-/*
-async function setCoo() {
-      let urlee = 'https://' + window.location.hostname + ':' + port + '/cgi/genc/action_cine';
-      fetch(urlee).then((response) => response.json()).then((result) => {
-        console.log('set session', result);
-      }).catch(function (err) { console.log('Error', err) })
-}
-*/
-
     
 window.addEventListener("message", function(event) {
 
-//console.log('eo:', event.origin, 'hn:', window.location.hostname);
+//console.log('eo:', event.origin, 'hn:', window.location.hostname, 'ed:', event.data);
+let da = event.data; //console.log ('da0 is' ,da[0]); 
 
-  if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url) {
+  //if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url) {
+if (da[0] == "esms" || (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url)) {
     return;
   }
-  
-  if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
-
-var obj = JSON.parse(event.data);
+ 
+  //if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
+  if ((event.origin == 'https://'+window.location.hostname) || (event.origin == 'https://'+window.location.hostname+':1443')) {
+//console.log('parsing1', da);
+var obj = JSON.parse(da);
 //replace URL on change of room name in iframe 
 if (obj.replacer && obj.replacer.length) {
 	var roo = window.location.hostname.split('.');
@@ -549,6 +543,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 //}
 	
 } else if (event.origin == sm_url) {
+//console.log('parsing2', event.data);
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('sm_niche')) {
 
@@ -558,6 +553,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 		document.id('sm_niche').src='';
 	}
 } else if (event.origin == "https://room-house.com" || event.origin == poker_url) {
+//console.log('parsing3', event.data);
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('poker_niche')) {
 
@@ -567,6 +563,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 		document.id('poker_niche').src='';
 	}
 } else if (event.origin == chess_url) {
+//console.log('parsing4', event.data);
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('chess_niche')) {
 
@@ -576,6 +573,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 		document.id('chess_niche').src='';
 	}
 } else if (event.origin == air_url) {
+//console.log('parsing5', event.data);
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('air_niche')) {
 
@@ -585,6 +583,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 		document.id('air_niche').src='';
 	}
 } else if (event.origin == swap_url) {
+//console.log('parsing6', event.data);
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'close_iframe' && document.id('swap_niche')) {
 
@@ -594,6 +593,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 		document.id('swap_niche').src='';
 	}		
 } else if (event.origin == sp_setter_url) {
+//console.log('parsing7', event.data);
 	var obj = JSON.parse(event.data);
 	if (obj.action == 'Bound') {
 		//if (obj.to == '5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx' && obj.sum == '10000000000') {
@@ -619,7 +619,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 	}
 	
 } else {
-
+//console.log('parsing8', event.data);
   var obj = JSON.parse(event.data);
 
   if (obj.action == 'saveCookie') {
@@ -754,12 +754,14 @@ if (!snd_clicked) {soundEffect.src = 'data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFg
 }
 
 const cli2 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').className = "bigO av_toggler_f"; document.id('fcam').className = "bigO fcam_f"; document.id('bcam').className = "bigO bcam";
+//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
+fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 2) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 1; setCookie('fmode',0,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').className = "bigO av_toggler_f"; document.id('fcam').className = "bigO fcam_f"; document.id('bcam').className = "bigO bcam";
  flashText_and_rejoin('FRONT CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); document.id('fcam').className = "bigO fcam";}} else {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('fcam').className = "bigO fcam"; setCookie('av', false, 144000); aonly = 1;  flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
 const cli3 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo;  if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').className = "bigO av_toggler_f"; document.id('fcam').className = "bigO fcam"; document.id('bcam').className = "bigO bcam_f"; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); document.id('bcam').className = "bigO bcam";}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('bcam').className = "bigO bcam"; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');setCookie('player', '');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
+//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
+fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo;  if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) hack = true; if (role == 0 && hack) role = 1; if ((!cammode || cammode == 1) && (!playSomeMusic && !shareSomeScreen)) {if (role == 1 || role == 2 || temporary) {cammode = 2; setCookie('fmode',1,144000); setCookie('av', true, 144000); aonly = 0; document.id('av_toggler').className = "bigO av_toggler_f"; document.id('fcam').className = "bigO fcam"; document.id('bcam').className = "bigO bcam_f"; flashText_and_rejoin('BACK CAM!');} else {flashText(caller + '&nbsp;<img style="margin-top:-72px;" src=/icons/bell' + sem + '2.png>'); document.id('bcam').className = "bigO bcam";}} else  {if (!playSomeMusic && !shareSomeScreen) {cammode = 0; document.id('bcam').className = "bigO bcam"; setCookie('av', false, 144000); aonly = 1; flashText_and_rejoin('AUDIO-ONLY');setCookie('player', '');} else {if (playSomeMusic) {flashText('PLAYING VIDEO! STOP?')} else {flashText('SHARING SCREEN! STOP?')}}}}).catch(err => console.log(err));
 }
 
 const cli4 = () => {
@@ -778,7 +780,8 @@ document.id('subcontrols').fade(1);}).delay(500);}}
 }
 
 const cli6 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000); setCookie('cT', null, 0); setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
+//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
+fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000); setCookie('cT', null, 0); setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
 }
 
 const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
@@ -786,6 +789,7 @@ document.id('message_wrap').fade(0);document.id('chatter').fade(0);document.id('
 }
 
 const cli8 = () => { homee = document.id('roomName').value !== w[0] && homee === w[0] ? document.id('roomName').value : homee;
-fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_guests.pl?room='+homee, {credentials: 'include'}).then(function(response){if (response.status !== 200){console.log('Status Code: ' + response.status); return;} response.json().then(function(data) { if (data != 0) { let audi = ''; const array = Object.keys(data).map(key => data[key]); array.forEach(item => { let s = item[0].split('_'); let short = s[0]; let d= item[3].split(' '); let ti = d[1].split(':'); let tim = ti[0]+':'+ti[1]; audi = audi + '<div><span>' + short + '</span>,&nbsp;<span>' + item[1] + '</span>,&nbsp;<span>' + item[2] + '</span>&nbsp;<span>' + tim + '</span></div>';}); audi = audi + '<div style="line-height:60px;">&nbsp;</div>'; document.id('logger').click(); chat_shown = 0; document.id('message_box').innerHTML = audi; document.id('message_box').fade(1);
+//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
+fetch('https://'+window.location.hostname+'/cgi/genc/get_guests.pl?room='+homee, {credentials: 'include'}).then(function(response){if (response.status !== 200){console.log('Status Code: ' + response.status); return;} response.json().then(function(data) { if (data != 0) { let audi = ''; const array = Object.keys(data).map(key => data[key]); array.forEach(item => { let s = item[0].split('_'); let short = s[0]; let d= item[3].split(' '); let ti = d[1].split(':'); let tim = ti[0]+':'+ti[1]; audi = audi + '<div><span>' + short + '</span>,&nbsp;<span>' + item[1] + '</span>,&nbsp;<span>' + item[2] + '</span>&nbsp;<span>' + tim + '</span></div>';}); audi = audi + '<div style="line-height:60px;">&nbsp;</div>'; document.id('logger').click(); chat_shown = 0; document.id('message_box').innerHTML = audi; document.id('message_box').fade(1);
 }})}).catch(err => console.log(err));
 }

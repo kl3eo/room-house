@@ -1,0 +1,90 @@
+#features {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 780px; PADDING-TOP: 0px; POSITION: absolute; TOP: 76px; HEIGHT: 500px; BACKGROUND-COLOR: #fff; TEXT-ALIGN: justify
+}
+#features UL.features {
+	MARGIN-TOP: 13px; PADDING-LEFT: 5px; FONT-SIZE: 14px; FONT-FAMILY: Arial, Helvetica, sans-serif; LIST-STYLE-TYPE: none; BACKGROUND-COLOR: #fff
+}
+#features UL.features LI {
+	MARGIN-BOTTOM: 12px; COLOR: blue
+}
+#features UL.features LI SPAN {
+	PADDING-LEFT: 6px; COLOR: #000
+}
+#features UL.features LI SPAN:hover {
+	BACKGROUND-COLOR: #ccc
+}
+#features P {
+	MARGIN-TOP: 26px; FONT-SIZE: 14px; MARGIN-LEFT: 27px; WIDTH: 370px; COLOR: blue
+}
+#features P SPAN {
+	MARGIN-LEFT: 6px; COLOR: #000
+}
+#features P SPAN:hover {
+	BACKGROUND-COLOR: #ccc
+}
+UL#menu {
+	LEFT: 404px; TOP: 33px
+}
+UL.menu_new#menu {
+	LEFT: 383px; WIDTH: 360px; POSITION: absolute; TOP: 33px
+}
+#features UL.install {
+	PADDING-LEFT: 4px; LIST-STYLE-TYPE: disc; BACKGROUND-COLOR: #fff
+}
+#features UL.install#break {
+	MARGIN-TOP: 16px
+}
+#features .miniheader {
+	MARGIN-TOP: 16px; MARGIN-LEFT: 29px
+}
+#features OL#resources {
+	MARGIN-LEFT: 27px
+}
+#features #next UL {
+	MARGIN-LEFT: 25px
+}
+#features #google_468on60 {
+	MARGIN-TOP: 38px; MARGIN-LEFT: 27px
+}
+#features #google_468on60_install {
+	MARGIN-TOP: 20px; MARGIN-LEFT: 23px
+}
+#features #google_ad_square {
+	MARGIN-TOP: 7px; MARGIN-RIGHT: 3px
+}
+#features #google_ad_square_1 {
+	MARGIN-TOP: 7px
+}
+#features #google_ad_vert_skyscraper {
+	TOP: 7px
+}
+#features #google_ad_ref_300on250 {
+	MARGIN-TOP: 14px; MARGIN-RIGHT: 18px; TEXT-ALIGN: left
+}
+#features #installation_728on90 {
+	MARGIN-TOP: 136px; MARGIN-LEFT: 28px
+}
+#features #features_468on60 {
+	MARGIN-LEFT: 28px
+}
+#links_top_468 {
+	LEFT: 370px; TOP: 33px
+}
+#features #top_leaderboard {
+	MARGIN-TOP: 6px; MARGIN-LEFT: 22px
+}
+#features #installation_728on15 {
+	MARGIN-TOP: 36px; MARGIN-LEFT: 23px
+}
+#features #installation_468on15 {
+	MARGIN-TOP: 36px; MARGIN-LEFT: 23px
+}
+#vert_banner_120on240_install {
+	TOP: 186px
+}
+#hosted {
+	HEIGHT: 62px
+}
+#hostedtext {
+	MARGIN-TOP: 23px
+}

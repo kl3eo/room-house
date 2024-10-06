@@ -1,0 +1,372 @@
+/* The main style for wTag website */
+body {
+/*background-color:#666699;*/
+font-family: Arial, Helvetica, sans-serif;
+}
+
+#main {
+position:absolute;
+top:20px;
+left:2%;
+width:1000px;
+height:762px;
+background-color:#fff;
+}
+
+/* Rounded corners */
+#corner_tl {
+position:absolute;
+width:26px;
+height:16px;
+top:0px;
+left:0px;
+background-image:url(../img/soft_topleft.png);
+background-position: top left;
+background-repeat:no-repeat;
+background-color:transparent;
+}
+
+#corner_tr {
+position:absolute;
+width:26px;
+height:16px;
+top:0px;
+right:0px;
+background-image:url(../img/soft_topright.png);
+background-position: top right;
+background-repeat:no-repeat;
+background-color:transparent;
+}
+
+#corner_bl {
+position:absolute;
+width:26px;
+height:16px;
+bottom:0px;
+left:0px;
+background-image:url(../img/soft_bottomleft.png);
+background-position: bottom left;
+background-repeat:no-repeat;
+background-color:transparent;
+}
+
+#corner_br {
+position:absolute;
+width:26px;
+height:16px;
+bottom:0px;
+right:0px;
+background-image:url(../img/soft_bottomright.png);
+background-position: bottom right;
+background-repeat:no-repeat;
+background-color:transparent;
+}
+/* End Rounded corners */
+
+/* Left navigation sidebar */
+#leftbar {
+position:absolute;
+width:160px;
+height:762px;
+left:0px;
+top:16px;
+background-color:transparent;
+text-align:left;
+}
+
+/* wTag logo */
+#leftbar #logo {
+margin-top:0px;
+width:160px;
+height:30px;
+border-bottom:1px solid #eee;
+background-color:#fff;
+text-align:center;
+}
+
+#logo a {
+color:blue;
+text-decoration:none;
+font-size:16px;
+background-color:#fff;
+padding-bottom:0px;
+}
+
+#logo span {
+color:#999; font-size:18px;    
+}
+
+/* Main navigation menu */
+#nav_main {
+position:absolute;
+width:160px;
+top:60px;
+left:0px;
+}
+
+/* Second navigation menu */
+#nav_second {
+position:absolute;
+width:160px;
+top:570px;
+left:0px;
+}
+
+/* Left sidebar menu style */
+#nav_main ul.nav, #nav_second ul.nav {
+width:160px;
+margin-top:0px;
+margin-left:0px;
+list-style-type:none;
+padding:0px;
+background-color:#fff;
+font-size:11px;
+}
+ 
+.nav li {
+width:160px;
+margin-bottom:0px;
+background-color:#fff;
+}
+
+.nav a {
+background: #fff;
+display:block;
+color: navy;
+text-decoration: none;
+font-weight: normal;
+padding-top:10px;
+padding-bottom:10px;
+padding-left:25px;
+}
+
+.nav a:hover {
+color: navy;
+background-color: #eee;
+}
+ 
+.nav li#current a {
+text-decoration:line-through;
+}
+
+.nav li.main a {
+padding-left:52px;
+}
+
+/* Top menu */
+ul#menu {
+position:absolute;
+width:360px;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+top:22px;
+padding:0px;
+background-color:transparent;
+left:454px;
+font-size:12px;
+}
+
+ul#menu.menu_new {
+position:absolute;
+width:360px;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+top:22px;
+padding:0px;
+background-color:transparent;
+left:429px;
+font-size:12px;
+}
+
+#menu li {
+display:inline;
+list-style-type:none;
+background-color:inherit;
+padding:0px;
+margin-right:20px;
+}
+
+#menu a, #menu a:link {
+background-color:inherit;
+color:#333;
+text-decoration:underline;
+width:160px;
+}
+
+#menu a:hover {
+background-color:#fff;
+color:blue;
+text-decoration:underline;
+}
+
+/* Center div */
+#center {
+position:absolute;
+width:826px;
+height:762px;
+top:0px;
+left:160px;
+background-color:transparent;
+border-left:1px solid #eee;
+}
+
+/* Pagename div */
+#pagename {
+position:absolute;
+font-size:15px;
+color:#ccc;
+background-color:transparent;
+width:260px;
+top:36px;
+left:28px;
+text-transform:uppercase;
+}
+
+#google-468-60-demo {
+position:absolute;
+
+background-color:transparent;
+width:468px;
+height:60px;
+top:36px;
+left:309px;
+
+}
+
+/* Pagename for resources page div */
+#pagename_resources {
+position:absolute;
+font-size:16px;
+color:#ccc;
+background-color:transparent;
+width:600px;
+top:26px;
+left:26px;
+text-transform:uppercase;
+}
+
+#req {
+position:absolute;
+color:#666;
+background-color:transparent;
+width:776px;
+top:676px;
+left:26px;
+font-size:11px;
+text-transform:none !important;
+ 
+}
+
+/* Shinystat div */
+#shinystat2 {
+position:absolute;
+width:160px;
+top:626px;
+left:0px;
+text-align:center;
+}
+
+/* Shinystat div */
+#shinystat {
+position:absolute;
+width:120px;
+height:60px;
+top:638px;
+left:687px;  
+}
+
+/* Footer div */
+#footer {
+position: absolute;
+top:710px;
+left:27px;
+height:30px;
+width: 800px;
+background-color:transparent;
+color:#666;
+font:11px Arial;
+}
+
+#footer a {
+background-color:#fff;
+color:#999;
+text-decoration:none;
+font:11px Arial;
+margin-right:11px;
+}
+
+#footer a:hover {
+color:blue;
+}
+
+/* Footer underline links */
+.accent {
+text-decoration:underline;
+}
+
+/* Important words */
+em {
+font-style:normal;
+}
+
+/*------ Advertising ---------------------------------------------------------*/
+
+
+/* Vertical banner between menu on the left sidebar */
+#prw_ad_demo {
+position:absolute;
+background-color:#fff;
+width:125px;
+height:260px;
+top:250px;
+left:16px;
+
+}
+
+/* Vertical banner between menu on the left sidebar */
+#vert_demo {
+position:absolute;
+background-color:#fff;
+width:120px;
+height:240px;
+top:250px;
+left:23px;
+
+}
+
+
+/* Square on the demo page */
+#square_200on200_demo {
+position: absolute;
+top:172px;
+left:76px;
+height:200px;
+width: 200px;
+}
+
+
+/* Leaderboard on the demo page */
+#leaderboard_demo_728on90 {
+position: absolute;
+top:516px;
+left:23px;
+height:90px;
+width: 728px;
+background-color:#fff;
+}
+
+
+
+/* Links on the demo page */
+#links_demo_728on15 {
+position: absolute;
+top:486px;
+left:24px;
+height:15px;
+width: 728px;
+background-color:#fff;
+}
+
+
+
+ 

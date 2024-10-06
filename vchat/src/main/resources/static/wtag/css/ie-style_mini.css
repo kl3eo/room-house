@@ -1,0 +1,46 @@
+#box {
+	BACKGROUND-IMAGE: url(../img/rounded_ie_mini.gif); WIDTH: 242px; HEIGHT: 186px; BACKGROUND-COLOR: transparent
+}
+#chat {
+	WIDTH: 228px; HEIGHT: 172px
+}
+#container {
+	WIDTH: 226px
+}
+#wtag {
+	BORDER-RIGHT: medium none
+}
+#emo {
+	BORDER-RIGHT: medium none
+}
+#refresh {
+	BORDER-RIGHT: medium none
+}
+#scrollArea {
+	HEIGHT: 100px
+}
+#form {
+	TOP: 109px; HEIGHT: 42px;
+}
+INPUT#name {
+	HEIGHT: 18px
+}
+INPUT#url {
+	HEIGHT: 18px; LEFT: -1px;
+}
+#chat_menu {
+	TOP: 151px
+}
+#emo LI.over UL {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; DISPLAY: block; PADDING-LEFT: 12px; Z-INDEX: 99; RIGHT: 0px; BORDER-LEFT: #ccc 1px solid; WIDTH: 211px; CURSOR: default; BORDER-BOTTOM: #ccc 1px solid; LIST-STYLE-TYPE: none; POSITION: absolute; TOP: 18px; HEIGHT: 60px; BACKGROUND-COLOR: #eee
+}
+#submit {
+width: 47px;
+}
+
+#submit P.over {
+	CURSOR: pointer; COLOR: #00bfff; BACKGROUND-COLOR: #eee
+}
+#refresh P.over {
+	CURSOR: pointer; COLOR: #00bfff; BACKGROUND-COLOR: #eee
+}

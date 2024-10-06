@@ -35,7 +35,8 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 	let sp_setter_url_cur = sp_setter_url+'/#/binder/to/:'+acc_host+'/amount/:'+sum_host;
 	acc_id.then(data => { 
 	   if (!data.length) {
-		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let sess = respo; 
 			// console.log('respo here is', sess);
 			if (sess.length) {
@@ -53,12 +54,6 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 			  //mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click(); let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '12vh';document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function(){document.id('m6').style.display='none';};
 			} else {
 				if (already_been_there) return;
-				//doesn't work here - fetch wouldn't bring a cookie; do it in join_v.html
-				/*let urlee = 'https://' + window.location.hostname + ':' + port + '/cgi/genc/action_cine';
-				fetch(urlee).then((response) => response.json()).then((result) => {
-				console.log('set session', result); already_been_there = true; doSwitchOneMode(el);
-				}).catch(function (err) { console.log('Error', err) })
-				*/
 			}
 		}).catch(err => console.log(err));
 	   } else {
@@ -419,7 +414,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function setCinema() {
-		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			if (role == 1) {
 				let p = participants[name]; let g = p.getMode();
@@ -438,7 +434,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 	
 	function back_to_audience() {
-		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			if (role == 1) set_guru(0, name);
 	
@@ -702,7 +699,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	  	var yon = window.confirm('Drop '+rname+'?!');
 		if (yon) {
 
-	  		fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	  		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 				let role = respo;
 				if (role == 1) {
 

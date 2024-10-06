@@ -1,0 +1,234 @@
+/* Copyright to Shen Huang, you can reach me out at shenhuang@live.ca */
+		body	{
+			background-color : #a3d2ff;
+		}
+		html, body {
+			max-width: 100%;
+			overflow-x: hidden;
+			overflow-y: hidden;
+		}
+		.bubble {
+			z-index : 999;
+			position : absolute;
+			border-radius : 50%;
+		}
+		sand {
+			z-index : -10;
+			position : absolute;
+			top : 60%;
+			left : -10%;
+			width: 110%;
+			border-bottom : 300px solid #ffedc6;
+			border-left : 100px solid transparent;
+		}
+		water {
+			z-index : -9;
+			position : absolute;
+			top : 45%;
+			left : -30%;
+			height : 60%;
+			width : 100%;
+			background-color : #84abff;
+			border-radius : 50%;
+		}
+		skymask {
+			z-index : -8;
+			position : absolute;
+			top : -10%;
+			left : -10%;
+			height : 70%;
+			width : 110%;
+			background-color : #a3d2ff;
+		}
+		boat {
+			z-index: -7;
+			position : absolute;
+			top : 80%;
+			left : 10%;
+			width: 70px;
+			border-top : 10px solid #ffd6f9;
+			border-left : 5px solid transparent;
+			border-right : 5px solid transparent;
+		}
+		mast {
+			z-index : -6;
+			position : absolute;
+			top : -70px;
+			left : 50px;
+			height : 60px;
+			width : 5px;
+			background-color : #efeded;
+		}
+		sail {
+			z-index: -7;
+			position : absolute;
+			top : -70px;
+			left : 10px;
+			width : 5px;
+			border-bottom : 50px solid #ffffff;
+			border-left : 40px solid transparent;
+		}
+		tree {
+			z-index : -8;
+			position : absolute;
+			top : 55%;
+			left : 82%;
+		}
+		branch {
+			z-index : -8;
+			position : absolute;
+			top : 0px;
+			left : 0px;
+			height : 90px;
+			width : 40px;
+			border : 1px;
+			border-color : #7f6048;
+			border-style : solid;
+			background-color : #bc8e6b;
+			border-radius : 50%;
+			-webkit-clip-path : polygon(20px -30px, 70px 0px, 35px 80px, 10px 80px, 30px 55px);
+			clip-path : polygon(20px -30px, 70px 0px, 35px 80px, 10px 80px, 30px 55px);
+		}
+		leaf1 {
+			z-index : -8;
+			position : absolute;
+			top : -5px;
+			left : -55px;
+			height : 15px;
+			width : 70px;
+			border : 1px;
+			border-color : #527c51;
+			border-style : solid;
+			background-color : #6fad6b;
+			border-radius : 50%;
+			-webkit-clip-path : ellipse(40px 25px at 60px 30px);
+			clip-path : ellipse(40px 25px at 60px 30px);
+			transform : scaleX(1.2) rotate(0deg);
+		}
+		leaf2 {
+			z-index : -8;
+			position : absolute;
+			top : -15px;
+			left : -35px;
+			height : 15px;
+			width : 70px;
+			border : 1px;
+			border-color : #527c51;
+			border-style : solid;
+			background-color : #6fad6b;
+			border-radius : 50%;
+			-webkit-clip-path : ellipse(40px 15px at 60px 20px);
+			clip-path : ellipse(40px 15px at 60px 20px);
+			transform : scaleX(0.7) rotate(15deg);
+		}
+		leaf3 {
+			z-index : -8;
+			position : absolute;
+			top : 5px;
+			left : -35px;
+			height : 15px;
+			width : 70px;
+			border : 1px;
+			border-color : #527c51;
+			border-style : solid;
+			background-color : #6fad6b;
+			border-radius : 50%;
+			-webkit-clip-path : ellipse(40px 15px at 60px 20px);
+			clip-path : ellipse(40px 15px at 60px 20px);
+			transform : scaleX(0.7) rotate(-10deg);
+		}
+		leaf4 {
+			z-index : -8;
+			position : absolute;
+			top : -7px;
+			left : 30px;
+			height : 15px;
+			width : 70px;
+			border : 1px;
+			border-color : #527c51;
+			border-style : solid;
+			background-color : #6fad6b;
+			border-radius : 50%;
+			-webkit-clip-path : ellipse(40px 25px at 60px 30px);
+			clip-path : ellipse(40px 25px at 60px 30px);
+			transform : scaleX(-1.2) rotate(0deg);
+		}
+		leaf5 {
+			z-index : -8;
+			position : absolute;
+			top : -20px;
+			left : 10px;
+			height : 15px;
+			width : 70px;
+			border : 1px;
+			border-color : #527c51;
+			border-style : solid;
+			background-color : #6fad6b;
+			border-radius : 50%;
+			-webkit-clip-path : ellipse(40px 15px at 60px 20px);
+			clip-path : ellipse(40px 15px at 60px 20px);
+			transform : scaleX(-0.7) rotate(20deg);
+		}
+		leaf6 {
+			z-index : -8;
+			position : absolute;
+			top : 5px;
+			left : 15px;
+			height : 15px;
+			width : 70px;
+			border : 1px;
+			border-color : #527c51;
+			border-style : solid;
+			background-color : #6fad6b;
+			border-radius : 50%;
+			-webkit-clip-path : ellipse(40px 15px at 60px 20px);
+			clip-path : ellipse(40px 15px at 60px 20px);
+			transform : scaleX(-0.7) rotate(-10deg);
+		}
+		coconut1 {
+			z-index: -7;
+			position : absolute;
+			top : 1px;
+			left : 10px;
+			height : 15px;
+			width : 15px;
+			border : 1px;
+			border-color : #827d5d;
+			border-style : solid;
+			background-color : #a59f78;
+			border-radius : 50%;
+		}
+		coconut2 {
+			z-index: -7;
+			position : absolute;
+			top : -1px;
+			left : 21px;
+			height : 15px;
+			width : 15px;
+			border : 1px;
+			border-color : #827d5d;
+			border-style : solid;
+			background-color : #a59f78;
+			border-radius : 50%;
+		}
+		coconut3 {
+			z-index: -7;
+			position : absolute;
+			top : 5px;
+			left : 15px;
+			height : 15px;
+			width : 15px;
+			border : 1px;
+			border-color : #827d5d;
+			border-style : solid;
+			background-color : #a59f78;
+			border-radius : 50%;
+		}
+@font-face {
+font-family: "Open Sans";
+src: url("../webfonts/Open-Sans-Regular.eot");
+src: url("../webfonts//Open-Sans-Regular.woff") format("woff"),
+src: url("../webfonts//Open-Sans-Regular.woff2") format("woff2"),
+url("../webfonts/Open-Sans-Regular.ttf") format("opentype"),
+url("../webfonts/Open-Sans-Regular.svg#filename") format("svg");
+}
