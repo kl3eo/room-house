@@ -100,7 +100,7 @@ public class Room implements Closeable {
   public UserSession join(String userName, String userMode, String userCurip, String userAccId, WebSocketSession session, String roleId, int num_guests, int room_limit, int num_rooms, String currRoom) throws IOException {
 
     final String empty_anno = "";
-    final UserSession participant = new UserSession(userName, userMode, userCurip, userAccId, roleId, empty_anno, currRoom, this.name, session, this.pipeline);
+    final UserSession participant = new UserSession(userName, userMode, "a", userCurip, userAccId, roleId, empty_anno, currRoom, this.name, session, this.pipeline);
     
     if (roleId.equals("1") || roleId.equals("2") || roleId.equals("3")) {
     	log.info("ROOM {}: adding participant {}", this.name, userName);
@@ -121,6 +121,7 @@ public class Room implements Closeable {
     
     sendParticipantNamesModesCuripsAccIdsAnnos(participant, num_rooms, currRoom);
     sendViewerNamesCurips(participant, num_guests, room_limit, currRoom);
+
     return participant;
   }
   
@@ -230,11 +231,17 @@ public class Room implements Closeable {
 
     }
   }
-
+  public void reply_ping(UserSession user) throws IOException {
+  
+    if (user != null) {
+ 	user.setAct("a");
+    }
+  }
   public void check_conn(UserSession user) throws IOException {
   
     if (user != null) {
 
+	user.setAct("a");
 	final JsonObject checkConnJson = new JsonObject();	
     	checkConnJson.addProperty("id", "goodConnection");
 	checkConnJson.addProperty("room", this.name);
@@ -243,7 +250,52 @@ public class Room implements Closeable {
 		user.sendMessage(checkConnJson);
 	} catch (final IOException e) {
 		log.debug("ROOM {}: user {} could not be notified on good connection", this.name, user.getName());
+		// leave(user);
 	}
+   	final JsonObject youLeft = new JsonObject();	
+    	youLeft.addProperty("id", "youLeft");    	
+   	final JsonObject pingJson = new JsonObject();	
+    	pingJson.addProperty("id", "pingConn");
+
+    	for (final UserSession participant : participants.values()) {
+	  try {
+		if (user.getName() != participant.getName()) {
+			final String a = participant.getAct();
+			if (a.equals("a")) {
+			  participant.setAct("n");
+			  participant.sendMessage(pingJson);
+			} else {
+			  log.info("ROOM {}: participant {} was ousted as inactive", this.name, participant.getName());
+			  leave(participant);
+			  participant.sendMessage(youLeft);
+			}
+		}
+	  } catch (final IOException e) {
+		//leave(participant);
+		log.debug("ROOM {}: participant {} could not be pinged", this.name, participant.getName());
+	  }
+	}
+// do the same for viewers, separately
+
+    	for (final UserSession viewer : viewers.values()) {
+	  try {
+		if (user.getName() != viewer.getName()) {
+			final String b = viewer.getAct();
+			if (b.equals("a")) {
+			  viewer.setAct("n");
+			  viewer.sendMessage(pingJson);
+			} else {
+			  log.info("ROOM {}: viewer {} was ousted as inactive", this.name, viewer.getName());
+			  leave(viewer);
+			  viewer.sendMessage(youLeft);
+			}
+		}
+	  } catch (final IOException e) {
+		//leave(viewer);
+		log.debug("ROOM {}: viewer {} could not be pinged", this.name, viewer.getName());
+	  }
+	}
+
     }
   }
       
@@ -301,7 +353,7 @@ public class Room implements Closeable {
 	
 	String loco = user.getCurip();
 
-	String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" voted for "+p+" at "+dtf.format(now)+"<br><br>\\n/' /var/www/html/cp/public_html/log.html"};
+	String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" voted for "+p+" at "+dtf.format(now)+"<br><br>\\n/' /opt/nvme/ssd/nobody/log.html"};
 	
 	Process pr4 = Runtime.getRuntime().exec(cmdline4);		
 
@@ -406,7 +458,8 @@ public class Room implements Closeable {
 	  
 	} else {
 
-	  String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" wrote: <<<span class=mes>"+mes+"<\\/span>>> at "+dtf.format(now)+"<br><br>\\n/' /var/www/html/cp/public_html/log.html"};
+	  //String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" wrote: <<<span class=mes>"+mes+"<\\/span>>> at "+dtf.format(now)+"<br><br>\\n/' /var/www/html/cp/public_html/log.html"};
+	  String[] cmdline4 = { "sh", "-c", "sed -i '1s/^/"+str+" from "+loco+" wrote: <<<span class=mes>"+mes+"<\\/span>>> at "+dtf.format(now)+"<br><br>\\n/' /opt/nvme/ssd/nobody/log.html"};
 	
 	  Process pr4 = Runtime.getRuntime().exec(cmdline4);		
 

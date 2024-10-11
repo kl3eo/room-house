@@ -142,7 +142,7 @@ window.onload = function(){
 
    setInterval(function(){
        
-       if (registered || problems) check_connection();
+       if (registered || problems) setTimeout(function() {check_connection()}, 1000); // give more time here to avoid early exits;
 
    }, 20000 + Math.random() * 10000);
 
@@ -192,6 +192,12 @@ ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 
 	switch (parsedMessage.id) {
+	case 'youLeft':
+		rejoin();
+		break;
+	case 'pingConn':
+		sendMessage({id : 'replyPing'});
+		break;
 	case 'existingParticipants':
 		onExistingParticipants(parsedMessage);
 		break;
@@ -383,6 +389,12 @@ const register = () => {
 		ws.onmessage = function(message) {
 			var parsedMessage = JSON.parse(message.data);
 			switch (parsedMessage.id) {
+				case 'youLeft':
+					rejoin();
+					break;
+				case 'pingConn':
+					sendMessage({id : 'replyPing'});
+					break;
 				case 'existingParticipants':
 					onExistingParticipants(parsedMessage);
 					break;

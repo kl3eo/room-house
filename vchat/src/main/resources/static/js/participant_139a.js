@@ -67,6 +67,8 @@ const PARTICIPANT_CLASS = 'participant';
 const PARTICIPANT_SOLO = 'participant solo'
 const PARTICIPANT_DUO = 'participant duo'
 const PARTICIPANT_TRIO = 'participant trio'
+const PARTICIPANT_CUATRO = 'participant cuatro'
+const PARTICIPANT_CINCO = 'participant cinco'
 
 function Participant(name, myname, mode, myrole, new_flag) {
 	
@@ -135,6 +137,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.className = (pcounter == 0 && !small_device) ? PARTICIPANT_SOLO : container.className;
 	container.className = (pcounter == 1 && !small_device) ? PARTICIPANT_DUO : container.className;
 	container.className = (pcounter == 2 && !small_device) ? PARTICIPANT_TRIO : container.className;
+	container.className = (pcounter == 3 && !small_device) ? PARTICIPANT_CUATRO : container.className;
+	container.className = (pcounter == 4 && !small_device) ? PARTICIPANT_CINCO : container.className;
 	
 	//need this trick because new participant breaks the row and appears underneath it -- make it appear after 0.5 sec delay in onNewParticipant and at once in onExistingParticipants
 	container.style.display='none';
@@ -155,11 +159,19 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	pcounter++; if (name != myname || myrole != 0) real_pcnt++;
 
+	if (real_pcnt === 5) {
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CUATRO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CINCO;
+			});
+	}
+	
 	if (real_pcnt === 4) {
 			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_TRIO));
                         elements.forEach(function(item) {
 
-				item.className = PARTICIPANT_MAIN_CLASS;
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CUATRO;
 			});
 	}
 		
@@ -181,9 +193,9 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	if (pcounter > room_limit) {hack = false;}
 
-	if (pcounter > 3) switchContainerClass();
+	if (pcounter > 5) switchContainerClass();
 
-	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : (pcounter === 2 && !small_device) ? PARTICIPANT_DUO : (pcounter === 3 && !small_device) ? PARTICIPANT_TRIO : container.className;}).delay(500);
+	(function() {container.className = (pcounter === 1 && !small_device) ? PARTICIPANT_SOLO : (pcounter === 2 && !small_device) ? PARTICIPANT_DUO : (pcounter === 3 && !small_device) ? PARTICIPANT_TRIO : (pcounter === 4 && !small_device) ? PARTICIPANT_CUATRO : (pcounter === 5 && !small_device) ? PARTICIPANT_CINCO : container.className;}).delay(500);
 	
 	if (document.id('pcounter')) { if (!real_pcnt) {(function(){document.id('pcounter').innerHTML = real_pcnt;}).delay(1000);} else {document.id('pcounter').innerHTML = real_pcnt;} }
 	
@@ -520,7 +532,19 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
 			});
-						
+
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CUATRO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+
+			elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CINCO));
+                        elements.forEach(function(item) {
+
+				item.className = small_device ? PARTICIPANT_MAIN_CLASS : PARTICIPANT_CLASS;
+			});
+												
 			container.className = PARTICIPANT_MAIN_CLASS;
 		} else {
 			container.className = PARTICIPANT_CLASS;
@@ -733,7 +757,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	}
 
 	function isPresentMainParticipant() {
-		return ( (document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0 || (document.getElementsByClassName(PARTICIPANT_SOLO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_DUO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_TRIO)).length != 0 );
+		return ( (document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0 || (document.getElementsByClassName(PARTICIPANT_SOLO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_DUO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_TRIO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_CUATRO)).length != 0 || (document.getElementsByClassName(PARTICIPANT_CINCO)).length != 0);
 	}
 
 
@@ -782,11 +806,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		//if (pcounter < room_limit || (pcounter == room_limit && !i_am_viewer)) {hack = true;}
 		if (pcounter <= room_limit && !i_am_viewer) {hack = true;}
 
-		if (pcounter < 4) {
+		if (pcounter < 6) {
                         var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_CLASS));
                         elements.forEach(function(item) {
-
-                                item.className = small_device ? PARTICIPANT_MAIN_CLASS : pcounter === 1 ? PARTICIPANT_SOLO : pcounter === 2 ? PARTICIPANT_DUO : pcounter === 3 ? PARTICIPANT_TRIO : item.className;
+                                item.className = small_device ? PARTICIPANT_MAIN_CLASS : pcounter === 1 ? PARTICIPANT_SOLO : pcounter === 2 ? PARTICIPANT_DUO : pcounter === 3 ? PARTICIPANT_TRIO : pcounter === 4 ? PARTICIPANT_CUATRO : pcounter === 5 ? PARTICIPANT_CINCO : item.className;
                         });
 
 		}

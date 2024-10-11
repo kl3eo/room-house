@@ -333,6 +333,9 @@ public class CallHandler extends TextWebSocketHandler {
       case "checkConnection":
         	if (user != null) checkConn(user);
         break;
+      case "replyPing":
+        	if (user != null) replyPing(user);
+        break;
       case "checkRoom":
 		if (user == null) {
         		final String jRoom = jsonMessage.get("room").getAsString();
@@ -600,6 +603,11 @@ public class CallHandler extends TextWebSocketHandler {
     final Room room = roomManager.getRoom(user.getRoomName());
     //log.info("SOMEONE {}: checking connection", user.getName());
     room.check_conn(user);
+  }
+  private void replyPing(UserSession user) throws IOException {
+    final Room room = roomManager.getRoom(user.getRoomName());
+    //log.info("SOMEONE {}: replying ping", user.getName());
+    room.reply_ping(user);
   }
 /*  
   private boolean matches(String ip, String subnet) {

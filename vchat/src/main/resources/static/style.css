@@ -337,6 +337,22 @@ input[type=button]:active, input[type=submit]:active {
 	margin-right:1px;
 }
 
+.participant.cuatro {
+	min-width: 210px;
+	width: 24%;
+	margin: 0 auto;
+	margin-left:1px;
+	margin-right:1px;
+}
+
+.participant.cinco {
+	min-width: 170px;
+	width: 19.2%;
+	margin: 0 auto;
+	margin-left:1px;
+	margin-right:1px;
+}
+
 .participant.main_i {
 	width: 96%;
 	min-width: 320px;

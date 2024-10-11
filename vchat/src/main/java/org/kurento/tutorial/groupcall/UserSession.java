@@ -67,6 +67,7 @@ public class UserSession implements Closeable {
 
   private final String name;
   private String mode;
+  private String act;
   private final String curip;
   private final String acc_id;
   private String role_id;
@@ -80,11 +81,12 @@ public class UserSession implements Closeable {
   private final WebRtcEndpoint outgoingMedia;
   private final ConcurrentMap<String, WebRtcEndpoint> incomingMedia = new ConcurrentHashMap<>();
 
-  public UserSession(final String name, String mode, String curip, String acc_id, String roleId, String anno, String curr_room, String roomName, final WebSocketSession session, MediaPipeline pipeline) {
+  public UserSession(final String name, String mode, String act, String curip, String acc_id, String roleId, String anno, String curr_room, String roomName, final WebSocketSession session, MediaPipeline pipeline) {
 
     this.pipeline = pipeline;
     this.name = name;
     this.mode = mode;
+    this.act = act;
     this.curip = curip;
     this.acc_id = acc_id;
     this.role_id = roleId;
@@ -129,7 +131,15 @@ public class UserSession implements Closeable {
   public void setMode(String r) {
     mode = r;
   }
-  
+
+  public String getAct() {
+    return act;
+  }
+
+  public void setAct(String r) {
+    act = r;
+  }
+    
   public String getCurip() {
     return curip;
   }
