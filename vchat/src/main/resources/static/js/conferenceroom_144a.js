@@ -134,11 +134,11 @@ window.onload = function(){
 
    }, 10000 + Math.random() * 10000);
 
-   setInterval(function(){
+   /*setInterval(function(){
 
        if (registered && !now_playing) {if (problems) rejoin();}
 
-   }, waiting_period + Math.random() * 10000);
+   }, waiting_period + Math.random() * 10000);*/
 
    setInterval(function(){
        
@@ -196,6 +196,7 @@ ws.onmessage = function(message) {
 		rejoin();
 		break;
 	case 'pingConn':
+		problems = 0;
 		sendMessage({id : 'replyPing'});
 		break;
 	case 'existingParticipants':
@@ -393,6 +394,7 @@ const register = () => {
 					rejoin();
 					break;
 				case 'pingConn':
+					problems = 0;
 					sendMessage({id : 'replyPing'});
 					break;
 				case 'existingParticipants':
