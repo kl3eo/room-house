@@ -619,6 +619,7 @@ const register_body = (ro) => {
 		if (small_device) {document.id('helpdoc').style.paddingTop = "0.4vh"; document.id('helpdoc').style.paddingRight = "2vw";}
 		
 		if (!small_device && window != window.top) {document.id('helpdoc').style.marginRight = "2vw";} document.id('helpdoc').fade(1);}).delay(500);
+		if (small_device && window != window.top) {document.id('message_wrap').style.marginLeft = "-10px";document.id('message_wrap').style.width = "330px";document.id('antichatter').style.marginLeft = "290px";}
 		
 		document.body.style.overflowY = 'auto';
 				

@@ -304,16 +304,16 @@ function toggleAllMuted() {
 window.addEventListener("message", function(event) {
 
 //console.log('eo:', event.origin, 'hn:', window.location.hostname, 'ed:', event.data);
-let da = event.data; //console.log ('da0 is' ,da[0]); 
+let da = event.data; // console.log ('da0 is', da[0]); 
 
   //if (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname+':'+port+'' && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url) {
-if (da[0] == "esms" || (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url)) {
+if (typeof(da[0]) === 'undefined' || da[0] == "esms" || (event.origin != 'https://'+window.location.hostname+':1443' && event.origin != 'https://'+window.location.hostname && event.origin != sp_container_url && event.origin != sp_setter_url && event.origin != sm_url && event.origin != "https://room-house.com" && event.origin != chess_url && event.origin != poker_url && event.origin != air_url && event.origin != swap_url)) {
     return;
   }
  
   //if ((event.origin == 'https://'+window.location.hostname+':'+port+'') || (event.origin == 'https://'+window.location.hostname+':1443')) {
   if ((event.origin == 'https://'+window.location.hostname) || (event.origin == 'https://'+window.location.hostname+':1443')) {
-//console.log('parsing1', da);
+// console.log('parsing1', da);
 var obj = JSON.parse(da);
 //replace URL on change of room name in iframe 
 if (obj.replacer && obj.replacer.length) {
@@ -619,7 +619,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 	}
 	
 } else {
-//console.log('parsing8', event.data);
+// console.log('parsing8', event.data);
   var obj = JSON.parse(event.data);
 
   if (obj.action == 'saveCookie') {
