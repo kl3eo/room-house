@@ -273,17 +273,17 @@ function rejoin(){
 	leaveRoom(); register();
 }
 
-function check_locked(par) {
-	if ((vcounter == 0 || vcounter == '0') && (pcounter == 0 || pcounter == '0') && !cine) { console.log('locked!'); (function() {if (par) clearAllCookies(); location.reload();}).delay(1000) } 
+function check_locked(par) { // let guru/user keep connected on server resets, guest leave
+	if ((vcounter == 0 || vcounter == '0') && (pcounter == 0 || pcounter == '0') && !cine) { console.log('locked!'); if (role == 0) (function() {if (par) clearAllCookies(); location.reload();}).delay(100)}
 }
 
-function check_connection() {
+const check_connection = () => {
 
-	check_locked(1);
+	// check_locked(1); // doing check server-side
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { problems = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -608,8 +608,7 @@ const register_body = (ro) => {
 
 		});
 
- 		if (problems) {//use 'onclick' to reload client on connection breakup IMPORTANT
-			// check_locked(1);
+ 		if (problems) {
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
 			(function() { document.id('phones').fade(1)}).delay(500);
 		}
@@ -632,7 +631,7 @@ const register_body = (ro) => {
 		// IMPORTANT: get SDP_ALREADY_NEGOTIATED for camera auto re-activation, so leave it only for players?!
 
 		if (role == 1 && !already_clicked && problems) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) {console.log('clicking 2!');cli2();} if (ca == 1 && av) {console.log('clicking 3!');cli3();} if (ca == 22) { playSomeMusic=true; getFile(); cli6(); } console.log('auto re-connect, ca is', ca, 'av is', av);}).delay(200);}
-		setTimeout(function() {check_locked(0)}, 2000); // give more time here to avoid early exits
+		setTimeout(function() {check_locked(0)}, 3000); // give more time here to avoid slow server push to exit
 }
 
 function checkLang() {

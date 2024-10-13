@@ -238,7 +238,22 @@ public class Room implements Closeable {
     }
   }
   public void check_conn(UserSession user) throws IOException {
-  
+
+    if (user != null) { 
+	final String pgurl = "jdbc:postgresql://localhost:5432/cp";
+	final String pguser = "postgres";
+	final String pgpass = "x";
+	// now check if room is closed
+	String sta = "0";
+	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+	Statement st = con.createStatement();
+	ResultSet rs = st.executeQuery("select status from rooms where name='" + this.name + "' and (current_timestamp < valid_till or valid_till is null)")) {
+	if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";} else {/*log.info("err1");*/}} else {log.info("err2");}
+	} catch (SQLException ex) {log.debug("PG join err5 from {}: ", user.getName());}		
+	String _role = user.getRole();
+	// log.info("Here sta is {} and role is {} and room is {}!", sta, _role, this.name);
+	if (sta.equals("1") && _role.equals("0")) {log.info("User {} locked off: ", user.getName()); return;} else {}
+    } 
     if (user != null) {
 
 	user.setAct("a");
