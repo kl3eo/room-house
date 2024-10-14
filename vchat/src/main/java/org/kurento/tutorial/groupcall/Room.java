@@ -244,17 +244,19 @@ public class Room implements Closeable {
 	final String pguser = "postgres";
 	final String pgpass = "x";
 	// now check if room is closed
+	
 	String sta = "0";
+	
 	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
 	Statement st = con.createStatement();
 	ResultSet rs = st.executeQuery("select status from rooms where name='" + this.name + "' and (current_timestamp < valid_till or valid_till is null)")) {
 	if (rs.next()) {if (rs.getString(1).equals("1")) {sta = "1";} else {/*log.info("err1");*/}} else {log.info("err2");}
 	} catch (SQLException ex) {log.debug("PG join err5 from {}: ", user.getName());}		
+	
 	String _role = user.getRole();
+	
 	// log.info("Here sta is {} and role is {} and room is {}!", sta, _role, this.name);
-	if (sta.equals("1") && _role.equals("0")) {log.info("User {} locked off: ", user.getName()); return;} else {}
-    } 
-    if (user != null) {
+	if (sta.equals("1") && _role.equals("0")) {log.info("User {} locked off: ", user.getName()); leave(user); return;} else {}
 
 	user.setAct("a");
 	final JsonObject checkConnJson = new JsonObject();	
@@ -275,6 +277,8 @@ public class Room implements Closeable {
     	for (final UserSession participant : participants.values()) {
 	  try {
 		if (user.getName() != participant.getName()) {
+			String _rolee = participant.getRole();
+			if (sta.equals("1") && _rolee.equals("0")) {log.info("Participant {} locked off: ", participant.getName()); leave(participant); break;} else {}
 			final String a = participant.getAct();
 			if (a.equals("a")) {
 			  participant.setAct("n");
@@ -295,6 +299,7 @@ public class Room implements Closeable {
     	for (final UserSession viewer : viewers.values()) {
 	  try {
 		if (user.getName() != viewer.getName()) {
+			if (sta.equals("1")) {log.info("Viewer {} locked off: ", viewer.getName()); leave(viewer); break;} else {}
 			final String b = viewer.getAct();
 			if (b.equals("a")) {
 			  viewer.setAct("n");
