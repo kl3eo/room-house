@@ -207,8 +207,10 @@ public class CallHandler extends TextWebSocketHandler {
                 if (role.equals("0") && cou < room_limit && sta.equals("0") && user != null ) { role = "1"; user.setRole("3"); }
 		if (room_limit == 2 && cou >= room_limit) { noSuchRoom = "1"; }
 		log.info("JOINER {}: SESSION {}, ROLE TOKEN {}, ROLE RECEIVED {}, ROOM STATUS {}, ROOM LIMIT {}", joinerName, session, role, joinerRole, sta, room_limit);
-	
-		if ( (sta.equals("1") && role.equals("0") && temporary.equals("0") && _role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0") && _role.equals("0")) || noSuchRoom.equals("1") ) {
+		
+		// long time ago it was cool, but now I want to be able on connect breaks to keep guests in room if they are with videos
+		//if ( (sta.equals("1") && role.equals("0") && temporary.equals("0") && _role.equals("0")) || (!joinerRole.equals(role) && role.equals("0") && temporary.equals("0") && _role.equals("0")) || noSuchRoom.equals("1") ) {
+		if ( (sta.equals("1") && role.equals("0") && temporary.equals("0") && _role.equals("0")) || noSuchRoom.equals("1") ) {
 			log.info("ALARM1: joiner {} ", joinerName);
 		} else {
         		joinRoom(jsonMessage, session, room_limit, num_rooms);
