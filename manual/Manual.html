@@ -630,13 +630,14 @@ It will eventually be, if not already, - first you'd have to do the correct "Por
 <section>
 <h3 id="2.4">4 - Port Forwarding</h3>
 <p>
-	To access Room-House from internet, TCP ports 443 and 8443 must be open. This is true when your host has a direct link to internet. However,
-	in most cases it would sit behind the firewall of the router. This is why port forwarding is required. First, your router is proxied by the Room-House.
-	From the proxy, web requests will be forwarded to the static IP of your router. And from the router, they will have to be forwarded to TCP ports 443 and 8443 on "192.168.0.100" which is what
-	you've chosen on the "blue screen" during startup. So you will have to configure the "Port Forwarding" on your router. If the ports 443 and 8443 are not busy, just assign them to
-	"192.168.0.100". But if they are busy, then assign ANY two TCP router ports, for example, 8943 and 8953, to be forwarded to TCP ports 443 and 8443 of the "192.168.0.100".
-	Then <a href="https://club.room-house.com" target=new>contact us</a> and tell us which ports of the router have been assigned (8943 and 8953, or other) 
-	so that we configure it on our proxy to do the correct forwarding of web requests to your router's ports.
+	To access Room-House from internet, TCP port 443 must be open. This is true when your host has a direct link to internet. However,
+	in most cases it is behind the firewall of the router. This is why the port forwarding is required. First, your static IP is proxied by the Room-House.
+	From the proxy, web requests are forwarded to your router. And from the router, they are forwarded to TCP port 443 on "192.168.0.100" which is what
+	you've assigned to the VM and typed in the "blue screen" form during the startup. Now you have to configure the "Port Forwarding" on your router. 
+	If the router's port 443 is not busy yet, assign this port to be forwarded to "192.168.0.100" port 443. But if it is busy, then assign ANY TCP free router port, for example, 8943, 
+	to be forwarded to TCP port 443 of "192.168.0.100". 
+	And in the end <a href="https://club.room-house.com" target=new>contact us</a> and tell us which port of the router has been assigned (8943? 443? or other) 
+	so that our Room-House proxy does the correct forwarding of all web requests to your router.
 </p>
 <p>
 	Besides these two TCP ports, also you have to forward the range 1025-65535 of the UDP ports from the router to "192.168.0.100". 
