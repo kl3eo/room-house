@@ -640,12 +640,10 @@ It will eventually be, if not already, - first you'd have to do the correct "Por
 	so that our Room-House proxy does the correct forwarding of all web requests to your router.
 </p>
 <p>
-	Besides these two TCP ports, also you have to forward the range 1025-65535 of the UDP ports from the router to "192.168.0.100". 
-	NB: if working without domain names, e.g. no DNS available, forward TCP post 18443 and then accept browser's warning to open https://your_external_ip:18443
+	Beside this one TCP port, also you have to forward the range 1025-65535 UDP ports from the router to "192.168.0.100". 
+	NB: if working without domain names, forward TCP post 18443 and then accept browser's warning to open https://your_external_ip:18443
 </p>
-<p>
-	NB: Sometimes the Towers may need a help from Room-House admins, in this case, they should be able to forward TCP port 22 to the virtual machine of the Tower.
-</p>
+
 <aside class="warnbox">
 	If you've found port forwarding difficult, as you probably must have, discuss these matters with your system administrator.
 </aside>
