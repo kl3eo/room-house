@@ -11,7 +11,7 @@ fi
 
 vboxmanage createvm --name RHU --ostype RedHat_64 --register --basefolder `pwd`
 mv loop_rh_uti.vdi RHU/ && cd RHU
-vboxmanage modifyvm RHU --memory 5120 --cpus 2 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 enp0s31f6
+vboxmanage modifyvm RHU --memory 6144 --cpus 4 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 enp0s31f6
 vboxmanage createmedium --filename 3G.vdi --size 3072
 vboxmanage storagectl RHU --name SATA --add sata
 vboxmanage storageattach RHU --storagectl SATA --medium loop_rh_uti.vdi --port 0 --type hdd
