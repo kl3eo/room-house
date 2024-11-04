@@ -50,6 +50,7 @@
 <script>var w = window.location.hostname.split('.'); var hack = false; var room_limit = 0; var roomee = ''; var normal_mode = true; var i_am_muted = false; var role = 0;
 var ho = document.location.href.split('#'); var homee = ho[1] && ho[1].length ? ho[1].toUpperCase() : w[0]; if (ho[1] && ho[1].length && ho[1] !== homee) document.location.href = ho[0] + '#' + homee;
 const cine = homee === 'GREENHALL' || homee === 'REDHALL' || homee === 'BLUEHALL' || w[0] == 'cine' ||  w[0] == 'cinema' ? true : false;
+const true_cine =  w[0] == 'cine' ||  w[0] == 'cinema' ? true : false;
 
 var currRoom = 'A';
 var num_rooms = 1;
@@ -1357,7 +1358,20 @@ select:focus, input:focus, button:focus{
 </div><!--mww-->
 
 <div id="spinner" style="position:absolute;left:20%;top:25%;width:60%;height:50%;background:url('/img/spinner.gif') center center no-repeat;display:none;z-index:2310;"></div>
-
+				
+<div id="room_header_container" style="position:absolute;left:0;top:22%;width:80%;height:50%;min-width:480px;">
+				<div style="float:right;margin-bottom:20px;" id="room-header_box">
+				  <h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2>
+				</div>
+				<div style="float:right;">
+				  <h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2>
+				</div>
+				<div style="float:right;margin-right:10px;margin-top: 8vw;margin-bottom: 0.5vw;z-index:31004;position:relative;">
+				  <input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();">
+				</div>
+				<div style="clear:right;"></div>
+</div> <!-- room_header_container -->
+			    
 <div id="preroom" style="position:relative;z-index:20;width:100%;text-align:center;margin-top:4vh;opacity:0;"><!-- div style="color:#fff;padding-top:10px;">&#9733;&#9733;&#9733;</div -->
 <div style="width:100%;text-align:center;white-space:nowrap;margin:0 auto;font-size:30px;padding:5px;margin-bottom:17px;font-weight:bold;cursor:pointer;color:#fff;" onclick="location.href='https://room-house.com';" onmouseover="this.style.color='#9cf';" onmouseout="this.style.color='#fff';"> &nbsp; </div>
 <div id="room_name_id" style="width:60%;margin:0 auto;font-size:48px;font-weight:bold;color:#fff;white-space:nowrap;opacity:0;"></div>
@@ -1415,13 +1429,6 @@ RANDOM=7777
 			</div><!-- join -->
 
 			<div id="room" style="display:none; position:relative; width:100%; min-width:40vw; margin:0 auto; border: 0px solid #9cf;">
-				
-				<div style="float:right;margin-bottom:20px;" id="room-header_box"><h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2></div>
-				<div style="float:right;"><h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2></div>
-				<div style="float:right;margin-right:10px;margin-top: 8vw;margin-bottom: 0.5vw;"><input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();"></div>
-				<div style="clear:right;"></div>
-
-				<!-- input style="margin:0 auto 0 -48px;width:90px;display:none;" type="button" id="button-leave" onmouseup="leaveRoom();location.reload();" value="Leave room" -->
 			</div><!-- room -->
 		</div><!-- wrapper -->
 	</div><!-- main_container -->
@@ -1577,8 +1584,8 @@ if (!curIP.length && false) {
 </div><!-- house -->
 
 </div><!-- city -->
-<div id="participants" style="position:relative;min-width:350px;text-align:center;z-index:1010">
-				<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
+<div id="participants" style="position:relative;min-width:350px;text-align:center;z-index:1010; border: 0px solid #900">
+				<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;z-index:33005;position:relative;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
 </div>
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>

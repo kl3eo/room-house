@@ -45,10 +45,10 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 			  let h = small_device ? '64vh' : 420;
 			  let fs = small_device ? 24 : 18;
 		//no jquery	 
-			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, zIndex: 1003, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
+			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, zIndex: 31005, position: 'relative', title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
 			  
 			  let topo = (window.innerHeight-540)/2 - 30; topo = topo + 'px'; if (!small_device) document.id('m6').style.top=topo;	//trim it, sir
-			  document.id('m6').onclick=function() {document.id('m6').style.display='none';document.id('m6').dispose();};
+			  // document.id('m6').onclick=function() {document.id('m6').style.display='none';document.id('m6').dispose();};
 			  	
 		//if we want to use both mBox and jQuery
 			  //mod6 = new mBox.Modal({content: sp_setter,setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: 18, color: '#222', height: h}}, width:280, id:'m6', height: h, title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click(); let lefto = (window.innerWidth-340)/2; lefto = lefto + 'px'; let topo = (window.innerHeight-540)/2; topo = topo + 'px'; if (small_device) topo = '12vh';document.id('m6').style.cursor='pointer'; document.id('m6').style.display='block'; document.id('m6').style.left=lefto; document.id('m6').style.top=topo; (function(){document.id('m6').fade(1);}).delay(200); document.id('m6').onclick=function(){document.id('m6').style.display='none';};
@@ -718,7 +718,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 
 	
 	function rmPtcp() {
-	  if (!normal_mode) {let foo = document.location.href.split('#'); document.location.href = foo[0];} else {
+	  if (!normal_mode) {let foo = document.location.href.split('#'); if (true_cine) {document.location.href = foo[0];} else {document.location.reload();}} else {
 	    if (name != myname) {
 	  	var yon = window.confirm('Drop '+rname+'?!');
 		if (yon) {
