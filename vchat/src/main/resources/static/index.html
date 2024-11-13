@@ -116,7 +116,7 @@ const city_or_main = 1;
 
 .phones {
 	visibility:hidden;
-	width:100%;
+	width:100vw;
 	height:100%;
 	text-align:center;
 	margin:0 auto;
@@ -126,7 +126,7 @@ const city_or_main = 1;
 	position:fixed;
 	top:0;
 	left:0;
-	z-index:2200;
+	z-index:2222;
 	background:#112;
 }
 
@@ -1366,7 +1366,7 @@ select:focus, input:focus, button:focus{
 				<div style="float:right;">
 				  <h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2>
 				</div>
-				<div style="float:right;margin-right:10px;margin-top: 8vw;margin-bottom: 0.5vw;z-index:31004;position:relative;">
+				<div style="float:right;margin-right:10px;margin-top: 8vw;margin-bottom: 0.5vw;z-index:2200;position:relative;">
 				  <input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();">
 				</div>
 				<div style="clear:right;"></div>
@@ -1523,7 +1523,7 @@ if (!curIP.length && false) {
 		
 	<div id="tex" onclick="if (document.id('poker_niche')) {document.id('poker_niche').src=poker_url; document.id('poker_niche').style.display='block'; document.id('poker_niche').style.zIndex='10100'; document.id('poker_niche').fade(1);}"></div>
 	<div id="chess" onclick="if (document.id('chess_niche')) {document.id('chess_niche').src=chess_url; document.id('chess_niche').style.display='block'; document.id('chess_niche').style.zIndex='10100'; document.id('chess_niche').fade(1);}"></div>
-	<div id="streamer" onclick="if (document.id('stream_adder')) document.id('stream_adder').click()"></div>
+	<div id="streamer" onclick="if (document.id('stream_adder')) document.id('stream_adder').click();document.id('container').style.display='none';"></div>
 
 	<div id="want" onclick="if (document.id('sm_niche')) {document.id('sm_niche').src=sm_url; document.id('sm_niche').style.display='block'; document.id('sm_niche').style.zIndex='10100'; document.id('sm_niche').fade(1);}">&#127920;</div>
 	<div style="clear:both;"></div>

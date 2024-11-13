@@ -192,6 +192,13 @@ function flashText_and_rejoin(t) {
 
 function resizer(pctr) {
 
+	  /*if (pctr == 1) {
+		document.id('participants').style.width = '50vw';		
+	  } else {
+		document.id('participants').style.width = '100vw';
+	  }
+	  */
+	  
 	// this is fine except when desktop minimizes windows
 	/*if (window.innerWidth > 1280) {
 	  if (pctr == 1) {
@@ -399,6 +406,7 @@ const ed = () => { //code to run on receive message from join_ frame
 	 
 	 document.id('house').style.textAlign = 'center';
 	 //document.id('participants').style.marginLeft = '-1vw';
+
  } else {
  	document.id('main_container').style.marginTop = '-60px';
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';

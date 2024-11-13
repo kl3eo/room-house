@@ -558,20 +558,23 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (!el.fullscreenElement) {
 			//fullscreen = true; //uncomment for 'strict' chasing
 			el.requestFullscreen();
+			document.id('room_selector').fade(0);
 			
 	
 		} else {
 			if (el.exitFullscreen) {		
 				//fullscreen = false; //uncomment for 'strict' chasing 
 				el.exitFullscreen();
+				document.id('room_selector').fade(1);
 				
 			}
 		}
 
 	}
 
-	function toggleBigScreen_old(el) {
+	function toggleBigScreen(el) {
 
+			
 			//if (!isAndroid) switchContainerClass();
 			if(!isAndroid && !ios_fullscreen) {
 				document.id('house').style.visibility='hidden';
@@ -580,19 +583,21 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				container.style.top='0px';
 				container.style.left='0px';
 				container.style.width= window.innerHeight > window.innerWidth ? '97vw' : '98vw';
-				document.id('second_logger').style.visibility='hidden';
+				//document.id('second_logger').style.visibility='hidden';
 				//screen.orientation.lock('landscape');
 				// if (window.innerHeight > window.innerWidth) flashText('swipe screen');
 				ios_fullscreen = true;
+				document.id('room_selector').fade(0);
 			}
 			else if(!isAndroid && ios_fullscreen) {
 				container.style.position='relative';
 				container.style.width='96%';
 				document.id('house').style.visibility='visible';
 				document.id('controls').style.display='block';
-				document.id('second_logger').style.visibility='visible';
+				//document.id('second_logger').style.visibility='visible';
 				//screen.orientation.unlock();
 				ios_fullscreen = false;
+				document.id('room_selector').fade(1);
 			}
 			else if (isAndroid) {
 				if (container.className == PARTICIPANT_MAIN_CLASS) toggleFullScreen(el);
@@ -600,7 +605,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			}
 	}
 	
-	function toggleBigScreen(el) {
+	function toggleBigScreen_new(el) {
 
 			if(!ios_fullscreen) {
 				document.id('house').style.visibility='hidden';
@@ -609,7 +614,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				container.style.top='0px';
 				container.style.left='0px';
 				container.style.width= window.innerHeight > window.innerWidth ? '97vw' : '98vw';
-				document.id('second_logger').style.visibility='hidden';
+				//document.id('second_logger').style.visibility='hidden';
 				//screen.orientation.lock('landscape');
 				// if (window.innerHeight > window.innerWidth) flashText('swipe screen');
 				ios_fullscreen = true;
@@ -619,7 +624,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				container.style.width='96%';
 				document.id('house').style.visibility='visible';
 				document.id('controls').style.display='block';
-				document.id('second_logger').style.visibility='visible';
+				//document.id('second_logger').style.visibility='visible';
 				//screen.orientation.unlock();
 				ios_fullscreen = false;
 			}

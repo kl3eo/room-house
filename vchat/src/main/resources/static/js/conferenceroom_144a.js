@@ -91,7 +91,7 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const fps = 15;
 const wi = 640;
 const fps_hq = 24;
-const wi_hq = 4096;
+const wi_hq = 1280;
 
 const sp_setter_url = "https://coins2.room-house.com";
 const sp_container_url = "https://coins1.room-house.com";
@@ -137,19 +137,14 @@ window.onload = function(){
    setInterval(function(){
        if ((registered && !now_playing)|| problems) {if (problems) rejoin();}
 
-   }, 10000 + Math.random() * 10000);
+   }, 5000 + Math.random() * 10000);
 
-   /*setInterval(function(){
-
-       if (registered && !now_playing) {if (problems) rejoin();}
-
-   }, waiting_period + Math.random() * 10000);*/
 
    setInterval(function(){
        
        if (registered || problems) setTimeout(function() {check_connection()}, 1000); // give more time here to avoid early exits;
 
-   }, 20000 + Math.random() * 10000);
+   }, 30000 + Math.random() * 10000);
 
    setInterval(function(){
        
@@ -288,7 +283,7 @@ const check_connection = () => {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { if (suspected) problems = 1; if (!problems) suspected = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { if (suspected) problems = 1; if (!problems) suspected = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);}} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -612,7 +607,9 @@ const register_body = (ro) => {
 		   sendMessage(message);		
 
 		});
-
+/*
+console.log('here token', tok,'val',document.id('asender').value,'name',document.id('name').value)
+*/
  		if (problems) {
 			document.id('phones').style.paddingTop = small_device ? '39vh' : '45vh'; document.id('phones').style.lineHeight = '36px'; document.id('phones').innerHTML = warning;
 			(function() { document.id('phones').fade(1)}).delay(500);
@@ -635,8 +632,32 @@ const register_body = (ro) => {
 		
 		// IMPORTANT: get SDP_ALREADY_NEGOTIATED for camera auto re-activation, so leave it only for players?!
 
-		if (role == 1 && !already_clicked && problems) {already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); (function() { if (ca == 0 && av) {console.log('clicking 2!');cli2();} if (ca == 1 && av) {console.log('clicking 3!');cli3();} if (ca == 22) { playSomeMusic=true; getFile(); cli6(); } console.log('auto re-connect, ca is', ca, 'av is', av);}).delay(200);}
-		setTimeout(function() {check_locked(0)}, 3000); // give more time here to avoid slow server push to exit
+		if (role == 1 && !already_clicked && problems) {
+			already_clicked = true; let ca = getCookie('fmode'); let av = getCookie('av'); 
+			(function() {
+				if (ca == 0 && av) {console.log('clicking 2!');cli2();} 
+				if (ca == 1 && av) {console.log('clicking 3!');cli3();} 
+				if (ca == 22) { playSomeMusic=true; getFile(); cli6(); 
+					if (document.id('asender').value.length) {
+						let  a = document.id('asender').value.replace(/'/g, ''); let tok = getCookie('authtoken');let counter = 0;
+						const inter = setInterval(function() {
+							counter++; sendMessage({id : 'setAnno', anno:a, addr: document.id('name').value, token: tok});
+							/*console.log('here token', tok,'val',document.id('asender').value,'name',document.id('name').value, 'counter', counter);*/ 
+							if (document.id('anno_' + document.id('name').value) || counter > 5) {
+								clearInterval(inter);
+								let myvideo = 'video-' + document.id('name').value;
+								if (document.id(myvideo)) {
+									document.id(myvideo).pause();__playing = false;
+								}
+							}
+						}, 3000);
+					}
+				} 
+				console.log('auto re-connect, ca is', ca, 'av is', av);
+			}).delay(200);
+		}
+		
+		setTimeout(function() {check_locked(0)}, 2000); // give more time here to avoid slow server push to exit
 }
 
 function checkLang() {
@@ -1072,9 +1093,9 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		var cstrx = {
 			audio: true,
 			video:{
-				maxWidth : wi_hq,
-				maxFrameRate : fps_hq,
-				minFrameRate : fps_hq
+				maxWidth : wi,
+				maxFrameRate : fps,
+				minFrameRate : fps
 			}
 		};
 
@@ -1539,9 +1560,9 @@ function copy(that){
 const grun = () => {
 	recordedVideo = document.querySelector('video');
 	if (recordedVideo.mozCaptureStream) {
-		savedSrc = recordedVideo.mozCaptureStream(fps_hq);
+		savedSrc = recordedVideo.mozCaptureStream(fps);
 	} else if (recordedVideo.captureStream) {
-		savedSrc = recordedVideo.captureStream(fps_hq);
+		savedSrc = recordedVideo.captureStream(fps);
 	} else {
 		savedSrc = null;
 	}
@@ -1970,7 +1991,7 @@ const onViewerLeft = (n) => {
 		vcounter = cur > 0 ? cur : 0;
 		
 		let myname = document.id('name').value; let myvideo = 'video-' + myname;	
-		if (now_playing && vcounter === 0) (function() {if (document.id(myvideo)) document.id(myvideo).pause();__playing = false;}).delay(100);
+		if (now_playing && vcounter === 0 && !shareSomeStream) (function() {if (document.id(myvideo)) document.id(myvideo).pause();__playing = false;}).delay(100);
 
 		if (document.id('vcounter')) { if (!vcounter) {(function(){document.id('vcounter').innerHTML = vcounter;}).delay(1000);} else {document.id('vcounter').innerHTML = vcounter;} }
 		cur = cur > 0 ? cur : '...';
