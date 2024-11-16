@@ -1367,7 +1367,7 @@ select:focus, input:focus, button:focus{
 				  <h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2>
 				</div>
 				<div style="float:right;margin-right:10px;margin-top: 8vw;margin-bottom: 0.5vw;z-index:2200;position:relative;">
-				  <input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();">
+				  <input type="file" id="room-header-file" style="display:none;width:120px;cursor:pointer;" onchange="getFile();getList_names();" multiple>
 				</div>
 				<div style="clear:right;"></div>
 </div> <!-- room_header_container -->

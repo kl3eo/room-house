@@ -252,6 +252,9 @@ ws.onmessage = function(message) {
 	case 'setAnno':
 		setAnno(parsedMessage);
 		break;
+	case 'setMoviesList':
+		setMoviesList(parsedMessage);
+		break;
 	case 'viewerLeft':
 		just_left = parsedMessage.name;
 		onViewerLeft(just_left);
@@ -270,6 +273,7 @@ ws.onmessage = function(message) {
 }
 
 function rejoin(){
+	already_being_played = false; // ?! to prevent local sound from played video
 	leaveRoom(); register();
 }
 
@@ -449,6 +453,9 @@ const register = () => {
 					break;
 				case 'setAnno':
 					setAnno(parsedMessage);
+					break;
+				case 'setMoviesList':
+					setMoviesList(parsedMessage);
 					break;
 				case 'viewerLeft':
 					just_left = parsedMessage.name;
@@ -638,7 +645,7 @@ console.log('here token', tok,'val',document.id('asender').value,'name',document
 				if (ca == 0 && av) {console.log('clicking 2!');cli2();} 
 				if (ca == 1 && av) {console.log('clicking 3!');cli3();} 
 				if (ca == 22) { playSomeMusic=true; getFile(); cli6(); 
-					if (document.id('asender').value.length) {
+					if (document.id('asender').value.length) { //hack ash : this value is set only manually?
 						let  a = document.id('asender').value.replace(/'/g, ''); let tok = getCookie('authtoken');let counter = 0;
 						const inter = setInterval(function() {
 							counter++; sendMessage({id : 'setAnno', anno:a, addr: document.id('name').value, token: tok});
@@ -1320,6 +1327,10 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 					document.id('room-header-file').style.display='none';
                   	 }
 		  	 (function(){document.id('phones').fade(0);}).delay(1000);
+			 
+			 // hack ash - to set caption with files names
+			 getList_names();
+			
 			}); //rtcPeer
 		    }).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
 	  	  } //already_being_played
@@ -1773,6 +1784,51 @@ function setAnno(request) {
 		document.id('anno_' + request.participant).style.display='block';			
 		document.id('anno_' + request.participant).fade(1);
 		document.id('room-header').fade(0);
+	}
+	
+}
+
+function handleFileSelectChange(v) {
+
+	let fis = document.id('room-header-file').files;
+	for (var i = 0; i < fis.length; i++) {
+		//console.log("here checking v is", v, "name is",fis[i].name);
+		if (fis[i].name === v) {
+			if (selectedFile) URL.revokeObjectURL(selectedFile);
+			selectedFile = URL.createObjectURL(fis[i]);
+			curSelInd = i;
+			rejoin();
+			break;
+		}
+	}
+}
+
+function setMoviesList(request) {
+//console.log("setting movies list:", request.participant, "ml:",request.ml, "curSelInd", curSelInd);
+	if (document.id('anno_' + request.participant)) {
+
+		document.id('anno_' + request.participant).innerHTML = "<select id='selector_" + request.participant + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)'></select>";
+		let arra = [];
+		let buf = request.ml.substring(2,request.ml.length-2);
+		//console.log('buf is', buf)
+		arra = buf.split('","');
+		
+		curSelInd = request.cs
+		let fi = arra[curSelInd];
+		arra.splice(curSelInd,1);
+		arra.unshift(fi);
+
+		let optionList = document.id('selector_' + request.participant).options;
+
+		for (i=0; i < arra.length; i++) {
+			arra[i].replace(/["']/g,'');
+			optionList.add(new Option(arra[i], i))
+		}		
+
+		document.id('anno_' + request.participant).style.display='block';			
+		document.id('anno_' + request.participant).fade(1);
+		document.id('room-header').fade(0);
+		document.id('room-header-file').style.display='none';
 	}
 	
 }

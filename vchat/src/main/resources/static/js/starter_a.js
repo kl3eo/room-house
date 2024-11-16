@@ -34,6 +34,7 @@ var dummies = false;
 var oldColor = null;
 
 var selectedFile = null;
+var movieList_names = [];
 
 var loado = ''; var warning = ''; var waiter = ''; var sorry = ''; var hola = ''; var caller = ''; var requ = ''; var creatu = ''; var badger = ''; var learner = ''; var morer = ''; var hea = ''; var now = ''; var today = ''; var roo = ''; var buy = ''; var helpcapo = '';
 var chat_shown = 1;
@@ -61,6 +62,8 @@ var already_clicked = false;
 var afterBinding = false;
 
 var ch_int; var chr_int;
+
+var curSelInd = 0;
 
 function getIP(json) {
     curIP = json.ip;
@@ -161,6 +164,23 @@ function getFile() {
 	let fi = document.id('room-header-file').files[0];
 	if (selectedFile) URL.revokeObjectURL(selectedFile);
 	selectedFile = URL.createObjectURL(fi);
+	// setCookie('cT', null, 0);
+}
+
+function getList_names() {
+	movieList_names = [];
+	let fis = document.id('room-header-file').files;
+	for (var i = 0; i < fis.length; i++) {
+		movieList_names.push(fis[i].name);
+	}
+	//console.log('Got list of names', movieList_names);
+	
+	let str = JSON.stringify(movieList_names);
+	document.id('asender').value = str; // hack ash
+	let tok = getCookie('authtoken') || '';
+	let mes = {id : 'moviesList', listStr : str, token: tok, addr: document.id('name').value, curSel: curSelInd};
+	//console.log('Send movies names as', mes);
+	sendMessage(mes);
 }
 
 function clearAllCookies() {
@@ -798,7 +818,7 @@ document.id('subcontrols').fade(1);}).delay(500);}}
 
 const cli6 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 //fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
-fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000); setCookie('cT', null, 0); setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {if (playSomeMusic) {let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT', document.id(myvideo).currentTime, 14400);}} else {setCookie('cT', null, 0);} cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000);  setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
 }
 
 const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
