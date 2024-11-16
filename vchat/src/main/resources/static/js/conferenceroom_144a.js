@@ -290,7 +290,7 @@ const check_connection = () => {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { if (suspected) problems = 1; if (!problems) suspected = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT_'+curMoviesList[0], document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);}} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { if (suspected) problems = 1; if (!problems) suspected = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT_'+curMoviesList[0], document.id(myvideo).currentTime, 14400); /*console.log('saving cT as', document.id(myvideo).currentTime, 'for movie', curMoviesList[0]);*/}} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -1233,9 +1233,11 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		video.loop = true;
 		video.src = selectedFile ? selectedFile : null;
 		video.muted = false;
-		// get name of the file played
-		let cT = curMoviesList[curSelInd] ? getCookie('cT_'+curMoviesList[curSelInd]) : 0; 
-//console.log('video name', video, 'movie name ', curMoviesList[curSelInd], 'cT', cT);
+
+		// get name of the file played - hack ash
+
+		let cT = curMovie ? getCookie('cT_'+curMovie) : 0;
+//console.log('Setting cT as', cT, 'for curMovie name ', curMovie);
 		video.currentTime = cT > 0 ? cT : 0;
 	
 		video.addEventListener('canplay', (event) => {
@@ -1530,6 +1532,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 				let fi = arr[curSelInd];
 				arr.splice(curSelInd,1);
 				arr.unshift(fi);
+				
+				curMovie = arr[0];
 
 				let optionList = document.id('selector_' + f).options;
 
@@ -1802,8 +1806,7 @@ function newChatMessage() {
 
 	new_message = 1;
 	let intervalID = setInterval(function() { if (new_message) {document.id('logger').className = "bigO logger_g";} else {document.id('logger').className = chat_shown ? "bigO logger_f" : "bigO logger"; clearInterval(intervalID)}}, 1000);
-	
-	//fetch('https://'+window.location.hostname+':'+port+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
+
 	fetch('https://'+window.location.hostname+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
 
 		soundEffect.src = "/sounds/buzz.mp3";
@@ -1823,7 +1826,8 @@ function setAnno(request) {
 		let fi = arra[curSelInd];
 		arr.splice(curSelInd,1);
 		arr.unshift(fi);
-
+		
+		curMovie = arr[0];
 		let optionList = document.id('selector_' + request.participant).options;
 
 		for (i=0; i < arr.length; i++) {
@@ -1851,8 +1855,10 @@ function handleFileSelectChange(v) {
 			if (selectedFile) URL.revokeObjectURL(selectedFile);
 			selectedFile = URL.createObjectURL(fis[i]);
 			setCookie('cT_'+curMoviesList[0], document.id('video-'+document.id('name').value).currentTime, 14400);
-//console.log('with curselind', curSelInd,'set cT for movie',curMoviesList[0],'to myvideo','video-'+document.id('name').value, 'to', document.id('video-'+document.id('name').value).currentTime);
+//console.log('saving cT as', document.id('video-'+document.id('name').value).currentTime, 'for movie', curMoviesList[0]);
 			curSelInd = i;
+			curMovie = v;
+//console.log('Saved curMovie as', v);			
 			rejoin();
 			break;
 		}
@@ -1877,6 +1883,8 @@ function setMoviesList(request) {
 		let fi = arra[curSelInd];
 		arra.splice(curSelInd,1);
 		arra.unshift(fi);
+		
+		curMovie = arra[0]
 
 		let optionList = document.id('selector_' + request.participant).options;
 		curMoviesList = []
@@ -1885,7 +1893,7 @@ function setMoviesList(request) {
 			optionList.add(new Option(arra[i], i))
 			curMoviesList.push(arra[i]);
 		}		
-
+		
 		document.id('anno_' + request.participant).style.display='block';			
 		document.id('anno_' + request.participant).fade(1);
 		document.id('room-header').fade(0);

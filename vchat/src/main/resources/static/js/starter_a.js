@@ -67,6 +67,8 @@ var curSelInd = 0;
 
 var curMoviesList = []
 
+var curMovie = ''
+
 function getIP(json) {
     curIP = json.ip;
 	document.id('curip').value = curIP;
@@ -176,7 +178,7 @@ function getList_names() {
 	//console.log('Got list of names', movieList_names);
 	
 	let str = JSON.stringify(movieList_names);
-	document.id('asender').value = str; // hack ash
+	//document.id('asender').value = str; // hack ash
 	let tok = getCookie('authtoken') || '';
 	let mes = {id : 'moviesList', listStr : str, token: tok, addr: document.id('name').value, curSel: curSelInd};
 	//console.log('Send movies names as', mes);
@@ -818,7 +820,7 @@ document.id('subcontrols').fade(1);}).delay(500);}}
 
 const cli6 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 //fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
-fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {if (playSomeMusic) {let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT_'+curMoviesList[0], document.id(myvideo).currentTime, 14400);}} else {setCookie('cT_'+curMoviesList[0], null, 0);} cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000);  setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {if (playSomeMusic) {let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT_'+curMoviesList[0], document.id(myvideo).currentTime, 14400);}} else {/*setCookie('cT_'+curMoviesList[0], null, 0);*/} cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000);  setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
 }
 
 const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
