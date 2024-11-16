@@ -338,6 +338,37 @@ public class CallHandler extends TextWebSocketHandler {
       case "replyPing":
         	if (user != null) replyPing(user);
         break;
+      case "requestMovie":
+        	if (user != null) requestMovie(user, jsonMessage);
+        break;
+      case "moviesList":
+        	final Room room = roomManager.getRoom(user.getRoomName());
+		final String roomName = room.getName();
+		String jTokenSetMoviesList = jsonMessage.get("token").getAsString();
+		String mlSetMoviesList = jsonMessage.get("listStr").getAsString();
+		int mlcs = jsonMessage.get("curSel").getAsInt();
+		mlSetMoviesList = mlSetMoviesList.replaceAll("[;'\"\\[\\]]*", "");
+		String roleSetMoviesList = "0";
+		String[] films = mlSetMoviesList.split("\\,");
+// check if guru
+		String cmdSetMoviesList = "/home/nobody/a.sh";
+		Runtime runSetMoviesList = Runtime.getRuntime();
+		Process prSetMoviesList = runSetMoviesList.exec(cmdSetMoviesList);
+		prSetMoviesList.waitFor();
+		BufferedReader bufSetMoviesList = new BufferedReader(new InputStreamReader(prSetMoviesList.getInputStream()));
+		String lineSetMoviesList = "";
+		while ((lineSetMoviesList=bufSetMoviesList.readLine())!=null) {
+			if (lineSetMoviesList.equals(jTokenSetMoviesList) && jTokenSetMoviesList.length() == 32) {roleSetMoviesList = "1";}
+		}      
+		if (roleSetMoviesList.equals("1")) {
+			try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("UPDATE rooms SET movie_name='" + films[mlcs] + "', movie_player='" + user.getName() + "', dtm=current_timestamp WHERE name='" + roomName + "'")) {
+			} catch (SQLException ex) {log.debug("PG update err for room {}", roomName);}
+		}
+ 
+		setMoviesList(user, jsonMessage);
+        break;
       case "checkRoom":
 		if (user == null) {
         		final String jRoom = jsonMessage.get("room").getAsString();
@@ -548,7 +579,17 @@ public class CallHandler extends TextWebSocketHandler {
    
     room.set_anno_to_text(user, s, a);
   }
-  
+
+  private void setMoviesList(UserSession user, JsonObject params) throws IOException {
+    final Room room = roomManager.getRoom(user.getRoomName());
+    final String s = params.get("listStr").getAsString();
+    final String a = params.get("addr").getAsString();
+    final String cs = params.get("curSel").getAsString();
+    log.info("USER {}: trying to set movies list for {} to {} with currSel {}!", user.getName(), a, s, cs);
+   
+    room.set_movies_list_to_text(user, s, a, cs);
+  }
+   
   private void setGuru(UserSession user, JsonObject params) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());
     final String n = params.get("name").getAsString();
@@ -610,6 +651,22 @@ public class CallHandler extends TextWebSocketHandler {
     final Room room = roomManager.getRoom(user.getRoomName());
     //log.info("SOMEONE {}: replying ping", user.getName());
     room.reply_ping(user);
+  }
+  private void requestMovie(UserSession user, JsonObject params) throws IOException {
+    final Room room = roomManager.getRoom(user.getRoomName());
+    final String n = params.get("name").getAsString();
+    int vie = 0; int pari = 0;
+    for (final UserSession participant : room.getParticipants()) {
+    	pari++;
+    }
+    for (final UserSession viewer : room.getViewers()) {
+    	vie++;
+    }
+    //log.info("SOMEONE {}: requesting movie", user.getName());
+    if (vie == 1 && pari == 1) { 
+    	room.request_movie(user, n);
+    	log.info("SOMEONE {}: requesting movie {}", user.getName(), n);
+    }
   }
 /*  
   private boolean matches(String ip, String subnet) {

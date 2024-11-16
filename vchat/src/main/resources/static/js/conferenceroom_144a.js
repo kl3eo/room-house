@@ -255,6 +255,9 @@ ws.onmessage = function(message) {
 	case 'setMoviesList':
 		setMoviesList(parsedMessage);
 		break;
+	case 'requestFilm':
+		requestFilm(parsedMessage);
+		break;
 	case 'viewerLeft':
 		just_left = parsedMessage.name;
 		onViewerLeft(just_left);
@@ -287,7 +290,7 @@ const check_connection = () => {
 	connection_is_good = 0;
 	var message={id : 'checkConnection'}; 
 	sendMessage(message);
-	setTimeout(function() { if (!connection_is_good) { if (suspected) problems = 1; if (!problems) suspected = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT', document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);}} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
+	setTimeout(function() { if (!connection_is_good) { if (suspected) problems = 1; if (!problems) suspected = 1; already_clicked = false; if (playSomeMusic) {setCookie('fmode',22,14400); let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT_'+curMoviesList[0], document.id(myvideo).currentTime, 14400); console.log('video', myvideo, 'cT', document.id(myvideo).currentTime);}} aonly = 1; cammode = 0; playSomeMusic = 0; shareSomeScreen = 0; console.log('resetting connection'); document.id('phones').innerHTML = warning; document.id('room_selector_box').style.zIndex = -10000; (function() { document.id('phones').fade(1)}).delay(1000);} else {if (problems) {} else {if (pcounter == 0 && role != 0) {}}}}, 1200);
 }
 
 const check_fullscreen_strict = () => {
@@ -456,6 +459,9 @@ const register = () => {
 					break;
 				case 'setMoviesList':
 					setMoviesList(parsedMessage);
+					break;
+				case 'requestFilm':
+					requestFilm(parsedMessage);
 					break;
 				case 'viewerLeft':
 					just_left = parsedMessage.name;
@@ -1227,8 +1233,9 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		video.loop = true;
 		video.src = selectedFile ? selectedFile : null;
 		video.muted = false;
-		let cT = getCookie('cT') || 0; 
-//console.log('video name', video, 'cT', cT);
+		// get name of the file played
+		let cT = curMoviesList[curSelInd] ? getCookie('cT_'+curMoviesList[curSelInd]) : 0; 
+//console.log('video name', video, 'movie name ', curMoviesList[curSelInd], 'cT', cT);
 		video.currentTime = cT > 0 ? cT : 0;
 	
 		video.addEventListener('canplay', (event) => {
@@ -1510,11 +1517,36 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		}	
 		
 		if (document.id('anno_' + f) && ValidateAnno(a)) {
+			//console.log("For:", f, "anno:", a);
+			let arra = a.split('@#%');
+			if (arra.length == 2) {
+				document.id('anno_' + f).innerHTML = "<select id='selector_" + f + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)'></select>";
+				let cs = arra[1] || 0;
+				let arr = [];
+				let buf = arra[0].substring(2,arra[0].length-2);
+				//console.log('buf is', buf)
+				arr = buf.split('","');
+				curSelInd = cs
+				let fi = arr[curSelInd];
+				arr.splice(curSelInd,1);
+				arr.unshift(fi);
+
+				let optionList = document.id('selector_' + f).options;
+
+				for (i=0; i < arr.length; i++) {
+					//arr[i].replace(/["']/g,'');
+					optionList.add(new Option(arr[i], i))
+				}
 		
-			document.id('anno_' + f).innerHTML = a;
+			} else {
+	  			if (document.id('anno_' + f)) {
+					document.id('anno_' + f).innerHTML = a;
+	  			}
+			}
+			
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
-			document.id('room-header').fade(0);
+			document.id('room-header').fade(0);		
 		}
 		/*
 		if (document.id('lol_' + f) && a.length && s === 'p' && window.top == window) {
@@ -1779,13 +1811,35 @@ function newChatMessage() {
 
 function setAnno(request) {
 //console.log("setting anno:", request.participant, "anno:",request.anno);
-	if (document.id('anno_' + request.participant)) {
+	let arra = request.anno.split('@#%');
+	if (arra.length == 2) {
+		document.id('anno_' + request.participant).innerHTML = "<select id='selector_" + request.participant + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)'></select>";
+		let cs = arra[1] || 0;
+		let arr = [];
+		let buf = arra[0].substring(2,arra[0].length-2);
+		//console.log('buf is', buf)
+		arr = buf.split('","');
+		curSelInd = cs
+		let fi = arra[curSelInd];
+		arr.splice(curSelInd,1);
+		arr.unshift(fi);
+
+		let optionList = document.id('selector_' + request.participant).options;
+
+		for (i=0; i < arr.length; i++) {
+			//arr[i].replace(/["']/g,'');
+			optionList.add(new Option(arr[i], i))
+		}
+		
+	} else {
+	  if (document.id('anno_' + request.participant)) {
 		document.id('anno_' + request.participant).innerHTML = request.anno;
-		document.id('anno_' + request.participant).style.display='block';			
-		document.id('anno_' + request.participant).fade(1);
-		document.id('room-header').fade(0);
+	  }
 	}
 	
+	document.id('anno_' + request.participant).style.display='block';			
+	document.id('anno_' + request.participant).fade(1);
+	document.id('room-header').fade(0);	
 }
 
 function handleFileSelectChange(v) {
@@ -1796,10 +1850,16 @@ function handleFileSelectChange(v) {
 		if (fis[i].name === v) {
 			if (selectedFile) URL.revokeObjectURL(selectedFile);
 			selectedFile = URL.createObjectURL(fis[i]);
+			setCookie('cT_'+curMoviesList[0], document.id('video-'+document.id('name').value).currentTime, 14400);
+//console.log('with curselind', curSelInd,'set cT for movie',curMoviesList[0],'to myvideo','video-'+document.id('name').value, 'to', document.id('video-'+document.id('name').value).currentTime);
 			curSelInd = i;
 			rejoin();
 			break;
 		}
+	}
+	if (fis.length == 0) {
+		let mes = {id: 'requestMovie', name: v};
+		sendMessage(mes);
 	}
 }
 
@@ -1819,10 +1879,11 @@ function setMoviesList(request) {
 		arra.unshift(fi);
 
 		let optionList = document.id('selector_' + request.participant).options;
-
+		curMoviesList = []
 		for (i=0; i < arra.length; i++) {
-			arra[i].replace(/["']/g,'');
+			//arra[i].replace(/["']/g,'');
 			optionList.add(new Option(arra[i], i))
+			curMoviesList.push(arra[i]);
 		}		
 
 		document.id('anno_' + request.participant).style.display='block';			
@@ -1831,6 +1892,10 @@ function setMoviesList(request) {
 		document.id('room-header-file').style.display='none';
 	}
 	
+}
+
+function requestFilm(request) {
+	handleFileSelectChange(request.name);
 }
 
 function changeTabLR(request) {

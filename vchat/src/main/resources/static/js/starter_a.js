@@ -65,6 +65,8 @@ var ch_int; var chr_int;
 
 var curSelInd = 0;
 
+var curMoviesList = []
+
 function getIP(json) {
     curIP = json.ip;
 	document.id('curip').value = curIP;
@@ -77,7 +79,6 @@ function ajax_chat() {
 
 function ajax_room(name) {
 	let banner = name == 'REDHALL' ? 'red_hall_span' : name == 'BLUEHALL' ? 'blue_hall_span' : name == 'GREENHALL' ? 'green_hall_span' :''; if (banner.length == 0) return;
-	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/get_room_data.pl?room='+name).then(response => response.text()).then((response) => {if (response.length) {document.id(banner).innerHTML = '"'+response+'"';} else {document.id(banner).innerHTML = '-'} }).catch(err => console.log(err));
 	fetch('https://'+window.location.hostname+'/cgi/genc/get_room_data.pl?room='+name).then(response => response.text()).then((response) => {if (response.length) {document.id(banner).innerHTML = '"'+response+'"';} else {document.id(banner).innerHTML = '-'} }).catch(err => console.log(err));
 }
 
@@ -161,10 +162,9 @@ function toggleHeader(i) {
 
 function getFile() {
 
-	let fi = document.id('room-header-file').files[0];
+	let fi = document.id('room-header-file').files[curSelInd];
 	if (selectedFile) URL.revokeObjectURL(selectedFile);
 	selectedFile = URL.createObjectURL(fi);
-	// setCookie('cT', null, 0);
 }
 
 function getList_names() {
@@ -818,7 +818,7 @@ document.id('subcontrols').fade(1);}).delay(500);}}
 
 const cli6 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';
 //fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl'
-fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {if (playSomeMusic) {let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT', document.id(myvideo).currentTime, 14400);}} else {setCookie('cT', null, 0);} cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000);  setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
+fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {let role = respo; if (pcounter < room_limit) hack = true; if (role == 0 && hack) role = 1; if (aonly) { already_being_played = 0; document.id('room-header').style.color = oldColor; document.id('room-header-file').style.display = 'none'; document.id('av_toggler').className = "bigO av_toggler_f"; if (role == 1 || role == 2 || temporary) {setCookie('av', true, 144000); aonly = 0; flashText_and_rejoin('VIDEO ON!'); } else {flashText(caller + '<img style="&nbsp;margin-top:-72px;" src=/icons/bell' + sem + '2.png>');  document.id('av_toggler').className = "bigO av_toggler";}} else {if (playSomeMusic) {let myname = document.id('name').value; let myvideo = 'video-' + myname; if (document.id(myvideo)) {setCookie('cT_'+curMoviesList[0], document.id(myvideo).currentTime, 14400);}} else {setCookie('cT_'+curMoviesList[0], null, 0);} cammode = 0; playSomeMusic = false; shareSomeScreen = false; audioContext = null; document.id('av_toggler').style.color='#777'; setCookie('av', false, 144000);  setCookie('fmode', null, 0); aonly = 1; flashText_and_rejoin('AUDIO-ONLY'); setCookie('player', '');}}).catch(err => console.log(err));
 }
 
 const cli7 = () => {let sem  = window.innerWidth > 1024 ? '7' : '';

@@ -557,7 +557,39 @@ public class Room implements Closeable {
     	}
     }
   }
-  
+
+  public void set_movies_list_to_text(UserSession user, String ml, String who_to, String cs) throws IOException {
+
+    if (user != null) {
+    	final JsonObject setMoviesList = new JsonObject();
+	
+	String userName = who_to;
+		
+    	setMoviesList.addProperty("id", "setMoviesList");
+	setMoviesList.addProperty("participant", userName);
+	setMoviesList.addProperty("ml", ml);
+	setMoviesList.addProperty("cs", cs);
+		
+   	for (final UserSession participant : participants.values()) {
+	  	try {
+			participant.sendMessage(setMoviesList);
+			if (userName.equals(participant.getName())) {participant.setAnno(ml+"@#%"+cs);}
+	  	} catch (final IOException e) {
+			log.debug("ROOM {}: could not set anno for {}", name, userName);
+		}				
+   	}	
+// do the same for viewers, separately
+
+    	for (final UserSession viewer : viewers.values()) {
+	  	try {
+			viewer.sendMessage(setMoviesList);
+	  	} catch (final IOException e) {
+			log.debug("ROOM {}: could not push new anno of {} to {}", name, userName, viewer.getName());
+		}
+    	}
+    }
+  }
+    
   public void set_guru_in_mode(UserSession user, String userName, String userMode) throws IOException {
     if (user != null) {
     	final JsonObject setGuru = new JsonObject();	
@@ -592,6 +624,37 @@ public class Room implements Closeable {
     }
   }
 
+  public void request_movie(UserSession user, String name) throws IOException {
+    if (user != null) {
+	final String pgurl = "jdbc:postgresql://localhost:5432/cp";
+	final String pguser = "postgres";
+	final String pgpass = "x";
+	
+	String userName = "DUMMY";
+	
+	try (Connection con = DriverManager.getConnection(pgurl, pguser, pgpass);
+	Statement st = con.createStatement();
+	ResultSet rs = st.executeQuery("select movie_player from rooms where name='" + this.name + "' and (current_timestamp < valid_till or valid_till is null)")) {
+	if (rs.next()) {userName = rs.getString(1);} else {log.info("PG select movie_player err2");}
+	} catch (SQLException ex) {log.debug("PG select movie_player err1 from {}: ", user.getName());}
+	
+    	final JsonObject reqMovie = new JsonObject();
+
+    	reqMovie.addProperty("id", "requestFilm");
+	reqMovie.addProperty("name", name);
+			
+    	for (final UserSession participant : participants.values()) {
+	  	try {
+			if (userName.equals(participant.getName())) { participant.sendMessage(reqMovie); }	 
+	  	} catch (final IOException e) {
+			log.debug("ROOM {}: could not inform of Cinema {}", name, participant.getName());
+		}				
+	}	
+
+
+    }
+  }
+  
   public void set_cinema_in_mode(UserSession user, String userName, String userMode) throws IOException {
     if (user != null) {
     	final JsonObject setCinema = new JsonObject();
