@@ -663,10 +663,10 @@ public class CallHandler extends TextWebSocketHandler {
     	vie++;
     }
     //log.info("SOMEONE {}: requesting movie", user.getName());
-    if (vie == 1 && pari == 1) { 
+    //if (vie == 1 && pari == 1) { 
     	room.request_movie(user, n);
     	log.info("SOMEONE {}: requesting movie {}", user.getName(), n);
-    }
+    //}
   }
 /*  
   private boolean matches(String ip, String subnet) {

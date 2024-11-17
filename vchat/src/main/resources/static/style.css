@@ -78,11 +78,16 @@ input[type=radio]:checked::after {
 select {
 	border: 1px solid #D0D0D0;
 	!background: url(http://www.quilor.com/i/select.png) no-repeat right center, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fbfbfb), to(#ededed));
-	background: -moz-linear-gradient(19% 75% 90deg, #ededed, #fbfbfb);
+	!background: -moz-linear-gradient(19% 75% 90deg, #ededed, #fbfbfb);
+	background-color: transparent;
 	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	color: #444;
+	color: #999;
+	padding:2px;
+	max-width:306px;
+	font-size: 16px;
+	line-height:24px;
 }
 
 .container {

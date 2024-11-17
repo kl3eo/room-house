@@ -1432,7 +1432,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		let ac = chu[3];
 		let a = chu[4];
 
-// console.log('here f is', f, 's is', s);		
+//console.log('here f is', f, 's is', s, 'a', a);		
 		let na = chu[0].split('_');
 		
 		if (s === 'c') {cinemaEnabled = true; num_cinemas += 1;}
@@ -1518,11 +1518,13 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			if (document.id('sp_container' && sp_shown) && document.id('sp_container').style.display != 'block') document.id('acco_' + f).style.visibility='hidden';			
 		}	
 		
-		if (document.id('anno_' + f) && ValidateAnno(a)) {
+		//if (document.id('anno_' + f) && ValidateAnno(a)) {
+		if (document.id('anno_' + f)) {
 			//console.log("For:", f, "anno:", a);
 			let arra = a.split('@#%');
 			if (arra.length == 2) {
-				document.id('anno_' + f).innerHTML = "<select id='selector_" + f + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)'></select>";
+				
+				document.id('anno_' + f).innerHTML = "<select id='selector_" + f + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)' onmouseover='toggleOpacity(this.parentNode)' onmouseout='toggleOpacity(this.parentNode)'></select>";
 				let cs = arra[1] || 0;
 				let arr = [];
 				let buf = arra[0].substring(2,arra[0].length-2);
@@ -1550,6 +1552,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
+			if (!normal_mode) setTimeout(function() {document.id('anno_' + f).fade(0.02);}, 3000);
 			document.id('room-header').fade(0);		
 		}
 		/*
@@ -1816,7 +1819,8 @@ function setAnno(request) {
 //console.log("setting anno:", request.participant, "anno:",request.anno);
 	let arra = request.anno.split('@#%');
 	if (arra.length == 2) {
-		document.id('anno_' + request.participant).innerHTML = "<select id='selector_" + request.participant + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)'></select>";
+		
+		document.id('anno_' + request.participant).innerHTML = "<select id='selector_" + request.participant + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)' onmouseover='toggleOpacity(this.parentNode)' onmouseout='toggleOpacity(this.parentNode)'></select>";
 		let cs = arra[1] || 0;
 		let arr = [];
 		let buf = arra[0].substring(2,arra[0].length-2);
@@ -1842,7 +1846,9 @@ function setAnno(request) {
 	}
 	
 	document.id('anno_' + request.participant).style.display='block';			
-	document.id('anno_' + request.participant).fade(1);
+	document.id('anno_' + request.participant).fade(1); setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 3000);
+		 
+	//setTimeout(function() {const boxes = document.querySelectorAll('.annos'); boxes.forEach(box => {box.style.opacity = 0.02;});}, 3000);
 	document.id('room-header').fade(0);	
 }
 
@@ -1869,11 +1875,16 @@ function handleFileSelectChange(v) {
 	}
 }
 
+function toggleOpacity(el) {
+	let a = el.style.opacity == 0.02 ? 1 : 0.02;
+	el.fade(a);
+}
+
 function setMoviesList(request) {
 //console.log("setting movies list:", request.participant, "ml:",request.ml, "curSelInd", curSelInd);
 	if (document.id('anno_' + request.participant)) {
-
-		document.id('anno_' + request.participant).innerHTML = "<select id='selector_" + request.participant + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)'></select>";
+		
+		document.id('anno_' + request.participant).innerHTML = "<select id='selector_" + request.participant + "' onchange='handleFileSelectChange(this.options[this.selectedIndex].text)' onmouseover='toggleOpacity(this.parentNode)' onmouseout='toggleOpacity(this.parentNode)'></select>";
 		let arra = [];
 		let buf = request.ml.substring(2,request.ml.length-2);
 		//console.log('buf is', buf)
@@ -1895,9 +1906,10 @@ function setMoviesList(request) {
 		}		
 		
 		document.id('anno_' + request.participant).style.display='block';			
-		document.id('anno_' + request.participant).fade(1);
+		document.id('anno_' + request.participant).fade(1); setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 3000);
 		document.id('room-header').fade(0);
-		document.id('room-header-file').style.display='none';
+		document.id('room-header-file').style.display='none';	 
+	 	
 	}
 	
 }

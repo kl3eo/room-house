@@ -406,6 +406,8 @@ const ed = () => { //code to run on receive message from join_ frame
 	if (small_device) document.id('controls').style.visibility = 'hidden';
 	if (small_device) document.id('bg_switch').style.display = 'none';
 	
+	document.id('streamer').style.display = 'none';
+	
 	document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
 	
 	if (small_device && document.id('second_logger')) (function() {document.id('second_logger').style.visibility = 'hidden';document.id('second_logger').style.display = 'block';}).delay(2000);
@@ -428,7 +430,7 @@ const ed = () => { //code to run on receive message from join_ frame
 	 
 	 document.id('house').style.textAlign = 'center';
 	 //document.id('participants').style.marginLeft = '-1vw';
-
+	 
  } else {
  	document.id('main_container').style.marginTop = '-60px';
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';

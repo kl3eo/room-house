@@ -164,6 +164,8 @@ const city_or_main = 1;
 @media screen and (max-width: 1024px) {
  .dropper {
 	right: 10px;
+	width: 36px;
+	height: 36px;
  }
  #participants {
  	margin:-59vh auto 0 auto;
@@ -635,7 +637,7 @@ const city_or_main = 1;
 
 .annos {
 	position: absolute;
-	top: -20px;
+	top: -24px;
 	left: 10px;	
 	background: #112;
 	color: #fed;
@@ -643,9 +645,9 @@ const city_or_main = 1;
 	display: none;
 	opacity: 0;
 	font-size: 16px;
+	line-height: 24px;
 	border-radius: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 6px 20px;
 }
 
 .lols {
@@ -1361,7 +1363,7 @@ select:focus, input:focus, button:focus{
 				
 <div id="room_header_container" style="position:absolute;left:0;top:22%;width:80%;height:50%;min-width:480px;">
 				<div style="float:right;margin-bottom:20px;" id="room-header_box">
-				  <h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;"></h2>
+				  <h2 id="room-header" style="z-index:2200;position:relative;color:#777;margin: 8vw auto 0.5vw 20px;opacity:0;cursor:pointer;"></h2>
 				</div>
 				<div style="float:right;">
 				  <h2 id="room-backer" style="z-index:2200;position:relative;color:#9cf;margin: 8vw auto 0.5vw 20px; display:none;cursor:pointer;opacity:0.7;" onclick="document.id('room-backer').style.display='none'; fullscreen = false; cinemaEnabled = false; rejoin();">BACK TO ROOM</h2>

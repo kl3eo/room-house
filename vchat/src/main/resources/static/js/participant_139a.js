@@ -343,6 +343,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	anno.style.fontSize = '16px';
 	anno.style.paddingLeft = '10px';
 	anno.style.paddingRight = '10px';
+	anno.onclick = function(e) {toggleAnnoVisibility(e.target)};
 	container.appendChild(anno);
 
 	var lol = document.createElement('div');
@@ -460,7 +461,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		}		
 		sendMessage(message);
 	}
-
+	
+	function toggleAnnoVisibility(el) {	
+		el.style.opacity = el.style.opacity == 0.02 ? 1 : 0.02;	
+	}
+	
 	function rewind() {
 		let message = {
 			id :'keyDown', num: 82, name: name //rewind 10sec
