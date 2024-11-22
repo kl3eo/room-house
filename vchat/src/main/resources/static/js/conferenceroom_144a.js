@@ -48,11 +48,15 @@ var logo_added = 0;
 var firstTime = true;
 var he_votado = false;
 
+var g = {}
 var playSomeMusic = false;
 var playSomeMusic_muted = true;
-var audioContext = null;
 var mediaSource;
 var analyser;
+g.audioContext = new AudioContext();
+g.ctx = new AudioContext();
+g.video = {}
+g.mixStream = {}
 
 var only_once = 1;
 
@@ -83,7 +87,7 @@ var nump = 0; var numv = 0; var num_cinemas = 0;
   
 var i_am_on_air = false;
 var saved_top = '';
-  
+ 
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = ua.indexOf("android") > -1;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -1049,7 +1053,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	var participant = new Participant(name, myname, mode, role, false);
 	participants[name] = participant;
 	
-	var video = recordedVideo ?  recordedVideo : participant.getVideoElement();
+	g.video = recordedVideo ?  recordedVideo : participant.getVideoElement();
 	
 	var canvas = check_iOS() ? participant.getCanvasElement() : '';
 
@@ -1088,13 +1092,13 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 	constraints_alt = (i_am_muted === true || i_am_muted === 'true') && aonly ? constraints_dumb : (i_am_muted === true || i_am_muted === 'true') ? constraints_vonly : constraints_alt;
 
 	var options = {
-              	localVideo: video,
+              	localVideo: g.video,
 		mediaConstraints: constraints,
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
 	
 	var options_alt = {
-		localVideo: video,
+		localVideo: g.video,
 		mediaConstraints: constraints_alt,
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
@@ -1134,7 +1138,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                                                 	return console.error(error);
                                         	}
 				
-                                        	startVideo(video);
+                                        	startVideo(g.video);
                                         	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 						if (small_device)  document.id(myname).style.float = 'none'; 				
 						document.id('room-header-file').style.display='none';
@@ -1142,7 +1146,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		  	}
 		  	return false;
                   	 } else {
-                  	  	startVideo(video);
+                  	  	startVideo(g.video);
 		  	
 				this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 		
@@ -1166,7 +1170,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		var audioTrack = mediaStream.getAudioTracks()[0] ? mediaStream.getAudioTracks()[0] : null;
 		if (audioTrack && i_am_muted !== true && i_am_muted !== 'true') stream.addTrack(audioTrack);
 
-		video.srcObject = stream;
+		g.video.srcObject = stream;
 
         	var options_sshare = {
 			videoStream: stream,
@@ -1193,7 +1197,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                                                 return console.error(error);
                                         }
 
-                                        startVideo(video);
+                                        startVideo(g.video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  document.id(myname).style.float = 'none';
                           });
@@ -1201,7 +1205,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
 			return false;
                   } else {
-                  	startVideo(video);
+                  	startVideo(g.video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  document.id(myname).style.float = 'none';
 		  }
@@ -1217,30 +1221,30 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// with sound both in the stream and in the local video. 
 		// initialize the audioContext
 		if (playSomeMusic_muted === false) {
-			audioContext = new AudioContext();
-			//console.log('audioContext init1');
-			mediaSource = audioContext.createMediaElementSource(video);
-			analyser = audioContext.createAnalyser();
+			//g.audioContext = new AudioContext();
+//console.log('audioContext init1');
+			mediaSource = g.audioContext.createMediaElementSource(g.video);
+			analyser = g.audioContext.createAnalyser();
 			mediaSource.connect(analyser);
-			analyser.connect(audioContext.destination);
+			analyser.connect(g.audioContext.destination);
 		}
   
-		video.autoplay = true;
-		video.playsInline = true;
-		video.controls = true;
-		video.crossOrigin = 'anonymous';
-		video.volume = 1;
-		video.loop = true;
-		video.src = selectedFile ? selectedFile : null;
-		video.muted = false;
+		g.video.autoplay = true;
+		g.video.playsInline = true;
+		g.video.controls = true;
+		g.video.crossOrigin = 'anonymous';
+		g.video.volume = 1;
+		g.video.loop = true;
+		g.video.src = selectedFile ? selectedFile : null;
+		g.video.muted = false;
 
 		// get name of the file played - hack ash
 
 		let cT = curMovie ? getCookie('cT_'+curMovie) : 0;
 //console.log('Setting cT as', cT, 'for curMovie name ', curMovie);
-		video.currentTime = cT > 0 ? cT : 0;
+		g.video.currentTime = cT > 0 ? cT : 0;
 	
-		video.addEventListener('canplay', (event) => {
+		g.video.addEventListener('canplay', (event) => {
 		
 		  now_playing = true;
 		
@@ -1257,28 +1261,35 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			   	captureStream = canvas.captureStream(fps_hq);
 				if (audioTrack && i_am_muted !== true && i_am_muted !== 'true') captureStream.addTrack(audioTrack);
 			} else 
-			if (video.captureStream) {
-				captureStream = video.captureStream(fps_hq);
-			} else if (video.mozCaptureStream) {
-				captureStream = video.mozCaptureStream(fps_hq);
+			if (g.video.captureStream) {
+				captureStream = g.video.captureStream(fps_hq);
+			} else if (g.video.mozCaptureStream) {
+				captureStream = g.video.mozCaptureStream(fps_hq);
 			} else {
 				console.error('Stream capture is not supported');
 			}
-			//NB: mix audio from mic to that of the video
-
-			const ctx = new AudioContext();
-			const dest = ctx.createMediaStreamDestination();
-			const audioIn_01 = ctx.createMediaStreamSource(mediaStream);
-			const audioIn_02 = ctx.createMediaStreamSource(captureStream);
- 
-			if (i_am_muted !== true && i_am_muted !== 'true') audioIn_01.connect(dest);
-			audioIn_02.connect(dest);
 			
-			const audioStreamTrack = dest.stream.getAudioTracks()[0];
-			const captureStreamVideoTrack = captureStream.getVideoTracks()[0];
-			const mixStream = new MediaStream();
-			mixStream.addTrack(captureStreamVideoTrack);
-			mixStream.addTrack(audioStreamTrack);
+			//NB: mix audio from mic to that of the video, except when in cinema
+			let audioStreamTrack = null;
+			if (!cine) {
+console.log('doing mic mix in normal mode');
+			   const dest = g.ctx.createMediaStreamDestination();
+			   const audioIn_01 = audioTrack ? g.ctx.createMediaStreamSource(mediaStream) : null;
+			   const audioIn_02 = captureStream.getAudioTracks()[0] ? g.ctx.createMediaStreamSource(captureStream) : null;
+ 
+			   if (i_am_muted !== true && i_am_muted !== 'true' && audioIn_01) audioIn_01.connect(dest);
+			   if (audioIn_02) audioIn_02.connect(dest);
+			
+			   audioStreamTrack = dest.stream.getAudioTracks()[0] ? dest.stream.getAudioTracks()[0] : null;
+			}// not cine
+			
+			const captureStreamVideoTrack = captureStream.getVideoTracks()[0] ? captureStream.getVideoTracks()[0] : null;
+			const captureStreamAudioTrack = captureStream.getAudioTracks()[0] ? captureStream.getAudioTracks()[0] : null;
+			
+			g.mixStream = new MediaStream();
+			if (captureStreamVideoTrack) g.mixStream.addTrack(captureStreamVideoTrack);
+			if (!cine && audioStreamTrack) g.mixStream.addTrack(audioStreamTrack);
+			if (cine && captureStreamAudioTrack) g.mixStream.addTrack(captureStreamAudioTrack); 
 			
 			var cstrx = {
 				audio: true,
@@ -1290,12 +1301,12 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			};
 
 			options = {
-				videoStream: mixStream,
+				videoStream: g.mixStream,
 				onicecandidate: participant.onIceCandidate.bind(participant),
 				mediaConstraints : cstrx
 			}
 			option_alt = {
-				videoStream: mixStream,
+				videoStream: g.mixStream,
 				onicecandidate: participant.onIceCandidate.bind(participant),
 				mediaConstraints :{audio: true, video: false}
 			}
@@ -1311,7 +1322,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                                                 	return console.error(error);
                                         	}
 						
-                                        	startVideo(video);
+                                        	startVideo(g.video);
                                         	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 						if (small_device)  document.id(myname).style.float = 'none'; 					
 						document.id('room-header-file').style.display='none';
@@ -1321,7 +1332,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			  	return false;
                   	 } else {
                   	  	//startVideo(video);
-                  	  	video.play();
+                  	  	g.video.play();
 
 				if (playSomeMusic_muted === false) {
 				    function getSoundData() {
@@ -1361,7 +1372,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
                                                 return console.error(error);
                                         }
 
-                                        startVideo(video);
+                                        startVideo(g.video);
                                         this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 					if (small_device)  document.id(myname).style.float = 'none';
                           });
@@ -1369,7 +1380,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
 			return false;
                   } else {
-                  	startVideo(video);
+                  	startVideo(g.video);
                   	this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			i_am_on_air = true;
 			
@@ -1452,20 +1463,6 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			
 			(function() {document.id(f).style.display='block'; document.id(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
 			
-			/*if (small_device || tablet) {
-				document.id(f).style.position = 'absolute';
-				document.id(f).style.top = top_buf + 'px';
-
-				top_buf += 390 + 20;
-				document.id('participants').style.height = 390 + top_buf + 'px'
-				console.log('is is',i,'height is',top_buf,'parti', document.id("participants").offsetHeight)
-				
-			}*/
-			// not working..
-			if (small_device || tablet) {
-				//document.id(f).style.position = 'absolute';
-
-			}
 			
 		} else {
 			var lang = getCookie('lang');
@@ -1627,10 +1624,15 @@ const leaveRoom = () => {
 	if (Object.keys(participants).length) {
 		for ( var key in participants) {
 				participants[key].dispose();
+				delete participants[key].rtcPeer;
 				delete participants[key];
 		}
 	}
-
+	//delete g.ctx;
+	delete g.mixStream;
+	delete g.video;
+	//delete g.audioContext;
+	
 	pcounter = 0;
 	vcounter = 0;
 	i_am_guest = 0;
@@ -1650,7 +1652,7 @@ const receiveVideo = (sender, mode, role, n) => {
 	
 	var participant = new Participant(sender, document.id('name').value, mode, role, new_flag );
 	participants[sender] = participant;
-	var video = participant.getVideoElement();
+	g.video = participant.getVideoElement();
       
 	var constraints = {
                 audio : true,
@@ -1668,12 +1670,12 @@ const receiveVideo = (sender, mode, role, n) => {
 	};
 	
 	var options = {
-		remoteVideo: video,
+		remoteVideo: g.video,
 		mediaConstraints: constraints_av,
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
 	var options_aonly = {
-		remoteVideo: video,
+		remoteVideo: g.video,
 		mediaConstraints: constraints,
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
@@ -1687,7 +1689,7 @@ const receiveVideo = (sender, mode, role, n) => {
 			return console.error(error);
 		}
 
-			startVideo(video);
+			startVideo(g.video);
 			this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 			if (small_device)  {
 				document.id(sender).style.float = 'none';
@@ -2066,6 +2068,7 @@ const onParticipantLeft = (request) => {
 		participant.dispose();
 		if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
 		delete participants[request.name];
+		delete g.video; //?!
 		just_left = request.name;
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	

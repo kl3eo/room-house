@@ -710,14 +710,14 @@ function Participant(name, myname, mode, myrole, new_flag) {
 				if (name == myname && playSomeMusic) 
 				{
 					//flashText('restart video to listen!');
-					if (audioContext === null) {
-						audioContext = new AudioContext();
-						//console.log('audioContext init2');
-						mediaSource = audioContext.createMediaElementSource(video);
-						analyser = audioContext.createAnalyser();
+					//if (audioContext === null) {
+//console.log('audioContext init2');
+						//g.audioContext = new AudioContext();
+						mediaSource = g.audioContext.createMediaElementSource(video);
+						analyser = g.audioContext.createAnalyser();
 						mediaSource.connect(analyser);
-					}
-					analyser.connect(audioContext.destination);					
+					//}
+					analyser.connect(g.audioContext.destination);					
 				}
 			}
 		   }
