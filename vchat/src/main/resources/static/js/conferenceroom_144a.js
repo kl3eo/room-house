@@ -53,10 +53,13 @@ var playSomeMusic = false;
 var playSomeMusic_muted = true;
 var mediaSource;
 var analyser;
+var N = 0;
 g.audioContext = new AudioContext();
 g.ctx = new AudioContext();
 g.video = {}
 g.mixStream = {}
+g.captureStreamVideoTrack = {}
+g.captureStreamVideoTrack = {}
 
 var only_once = 1;
 
@@ -1217,10 +1220,10 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
    
 	//} else if (playSomeMusic && (role == 1|| role == 2)) {
 	} else if (playSomeMusic) {
-
 		// with sound both in the stream and in the local video. 
 		// initialize the audioContext
-		if (playSomeMusic_muted === false) {
+		
+		/*if (playSomeMusic_muted === false) {
 			//g.audioContext = new AudioContext();
 //console.log('audioContext init1');
 			mediaSource = g.audioContext.createMediaElementSource(g.video);
@@ -1228,6 +1231,7 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 			mediaSource.connect(analyser);
 			analyser.connect(g.audioContext.destination);
 		}
+		*/
   
 		g.video.autoplay = true;
 		g.video.playsInline = true;
@@ -1249,6 +1253,8 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		  now_playing = true;
 		
 		  if (!already_being_played) {
+
+console.log('running', N++);
 	  	
 			already_being_played = true;
 			let captureStream = null;
@@ -1283,13 +1289,13 @@ console.log('doing mic mix in normal mode');
 			   audioStreamTrack = dest.stream.getAudioTracks()[0] ? dest.stream.getAudioTracks()[0] : null;
 			}// not cine
 			
-			const captureStreamVideoTrack = captureStream.getVideoTracks()[0] ? captureStream.getVideoTracks()[0] : null;
-			const captureStreamAudioTrack = captureStream.getAudioTracks()[0] ? captureStream.getAudioTracks()[0] : null;
+			g.captureStreamVideoTrack = captureStream.getVideoTracks()[0] ? captureStream.getVideoTracks()[0] : null;
+			g.captureStreamAudioTrack = captureStream.getAudioTracks()[0] ? captureStream.getAudioTracks()[0] : null;
 			
 			g.mixStream = new MediaStream();
-			if (captureStreamVideoTrack) g.mixStream.addTrack(captureStreamVideoTrack);
+			if (g.captureStreamVideoTrack) g.mixStream.addTrack(g.captureStreamVideoTrack);
 			if (!cine && audioStreamTrack) g.mixStream.addTrack(audioStreamTrack);
-			if (cine && captureStreamAudioTrack) g.mixStream.addTrack(captureStreamAudioTrack); 
+			if (cine && g.captureStreamAudioTrack) g.mixStream.addTrack(g.captureStreamAudioTrack); 
 			
 			var cstrx = {
 				audio: true,
@@ -1631,6 +1637,8 @@ const leaveRoom = () => {
 	//delete g.ctx;
 	delete g.mixStream;
 	delete g.video;
+	delete g.captureStreamVideoTrack;
+	delete g.captureStreamAudioTrack;
 	//delete g.audioContext;
 	
 	pcounter = 0;
@@ -2067,8 +2075,11 @@ const onParticipantLeft = (request) => {
 	if (participant) {
 		participant.dispose();
 		if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
-		delete participants[request.name];
+
 		delete g.video; //?!
+
+		delete participant.rtcPeer;
+		delete participant;
 		just_left = request.name;
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	
@@ -2118,7 +2129,7 @@ const onParticipantLeft = (request) => {
 		if (participant) {
 			participant.dispose();
 			if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
-				delete participants[request.name];
+				delete participant;
 				just_left = request.name;
         			if (!small_device) resizer(pcounter);			
 		} 

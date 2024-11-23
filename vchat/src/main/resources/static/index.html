@@ -1660,6 +1660,8 @@ window.addEventListener("orientationchange", hideAddressBar );
 
 			function init() {
 
+				if (cine) return;
+				
 				const container = document.getElementById( 'container' );
 				container.innerHTML='';
 
@@ -1793,6 +1795,7 @@ window.addEventListener("orientationchange", hideAddressBar );
 
 			function animate() {
 
+				if (cine) return;
 				requestAnimationFrame( animate );
 				update();
 

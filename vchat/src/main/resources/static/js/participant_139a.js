@@ -112,6 +112,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
 	if (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
+	// if (mode == 'm') coo_muted = true; //?! better all like iOS
 				
 	var coo_volume = loadData(name+'_volume');
 

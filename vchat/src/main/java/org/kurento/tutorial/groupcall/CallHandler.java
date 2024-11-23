@@ -67,7 +67,7 @@ import java.sql.PreparedStatement;
  * 
  * @author Ivan Gracia (izanmail@gmail.com)
  * @since 4.3.1
- * -- room-house.com 2022
+ * -- for Room-House 2022-24 Alex Shevlaquov (alex@room-house.com)
  */
 
 @Component
@@ -449,8 +449,7 @@ public class CallHandler extends TextWebSocketHandler {
     
     //need this hack to avoid DB errors
     curip = curip.replaceAll("[;'\"]*", "");
-    //if (curip.equals("127.0.0.1") || curip.equals("") || curip.equals("192.168.88.99")) {curip = "164.68.105.131";}
-    //if (matches(curip, "192.168.0.0/16") || matches(curip, "10.0.0.0/8") || matches(curip, "172.16.0.0/8") )
+
     if (curip.equals("127.0.0.1") || curip.equals("") || isPrivateIP(curip)) {curip = "164.68.105.131";}
     final InetAddress ipAddress = InetAddress.getByName(curip);
 
