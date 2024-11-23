@@ -224,7 +224,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	container.appendChild(speaker);
 	
 	//container.onclick = switchContainerClass;
-	if (name == myname) container.onclick = shareSomeStream ? do_grun : toggleRoomHeader;
+	//if (name == myname) container.onclick = shareSomeStream ? do_grun : toggleRoomHeader;
 	container.ondblclick = rmPtcp;
 
 	var ar = name.split("_");
@@ -344,6 +344,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	anno.style.fontSize = '16px';
 	anno.style.paddingLeft = '10px';
 	anno.style.paddingRight = '10px';
+	anno.style.opacity = 0;
 	anno.onclick = function(e) {toggleAnnoVisibility(e.target)};
 	container.appendChild(anno);
 
@@ -373,7 +374,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	adder.style.background = name == myname ? '#369' : '#900';
 	adder.id = 'adder_' + name;
 	adder.appendChild(document.createTextNode('A'));
-	adder.onclick = setAnno;
+	adder.onclick = set_Anno;
 	
 	adder.style.display = myrole == 0 && myname == name ? 'none': 'block';
 	//don't add to gurus except myself
@@ -413,18 +414,23 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	this.getCanvasElement = function() {
 		return canvas;
 	}
-		
+	
+	/*	
 	function toggleRoomHeader() {
 
 			if(!small_device) {document.id('room-header').style.display = document.id('room-header').style.display === 'none' ? 'block' : 'none'; let a = document.id('room-header').style.display === 'none' ? 0 : 1; document.id('room-header').fade(a); document.id('room-header-file').style.display = document.id('room-header').style.display === 'none' ? 'none' : document.id('room-header-file').style.display;}
 	}
+	
 	function do_grun() {
 		shareSomeStream = false;
 		grun();
 	}
-	function setAnno() {
+	*/
+	
+	function set_Anno() {
 				who_to = name;
-				anno_adder.click();		
+				document.id('anno_adder').click();
+				//console.log('clicked set_anno!');		
 	}
 	
 	function setCinema() {

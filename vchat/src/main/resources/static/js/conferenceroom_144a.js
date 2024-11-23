@@ -786,7 +786,7 @@ const onNewParticipant = (request) => {
 		 if (small_device && pcounter > 3) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 
 		 // take care when only 1 participant in audio mode, small device
-		 if (small_device && pcounter === 0) {
+		 /*if (small_device && pcounter === 0) {
 			if (Object.keys(participants) && Object.keys(participants).length === 1) {	
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
@@ -795,7 +795,7 @@ const onNewParticipant = (request) => {
 					}
 				}
 			}		 	
-		 }
+		 }*/
 		}
 		
 // console.log('name:', request.name, 'mode:', request.mode, 'myrole:', myrole);
@@ -1106,7 +1106,6 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		onicecandidate: participant.onIceCandidate.bind(participant)
 	}
 			
-	//if (shareSomeScreen && (role == 1 || role == 2)) {
 	if(recordedVideo && savedSrc) {
 		
 		shareSomeStream = true;
@@ -1413,7 +1412,7 @@ console.log('doing mic mix in normal mode');
 					document.id('participants').style.top = saved_top.length ? saved_top : document.id('participants').style.top ;
 				}
 			       // take care when only 1 participant in audio mode, small device
-			        if (small_device && pcounter === 1) {
+			        /*if (small_device && pcounter === 1) {
 				  if (Object.keys(participants) && Object.keys(participants).length === 1) {
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
@@ -1422,7 +1421,7 @@ console.log('doing mic mix in normal mode');
 						}
 					}
 				  }
-		 	        }
+		 	        }*/
 			}
 			
 			if (!small_device && window == window.top) resizer(1);
@@ -1555,7 +1554,7 @@ console.log('doing mic mix in normal mode');
 			
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
-			if (!normal_mode) setTimeout(function() {document.id('anno_' + f).fade(0.02);}, 3000);
+			if (cine) setTimeout(function() {document.id('anno_' + f).fade(0.02);}, 3000);
 			document.id('room-header').fade(0);		
 		}
 		/*
@@ -1583,7 +1582,8 @@ console.log('doing mic mix in normal mode');
 			// if (pcounter > 1 && i_am_on_air) document.id('participants').style.marginTop = '-78vh';
 			
 			// take care when only 1 participant in audio mode, small device
-			if (small_device && pcounter === 1) {
+			
+			/*if (small_device && pcounter === 1) {
 				if (Object.keys(participants) && Object.keys(participants).length === 1) {	
 					for (var key in participants) {
 						if (participants[key].mode === 'a') {
@@ -1592,7 +1592,7 @@ console.log('doing mic mix in normal mode');
 						}
 					}
 				}		 	
-		 	}			
+		 	}*/			
 
 	   }
    } // msg.data
@@ -1856,7 +1856,7 @@ function setAnno(request) {
 	}
 	
 	document.id('anno_' + request.participant).style.display='block';			
-	document.id('anno_' + request.participant).fade(1); setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 3000);
+	document.id('anno_' + request.participant).fade(1); if (cine) setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 3000);
 		 
 	//setTimeout(function() {const boxes = document.querySelectorAll('.annos'); boxes.forEach(box => {box.style.opacity = 0.02;});}, 3000);
 	document.id('room-header').fade(0);	
@@ -2094,7 +2094,7 @@ const onParticipantLeft = (request) => {
 			if (pcounter > 4) document.id('participants').style.height = window == window.top ? '275vh' : '300vh';
 
 			// take care when only 1 participant in audio mode, small device
-			if (small_device && pcounter === 1) {
+			/*if (small_device && pcounter === 1) {
 			  if (Object.keys(participants) && Object.keys(participants).length === 1) {	
 				for (var key in participants) {
 					if (participants[key].mode === 'a') {
@@ -2103,7 +2103,8 @@ const onParticipantLeft = (request) => {
 					}
 				}
 			  }		 	
-		 	}		
+		 	}*/
+					
 		 // calculate the height of participants ?!
 		 /*setTimeout(function() {
 			let p_height = 0;

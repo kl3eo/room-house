@@ -1418,7 +1418,6 @@ select:focus, input:focus, button:focus{
                                 <div style="display:none;">
 RANDOM=7777
                                 </div>
-<!-- script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; /*let sourcee = foo[1] && foo[1].length ? 'join_'+foo[1]+'_'+w[0]+'.html' : 'join_'+w[0]+'.html';*/ document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+':'+port+'/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:80vw;max-width:240px;"></iframe>'); (function() {if (document.id('join_')) console.log ('here', document.id('join_').src);}).delay(5000); </script -->
 
 <script>var foo = document.location.href.split('#'); var zoo = foo[1] && foo[1].length ? '#'+foo[1] : ''; /*let sourcee = foo[1] && foo[1].length ? 'join_'+foo[1]+'_'+w[0]+'.html' : 'join_'+w[0]+'.html';*/ document.write('<iframe id="join_" name="join_" src="https://'+window.location.hostname+'/joins/join_'+w[0]+'.html'+zoo+'" scrolling="no" style="border:0;min-height:128px;background:transparent;text-align:center;margin:-20px auto 0 auto; width:80vw;max-width:240px;"></iframe>'); /*(function() {if (document.id('join_')) console.log ('here', document.id('join_').src);}).delay(5000);*/ </script>
 				</div>
@@ -1473,7 +1472,7 @@ if (!curIP.length && false) {
 <div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;margin:0 auto;">
 	<div id="slidein" style="display:none;"></div><!-- dummy -->
 	<div id="anno_adder" style="display:none;"></div><!-- dummy -->
-	<div id="stream_adder" style="display:none;" onclick="if (shareSomeStream == false) {playSomeMusic=true;shareSomeStream=true;cli6();} else {if (document.id('av_toggler').className == 'bigO av_toggler_f') {flashText('<div style=\'position:absolute;top:30vh; left:40vw;\'>Switch off video, please!</div>'); return} leaveRoom();now_playing=false;__playing=false;hack=false;role=0;register();playSomeMusic=true;shareSomeStream=true;cli6();document.getElementsByTagName('iframe')[7].id=gifrid;document.getElementsByTagName('iframe')[7].src=document.getElementsByTagName('iframe')[7].src;}"></div><!-- dummy -->
+	<div id="stream_adder" style="display:none;" onclick="if (shareSomeStream == false) {playSomeMusic=true;shareSomeStream=true;cli6();} else { leaveRoom();now_playing=false;__playing=false;hack=false;role=0;register();playSomeMusic=true;shareSomeStream=true;cli6();document.getElementsByTagName('iframe')[7].id=gifrid;document.getElementsByTagName('iframe')[7].src=document.getElementsByTagName('iframe')[7].src;}"></div><!-- dummy -->
 	<div id="leftpluss" style="display:none;"></div><!-- dummy -->
 	<div id="rightpluss" style="display:none;"></div><!-- dummy -->
 	<div id="removerB" style="color:#777;font-size:16px;line-height:24px;cursor:pointer;z-index:1001;position:absolute;right:3px;"></div>
@@ -1525,7 +1524,7 @@ if (!curIP.length && false) {
 		
 	<div id="tex" onclick="if (document.id('poker_niche')) {document.id('poker_niche').src=poker_url; document.id('poker_niche').style.display='block'; document.id('poker_niche').style.zIndex='10100'; document.id('poker_niche').fade(1);}"></div>
 	<div id="chess" onclick="if (document.id('chess_niche')) {document.id('chess_niche').src=chess_url; document.id('chess_niche').style.display='block'; document.id('chess_niche').style.zIndex='10100'; document.id('chess_niche').fade(1);}"></div>
-	<div id="streamer" onclick="if (document.id('stream_adder')) document.id('stream_adder').click();document.id('container').style.display='none';"></div>
+	<div id="streamer" onclick="if (document.id('stream_adder') && aonly) document.id('stream_adder').click(); if (!aonly) {flashText('<div style=\'position:absolute;top:30vh; left:40vw;\'>Switch off video, please!</div>');}; document.id('container').style.display='none';"></div>
 
 	<div id="want" onclick="if (document.id('sm_niche')) {document.id('sm_niche').src=sm_url; document.id('sm_niche').style.display='block'; document.id('sm_niche').style.zIndex='10100'; document.id('sm_niche').fade(1);}">&#127920;</div>
 	<div style="clear:both;"></div>
