@@ -809,7 +809,7 @@ fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 
 
 const cli4 = () => {
 
-if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else { i_am_muted = !i__am_muted}
+if (!playSomeMusic && !shareSomeScreen) {toggleAllMuted();} else { i_am_muted = !i_am_muted}
 }
 
 const cli5 = () => {let sem  = window.innerWidth > 1024 ? '7' : ''; document.id('message_box').style.display = 'block'; document.id('audience_box').style.display = 'none';

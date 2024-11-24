@@ -111,8 +111,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//or only guru can hear others
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
-	if (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
-	// if (mode == 'm') coo_muted = true; //?! better all like iOS
+	// if (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
+	if (mode == 'm' || check_iOS() || isAndroid) coo_muted = true; //?! better all smart phones/tablets muted on default in cinema
 				
 	var coo_volume = loadData(name+'_volume');
 
@@ -225,6 +225,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	//container.onclick = switchContainerClass;
 	//if (name == myname) container.onclick = shareSomeStream ? do_grun : toggleRoomHeader;
+	if (name == myname) container.onclick = toggleRoomHeader;
 	container.ondblclick = rmPtcp;
 
 	var ar = name.split("_");
@@ -415,12 +416,12 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		return canvas;
 	}
 	
-	/*	
+	
 	function toggleRoomHeader() {
 
 			if(!small_device) {document.id('room-header').style.display = document.id('room-header').style.display === 'none' ? 'block' : 'none'; let a = document.id('room-header').style.display === 'none' ? 0 : 1; document.id('room-header').fade(a); document.id('room-header-file').style.display = document.id('room-header').style.display === 'none' ? 'none' : document.id('room-header-file').style.display;}
 	}
-	
+	/*
 	function do_grun() {
 		shareSomeStream = false;
 		grun();
@@ -440,7 +441,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 			if (role == 1) {
 				let p = participants[name]; let g = p.getMode();
 				let m = g == 'c' ? 'v'  : 'c'; //toggle
+				let mo =  g == 'c' ? false : true;
 				let tok = getCookie('authtoken') || '';
+				//setCookie('cinemaMode', mo);
+//console.log('saved cinema mode as', mo); 
 				let message = {
 					id : 'setCinema',
 					name : name,

@@ -865,6 +865,8 @@ public class Room implements Closeable {
 	final JsonElement participantNameModeCuripAccIdAnno_DUMMY = new JsonPrimitive(str + "_|_" + participant.getMode() + "_|_" + participant.getCurip() + "_|_" + participant.getAccId() + "_|_" + participant.getAnno());
         if (user.getAccId().length() == 0 && participant.getMode().equals("c")) {participantsArray.add(participantNameModeCuripAccIdAnno_DUMMY);} else {participantsArray.add(participantNameModeCuripAccIdAnno);}
 
+//if (user.getAccId().length() == 0 && participant.getMode().equals("c") && user.getName().compareTo(participant.getName()) != 0) {participantsArray.add(participantNameModeCuripAccIdAnno_DUMMY);} else {participantsArray.add(participantNameModeCuripAccIdAnno);}
+//?! set cinema mode until not disabled; not really a good thing; better set it for a particular file with a click
     }
 
     final JsonObject existingParticipantsMsg = new JsonObject();

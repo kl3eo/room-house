@@ -509,6 +509,7 @@ const register = () => {
 const register_body = (ro) => {
 	
 		var plr = getCookie('player');
+		//var mo = getCookie('cinemaMode');
 		
 		let w = window.location.hostname.split('.'); 
 		let room = document.id('roomName').value == '' ? w[0] : document.id('roomName').value;
@@ -591,6 +592,7 @@ const register_body = (ro) => {
 
 		let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
 		
+		//mode = plr && mo ? 'c' : plr ? 'p' : mode;
 		mode = plr ? 'p' : mode;
 		
 		let tok = getCookie('authtoken') || '';
@@ -1051,8 +1053,12 @@ const onExistingParticipants = (msg) => {
 all_muted = getCookie('all_muted');
 if (all_muted === true || all_muted === 'true') i_am_muted = true;
 
+	//let mo = getCookie('cinemaMode');
+	//let mode = mo ? 'c' : (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
+//?! set cinema mode until not disabled; not really a good thing; better set it for a particular file with a click
+
 	let mode = (i_am_muted === true || i_am_muted === 'true') ? 'm' : aonly ? 'a' : 'v';
-		
+	
 	var participant = new Participant(name, myname, mode, role, false);
 	participants[name] = participant;
 	
@@ -1354,7 +1360,7 @@ console.log('doing mic mix in normal mode');
 		  	 (function(){document.id('phones').fade(0);}).delay(1000);
 			 
 			 // hack ash - to set caption with files names
-			 getList_names();
+			 if (!shareSomeStream) getList_names();
 			
 			}); //rtcPeer
 		    }).catch(function(err){console.log(err.name + ": " + err.message);}); //mediaStream
@@ -1540,8 +1546,8 @@ console.log('doing mic mix in normal mode');
 				curMovie = arr[0];
 
 				let optionList = document.id('selector_' + f).options;
-
-				for (i=0; i < arr.length; i++) {
+				let lim = cinemaEnabled ? 1 : arr.length
+				for (i=0; i < lim; i++) {
 					//arr[i].replace(/["']/g,'');
 					optionList.add(new Option(arr[i], i))
 				}
