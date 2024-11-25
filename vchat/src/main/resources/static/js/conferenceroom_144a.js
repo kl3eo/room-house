@@ -1557,9 +1557,12 @@ console.log('doing mic mix in normal mode');
 	  			}
 			}
 			
-			document.id('anno_' + f).style.display='block';			
-			document.id('anno_' + f).fade(1);
-			if (cine) setTimeout(function() {if (document.id('anno_' + f)) document.id('anno_' + f).fade(0.02);}, 2000);
+			if (a && a.length) {
+				document.id('anno_' + f).style.display='block';			
+				document.id('anno_' + f).fade(1);
+			}
+			
+			if (s === 'c') setTimeout(function() {if (document.id('anno_' + f)) document.id('anno_' + f).fade(0.02);}, 2000);
 			setTimeout(function() {document.id('one-' + f).fade(0.25);}, 3000);
 			document.id('room-header').fade(0);		
 		}
@@ -1810,12 +1813,14 @@ function askGuru(request) {
 
 const setCinema = (request) => {
 
+	let myname = document.id('name').value;
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-//console.log('here req is', request);
+//console.log('here req is', request, 'myname', myname);
 		let myrole = respo || 0;
+
 		let m = request.mode;
-		if (m == 'c') { 
+		if (m == 'c' && request.name !== myname) { 
 		  rejoin();
 		  return;
 		}
@@ -1881,7 +1886,7 @@ function setAnno(request) {
 	}
 	
 	document.id('anno_' + request.participant).style.display='block';			
-	document.id('anno_' + request.participant).fade(1); if (cine) setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 2000);
+	document.id('anno_' + request.participant).fade(1); /*if (cine) setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 2000);*/
 		 
 	//setTimeout(function() {const boxes = document.querySelectorAll('.annos'); boxes.forEach(box => {box.style.opacity = 0.02;});}, 3000);
 	document.id('room-header').fade(0);	
