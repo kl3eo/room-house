@@ -42,10 +42,10 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 			if (sess.length) {
 			  let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>';
 			  
-			  let h = small_device ? '64vh' : 420;
+			  let h = tablet ? '42vh' : small_device ? '64vh' : 420;
 			  let fs = small_device ? 24 : 18;
 		//no jquery	 
-			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h}}, width:280, id:'m6', height: h, zIndex: 31005, position: 'relative', title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
+			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h, maxHeight: '450px'}}, width:280, id:'m6', height: h, zIndex: 31005, position: 'relative', title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
 			  
 			  let topo = (window.innerHeight-540)/2 - 30; topo = topo + 'px'; if (!small_device) document.id('m6').style.top=topo;	//trim it, sir
 			  // document.id('m6').onclick=function() {document.id('m6').style.display='none';document.id('m6').dispose();};
@@ -274,6 +274,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	onemode.className = 'onemode';
 	onemode.id = 'one-' + name;
 	onemode.style.zIndex=10002;
+	onemode.style.opacity=0;
 	onemode.style.fontSize = small_device ? '18px' : '14px';
 	onemode.style.color = shareSomeStream ? '#ff0' : onemode_color;
 	onemode.style.width = small_device ? '72px' : onemode.style.width;
@@ -310,7 +311,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		dummee.style.float='none';
 		dummee.style.margin = '-21px auto 0 auto';
 		dummee.style.cursor = 'pointer';
-		dummee.addEventListener('click',function(e){switchOneMode(e.target)});
+		//dummee.addEventListener('click',function(e){switchOneMode(e.target)});
 		container.appendChild(dummee);
 	}
 
@@ -512,9 +513,11 @@ function Participant(name, myname, mode, myrole, new_flag) {
 					document.body.scrollTop = document.documentElement.scrollTop = 0;  
 				   });
 				}
-				document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu;
-				document.id('phones').fade(1); (function(){if (afterBinding) location.reload();}).delay(500); 
-				(function(){document.id('phones').fade(0);}).delay(1000);
+				//document.id('phones').innerHTML = afterBinding ? '..PLEASE RE-ENTER..' : creatu;
+				//document.id('phones').fade(1); 
+				(function(){if (afterBinding) location.reload();}).delay(500); 
+				//(function(){document.id('phones').fade(0);}).delay(500);
+				//rejoin(); //?!
 			}
 		});
 

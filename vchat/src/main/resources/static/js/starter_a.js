@@ -399,8 +399,6 @@ const ed = () => { //code to run on receive message from join_ frame
 		document.id('want').style.visibility = 'hidden';
 		document.id('logger').style.display = 'none';		
 	}
-
-
 	
 	if (!small_device) document.id('controls').style.display = 'none';
 	if (small_device) document.id('controls').style.visibility = 'hidden';
@@ -413,24 +411,14 @@ const ed = () => { //code to run on receive message from join_ frame
 	if (small_device && document.id('second_logger')) (function() {document.id('second_logger').style.visibility = 'hidden';document.id('second_logger').style.display = 'block';}).delay(2000);
 	
 	let bgr = homee == 'REDHALL' ? 'red' : homee == 'BLUEHALL' ? 'blue' : homee == 'GREENHALL' ? 'green' : 'empty';
-	//document.id('city').style.background = bgr != 'empty' && !small_device ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;
+
 	document.id('city').style.background = bgr != 'empty' ?  'url(/img/' + bgr + '_screen.jpg) center center no-repeat' : null;
  	(function(){document.id('phones').fade(0);}).delay(100);
-	 
-	 // pop up the cinema screen
-	 
-	 //let hv = homee == 'REDHALL' ? 27 : homee == 'BLUEHALL' ? 27 : homee == 'GREENHALL' ? !small_device ? 39.9 : 27 : 27;//need to calculate somehow
-	 // if (!small_device)  {
-	 	//document.id('house').style.top = '-'+hv+'vh';
-	 	//document.id('sp_container').style.top = hv - 3 +'vh'; //get back
-		//if (small_device) document.id('message_wrap').style.top = hv+'vh';
-	 //}
 	 
 	 let hv = homee == 'REDHALL' ? small_device ? 24 : 30 : homee == 'BLUEHALL' ? small_device ? 24 : 27 : homee == 'GREENHALL' ? small_device ? 24 : 33 : 33;//need to calculate somehow
 	 document.id('participants').style.top = '-'+hv+'vh';
 	 
 	 document.id('house').style.textAlign = 'center';
-	 //document.id('participants').style.marginLeft = '-1vw';
 	 
  } else {
  	document.id('main_container').style.marginTop = '-60px';
@@ -652,7 +640,10 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 			ch_int = setInterval(function() {if (document.id('sp_balance')) { document.id('sp_balance').style.display='block'; document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from;}}, 300000);
 			afterBinding = true;
 			
-			document.id('phones').innerHTML = 'OK TO RE-ENTER'; document.id('phones').fade(1); (function(){location.reload();}).delay(2000);
+			//document.id('phones').innerHTML = 'OK TO RE-ENTER'; document.id('phones').fade(1); (function(){location.reload();}).delay(2000);
+			//(function(){
+			let vv = document.querySelector('video'); vv.click();
+			//}).delay(1000);
 		   
 			//let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
 			//scr.appendChild(document.createTextNode(obj.payload)); head.appendChild(scr);

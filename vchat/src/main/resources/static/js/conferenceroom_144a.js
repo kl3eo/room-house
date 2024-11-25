@@ -679,7 +679,7 @@ console.log('here token', tok,'val',document.id('asender').value,'name',document
 			}).delay(200);
 		}
 		
-		setTimeout(function() {check_locked(0)}, 2000); // give more time here to avoid slow server push to exit
+		setTimeout(function() {check_locked(0)}, 2000); // give more time here to avoid slow server push to exit 
 }
 
 function checkLang() {
@@ -1494,7 +1494,7 @@ console.log('doing mic mix in normal mode');
 		}		
 
 		if (cine) {
-			(function() {document.id('loco_' + f).fade(0);document.id('span_' + f).fade(0);}).delay(2000);
+			(function() {if (document.id('loco_' + f)) document.id('loco_' + f).fade(0);document.id('span_' + f).fade(0);}).delay(2000);
 		}
 				
 		if (document.id('acco_' + f) && ValidateAccountId(ac)) {
@@ -1560,7 +1560,8 @@ console.log('doing mic mix in normal mode');
 			
 			document.id('anno_' + f).style.display='block';			
 			document.id('anno_' + f).fade(1);
-			if (cine) setTimeout(function() {document.id('anno_' + f).fade(0.02);}, 3000);
+			if (cine) setTimeout(function() {if (document.id('anno_' + f)) document.id('anno_' + f).fade(0.02);}, 2000);
+			setTimeout(function() {document.id('one-' + f).fade(0.25);}, 3000);
 			document.id('room-header').fade(0);		
 		}
 		/*
@@ -1602,6 +1603,17 @@ console.log('doing mic mix in normal mode');
 
 	   }
    } // msg.data
+   if (!cinemaEnabled && document.id('sp_container') && document.id('sp_balance')) {document.id('sp_container').style.display = 'none';document.id('sp_balance').style.display='none';}
+   
+   acc_id.then(data => {
+     if (role == 0 && cinemaEnabled && !data.length) {
+	  (function() {if (document.id('sp_balance') && document.id('sp_container')){
+	    setTimeout(function() {document.id('sp_container').style.display='block';},1000);
+	    document.id('sp_balance').style.display='block';
+	    document.id('sp_balance').src=sp_container_url+'/?acc=';
+	  }}).delay(1000);
+     }
+   });
    	     
 //  }).catch(err => console.log(err)); //fetch
 } // onExistingP
@@ -1800,17 +1812,24 @@ const setCinema = (request) => {
 
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		let myrole = respo || 0;	
-		let p = participants[request.name];
-		p.setMode(request.mode);
-	
-		let o = document.id('one-' + request.name);
+//console.log('here req is', request);
+		let myrole = respo || 0;
 		let m = request.mode;
+		if (m == 'c') { 
+		  rejoin();
+		  return;
+		}
+		let p = participants[request.name];
+		if (p) {p.setMode(request.mode)} else {rejoin();return}; //?!
+		
+		let o = document.id('one-' + request.name);
 
-		o.style.color = m == 'c' ? '#ff0' : '#369';
-		o.style.fontWeight = m == 'c' ? 'bold' : 'normal';
-		o.style.display = m == 'c' ? 'block' : myrole == 1 ? 'block' : 'none';
-		o.innerHTML = m == 'c' ? 'CINEMA!' : 'CINEMA?';
+		if (o) {
+		   o.style.color = m == 'c' ? '#ff0' : '#369';
+		   o.style.fontWeight = m == 'c' ? 'bold' : 'normal';
+		   o.style.display = m == 'c' ? 'block' : myrole == 1 ? 'block' : 'none';
+		   o.innerHTML = m == 'c' ? 'CINEMA!' : 'CINEMA?';
+		}
 		
 		num_cinemas = m == 'c' ? num_cinemas + 1 : num_cinemas - 1;
 		
@@ -1862,7 +1881,7 @@ function setAnno(request) {
 	}
 	
 	document.id('anno_' + request.participant).style.display='block';			
-	document.id('anno_' + request.participant).fade(1); if (cine) setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 3000);
+	document.id('anno_' + request.participant).fade(1); if (cine) setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 2000);
 		 
 	//setTimeout(function() {const boxes = document.querySelectorAll('.annos'); boxes.forEach(box => {box.style.opacity = 0.02;});}, 3000);
 	document.id('room-header').fade(0);	
@@ -1870,6 +1889,7 @@ function setAnno(request) {
 
 function handleFileSelectChange(v) {
 
+	if (v === null || typeof(v) === 'undefined' || v.length === 0) return;
 	let fis = document.id('room-header-file').files;
 	for (var i = 0; i < fis.length; i++) {
 		//console.log("here checking v is", v, "name is",fis[i].name);
@@ -1922,7 +1942,7 @@ function setMoviesList(request) {
 		}		
 		
 		document.id('anno_' + request.participant).style.display='block';			
-		document.id('anno_' + request.participant).fade(1); setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 3000);
+		document.id('anno_' + request.participant).fade(1); setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 2000);
 		document.id('room-header').fade(0);
 		document.id('room-header-file').style.display='none';	 
 	 	

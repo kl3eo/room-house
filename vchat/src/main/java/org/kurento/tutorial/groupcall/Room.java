@@ -645,7 +645,7 @@ public class Room implements Closeable {
 			
     	for (final UserSession participant : participants.values()) {
 	  	try {
-			if (userName.equals(participant.getName())) { participant.sendMessage(reqMovie); }	 
+			if (userName.equals(participant.getName()) && !participant.getMode().equals("c")) { participant.sendMessage(reqMovie); }	 
 	  	} catch (final IOException e) {
 			log.debug("ROOM {}: could not inform of Cinema {}", name, participant.getName());
 		}				

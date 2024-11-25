@@ -164,8 +164,9 @@ const city_or_main = 1;
 @media screen and (max-width: 1024px) {
  .dropper {
 	right: 10px;
-	width: 36px;
-	height: 36px;
+	width: 72px;
+	height: 72px;
+	border-radius: 36px;
  }
  #participants {
  	margin:-59vh auto 0 auto;
@@ -1469,7 +1470,7 @@ if (!curIP.length && false) {
 <div id="subbundled" style="position:relative; text-align:center; width:100%;">
 <div id="removerA" style="color:#aaa;font-size:14px;line-height:24px;position:absolute;right:3px;top:-36px;display:none;font-family:Courier;">Connecting to SkyRHC network... <span id="cancel_sp" style="color:#9cf;cursor:pointer;z-index:1001;font-size:14px;line-height:18px;font-family:Arial;">CANCEL</span></div>
 
-<div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:99;top:-30px;margin:0 auto;">
+<div id="sp_container" style="height:84px;width:350px;background:transparent;display:none;position:relative;z-index:1011;top:-30px;margin:0 auto;">
 	<div id="slidein" style="display:none;"></div><!-- dummy -->
 	<div id="anno_adder" style="display:none;"></div><!-- dummy -->
 	<div id="stream_adder" style="display:none;" onclick="if (shareSomeStream == false) {selectedFile=null;playSomeMusic=true;shareSomeStream=true;cli6();} else { leaveRoom();now_playing=false;__playing=false;hack=false;role=0;register();playSomeMusic=true;shareSomeStream=true;cli6();document.getElementsByTagName('iframe')[7].id=gifrid;document.getElementsByTagName('iframe')[7].src=document.getElementsByTagName('iframe')[7].src;}"></div><!-- dummy -->
