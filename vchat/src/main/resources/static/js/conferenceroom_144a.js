@@ -301,7 +301,7 @@ const check_connection = () => {
 }
 
 const check_fullscreen_strict = () => {
-	acc_id.then(data => {
+	request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
 	   if (fullscreen) {
 		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
 			fullscreen = false; if (!data.length && cinemaEnabled) rejoin(); else fullscreen = true;
@@ -315,7 +315,7 @@ const check_fullscreen_strict = () => {
 }
 
 function check_fullscreen() {
-	acc_id.then(data => {
+	request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
 	   if (fullscreen) {
 		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
 			fullscreen = false; if (!data.length) rejoin(); else {fullscreen = true;}
@@ -611,7 +611,7 @@ const register_body = (ro) => {
 			let role = respo || 0;
 		}).catch(err => console.log(err));
 	
-		acc_id.then(data=>{
+		request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data=>{
 //console.log('reg: acc_id is', data);
 		   let message = {
 			id : 'joinRoom',
@@ -627,7 +627,6 @@ const register_body = (ro) => {
 		   }
 	
 		   sendMessage(message);		
-
 		});
 /*
 console.log('here token', tok,'val',document.id('asender').value,'name',document.id('name').value)
@@ -838,7 +837,7 @@ const onNewParticipant = (request) => {
 			document.id('acco_'+ request.name).fade(1);
 			document.id('acco_' + request.name).onclick = function(e) {
 				e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);
-				acc_id.then(data => {
+				request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
 					setTimeout(function() {
 						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
 						(function() {document.id('removerA').fade(0)}).delay(1000);}
@@ -1503,7 +1502,7 @@ console.log('doing mic mix in normal mode');
 			document.id('acco_' + f).fade(1);
 			document.id('acco_' + f).onclick = function() {
 				copy(ac); flashText('copied '+ na[0]);
-				acc_id.then(data => {
+				request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
 					setTimeout(function() {
 						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
 						(function() {document.id('removerA').fade(0)}).delay(1000);}
@@ -1603,15 +1602,16 @@ console.log('doing mic mix in normal mode');
 
 	   }
    } // msg.data
-   if (!cinemaEnabled && document.id('sp_container') && document.id('sp_balance')) {document.id('sp_container').style.display = 'none';document.id('sp_balance').style.display='none';}
    
-   acc_id.then(data => {
+   request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
      if (role == 0 && cinemaEnabled && !data.length) {
 	  (function() {if (document.id('sp_balance') && document.id('sp_container')){
 	    setTimeout(function() {document.id('sp_container').style.display='block';},1000);
 	    document.id('sp_balance').style.display='block';
 	    document.id('sp_balance').src=sp_container_url+'/?acc=';
 	  }}).delay(1000);
+     } else {
+     	document.id('sp_container').style.display = 'none';document.id('sp_balance').style.display='none';
      }
    });
    	     

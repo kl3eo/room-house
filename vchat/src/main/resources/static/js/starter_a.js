@@ -504,7 +504,7 @@ e.stopPropagation();
 
    
   if (role != -1  && sp_shown) {
-  	acc_id.then(data => {
+  	request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
 //console.log('1: acc_id is', data);
 		setTimeout(function() { if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable'; (function() { document.id('removerA').fade(0)}).delay(1000);}}, 10000);
 		
