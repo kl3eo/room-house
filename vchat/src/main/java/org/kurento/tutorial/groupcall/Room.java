@@ -729,6 +729,7 @@ public class Room implements Closeable {
     newViewerMsg.addProperty("ng", ng);
     newViewerMsg.addProperty("rl", rl);
     newViewerMsg.addProperty("currRoom", currRoom);
+    newViewerMsg.addProperty("accid", newViewer.getAccId());
 
     for (final UserSession participant : participants.values()) {
       try {

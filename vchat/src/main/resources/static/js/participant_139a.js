@@ -30,6 +30,9 @@
 var fullscreen = false; var ios_fullscreen = false; var cinemaEnabled = false;
 
 let already_been_there = false;
+let first_time = true;
+
+//const dumbHandler = (e) => {e.preventDefault(); e.stopPropagation(); console.log('clicked dumb!')}
 
 const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 	let sp_setter_url_cur = sp_setter_url+'/#/binder/to/:'+acc_host+'/amount/:'+sum_host;
@@ -42,10 +45,19 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 			if (sess.length) {
 			  let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>';
 			  
+			  sp_setter += '<div id="sp_setter_dummy" style="font-size:18px;position:relative;text-align:center;width:70%;margin:44% auto;display:none;">PLEASE WAIT .. LOADING WALLET..</div>'
+			  
 			  let h = tablet ? '42vh' : small_device ? '64vh' : 420;
 			  let fs = small_device ? 24 : 18;
 		//no jquery	 
 			  mod6 = new mBox.Modal({content: sp_setter, setStyles: {content: {padding: '25px', lineHeight: 24, margin: '0 auto', fontSize: fs, color: '#222', height: h, maxHeight: '450px'}}, width:280, id:'m6', height: h, zIndex: 31005, position: 'relative', title: 'SkyRHC wallet', attach: 'newacc'}); document.id('newacc').click();
+			  if (document.id('sp_setter') && first_time) {
+			    //document.id('sp_setter').addEventListener('click', dumbHandler)
+			    //setTimeout(function() {document.id('sp_setter').removeEventListener('click', dumbHandler);console.log('back from dumb!')}, 5000);
+			    document.id('sp_setter').style.display = 'none';document.id('sp_setter_dummy').style.display = 'block';// hack ash: do not disturb iframe while it's connecting
+			    setTimeout(function() {document.id('sp_setter').style.display='block';document.id('sp_setter_dummy').style.display = 'none';/*console.log('back from dumb!')*/}, 5000);
+			    first_time = false;
+			  }
 			  
 			  let topo = (window.innerHeight-540)/2 - 30; topo = topo + 'px'; if (!small_device) document.id('m6').style.top=topo;	//trim it, sir
 			  // document.id('m6').onclick=function() {document.id('m6').style.display='none';document.id('m6').dispose();};
@@ -60,7 +72,7 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 		/*
 		if(!playSomeMusic&&!shareSomeScreen){fullscreen=true; chat_shown=1;document.id("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=document.id("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){document.id("room-header").style.display="none";if (normal_mode) document.id("room-backer").style.display="block";if (!small_device) {document.id("room").style.minWidth = "480px";document.id("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}let c=document.id("one-"+a);if (c) c.fade(0);}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}
 		*/
-		rejoin();
+		if (!switched) { switched = true; rejoin(); } else {if(!playSomeMusic && !shareSomeScreen){fullscreen=true; chat_shown=1;document.id("logger").click();let re=/video-/gi;let a=el.id.replace(re,"");let v=document.id("video-"+a);if(v && !v.fullscreenElement && !check_iOS()){v.requestFullscreen()}(function(){document.id("room-header").style.display="none";if (normal_mode) document.id("room-backer").style.display="block";if (!small_device) {document.id("room").style.minWidth = "480px";document.id("room").style.marginLeft = "0px";}if(Object.keys(participants).length){for(var key in participants){if(participants[key].name!=a){participants[key].dispose();delete participants[key]}}}}).delay(500)}else{if(playSomeMusic){flashText("PLAYING VIDEO! STOP?")}else{flashText("SHARING SCREEN! STOP?")}}}
 	   }
 	});	
 };
@@ -115,8 +127,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
 	// if (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
-	if (mode == 'm' || check_iOS() || isAndroid) coo_muted = true; //?! better all smart phones/tablets muted on default in cinema
-				
+	// if (mode == 'm' || check_iOS() || isAndroid) coo_muted = true; //?! better all smart phones/tablets muted on default in cinema
+	// if (mode == 'm' || mode == 'c' || || mode == 'p') coo_muted = true; // ?!
+	coo_muted = true; // serpom po mandarinam
+	
 	var coo_volume = loadData(name+'_volume');
 
 	if (coo_volume === null || coo_volume === 'null') coo_volume = this_is_unmuted ? 0.1 : this_is_guru ? 0.7 : 0.5;

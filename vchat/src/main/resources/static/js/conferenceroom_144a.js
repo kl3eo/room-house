@@ -692,7 +692,7 @@ const onNewViewer = (request) => {
 	if (request.currRoom && currRoom != request.currRoom) return false; // do not connect those coming to a room other than mine current
 	
 	let myname = document.id('name').value; let myvideo = 'video-' + myname;	
-	if (now_playing) (function() {if (document.id(myvideo)) document.id(myvideo).play();__playing = true;}).delay(1000);
+	if ((now_playing && cinemaEnabled && playSomeMusic && request.accid.length) || (now_playing && !cinemaEnabled && playSomeMusic)) (function() {if (document.id(myvideo)) document.id(myvideo).play();__playing = true;}).delay(1000);
 
 	if (request.ng) {if (document.id('num_guests')) document.id('num_guests').innerHTML = request.ng;}
 	room_limit = (typeof request.rl !== 'undefined') ? request.rl : room_limit;
@@ -1468,10 +1468,10 @@ console.log('doing mic mix in normal mode');
 			receiveVideo(f, s, role, false);
 			let coo_volume = loadData(f+'_volume');
 			
-			document.id('slider_' + f).value = coo_volume;
-			document.id('video-' + f).volume = coo_volume;
+			if (document.id('slider_' + f)) document.id('slider_' + f).value = coo_volume;
+			if (document.id('video-' + f)) document.id('video-' + f).volume = coo_volume;
 			
-			(function() {document.id(f).style.display='block'; document.id(f).fade(1);}).delay(500);//need this animation because the new video appears under the row, so we hide it
+			(function() {if (document.id(f)) {document.id(f).style.display='block'; document.id(f).fade(1);}}).delay(500);//need this animation because the new video appears under the row, so we hide it
 			
 			
 		} else {
@@ -1493,7 +1493,7 @@ console.log('doing mic mix in normal mode');
 		}		
 
 		if (cine) {
-			(function() {if (document.id('loco_' + f)) document.id('loco_' + f).fade(0);document.id('span_' + f).fade(0);}).delay(2000);
+			(function() {if (document.id('loco_' + f)) document.id('loco_' + f).fade(0); if (document.id('span_' + f))document.id('span_' + f).fade(0);}).delay(2000);
 		}
 				
 		if (document.id('acco_' + f) && ValidateAccountId(ac)) {
@@ -1563,7 +1563,7 @@ console.log('doing mic mix in normal mode');
 			}
 			
 			if (s === 'c') setTimeout(function() {if (document.id('anno_' + f)) document.id('anno_' + f).fade(0.02);}, 2000);
-			setTimeout(function() {document.id('one-' + f).fade(0.25);}, 3000);
+			setTimeout(function() {if (document.id('one-' + f)) document.id('one-' + f).fade(0.5);}, 3000);
 			document.id('room-header').fade(0);		
 		}
 		/*

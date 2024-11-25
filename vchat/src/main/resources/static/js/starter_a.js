@@ -69,6 +69,8 @@ var curMoviesList = []
 
 var curMovie = ''
 
+var switched = false;
+
 function getIP(json) {
     curIP = json.ip;
 	document.id('curip').value = curIP;
@@ -633,7 +635,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 			
 			//mod6.close();
 			
-			(function(){document.id('m6').style.display='none';}).delay(2000);
+			(function(){if (document.id('m6')) {document.id('m6').style.display='none';document.id('m6').dispose(); [...document.querySelectorAll("[style*='z-index: 31004']")].forEach(e=>e.dispose())}}).delay(1000);
 
 			document.id('sp_balance').src = sp_container_url + '/?acc=' + obj.from;
 			clearInterval(ch_int);
@@ -642,7 +644,7 @@ document.id('join').style.visibility='hidden'; document.id('langs').style.visibi
 			
 			//document.id('phones').innerHTML = 'OK TO RE-ENTER'; document.id('phones').fade(1); (function(){location.reload();}).delay(2000);
 			//(function(){
-			let vv = document.querySelector('video'); vv.click();
+			let vv = document.querySelector('video'); setTimeout(function() {vv.click()}, 500);
 			//}).delay(1000);
 		   
 			//let head = document.getElementsByTagName('head')[0], scr = document.createElement('script'); 
