@@ -491,6 +491,9 @@ const register = () => {
 	if (!name.length) name = cookie_name; 
 	if (!name.length || name === 'null') {name=makeid(8); name = name+'_'+name; saveData('name', name, 1440);}
 	
+	var gi = new RegExp('GURU:','g');
+	if (name.match(gi) && cine) {name=makeid(8); name = 'GURU:'+name+'_'+name; saveData('name', name, 1440);document.id('name').value=name}
+	
 	if (i_am_dummy_guest) { //it wouldn't help?!
 
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
@@ -1608,11 +1611,12 @@ console.log('doing mic mix in normal mode');
    
    request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
      if (role == 0 && cinemaEnabled && !data.length) {
-	  (function() {if (document.id('sp_balance') && document.id('sp_container')){
-	    setTimeout(function() {document.id('sp_container').style.display='block';},1000);
-	    document.id('sp_balance').style.display='block';
-	    document.id('sp_balance').src=sp_container_url+'/?acc=';
-	  }}).delay(1000);
+	  if (document.id('sp_balance') && document.id('sp_container')){
+	    setTimeout(function() {document.id('sp_container').style.display='block';},2000);
+	    setTimeout(function() {document.id('sp_balance').style.display='block';document.id('sp_balance').src=sp_container_url+'/?acc=';},1000);
+	    //document.id('sp_balance').style.display='block';
+	    //document.id('sp_balance').src=sp_container_url+'/?acc=';
+	  };
      } else {
      	document.id('sp_container').style.display = 'none';document.id('sp_balance').style.display='none';
      }

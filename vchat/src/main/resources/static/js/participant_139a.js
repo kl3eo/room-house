@@ -45,7 +45,7 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 			if (sess.length) {
 			  let sp_setter = isIOSFirefox() ? '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:400px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>' : '<iframe id="sp_setter" name="sp_setter" src="' + sp_setter_url_cur + '/?session=' + sess +'" scrolling="yes" style="border:0;min-height:430px;background:transparent;text-align:center;margin:-20px auto 0 -20px; width:320px;"></iframe>';
 			  
-			  sp_setter += '<div id="sp_setter_dummy" style="font-size:18px;position:relative;text-align:center;width:70%;margin:44% auto;display:none;">PLEASE WAIT .. LOADING WALLET..</div>'
+			  sp_setter += '<div id="sp_setter_dummy" style="font-size:18px;position:relative;text-align:center;width:70%;margin:44% auto;display:none;background:#def;">PLEASE WAIT .. LOADING WALLET..</div>'
 			  
 			  let h = tablet ? '42vh' : small_device ? '64vh' : 420;
 			  let fs = small_device ? 24 : 18;
@@ -55,7 +55,7 @@ const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 			    //document.id('sp_setter').addEventListener('click', dumbHandler)
 			    //setTimeout(function() {document.id('sp_setter').removeEventListener('click', dumbHandler);console.log('back from dumb!')}, 5000);
 			    document.id('sp_setter').style.display = 'none';document.id('sp_setter_dummy').style.display = 'block';// hack ash: do not disturb iframe while it's connecting
-			    setTimeout(function() {document.id('sp_setter').style.display='block';document.id('sp_setter_dummy').style.display = 'none';/*console.log('back from dumb!')*/}, 5000);
+			    setTimeout(function() {document.id('sp_setter').style.display='block';document.id('sp_setter_dummy').style.display = 'none';/*console.log('back from dumb!')*/}, 3000);
 			    first_time = false;
 			  }
 			  
