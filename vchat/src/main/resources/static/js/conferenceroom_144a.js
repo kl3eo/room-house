@@ -693,6 +693,7 @@ function checkLang() {
 const onNewViewer = (request) => {
 
 	if (request.currRoom && currRoom != request.currRoom) return false; // do not connect those coming to a room other than mine current
+
 	
 	let myname = document.id('name').value; let myvideo = 'video-' + myname;	
 	if ((now_playing && cinemaEnabled && playSomeMusic && request.accid.length) || (now_playing && !cinemaEnabled && playSomeMusic)) (function() {if (document.id(myvideo)) document.id(myvideo).play();__playing = true;}).delay(1000);
@@ -724,7 +725,7 @@ const onNewViewer = (request) => {
 		
 		vcounter = cur; if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 		
-		if (just_left != f && document.id('name').value != f && document.id('name').value != just_left) soundEffect.src = "/sounds/steps.mp3";
+		if (just_left != f && document.id('name').value != f && document.id('name').value != just_left) { if (cine) {soundEffect.src = "/sounds/coin.mp3";} else {soundEffect.src = "/sounds/steps.mp3";}}
 }
 
 const onNewParticipant = (request) => {
@@ -813,15 +814,17 @@ const onNewParticipant = (request) => {
 		let vid = document.id('video-' + request.name);
 
 		vid.muted = noSound;
+		if (cine) vid.muted = true; // serpom po mandarinam
 		
 		// should check muted mic here, too
 		if (request.mode === 'm') vid.muted = true;
 		
 		let spea = document.id('speaker-' + request.name);
 		spea.removeChild(spea.childNodes[0]);
-		request.mode !== 'm' && noSound && spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
-		request.mode !== 'm' && !noSound && spea.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
+		request.mode !== 'm' && (noSound || cine) && spea.appendChild(document.createTextNode('\uD83D\uDD07'));//muted icon
+		request.mode !== 'm' && !noSound && !cine && spea.appendChild(document.createTextNode('\uD83D\uDD0A'));//speaker icon
 		request.mode === 'm' && spea.appendChild(document.createTextNode('X'));//x icon
+
 				
 		if (request.curip.length && document.id('loco_'+request.name) && !ValidateIPaddress(request.curip)) {
 			document.id('loco_'+request.name).innerHTML = request.curip;
