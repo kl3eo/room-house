@@ -71,6 +71,8 @@ var curMovie = ''
 
 var switched = false;
 
+var lori = small_device && window.innerWidth > window.innerHeight ? true : false;
+
 function getIP(json) {
     curIP = json.ip;
 	document.id('curip').value = curIP;

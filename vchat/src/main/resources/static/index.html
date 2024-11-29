@@ -114,6 +114,14 @@ const city_or_main = 1;
 	width:290px;
 }
 
+.round_button {
+	background:#334;
+	color: #fed;
+	float: left;
+	text-align:center;
+	cursor:pointer;
+}
+
 .phones {
 	visibility:hidden;
 	width:100vw;
@@ -160,8 +168,42 @@ const city_or_main = 1;
 	padding:5px 0;
 	z-index:2200;	
 }
+#viewer_menu {
+	background:#001;
+	opacity:0;
+}
 
 @media screen and (max-width: 1024px) {
+ .but_text {
+ 	font-size:24px;
+ }
+ .round_button {
+	height:30px;
+	border-radius:15px;
+	font-size:0px;
+	margin:16px 2px;
+	line-height:30px;
+ }
+ .long {
+ 	width:60px;
+	text-align:left;
+ }
+ .short {
+ 	width:45px
+ }
+ .space {
+ 	width:2px
+ } 
+ #viewer_menu {
+	width:100vw;
+	max-width:480px;
+	margin:0 auto 0 auto;
+	height:60px;
+	position:absolute;
+	!top: 50vh;
+	top: 0;
+ }
+
  .dropper {
 	right: 10px;
 	width: 72px;
@@ -328,6 +370,32 @@ const city_or_main = 1;
 }
 
 @media screen and (min-width: 1024px)  {
+ .but_text {
+ 	font-size:16px;
+ }
+ 
+ .round_button {
+	height:60px;
+	border-radius:30px;
+	font-size:48px;
+	margin:16px 5px;
+	line-height:60px;
+ }
+ .long {
+ 	width:78px
+ }
+ .short {
+ 	width:72px
+ }
+ .space {
+ 	width:72px
+ }
+ #viewer_menu {
+	width:680px;
+	margin:-300px auto 0 auto;
+	height:90px;
+	position:relative;
+ }
  #participants {
  	margin:-50vh auto 0 auto;
  }
@@ -1587,7 +1655,15 @@ if (!curIP.length && false) {
 
 </div><!-- city -->
 <div id="participants" style="position:relative;min-width:350px;text-align:center;z-index:1010; border: 0px solid #900">
-				<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;z-index:33005;position:relative;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
+	<div id="second_logger" style="width:50px;height:50px;background:url(/icons/chat2.png) center center no-repeat;display:none;z-index:33005;position:relative;" onclick="document.id('message_wrap').style.marginTop='35vh';cli5()"></div>
+</div>
+<div id="viewer_menu">
+<div id="sbut" class="round_button short" onclick="eventHandler(83)">S<span class="but_text">stop</span></div><div id="pbut" class="round_button short" onclick="eventHandler(80)">P<span class="but_text">play</span></div>
+<div class="round_button space" style="visibility:hidden;"></div><!-- space -->
+<div id="rbut" class="round_button long" onclick="eventHandler(82)">R<span class="but_text">-10s</span></div><div id="fbut" class="round_button long" onclick="eventHandler(70)">F<span class="but_text">+10s</span></div>
+<div class="round_button space" style="visibility:hidden;"></div><!-- space -->
+<div id="cbut" class="round_button long" onclick="eventHandler(67)">C<span class="but_text">-5m</span></div><div id="dbut" class="round_button long" onclick="eventHandler(68)">D<span class="but_text">+5m</span></div>
+<div style="clear:left;"></div>
 </div>
 <div id="icons_cr" style="float:right; opacity:0; white-space:nowrap;"><a target="_blank" href="https://icons8.com/icon/102718/перезапуск">Перезапуск</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
 <div id="container" style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0;"></div>

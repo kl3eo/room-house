@@ -265,6 +265,9 @@ ws.onmessage = function(message) {
 	case 'requestFilm':
 		requestFilm(parsedMessage);
 		break;
+	case 'denyMovie':
+		denyMovie(parsedMessage);
+		break;
 	case 'viewerLeft':
 		just_left = parsedMessage.name;
 		onViewerLeft(just_left);
@@ -280,6 +283,28 @@ ws.onmessage = function(message) {
 	default:
 		console.error('Unrecognized message', parsedMessage);
 	}
+}
+
+if (isAndroid) {
+screen.orientation.onchange = function (){
+    // logs 'portrait' or 'landscape'
+    //console.log(screen.orientation.type.match(/\w+/)[0]);
+    if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
+    let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+    let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
+    if (document.id('viewer_menu')) setTimeout(function() {window.innerWidth < window.innerHeight && document.id('viewer_menu').setStyles({'zIndex': zi}) && document.id('viewer_menu').fade(vis);}, 1000);
+};
+} else if (check_iOS()) {
+    window.onorientationchange = function () {
+      if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
+      let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+      let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
+      if (Math.abs(window.orientation) === 90) {
+        // Landscape
+      } else {
+    	if (document.id('viewer_menu')) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
+      }
+    }
 }
 
 function rejoin(){
@@ -336,8 +361,9 @@ function signalGuru(e) {
 
 function eventHandler(n) {
 
-		var message={id :'keyDown', num: n, name: ''}; 
+		var message={id :'keyDown', num: n}; 
 		sendMessage(message);
+		//console.log('key down!', n);
 }
 
 function leftHandler(e) {
@@ -470,6 +496,9 @@ const register = () => {
 				case 'requestFilm':
 					requestFilm(parsedMessage);
 					break;
+				case 'denyMovie':
+					denyMovie(parsedMessage);
+					break;
 				case 'viewerLeft':
 					just_left = parsedMessage.name;
 					onViewerLeft(just_left);
@@ -579,7 +608,7 @@ const register_body = (ro) => {
 			});
                 	firstTime = false;
         	}
-	
+
 		document.id('fmode_selector').style.display = 'block';
 		//if (document.id('newsub') && ro == 1) 
 			document.id('newsub').style.display = 'block';
@@ -725,6 +754,10 @@ const onNewViewer = (request) => {
 		
 		vcounter = cur; if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 		
+		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
+		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
+				
 		if (just_left != f && document.id('name').value != f && document.id('name').value != just_left) { if (cine) {soundEffect.src = "/sounds/coin.mp3";} else {soundEffect.src = "/sounds/steps.mp3";}}
 }
 
@@ -867,6 +900,9 @@ const onNewParticipant = (request) => {
 		}
 
 	}
+		let vis = i_am_viewer && vcounter === 1 && cine && (request.mode == 'p' || request.mode == 'c')? small_device ? 0.5 : 0.5 : 0;
+		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
+		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 }
 
 function receiveVideoResponse(result) {
@@ -962,7 +998,10 @@ const onExistingViewers = (msg) => {
 	   if (document.id('audience_boxx')) document.id('audience_boxx').innerHTML = audience;
 
    }
-    
+
+   let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+   let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
+   if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 }
 
 const set_guru = (par, who) => {
@@ -1289,6 +1328,7 @@ console.log('running', N++);
 			let audioStreamTrack = null;
 			if (!cine) {
 console.log('doing mic mix in normal mode');
+			   if (!g.ctx) g.ctx = new AudioContext();
 			   const dest = g.ctx.createMediaStreamDestination();
 			   const audioIn_01 = audioTrack ? g.ctx.createMediaStreamSource(mediaStream) : null;
 			   const audioIn_02 = captureStream.getAudioTracks()[0] ? g.ctx.createMediaStreamSource(captureStream) : null;
@@ -1617,8 +1657,6 @@ console.log('doing mic mix in normal mode');
 	  if (document.id('sp_balance') && document.id('sp_container')){
 	    setTimeout(function() {document.id('sp_container').style.display='block';},2000);
 	    setTimeout(function() {document.id('sp_balance').style.display='block';document.id('sp_balance').src=sp_container_url+'/?acc=';},1000);
-	    //document.id('sp_balance').style.display='block';
-	    //document.id('sp_balance').src=sp_container_url+'/?acc=';
 	  };
      } else {
      	document.id('sp_container').style.display = 'none';document.id('sp_balance').style.display='none';
@@ -1945,7 +1983,7 @@ function setMoviesList(request) {
 		
 		curMovie = arra[0]
 
-		let optionList = document.id('selector_' + request.participant).options;
+		let optionList = document.id('selector_' + request.participant) ? document.id('selector_' + request.participant).options : [];
 		curMoviesList = []
 		for (i=0; i < arra.length; i++) {
 			//arra[i].replace(/["']/g,'');
@@ -1954,7 +1992,8 @@ function setMoviesList(request) {
 		}		
 		
 		document.id('anno_' + request.participant).style.display='block';			
-		document.id('anno_' + request.participant).fade(1); setTimeout(function() {document.id('anno_' + request.participant).fade(0.02);}, 2000);
+		document.id('anno_' + request.participant).fade(1); 
+		setTimeout(function() {if (document.id('anno_' + request.participant)) document.id('anno_' + request.participant).fade(0.02)}, 2000);
 		document.id('room-header').fade(0);
 		document.id('room-header-file').style.display='none';	 
 	 	
@@ -1964,6 +2003,10 @@ function setMoviesList(request) {
 
 function requestFilm(request) {
 	handleFileSelectChange(request.name);
+}
+
+function denyMovie(request) {
+	flashText('Currently ' + request.n + ' people watching!');
 }
 
 function changeTabLR(request) {
@@ -1984,7 +2027,8 @@ function bongoKey(request) {
 	let myname = document.id('name').value;
 	let myvideo = 'video-' + myname;
 	
-	let video_controlable = request.name === myname || request.name === '' ? true : false; 
+	//let video_controlable = request.name === myname || request.name === '' ? true : false;
+	let video_controlable = true;
 	
 	if (request.num == '65') {
 		soundEffect.src = "/sounds/track01.mp3";
@@ -1994,17 +2038,17 @@ function bongoKey(request) {
 	if (request.num == '66') {
 		soundEffect.src = "/sounds/track02.mp3";
 		a = 'b';
-
+		if (now_playing && video_controlable) {document.id(myvideo).currentTime = 0;document.id(myvideo).play();__playing = true;}
 	}
 	if (request.num == '67') {
-		soundEffect.src = "/sounds/track03.mp3";
+		//soundEffect.src = "/sounds/track03.mp3";
 		a = 'c';
-
+		if (now_playing && video_controlable) {document.id(myvideo).currentTime -= 300;document.id(myvideo).play();__playing = true;}
 	}
 	if (request.num == '68') {
-		soundEffect.src = "/sounds/track04.mp3";
+		//soundEffect.src = "/sounds/track04.mp3";
 		a = 'd';
-
+		if (now_playing && video_controlable) {document.id(myvideo).currentTime += 300;document.id(myvideo).play();__playing = true;}
 	}
 	if (request.num == '69') {
 		soundEffect.src = "/sounds/track05.mp3";
@@ -2012,9 +2056,9 @@ function bongoKey(request) {
 
 	}
 	if (request.num == '70') {
-		soundEffect.src = "/sounds/track06.mp3";
+		//soundEffect.src = "/sounds/track06.mp3";
 		a = 'f';
-		if (now_playing && video_controlable) document.id(myvideo).currentTime += 10;
+		if (now_playing && video_controlable) {document.id(myvideo).currentTime += 10;document.id(myvideo).play();__playing = true;}
 
 	}
 	if (request.num == '71') {
@@ -2063,7 +2107,7 @@ function bongoKey(request) {
 
 	}
 	if (request.num == '80') {
-		soundEffect.src = "/sounds/track16.mp3";
+		//soundEffect.src = "/sounds/track16.mp3";
 		a = 'p';
 		if (now_playing && video_controlable) {document.id(myvideo).play();__playing = true;}
 
@@ -2074,13 +2118,13 @@ function bongoKey(request) {
 
 	}
 	if (request.num == '82') {
-		soundEffect.src = "/sounds/track14.mp3";
+		//soundEffect.src = "/sounds/track14.mp3";
 		a = 'r';
 		if (now_playing && video_controlable) {document.id(myvideo).currentTime -= 10;document.id(myvideo).play();__playing = true;}
 
 	}
 	if (request.num == '83') {
-		soundEffect.src = "/sounds/track13.mp3";
+		//soundEffect.src = "/sounds/track13.mp3";
 		a = 's';
 		if (now_playing && video_controlable) {document.id(myvideo).pause();__playing = false;}
 
@@ -2091,7 +2135,7 @@ function bongoKey(request) {
 
 	}
 	if (request.num == '85') {
-		soundEffect.src = "/sounds/track11.mp3";
+		//soundEffect.src = "/sounds/track11.mp3";
 		a = 'u';
 //console.log('here, np is', now_playing, 'vc is ', video_controlable, 'pl is', __playing);
 		if (now_playing  && video_controlable && __playing) {document.id(myvideo).pause(); __playing = false;}
@@ -2173,6 +2217,7 @@ const onParticipantLeft = (request) => {
         			if (!small_device) resizer(pcounter);			
 		} 
 	}
+	if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
 }
 
 const onViewerLeft = (n) => {
@@ -2193,7 +2238,11 @@ const onViewerLeft = (n) => {
 		let col = cur > 0 ? '#369' : '#ccc';
 		document.id('audience_numbers').setStyles({'color': col});
 		document.id('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : document.id('audience_boxx').innerHTML;
-		chat_shown = 1; document.id('logger').click(); document.id('audience').click(); 
+		chat_shown = 1; document.id('logger').click(); document.id('audience').click();
+		
+		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
+		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 	}
 }
 

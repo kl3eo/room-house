@@ -126,10 +126,10 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	//or only guru can hear others
 	//if (coo_muted === null || coo_muted === 'null') coo_muted = (i_am_guru || this_is_unmuted) ? all_muted : true;
 	
-	// if (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
+	// (mode == 'm' || check_iOS()) coo_muted = true; // ios stupid block video unless sound off
 	// if (mode == 'm' || check_iOS() || isAndroid) coo_muted = true; //?! better all smart phones/tablets muted on default in cinema
-	// if (mode == 'm' || mode == 'c' || || mode == 'p') coo_muted = true; // ?!
-	coo_muted = true; // serpom po mandarinam
+	if (mode == 'm' || mode == 'c' || mode == 'p') coo_muted = true; // ?!
+	// coo_muted = true; // serpom po mandarinam
 	
 	var coo_volume = loadData(name+'_volume');
 
@@ -744,7 +744,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 					//flashText('restart video to listen!');
 					//if (audioContext === null) {
 //console.log('audioContext init2');
-						//g.audioContext = new AudioContext();
+						if (!g.audioContext) g.audioContext = new AudioContext();
 						mediaSource = g.audioContext.createMediaElementSource(video);
 						analyser = g.audioContext.createAnalyser();
 						mediaSource.connect(analyser);
