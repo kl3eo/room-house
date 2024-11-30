@@ -159,7 +159,34 @@ window.onload = function(){
 
    }, 1000);
    
-   
+	let loneGuy = getCookie('loneGuy') || 0;
+	
+	if (loneGuy && typeof(loneGuy) !== 'undefined') {
+	  setCookie('loneGuy', 0, 1440); //console.log('here lone guy is', loneGuy);
+	  setTimeout(function() {
+	    document.getElementsByTagName('iframe')[0].contentDocument.getElementsByTagName('input')[5].click();
+
+	    let v = getCookie('playedFileName') || '';
+	    if (v.length) {
+	      let fis = document.id('room-header-file').files;
+	      for (var i = 0; i < fis.length; i++) {
+		if (fis[i].name === v) {
+		  if (selectedFile) URL.revokeObjectURL(selectedFile);
+		  selectedFile = URL.createObjectURL(fis[i]);
+		  curSelInd = i;
+		  curMovie = v;		
+		  break;
+		}
+	      }
+	    } else {
+	      if (document.id('room-header-file').files && document.id('room-header-file').files[0]) selectedFile = URL.createObjectURL(document.id('room-header-file').files[0]);
+	      
+	    }
+	    
+	    setTimeout(function() {playSomeMusic = true; /*console.log('clicking cli6');*/ cli6()}, 2000);
+	    
+	  }, 1000);
+	}	      
       
 	let lang = getCookie('lang');
 	lang = (lang === null || lang === 'null') ? 0 : lang;
@@ -290,14 +317,14 @@ screen.orientation.onchange = function (){
     // logs 'portrait' or 'landscape'
     //console.log(screen.orientation.type.match(/\w+/)[0]);
     if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
-    let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+    let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
     let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
     if (document.id('viewer_menu')) setTimeout(function() {window.innerWidth < window.innerHeight && document.id('viewer_menu').setStyles({'zIndex': zi}) && document.id('viewer_menu').fade(vis);}, 1000);
 };
 } else if (check_iOS()) {
     window.onorientationchange = function () {
       if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
-      let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+      let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
       let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
       if (Math.abs(window.orientation) === 90) {
         // Landscape
@@ -754,7 +781,7 @@ const onNewViewer = (request) => {
 		
 		vcounter = cur; if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 		
-		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
 		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
 		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 				
@@ -900,7 +927,7 @@ const onNewParticipant = (request) => {
 		}
 
 	}
-		let vis = i_am_viewer && vcounter === 1 && cine && (request.mode == 'p' || request.mode == 'c')? small_device ? 0.5 : 0.5 : 0;
+		let vis = i_am_viewer && vcounter === 1 && cine && (request.mode == 'p' || request.mode == 'c')? small_device ? 0.75 : 0.75 : 0;
 		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
 		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 }
@@ -999,7 +1026,7 @@ const onExistingViewers = (msg) => {
 
    }
 
-   let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+   let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
    let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
    if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 }
@@ -1612,8 +1639,8 @@ console.log('doing mic mix in normal mode');
 			setTimeout(function() {if (document.id('one-' + f)) document.id('one-' + f).fade(0.5);}, 3000);
 			document.id('room-header').fade(0);		
 		}
-		/*
-		if (document.id('lol_' + f) && a.length && s === 'p' && window.top == window) {
+		
+		/*if (document.id('lol_' + f) && a.length && s === 'p' && window.top == window && !small_device) {
 		
 			document.id('lol_' + f).innerHTML = 'STOP/PLAY';
 			document.id('lol_' + f).style.display='block';			
@@ -1621,8 +1648,8 @@ console.log('doing mic mix in normal mode');
 			document.id('rew_' + f).innerHTML = '<< -10s';
 			document.id('rew_' + f).style.display='block';			
 			document.id('rew_' + f).fade(1);
-		}
-		*/
+		}*/
+		
 		// disabled user controls for now --ash oct'23
 	   } //for
 	   if (small_device || tablet) {
@@ -1727,6 +1754,13 @@ const receiveVideo = (sender, mode, role, n) => {
 	var participant = new Participant(sender, document.id('name').value, mode, role, new_flag );
 	participants[sender] = participant;
 	g.video = participant.getVideoElement();
+	
+	//g.video.autoplay = true;
+	//g.video.playsInline = true;
+	g.video.controls = true;
+	//g.video.crossOrigin = 'anonymous';
+	//g.video.volume = 1;
+	//g.video.loop = true;
       
 	var constraints = {
                 audio : true,
@@ -2043,7 +2077,8 @@ function bongoKey(request) {
 	if (request.num == '67') {
 		//soundEffect.src = "/sounds/track03.mp3";
 		a = 'c';
-		if (now_playing && video_controlable) {document.id(myvideo).currentTime -= 300;document.id(myvideo).play();__playing = true;}
+		//if (now_playing && video_controlable) {document.id(myvideo).currentTime -= 300;document.id(myvideo).play();__playing = true;}
+		if (now_playing && video_controlable) {document.id(myvideo).currentTime = 0;document.id(myvideo).play();__playing = true;}
 	}
 	if (request.num == '68') {
 		//soundEffect.src = "/sounds/track04.mp3";
@@ -2130,9 +2165,14 @@ function bongoKey(request) {
 
 	}
 	if (request.num == '84') {
-		soundEffect.src = "/sounds/track12.mp3";
+		//soundEffect.src = "/sounds/track12.mp3";
 		a = 't';
-
+		if (playSomeMusic && selectedFile && cine) {
+		  setCookie('loneGuy', true, 1);
+		  setCookie('playedFileName', curMoviesList[0]);
+		  setCookie('cT_'+curMoviesList[0],document.id('video-'+document.id('name').value).currentTime, 14400);
+		  location.reload();
+		}
 	}
 	if (request.num == '85') {
 		//soundEffect.src = "/sounds/track11.mp3";
@@ -2240,7 +2280,7 @@ const onViewerLeft = (n) => {
 		document.id('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : document.id('audience_boxx').innerHTML;
 		chat_shown = 1; document.id('logger').click(); document.id('audience').click();
 		
-		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.5 : 0.5 : 0;
+		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
 		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
 		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 	}

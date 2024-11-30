@@ -305,7 +305,8 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	dropper.appendChild(document.createTextNode('X'));
 	dropper.style.fontSize = '16px';
 		
-	slider.style.zIndex = '1001';
+	slider.style.position = 'relative';
+	slider.style.zIndex = 10112;
 	
 	video.id = 'video-' + name;
 	video.autoplay = true;
