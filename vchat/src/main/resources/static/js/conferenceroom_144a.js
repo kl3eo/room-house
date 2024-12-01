@@ -317,14 +317,14 @@ screen.orientation.onchange = function (){
     // logs 'portrait' or 'landscape'
     //console.log(screen.orientation.type.match(/\w+/)[0]);
     if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
-    let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
+    let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 1 : 1 : 0;
     let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
     if (document.id('viewer_menu')) setTimeout(function() {window.innerWidth < window.innerHeight && document.id('viewer_menu').setStyles({'zIndex': zi}) && document.id('viewer_menu').fade(vis);}, 1000);
 };
 } else if (check_iOS()) {
     window.onorientationchange = function () {
       if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
-      let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
+      let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 1 : 1 : 0;
       let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
       if (Math.abs(window.orientation) === 90) {
         // Landscape
@@ -781,7 +781,7 @@ const onNewViewer = (request) => {
 		
 		vcounter = cur; if (document.id('vcounter')) document.id('vcounter').innerHTML = vcounter;
 		
-		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
+		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 1 : 1 : 0;
 		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
 		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 				
@@ -927,7 +927,7 @@ const onNewParticipant = (request) => {
 		}
 
 	}
-		let vis = i_am_viewer && vcounter === 1 && cine && (request.mode == 'p' || request.mode == 'c')? small_device ? 0.75 : 0.75 : 0;
+		let vis = i_am_viewer && vcounter === 1 && cine && (request.mode == 'p' || request.mode == 'c')? small_device ? 1 : 1 : 0;
 		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
 		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 }
@@ -1026,7 +1026,7 @@ const onExistingViewers = (msg) => {
 
    }
 
-   let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
+   let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 1 : 1 : 0;
    let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
    if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 }
@@ -1299,15 +1299,15 @@ if (all_muted === true || all_muted === 'true') i_am_muted = true;
 		// with sound both in the stream and in the local video. 
 		// initialize the audioContext
 		
-		/*if (playSomeMusic_muted === false) {
-			//g.audioContext = new AudioContext();
+		if (playSomeMusic_muted === false) {
+			if (!g.audioContext) g.audioContext = new AudioContext();
 //console.log('audioContext init1');
 			mediaSource = g.audioContext.createMediaElementSource(g.video);
 			analyser = g.audioContext.createAnalyser();
 			mediaSource.connect(analyser);
 			analyser.connect(g.audioContext.destination);
 		}
-		*/
+		
   
 		g.video.autoplay = true;
 		g.video.playsInline = true;
@@ -1757,7 +1757,7 @@ const receiveVideo = (sender, mode, role, n) => {
 	
 	//g.video.autoplay = true;
 	//g.video.playsInline = true;
-	g.video.controls = true;
+	// g.video.controls = true;
 	//g.video.crossOrigin = 'anonymous';
 	//g.video.volume = 1;
 	//g.video.loop = true;
@@ -2259,7 +2259,9 @@ const onParticipantLeft = (request) => {
 	}
 	if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
 }
-
+/*
+Diez peliculas cortas anti-globalistas en hispaniol he incluido en la lista de GREENHALL - disfrutalo ahora 24 horas cada dia non-stop. Solo tenemos Room-House para peliculas non cenzurada http://cinema.room-house.com.
+*/
 const onViewerLeft = (n) => {
 	
 	let na = n.split('_');
@@ -2280,7 +2282,7 @@ const onViewerLeft = (n) => {
 		document.id('audience_boxx').innerHTML = cur == '...' ? 'Audience is empty :(' : document.id('audience_boxx').innerHTML;
 		chat_shown = 1; document.id('logger').click(); document.id('audience').click();
 		
-		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 0.75 : 0.75 : 0;
+		let vis = i_am_viewer && vcounter === 1 && cine ? small_device ? 1 : 1 : 0;
 		let zi = i_am_viewer && vcounter === 1 && cine  ? 10111 : 0;
 		if (document.id('viewer_menu') && !lori) setTimeout(function() {document.id('viewer_menu').setStyles({'zIndex': zi});document.id('viewer_menu').fade(vis);}, 1000);
 	}

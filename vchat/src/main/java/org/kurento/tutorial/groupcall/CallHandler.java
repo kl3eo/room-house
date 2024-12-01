@@ -235,7 +235,7 @@ public class CallHandler extends TextWebSocketHandler {
       case "plus":
         	if (user != null) plusVote(user, jsonMessage);
       case "keyDown":
-        	// if (user != null) keyDown(user, jsonMessage); // disabled user controls for now --ash oct'23
+        	if (user != null) keyDown(user, jsonMessage);
         break;
       case "makeLeave":
 		String jTokenMakeLeave = jsonMessage.get("token").getAsString();
@@ -552,8 +552,22 @@ public class CallHandler extends TextWebSocketHandler {
   private void keyDown(UserSession user, JsonObject params) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());
     final String num = params.get("num").getAsString();
-    final String namee = params.get("name").getAsString();
-    room.notify_key_down(user,num,namee);
+    
+    int vie = 0; int pari = 0;
+    for (final UserSession participant : room.getParticipants()) {
+    	pari++;
+    }
+    for (final UserSession viewer : room.getViewers()) {
+    	vie++;
+    }
+    log.info("SOMEONE {}: requesting movie", user.getName());
+    if (vie == 1 && pari == 1) { 
+    	room.notify_key_down(user, num);
+    	log.info("SOMEONE {}: requesting key {}", user.getName(), num);
+    } else {
+    	room.deny_movie(user, vie);
+    	log.info("SOMEONE {}: denying key {} for {} viewers", user.getName(), num, vie);    
+    }        
   }
   
   private void makeLeave(UserSession user, JsonObject params) throws IOException {
@@ -654,6 +668,7 @@ public class CallHandler extends TextWebSocketHandler {
   private void requestMovie(UserSession user, JsonObject params) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());
     final String n = params.get("name").getAsString();
+    
     int vie = 0; int pari = 0;
     for (final UserSession participant : room.getParticipants()) {
     	pari++;
@@ -661,11 +676,14 @@ public class CallHandler extends TextWebSocketHandler {
     for (final UserSession viewer : room.getViewers()) {
     	vie++;
     }
-    //log.info("SOMEONE {}: requesting movie", user.getName());
-    //if (vie == 1 && pari == 1) { 
+    log.info("SOMEONE {}: requesting movie", user.getName());
+    if (vie == 1 && pari == 1) { 
     	room.request_movie(user, n);
     	log.info("SOMEONE {}: requesting movie {}", user.getName(), n);
-    //}
+    } else {
+    	room.deny_movie(user, vie);
+    	log.info("SOMEONE {}: denying for {} viewers", user.getName(), vie);    
+    }
   }
 /*  
   private boolean matches(String ip, String subnet) {
