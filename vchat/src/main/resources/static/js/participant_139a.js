@@ -785,6 +785,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 					for ( var key in participants) {
 						if (participants[key].name === name) {
 							participants[key].dispose();
+							delete participants[key].rtcPeer;
 							delete participants[key];
 						}
 					}					

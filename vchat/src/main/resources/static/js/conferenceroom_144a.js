@@ -737,7 +737,7 @@ console.log('here token', tok,'val',document.id('asender').value,'name',document
 			}).delay(200);
 		}
 		
-		setTimeout(function() {check_locked(0)}, 2000); // give more time here to avoid slow server push to exit 
+		setTimeout(function() {check_locked(0)}, 5000); // give more time here to avoid slow server push to exit 
 }
 
 function checkLang() {
@@ -1722,7 +1722,9 @@ const leaveRoom = () => {
 	
 	if (Object.keys(participants).length) {
 		for ( var key in participants) {
+				//console.log('dispose 3 in leave: real', real_pcnt, participants[key].name, key);
 				participants[key].dispose();
+				
 				delete participants[key].rtcPeer;
 				delete participants[key];
 		}
@@ -2195,13 +2197,17 @@ const onParticipantLeft = (request) => {
 
 	var participant = participants[request.name];
 	if (participant) {
-		participant.dispose();
+
+		participants[request.name].dispose();
+				
+		delete participants[request.name].rtcPeer;
+		delete participants[request.name];
+
+		//console.log('dispose 1 in left: real', real_pcnt);
 		if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
 
 		delete g.video; //?!
 
-		delete participant.rtcPeer;
-		delete participant;
 		just_left = request.name;
         	if (!small_device && window == window.top) resizer(pcounter);			
 	    	
@@ -2250,11 +2256,13 @@ const onParticipantLeft = (request) => {
 		let du = 'DUMMY_'+temp[temp.length-1];
 		participant = participants[du];
 		if (participant) {
-			participant.dispose();
+			participants[du].dispose();
+			delete participants[du];
+			console.log('dispose 2 in left: real', real_pcnt);
 			if (pcounter < room_limit) {document.id('bell').style.display = 'none'; document.id('av_toggler').style.display='block';}
-				delete participant;
-				just_left = request.name;
-        			if (!small_device) resizer(pcounter);			
+
+			just_left = request.name;
+        		if (!small_device) resizer(pcounter);			
 		} 
 	}
 	if (document.id('viewer_menu')) document.id('viewer_menu').setStyles({'opacity': 0,'zIndex': 0});
