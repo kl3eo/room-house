@@ -36,10 +36,10 @@ let first_time = true;
 
 const doSwitchOneMode = (el, acc_host, sum_host) => {if (false) console.log(el);
 	let sp_setter_url_cur = sp_setter_url+'/#/binder/to/:'+acc_host+'/amount/:'+sum_host;
-	request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => { 
+	request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => { 
 	   if (!data.length) {
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl?par=session', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let sess = respo; 
 			// console.log('respo here is', sess);
 			if (sess.length) {
@@ -455,7 +455,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	function setCinema() {
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			if (role == 1) {
 				let p = participants[name]; let g = p.getMode();
@@ -478,7 +478,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 	
 	function back_to_audience() {
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo;
 			if (role == 1) set_guru(0, name);
 	
@@ -505,7 +505,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		
 	const switchOneMode = (el) => {
 		document.id('house').style.display = 'block'; document.id('house').style.visibility='visible';
-		request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
+		request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => {
 			if (data.length) {
 				doSwitchOneMode(el,'5ENzTTUL3zvnMP8usRo3ZcGmMhkaHsvFUP6PMedLV9EWtLFx',5); //sorba
 			} else {
@@ -767,7 +767,7 @@ function Participant(name, myname, mode, myrole, new_flag) {
 		if (yon) {
 
 	  		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-			fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+			fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 				let role = respo;
 				if (role == 1) {
 

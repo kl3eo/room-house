@@ -353,7 +353,7 @@ const check_connection = () => {
 }
 
 const check_fullscreen_strict = () => {
-	request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
+	request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => {
 	   if (fullscreen) {
 		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
 			fullscreen = false; if (!data.length && cinemaEnabled) rejoin(); else fullscreen = true;
@@ -367,7 +367,7 @@ const check_fullscreen_strict = () => {
 }
 
 function check_fullscreen() {
-	request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
+	request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => {
 	   if (fullscreen) {
 		if ( !data.length || window.screenTop ||  window.screenY || (!(window.innerWidth == screen.width && window.innerHeight == screen.height) && isAndroid) ) {
 			fullscreen = false; if (!data.length) rejoin(); else {fullscreen = true;}
@@ -395,7 +395,7 @@ function eventHandler(n) {
 
 function leftHandler(e) {
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 		e.preventDefault();
 		e.stopPropagation(); 
@@ -416,7 +416,7 @@ function leftHandler(e) {
 function noHandler(e) { }
 function rightHandler(e) {
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
         	e.preventDefault();
         	e.stopPropagation(); 
@@ -553,7 +553,7 @@ const register = () => {
 	if (i_am_dummy_guest) { //it wouldn't help?!
 
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
  
 			let role = respo || 0;
 //console.log('registering as dummy guest, after fetch');
@@ -666,11 +666,11 @@ const register_body = (ro) => {
 		formData.append('addr', curip);
 		
 		//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {body: formData, method: 'post', credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-		fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {body: formData, method: 'post', credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+		fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {body: formData, method: 'post', credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 			let role = respo || 0;
 		}).catch(err => console.log(err));
 	
-		request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data=>{
+		request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data=>{
 //console.log('reg: acc_id is', data);
 		   let message = {
 			id : 'joinRoom',
@@ -903,7 +903,7 @@ const onNewParticipant = (request) => {
 			document.id('acco_'+ request.name).fade(1);
 			document.id('acco_' + request.name).onclick = function(e) {
 				e.preventDefault(); e.stopPropagation(); copy(ac); flashText('copied '+ na[0]);
-				request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
+				request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => {
 					setTimeout(function() {
 						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
 						(function() {document.id('removerA').fade(0)}).delay(1000);}
@@ -1033,7 +1033,7 @@ const onExistingViewers = (msg) => {
 
 const set_guru = (par, who) => {
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 
 		if (role == 1) {
@@ -1058,7 +1058,7 @@ const set_guru = (par, who) => {
 function drop_guest(who) {
 
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 		let role = respo || 0;
 
 		if (role == 1) {
@@ -1575,7 +1575,7 @@ console.log('doing mic mix in normal mode');
 			document.id('acco_' + f).fade(1);
 			document.id('acco_' + f).onclick = function() {
 				copy(ac); flashText('copied '+ na[0]);
-				request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
+				request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => {
 					setTimeout(function() {
 						if (document.id('removerA')) {document.id('removerA').innerHTML = 'Error: Service unavailable';
 						(function() {document.id('removerA').fade(0)}).delay(1000);}
@@ -1679,7 +1679,7 @@ console.log('doing mic mix in normal mode');
 	   }
    } // msg.data
    
-   request('https://'+window.location.hostname+'/cgi/genc/get_acc_id.pl').then(data => {
+   request('https://'+window.location.hostname+port+'/cgi/genc/get_acc_id.pl').then(data => {
      if (role == 0 && cinemaEnabled && !data.length) {
 	  if (document.id('sp_balance') && document.id('sp_container')){
 	    setTimeout(function() {document.id('sp_container').style.display='block';},2000);
@@ -1883,7 +1883,7 @@ function askGuru(request) {
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 	//	let role = respo || 0;
 		//if (role == 1 || request.name == document.id('name').value) {
-			soundEffect.src = "/sounds/wood_" + window.location.hostname + ".mp3";
+			soundEffect.src = "/sounds/wood_" + window.location.hostname+port + ".mp3";
 			chat_shown = 0; document.id('logger').click();
 			document.id('message_box').style.display = 'none';
 			document.id('audience_box').style.display = 'table';
@@ -1896,7 +1896,7 @@ const setCinema = (request) => {
 
 	let myname = document.id('name').value;
 	//fetch('https://'+window.location.hostname+':'+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
-	fetch('https://'+window.location.hostname+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
+	fetch('https://'+window.location.hostname+port+'/cgi/genc/checker.pl', {credentials: 'include'}).then(respo => respo.text()).then((respo) => {
 //console.log('here req is', request, 'myname', myname);
 		let myrole = respo || 0;
 
@@ -1931,7 +1931,7 @@ function newChatMessage() {
 	new_message = 1;
 	let intervalID = setInterval(function() { if (new_message) {document.id('logger').className = "bigO logger_g";} else {document.id('logger').className = chat_shown ? "bigO logger_f" : "bigO logger"; clearInterval(intervalID)}}, 1000);
 
-	fetch('https://'+window.location.hostname+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
+	fetch('https://'+window.location.hostname+port+'/log.html').then(response => response.text()).then((response) => {document.id('message_box').innerHTML = response; }).catch(err => console.log(err));
 
 		soundEffect.src = "/sounds/buzz.mp3";
 }
