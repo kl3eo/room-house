@@ -357,7 +357,7 @@ button {
 <body>
 	<!-- a name="top" class="return-link" href="https://room-house.com/">&lt;- Return to Room-House.com</a -->
 	<h1>Room-House Tower Owner's Manual</h1>
-	<p>version 1.41</p>
+	<p>version 1.42 - December 6, 2024.</p>
 	<div id="toc">
 <a href="#0" class="section-header">0 - Introduction</a>
 <ul>
@@ -405,7 +405,7 @@ button {
 	<li><a href="https://explorer.room-house.com">Explorer</a></li>
 	<li><a href="https://skypirl.net">Explorer Legacy</a></li>
 	<li><a href="https://subscan.room-house.com">Subscan</a></li>
-	<li><a href="mailto:support@room-house.com">Support E-mail Address</a></li>
+	<li><a href="mailto:alex@room-house.com">Support E-mail Address</a></li>
 </ul>
 
 <h4>Developer Resources</h4>
@@ -426,9 +426,9 @@ configurability, and extensibility in mind. The server is written in Java, and t
 <section>
 <h3 id="0.3">3 - History</h3>
 <p>
-	Room-House was created in early 2021 by <a href="mailto:alex@room-house.com">kl3eo</a> as a replacement for the vanilla Kurento's team Java client/server sample app.
-It's designed with a purpose to be better performing and more configurable than the original sample app. 
-It has since been run inside the <a href="https://room-house.com/space/" target=new>xTER SafeContainer</a> to make its deploy as easy as possible. Room-House inside an xTER makes up the basis for the Room-House Tower.
+	Room-House was created in early 2021 by <a href="mailto:alex@room-house.com">kl3eo</a> as a replacement for the Kurento's Java client/server sample app.
+It's designed with a purpose to be performing better and be more configurable than the original sample app. 
+It has since been run inside the <a href="https://room-house.com/space/" target=new>xTER SafeContainer</a> to make its use as easy as possible. Room-House inside the xTER container makes up for the Room-House Tower.
 </p>
 
 </section>
@@ -438,21 +438,22 @@ It has since been run inside the <a href="https://room-house.com/space/" target=
 <section>
 <h3 id="1.1">1 - Requirements</h3>
 <p id="buildsurl">
-	For Windows, Linux or Mac, the same demand will apply, namely having a static (fixed) IP for the host that runs the Room-House in container.
-	6Gb RAM at least is required of the host as well as 2 Gb of free space specially for R-H files.
+	For Windows, Linux or Mac, the same demand is having a static (fixed) IP for the host that runs the Room-House inside the container.
+	6Gb RAM at least is required of the host, as well as 4 Gb of free disk specially for the R-H files.
 </p>
 
 <p>
-	Room-House Tower is a Linux virtual machine that runs in VirtualBox (C) by Oracle.
+	Room-House Tower is normally a Linux virtual machine that runs in VirtualBox (C) by Oracle.
 	On Linux, macOS, Windows, you can simply install VirtualBox from Oracle's site <a href="https://www.virtualbox.org/" target=new>virtualbox.org</a>.
-	No extension pack is required. The oldest tested version of VB to run Room-House is 6.1.22.
+	No extension pack is required. The oldest tested version of VB to run Room-House is 6.1.22. 
+	The most tested is 6.1.46 - please keep in mind the we don't recommend using VirtualBox versions starting from 7.0 and up due to their newer license.
 </p>
 
 </section>
 <section>
 <h3 id="1.2">2 - Setting up virtual machine</h3>
 <p>
-	The simplest way is to use our setup scripts fow Windows (a) or Linux/macOS (b). Before running any of them, download the small boot file "loop_rh.vdi" from <a href="https://github.com/kl3eo/room-house/tree/main/rh" target=new>github</a>
+	The simplest way is to use our setup scripts fow Windows (a) or Linux/macOS (b). Before running any of them, download the small boot file "loop_rh_uti.vdi" from <a href="https://github.com/kl3eo/room-house/tree/main/rh" target=new>github</a>
 .	On Linux, place it to "/opt" folder where the script will find it. On Windows, take it to the new folder which is created by the script (see the code).
 </p>
 
@@ -465,22 +466,25 @@ It has since been run inside the <a href="https://room-house.com/space/" target=
 	On Linux or Mac, here is our script to create the virtual machine name "RH".
 </p>
 <figure class="codebox"><pre><code>#!/bin/bash
+
 mkdir -p ~/VB && cd ~/VB
-if [ -f /opt/loop_rh.vdi ]; then
- cp -a /opt/loop_rh.vdi ./
+
+if [ -f /opt/loop_rh_uti.vdi ]; then
+        cp -a /opt/loop_rh_uti.vdi ./
 else
- echo File /opt/loop_rh.vdi not found. Exiting
- exit
+        echo File /opt/loop_rh_uti.vdi not found. Exiting
+        exit
 fi
-vboxmanage createvm --name RH --ostype RedHat_64 --register --basefolder `pwd`
-mv loop_rh.vdi RH/ && cd RH
-PRI_IF=`/sbin/ip addr show | awk '/inet.*brd/{print $NF; exit}'`
-vboxmanage modifyvm RH --memory 4096 --cpus 2 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 $PRI_IF
-vboxmanage createmedium --filename 3G.vdi --size 3072
-vboxmanage storagectl RH --name SATA --add sata
-vboxmanage storageattach RH --storagectl SATA --medium loop_rh.vdi --port 0 --type hdd
-vboxmanage storageattach RH --storagectl SATA --medium 3G.vdi --port 1 --type hdd
-vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none
+
+vboxmanage createvm --name RHU --ostype RedHat_64 --register --basefolder `pwd`
+mv loop_rh_uti.vdi RHU/ && cd RHU
+vboxmanage modifyvm RHU --memory 6144 --cpus 4 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 enp0s31f6
+vboxmanage createmedium --filename 4G.vdi --size 4096
+vboxmanage storagectl RHU --name SATA --add sata
+vboxmanage storageattach RHU --storagectl SATA --medium loop_rh_uti.vdi --port 0 --type hdd
+vboxmanage storageattach RHU --storagectl SATA --medium 4G.vdi --port 1 --type hdd
+vboxmanage modifyvm RHU --boot1 disk --boot2 none --boot3 none --boot4 none
+
 
 </code></pre></figure>
 
@@ -497,17 +501,17 @@ vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none
 <figure class="codebox"><pre><code>
 1. vboxmanage createvm --name RH --ostype RedHat_64 --register --basefolder "C:\Users\Bob\VMs"
 2. cd "C:\Users\Bob\VMs\RH"
-3. vboxmanage modifyvm RH --memory 4096 --cpus 2 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 "Intel(R) Ethernet Connection I219-LM"
-4. vboxmanage createmedium --filename 3G.vdi --size 3072
+3. vboxmanage modifyvm RH --memory 6144 --cpus 4 --audio none --firmware efi --nic1 bridged --nictype1 virtio --bridgeadapter1 "Intel(R) Ethernet Connection I219-LM"
+4. vboxmanage createmedium --filename 4G.vdi --size 4096
 5. vboxmanage storagectl RH --name SATA --add sata
 
 </code></pre></figure>
-<p>Now download "loop_rh.vdi" from github link above and place it to the same folder where you're running commands (it's "C:\Users\Bob\VMs\RH"), and proceed with command #6.
+<p>Now download "loop_rh_uti.vdi" from github link above and place it to the same folder where you're running commands (it's "C:\Users\Bob\VMs\RH"), and proceed with command #6.
 </p>
 <figure class="codebox"><pre><code>
-6. vboxmanage internalcommands sethduuid loop_rh.vdi
-7. vboxmanage storageattach RH --storagectl SATA --medium loop_rh.vdi --port 0 --type hdd
-8. vboxmanage storageattach RH --storagectl SATA --medium 3G.vdi --port 1 --type hdd
+6. vboxmanage internalcommands sethduuid loop_rh_uti.vdi
+7. vboxmanage storageattach RH --storagectl SATA --medium loop_rh_uti.vdi --port 0 --type hdd
+8. vboxmanage storageattach RH --storagectl SATA --medium 4G.vdi --port 1 --type hdd
 9. vboxmanage modifyvm RH --boot1 disk --boot2 none --boot3 none --boot4 none
 
 </code></pre></figure>
@@ -547,7 +551,7 @@ Once this process has finished, you will see the "login" prompt on the bottom li
 <h4 id="cmpl">..Complete</h4>
 <img src="https://room-house.com/img/man5.png">
 <p>
-After the very first startup, until the Tower has been configured, the bottom line reads as "localhost login:" - you will change the Tower's name from "localhost" to its real name later.
+After the very first startup, until the Tower has been configured, the bottom line reads as "uti login:" - you will change the Tower's name from "uti" to its real name later.
 In this example pictures, the tower's name was already configured by us as "iron", and its internal IP had been chosen "192.168.88.202" by us, because our local subnet is "192.168.88.0/24".
 </p>
 </section>
@@ -598,9 +602,9 @@ In this example pictures, the tower's name was already configured by us as "iron
 </p>
 <aside class="warnbox">
 	If you didn't write down your new admin's password and can't remember it, you will have to stop this virtual machine, 
-	then replace file "loop_rh.vdi" located in your VB folder with the same file from the github. Doing this, you lose all changes to the R-H configuration that you may have done so far. 
+	then replace file "loop_rh_uti.vdi" located in your VB folder with the same file from the github. Doing this, you lose all changes to the R-H configuration that you may have done so far. 
 	Restart your VM and change the default password again. Please be advised to lock your computer while going out, 
-	because one can change the admin's password replacing the current "loop_rh.vdi" with the default file! 
+	because one can change the admin's password replacing the current "loop_rh_uti.vdi" with the default file! 
 	Anyone who has access to your computer may do so and then login to WebAdmin as you - to prevent this, lock your computer before leaving your place.
 </aside>
 
@@ -636,12 +640,13 @@ It will eventually be, if not already, - first you'd have to do the correct "Por
 	you've assigned to the VM and typed in the "blue screen" form during the startup. Now you have to configure the "Port Forwarding" on your router. 
 	If the router's port 443 is not busy yet, assign this port to be forwarded to "192.168.0.100" port 443. But if it is busy, then assign ANY TCP free router port, for example, 8943, 
 	to be forwarded to TCP port 443 of "192.168.0.100". 
-	And in the end <a href="https://club.room-house.com" target=new>contact us</a> and tell us which port of the router has been assigned (8943? 443? or other) 
+	And in the end <a href="https://club.room-house.com" target=new>contact us</a> and tell us which port of the router has been assigned (8943 or 443, or other) 
 	so that our Room-House proxy does the correct forwarding of all web requests to your router.
 </p>
 <p>
 	Beside this one TCP port, also you have to forward the range 1025-65535 UDP ports from the router to "192.168.0.100". 
-	NB: if working without domain names, forward TCP post 18443 and then accept browser's warning to open https://your_external_ip:18443
+	NB: if working without domain names, forward TCP ports 8453 and 18443 and then accept browser's warning to open https://your_external_ip:18443, 
+	and the https://your_external_ip:8453/cgi/genc/cp to open the admin's interface.
 </p>
 
 <aside class="warnbox">
@@ -658,7 +663,7 @@ It will eventually be, if not already, - first you'd have to do the correct "Por
 <img src="https://room-house.com/img/man8.png">
 
 <p>
-	In the example above, "fuji" can login to the WebAdmin (https://roma.room-house.com:8453) by typing <code>9</code> as username and the password <code>510516</code>. Also,
+	In the example above, "fuji" can login to the WebAdmin (https://roma.room-house.com/cgi/genc/cp) by typing <code>9</code> as username and the password <code>510516</code>. Also,
 	"fuji" can enter the locked Lobby of the Tower "roma" (https://roma.room-house.com) by typing <code>9510516</code> right after the captcha.
 </p>
 
