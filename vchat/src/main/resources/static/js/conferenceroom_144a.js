@@ -152,12 +152,13 @@ window.onload = function(){
        if (registered || problems) setTimeout(function() {check_connection()}, 1000); // give more time here to avoid early exits;
 
    }, 30000 + Math.random() * 10000);
-
-   setInterval(function(){
+   
+   // idiotic check
+   /*setInterval(function(){
        
        if (registered) check_fullscreen();
 
-   }, 1000);
+   }, 1000);*/
    
 	let loneGuy = getCookie('loneGuy') || 0;
 	
@@ -2066,11 +2067,12 @@ function bongoKey(request) {
 	//let video_controlable = request.name === myname || request.name === '' ? true : false;
 	let video_controlable = true;
 	
-	if (request.num == '65') {
+	/*if (request.num == '65') {
 		soundEffect.src = "/sounds/track01.mp3";
 		a = 'a';
 
-	}
+	}*/
+	
 	if (request.num == '66') {
 		soundEffect.src = "/sounds/track02.mp3";
 		a = 'b';
@@ -2087,18 +2089,18 @@ function bongoKey(request) {
 		a = 'd';
 		if (now_playing && video_controlable) {document.id(myvideo).currentTime += 300;document.id(myvideo).play();__playing = true;}
 	}
-	if (request.num == '69') {
+	/*if (request.num == '69') {
 		soundEffect.src = "/sounds/track05.mp3";
 		a = 'e';
 
-	}
+	}*/
 	if (request.num == '70') {
 		//soundEffect.src = "/sounds/track06.mp3";
 		a = 'f';
 		if (now_playing && video_controlable) {document.id(myvideo).currentTime += 10;document.id(myvideo).play();__playing = true;}
 
 	}
-	if (request.num == '71') {
+	/*if (request.num == '71') {
 		soundEffect.src = "/sounds/track07.mp3";
 		a = 'g';
 
@@ -2142,18 +2144,18 @@ function bongoKey(request) {
 		soundEffect.src = "/sounds/track15.mp3";
 		a = 'o';
 
-	}
+	}*/
 	if (request.num == '80') {
 		//soundEffect.src = "/sounds/track16.mp3";
 		a = 'p';
 		if (now_playing && video_controlable) {document.id(myvideo).play();__playing = true;}
 
 	}
-	if (request.num == '81') {
+	/*if (request.num == '81') {
 		soundEffect.src = "/sounds/track15.mp3";
 		a = 'q';
 
-	}
+	}*/
 	if (request.num == '82') {
 		//soundEffect.src = "/sounds/track14.mp3";
 		a = 'r';
