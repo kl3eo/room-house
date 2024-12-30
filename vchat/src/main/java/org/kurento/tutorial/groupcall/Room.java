@@ -102,6 +102,14 @@ public class Room implements Closeable {
     final String empty_anno = "";
     final UserSession participant = new UserSession(userName, userMode, "a", userCurip, userAccId, roleId, empty_anno, currRoom, this.name, session, this.pipeline);
     
+/*    int cod = 0; int mod = 0;
+    for (final UserSession pa : this.getParticipants()) {
+      if (pa.getMode().equals("c")) { mod++; }
+      cod++;
+    }
+
+    boolean joins_cinema_with_no_acc = cod == 1 && mod == 1 &&  userAccId.equals("") ? true : false;
+*/			    
     if (roleId.equals("1") || roleId.equals("2") || roleId.equals("3")) {
     	log.info("ROOM {}: adding participant {}", this.name, userName);
     	joinRoom(participant, num_guests, room_limit, currRoom);
@@ -112,7 +120,8 @@ public class Room implements Closeable {
     	
 	if(viewers.size() < 100) {
 		log.info("ROOM {}: adding viewer {}", this.name, userName);
-		viewers.put(participant.getName(), participant);
+		viewers.put(participant.getName(), participant); 
+//		if (!joins_cinema_with_no_acc) { viewers.put(participant.getName(), participant); }
 		viewRoom(participant, num_guests, room_limit, currRoom);
 	} else {
 		log.info("ROOM {}: reached limit of viewers {}", this.name, viewers.size());
@@ -391,7 +400,7 @@ public class Room implements Closeable {
 	
     	for (final UserSession participant : participants.values()) {
 	  try {
-		if (user.getName() != participant.getName()) participant.sendMessage(keyDownJson);
+		if (user.getName() != participant.getName() && !user.getAccId().equals("")) participant.sendMessage(keyDownJson);
 	  } catch (final IOException e) {
 		unnotifiedParticipants.add(participant.getName());
 	  }

@@ -161,7 +161,7 @@ window.onload = function(){
    }, 1000);*/
    
 	let loneGuy = getCookie('loneGuy') || 0;
-	
+		
 	if (loneGuy && typeof(loneGuy) !== 'undefined') {
 	  setCookie('loneGuy', 0, 1440); //console.log('here lone guy is', loneGuy);
 	  setTimeout(function() {
@@ -185,7 +185,17 @@ window.onload = function(){
 	    }
 	    
 	    setTimeout(function() {playSomeMusic = true; /*console.log('clicking cli6');*/ cli6()}, 2000);
-	    
+	    setTimeout(function() { 
+	      let cinemaGuy = getCookie('cinemaGuy') || 0;
+	      console.log('here cinemaGuy is', cinemaGuy);
+	      if (cinemaGuy && typeof(cinemaGuy) !== 'undefined') {
+	        if (document.id('name') && document.id('name').value && document.id('one-'+document.id('name').value)) {
+		  document.id('one-'+document.id('name').value).click();
+	          console.log('clicked cinemaGuy');
+	          setCookie('cinemaGuy', 0, 1440);
+		}
+	      }
+	     }, 7000);    
 	  }, 1000);
 	}	      
       
@@ -2175,6 +2185,7 @@ function bongoKey(request) {
 		  setCookie('loneGuy', true, 1);
 		  setCookie('playedFileName', curMoviesList[0]);
 		  setCookie('cT_'+curMoviesList[0],document.id('video-'+document.id('name').value).currentTime, 14400);
+		  if (document.id('one-'+document.id('name').value).style.color == "rgb(255, 255, 0)") setCookie('cinemaGuy', true, 10); //hack ash
 		  location.reload();
 		}
 	}
