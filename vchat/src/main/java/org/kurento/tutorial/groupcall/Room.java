@@ -400,7 +400,7 @@ public class Room implements Closeable {
 	
     	for (final UserSession participant : participants.values()) {
 	  try {
-		if (user.getName() != participant.getName() && !user.getAccId().equals("")) participant.sendMessage(keyDownJson);
+		if (user.getName() != participant.getName() && !(user.getAccId().equals("") && participant.getMode().equals("c"))) participant.sendMessage(keyDownJson);
 	  } catch (final IOException e) {
 		unnotifiedParticipants.add(participant.getName());
 	  }
