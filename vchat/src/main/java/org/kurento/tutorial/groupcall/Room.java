@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
-#   Copyright (c) 2021-24 Alex Shevlakov alex@motivation.ru
+#   Copyright (c) 2021-25 Alex Shevlakov alex@motivation.ru
 #   All Rights Reserved.
 
 #   This program is free software; you can redistribute it and/or modify
